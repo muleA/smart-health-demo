@@ -8,6 +8,7 @@ import MyApplications from './my-applications';
 import MyLicenses from './my-license';
 import ProfileWrapper from './profile-wrapper';
 import { useAuth } from '../shared/auth/use-auth';
+import Banner from '../pages/banner';
 
 const { Header, Content, Sider } = Layout;
 
@@ -138,6 +139,7 @@ const {session}=useAuth()
 
         <Content style={{ margin: '16px' }}>
           <Routes>
+            <Route  path='/banner' element={<Banner/>}></Route>
             <Route path="/my-profile" element={<ProfileWrapper />} />
             <Route path="/my-applications" element={<MyApplications />} />
             <Route path="/new-application" element={<LicenseRegistrationForm />} />

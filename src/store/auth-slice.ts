@@ -44,7 +44,7 @@ export function logIn(request: LoginRequest) {
         `${baseUrl}auth/login`,
       request,
       );
-      console.log("response decode",jwtDecode(response.data.access_token))
+      console.log("response decode",response)
       dispatch(setSession({ accessToken: response.data.access_token, userInfo:jwtDecode(response.data.access_token)}));
     } catch (error: any) {
       // Handle error

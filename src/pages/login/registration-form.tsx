@@ -160,6 +160,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       title="Registration"
       onCancel={onClose}
       footer={null}
+      width={1500} // Set the width of the Modal
+
     >
       <Steps
         current={currentStep}

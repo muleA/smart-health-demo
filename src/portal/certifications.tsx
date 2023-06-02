@@ -1,51 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Card, Collapse, Button, Input, DatePicker, Form, Upload } from "antd";
+import { Card, Collapse, Button, Input, Form, message, DatePicker } from "antd";
 import axios from "axios";
 import { Notify } from "../shared/notification/notify";
-import {
-  PlusCircleFilled,
-  PlusOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
 import { baseUrl } from "../shared/config";
 import { useAuth } from "../shared/auth/use-auth";
-import Empty from "../shared/empty-state";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { PlusOutlined } from "@ant-design/icons";
+import moment from "moment";
 
 const { Panel } = Collapse;
 
 interface Certificate {
-  id: string; // Unique identifier for each certificate
+  id:string;
   Institution: string;
   name: string;
   certificateTitle: string;
   startDate: string;
   receivedDate: string;
   [key: string]: string | number; // Index signature
+
 }
 
-const validationSchema = Yup.object().shape({
-  Institution: Yup.string().required("Institution is required"),
-  name: Yup.string().required("Name is required"),
-  certificateTitle: Yup.string().required("Certificate Title is required"),
-  startDate: Yup.string().required("Start Date is required"),
-  receivedDate: Yup.string().required("Received Date is required"),
-});
-
-const CertificateForm: React.FC = () => {
-  const [form] = Form.useForm();
+const CertificateInformation: React.FC = () => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const { session } = useAuth();
-  const [selectedImage, setSelectedImage] = useState<any>(null);
-  const handleUploadClick = () => {
-    // Trigger the image upload manually
-    const uploadInput = document.getElementById("image-upload-input");
-    if (uploadInput) {
-      uploadInput.click();
-    }
-  };
-  
+
   useEffect(() => {
     fetchCertificates();
   }, []);
@@ -53,12 +31,57 @@ const CertificateForm: React.FC = () => {
   const fetchCertificates = async () => {
     try {
       const response = await axios.get(
-        `${baseUrl}user/get-certificate-by-userId/${session?.userInfo?.userId}`
+        `${baseUrl}user/get-experience-by-userId/${session?.userInfo?.userId}`
+        // Replace "userId" with the actual ID of the user
       );
       setCertificates(response.data);
     } catch (error) {
       console.error("Error fetching certificates:", error);
     }
+  };
+
+  const handleCreateCertificate = async (certificate: Certificate) => {
+    const { id, ...otherProps } = certificate;
+    console.log("otherProps",otherProps)
+
+    try {
+      await axios.post(
+          `${baseUrl}user/add-certificate-to-user`,
+        {Institution:certificate.Institution,name:certificate.name,certificateTitle:certificate.certificateTitle,startDate:certificate.startDate,receivedDate:certificate.receivedDate,userId:session?.userInfo?.userId}
+      );
+      message.success("Certificate info added successfully");
+    } catch (error) {
+      console.error("Error creating certificate:", error);
+      message.error("Error in adding certificate info");
+    }
+  };
+
+  const handleDeleteCertificate = async (certificate: Certificate) => {
+    try {
+      await axios.post(
+        `${baseUrl}user/delete-certificate/${certificate.id}`
+      );
+      const updatedCertificates = certificates.filter(
+        (cert) => cert.id !== certificate.id
+      );
+      setCertificates(updatedCertificates);
+      message.success("Certificate info deleted successfully");
+    } catch (error) {
+      console.error("Error deleting certificate:", error);
+      message.error("Error in deleting certificate info");
+    }
+  };
+
+  const handleAddCertificate = () => {
+    const newCertificate: Certificate = {
+      Institution: "",
+      name: "",
+      certificateTitle: "",
+      startDate: "",
+      receivedDate: "",
+      id: ""
+    };
+    setCertificates([...certificates, newCertificate]);
   };
 
   const handleCertificateChange = (
@@ -73,111 +96,27 @@ const CertificateForm: React.FC = () => {
 
   const handleUpdateCertificate = async (certificate: Certificate) => {
     try {
-      await axios.post(`${baseUrl}user/update-certificate/${certificate.id}`, certificate);
-      // Handle image upload separately if needed
+      await axios.post(
+        `http://20.21.120.66:3000/api/user/update-certificate`,
+        certificate
+      );
+      Notify("success", "Certificate info updated successfully");
     } catch (error) {
       console.error("Error updating certificate:", error);
-      Notify("success", "Certificate Info updated successfully");
+      Notify("error", "Error in updating certificate info");
     }
   };
 
-  const handleCreateCertificate = async (certificate: Certificate) => {
-    try {
-      await axios.post(`${baseUrl}user/add-certificate`, certificate);
-      // Handle image upload separately if needed
-    } catch (error) {
-      console.error("Error creating certificate:", error);
-      Notify("success", "Certificate Info created successfully");
-    }
-  };
-
-  const handleDeleteCertificate = async (certificate: Certificate) => {
-    try {
-      await axios.post(`${baseUrl}user/delete-certificate/${certificate.id}`);
-      const updatedCertificates = certificates.filter(
-        (cert) => cert.id !== certificate.id
-      );
-      setCertificates(updatedCertificates);
-      Notify("success", "Certificate Info deleted successfully");
-    } catch (error) {
-      console.error("Error deleting certificate:", error);
-      Notify("error", "Error in deleting Certificate Info");
-    }
-  };
-
-  const onSubmit = async (certificate: Certificate) => {
-    const formik = useFormik({
-      initialValues: certificate,
-      validationSchema: validationSchema,
-      onSubmit: async (values) => {
-        if (certificate.id) {
-          handleUpdateCertificate(values);
-        } else {
-          handleCreateCertificate(values);
-        }
-      },
-    });
-
-    formik.handleSubmit();
-  };
- 
-  const handleImageUpload = async (
-    file: string | Blob,
-    certificateId: string | undefined
-  ) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
-
-      await axios.post(
-        `${baseUrl}user/add-certificate-attachment/${session?.userInfo?.userId}/${certificateId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      setSelectedImage(file);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
-
-  const handleAddCertificate = () => {
-    const newCertificate: Certificate = {
-      id: "", // Generate a unique ID for the new certificate
-      Institution: "",
-      name: "",
-      certificateTitle: "",
-      startDate: "",
-      receivedDate: "",
-    };
-    setCertificates([...certificates, newCertificate]);
-  };
-
+  const [expanded, setExpanded] = useState(false);
   const handleButtonClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleDateChange = (date: any, dateString: any) => {
-    console.log(date, dateString);
-    // Perform any desired operations with the selected date
-  };
-
-  const handleImageRemove = () => {
-    setSelectedImage(null);
-  };
-  
-  const [expanded, setExpanded] = useState(false);
-
   return (
-    <Card title="" className="w-3/2 mx-auto mt-3">
+    <Card title="" className="w-3/2 mx-auto mt-6">
       <Collapse activeKey={expanded ? "1" : ""}>
-        
         <Panel
-          header={<h3 className="font-bold text-lg">Certificate information</h3>}
+          header={<h3 className="font-bold text-lg">Certificate Information</h3>}
           key="1"
           extra={
             <>
@@ -199,197 +138,120 @@ const CertificateForm: React.FC = () => {
             </>
           }
         >
-          {certificates.length === 0 ? (
-            <Empty />
-          ) : (
-            <>
-              {certificates.map((certificate: Certificate, index: number) => (
-                <Collapse key={certificate.id}>
-                  <Panel
-                    className="mb-2"
-                    header={`Certificate ${index + 1}`}
-                    extra={
-                      <Button
-                        type="primary"
-                        danger
-                        onClick={() => handleDeleteCertificate(certificate)}
-                      >
-                        Delete
-                      </Button>
-                    }
-                    key={certificate.id}
+          {certificates.map((certificate: Certificate, index: number) => (
+            <Collapse key={index}>
+              <Panel
+                className="mb-2"
+                header={`Certificate ${index + 1}`}
+                key={certificate.id}
+                extra={
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => handleDeleteCertificate(certificate)}
                   >
-                    <div className="flex space-x-4">
-                      <div className="w-1/2 bg-gray-100">
-                        <Form
-                          layout="vertical"
-                          className="mx-auto px-4"
-                          form={form}
-                          initialValues={certificate}
-                          onFinish={onSubmit}
-                        >
-                          <Form.Item
-                            label="Institution"
-                            name="Institution"
-                            initialValue={certificate.Institution}
-                            rules={[
-                              {
-                                required: true,
-                                message: "Institution is required",
-                              },
-                            ]}
-                          >
-                            <Input
-                              onChange={(e) =>
-                                handleCertificateChange(
-                                  index,
-                                  "Institution",
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </Form.Item>
-                          <Form.Item
-                            label="Name"
-                            name="name"
-                            initialValue={certificate.name}
-                            rules={[
-                              {
-                                required: true,
-                                message: "Name is required",
-                              },
-                            ]}
-                          >
-                            <Input
-                              onChange={(e) =>
-                                handleCertificateChange(
-                                  index,
-                                  "name",
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </Form.Item>
-                          <Form.Item
-                            label="Certificate Title"
-                            name="certificateTitle"
-                            initialValue={certificate.certificateTitle}
-                            rules={[
-                              {
-                                required: true,
-                                message: "Certificate Title is required",
-                              },
-                            ]}
-                          >
-                            <Input
-                              onChange={(e) =>
-                                handleCertificateChange(
-                                  index,
-                                  "certificateTitle",
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </Form.Item>
-                          <Form.Item
-                            label="Start Date"
-                            name="startDate"
-                            initialValue={certificate.startDate}
-                            rules={[
-                              {
-                                required: true,
-                                message: "Start Date is required",
-                              },
-                            ]}
-                          >
-                            <DatePicker className="w-full" onChange={handleDateChange} />
-                          </Form.Item>
-                          <Form.Item
-                            label="Received Date"
-                            name="receivedDate"
-                            initialValue={certificate.receivedDate}
-                            rules={[
-                              {
-                                required: true,
-                                message: "Received Date is required",
-                              },
-                            ]}
-                          >
-                            <DatePicker className="w-full" onChange={handleDateChange} />
-                          </Form.Item>
-                          <div className="flex justify-between">
-                            <Button
-                              htmlType="submit"
-                              className="bg-primary mb-4"
-                              type="primary"
-                            >
-                              Save
-                            </Button>
-                          </div>
-                        </Form>
-                      </div>
-                      <div className="w-1/2 h-100">
-                        <input
-                          id="image-upload-input"
-                          type="file"
-                          style={{ display: "none" }}
-                          /*onChange={(e) => handleImagePreview(e.target.files[0])}*/
+                    Delete
+                  </Button>
+                }
+              >
+                <Form layout="vertical">
+                  <Form.Item label="Institution">
+                    <Input
+                      value={certificate.Institution}
+                      onChange={(e) =>
+                        handleCertificateChange(
+                          index,
+                          "Institution",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item label="Name">
+                    <Input
+                      value={certificate.name}
+                      onChange={(e) =>
+                        handleCertificateChange(index, "name", e.target.value)
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item label="Certificate Title">
+                    <Input
+                      value={certificate.certificateTitle}
+                      onChange={(e) =>
+                        handleCertificateChange(
+                          index,
+                          "certificateTitle",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item
+                      rules={[{ required: true }]}
+                        label="Issued Date"
+                        name={`startDate${index}`}
+                        initialValue={
+                          certificate.receivedDate
+                            ? moment(certificate.receivedDate)
+                            : undefined
+                        }
+                      >
+                        <DatePicker
+                          onChange={(date) =>
+                            handleCertificateChange(
+                              index,
+                              "receivedDate",
+                              date ? date.format("YYYY-MM-DD") : ""
+                            )
+                          }
                         />
-                        <Upload.Dragger
-                          name="image"
-                          showUploadList={false}
-                          /*beforeUpload={handleImagePreview}
-                           onChange={handleImageChange}*/
-                        >
-                          {selectedImage ? (
-                            <img
-                              src={selectedImage}
-                              alt="Selected"
-                              className="mb-4"
-                            />
-                          ) : (
-                            <div className="text-center h-100">
-                              <p className="mb-2">Drag & Drop or Click to Upload</p>
-                              <Button
-                                icon={<UploadOutlined />}
-                                onClick={handleUploadClick}
-                              >
-                                Select Image
-                              </Button>
-                            </div>
-                          )}
-                        </Upload.Dragger>
-                        {selectedImage && (
-                          <>
-                            <Button
-                              type="link"
-                              danger
-                              onClick={handleImageRemove}
-                            >
-                              Remove Image
-                            </Button>
-                            <Button
-                              type="primary"
-                              className="bg-primary"
-                              onClick={() =>
-                                handleImageUpload(selectedImage, certificate.id)
-                              }
-                            >
-                              Upload
-                            </Button>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </Panel>
-                </Collapse>
-              ))}
-            </>
-          )}
+                      </Form.Item>
+                  <Form.Item
+                      rules={[{ required: true }]}
+                        label="Received Date"
+                        name={`receivedDate_${index}`}
+                        initialValue={
+                          certificate.receivedDate
+                            ? moment(certificate.receivedDate)
+                            : undefined
+                        }
+                      >
+                        <DatePicker
+                          onChange={(date) =>
+                            handleCertificateChange(
+                              index,
+                              "receivedDate",
+                              date ? date.format("YYYY-MM-DD") : ""
+                            )
+                          }
+                        />
+                      </Form.Item>
+              
+                  <div className="flex space-x-4">
+                    <Button
+                      type="primary"
+                      className="bg-primary"
+                      onClick={() => handleCreateCertificate(certificate)}
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      type="primary"
+                      danger
+                      onClick={() => handleDeleteCertificate(certificate)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </Form>
+              </Panel>
+            </Collapse>
+          ))}
         </Panel>
       </Collapse>
     </Card>
   );
 };
 
-export default CertificateForm;
+export default CertificateInformation;

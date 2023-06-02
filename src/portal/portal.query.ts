@@ -28,6 +28,14 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    addEducation: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: authEndPoints.addEducation,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
     applyToLicense: builder.mutation<any, any>({
       query: (newUser) => ({
         url: authEndPoints.apply,
@@ -52,5 +60,6 @@ export const {
   useCreateUserMutation,
   useGetAccountsQuery,
   useGetUsersQuery,
-  useApplyToLicenseMutation
+  useApplyToLicenseMutation,
+  useAddEducationMutation
 } = userApi;

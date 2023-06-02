@@ -6,6 +6,8 @@ import { Notify } from "../shared/notification/notify";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { useAuth } from "../shared/auth/use-auth";
 import { baseUrl } from "../shared/config";
+import { useAddEducationMutation } from "./portal.query";
+import Empty from "../shared/empty-state";
 
 const { Panel } = Collapse;
 
@@ -33,7 +35,7 @@ const EducationForm: React.FC = () => {
       formData.append("image", file);
 
       const response = await axios.post(
-        `${baseUrl}user/add-education-attachment/${session?.userInfo?.userId}/${educationId}`,
+        `${baseUrl}user/add-education-attachment/${educationId}/${session?.userInfo?.userId}`,
         formData,
         {
           headers: {
@@ -60,6 +62,24 @@ const EducationForm: React.FC = () => {
       setSelectedImage(imageUrl);
     }
   };
+
+  
+const url = `${baseUrl}user/get-education-file-name-by-userId/${session?.userInfo.userId}/001b684f-0e88-43af-8ab9-c7b18ad7b3d0`;
+
+
+
+  useEffect(()=>{
+    axios.get(url, { responseType: 'arraybuffer' })
+    .then(response => {
+      const file = new Blob([response.data], { type: response.headers['content-type'] });
+      const fileUrl = URL.createObjectURL(file);
+     setSelectedImage(fileUrl)
+      // Display the file as a link
+    })
+    .catch(error => {
+      console.error('Error retrieving the file:', error);
+    });
+  },[])
 
   const handleImageChange = (info: any, educationId: any) => {
     if (info.file.status === "done") {
@@ -93,7 +113,7 @@ const EducationForm: React.FC = () => {
       console.error("Error fetching educations:", error);
     }
   };
-
+const [addEducation,{data,isLoading}]=useAddEducationMutation()
   const handleEducationChange = (
     index: number,
     field: string,
@@ -105,33 +125,42 @@ const EducationForm: React.FC = () => {
   };
 
   const handleUpdateEducation = async (education: Education) => {
+    const { id, ...otherProps } = education;
+
     try {
-      await axios.post(
-        `${baseUrl}user/update-education/${education.id}`,
-        education
-      );
+      addEducation(otherProps)
+    /*   await axios.post(`${baseUrl}api/user/add-education`,
+c        education
+      ); */
+      message.success("Education Info updated successfully");
+
     } catch (error) {
       console.error("Error updating education:", error);
-      Notify("success", "Education Info updated successfully");
+      message.error("error happened in Education Info updated successfully");
+
     }
   };
-
+console.log("baseUrl",baseUrl)
   const handleCreateEducations = async (education: Education) => {
+    const { id, ...otherProps } = education;
+
     try {
-      await axios.post(
-        `${baseUrl}api/user/add-education`,
+      addEducation({...otherProps,userId:session?.userInfo?.userId})
+    /*   await axios.post(`${baseUrl}api/user/add-education`,
         education
-      );
+      ); */
+      message.success("Education Info updated successfully");
+
     } catch (error) {
       console.error("Error updating education:", error);
-      message.success("Education Info updated successfully");
+      message.error("error happened in Education Info updated successfully");
+
     }
   };
 
   const handleDeleteEducation = async (education: Education) => {
     try {
-      await axios.post(
-        `${baseUrl}api/user/delete-education/${education.id}`
+      await axios.post(`${baseUrl}user/delete-education/${education.id}`
       );
       const updatedEducations = educations.filter(
         (edu) => edu.id !== education.id
@@ -172,7 +201,7 @@ const EducationForm: React.FC = () => {
   
     setEducations([...educations, newEducation]);
   };
-  
+
   
   
   const [expanded, setExpanded] = useState(false);
@@ -208,12 +237,13 @@ const EducationForm: React.FC = () => {
           }
         >
           {/*  */}
-
-          {educations.map((education: Education, index: number) => (
-            <Collapse>
+          {educations?.length===0?(<><Empty/></>):(<>
+          
+            {educations.map((education: Education, index: number) => (
+            <Collapse key={index}>
               <Panel
                 className="mb-2"
-                header={`Experience ${index + 1}`}
+                header={`Education ${index + 1}`}
                 key={education.id}
                 extra={
                   <Button
@@ -325,17 +355,18 @@ const EducationForm: React.FC = () => {
                           htmlType="submit"
                           className="bg-primary"
                           type="primary"
+                          loading={isLoading}
                           onClick={() => handleCreateEducations(education)}
                         >
                           Save
                         </Button>
-                        <Button
+                      {/*   <Button
                           htmlType="submit"
                           className="bg-primary"
                           type="primary"
                         >
                           Update
-                        </Button>
+                        </Button> */}
                         <Button
                           type="primary"
                           danger
@@ -373,6 +404,7 @@ const EducationForm: React.FC = () => {
                             <p className="mb-2">
                               Drag & Drop or Click to Upload
                             </p>
+                            
                             <Button
                               icon={<UploadOutlined />}
                               onClick={handleUploadClick}
@@ -411,7 +443,12 @@ const EducationForm: React.FC = () => {
                 </div>
               </Panel>
             </Collapse>
-          ))}
+          ))
+          }
+          
+          </>)}
+
+         
         </Panel>
       </Collapse>
     </Card>

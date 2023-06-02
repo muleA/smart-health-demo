@@ -18,7 +18,7 @@ export const axiosBaseQuery =
   > =>
   async ({ url, method, data, params }) => {
     const session = getCurrentSession();
-    console.log("session",session.accessToken.data.token)
+    console.log("session",session.access_token)
     try {
       const config: AxiosRequestConfig = {
         url: baseUrl + url,
@@ -28,10 +28,10 @@ export const axiosBaseQuery =
       };
       /*  */
       console.log("session",session)
-      if (session?.access_token) {
+      if (session?.accessToken) {
         axios.defaults.headers.common[
           'Authorization'
-        ] = `Bearer ${session?.access_token}`;
+        ] = `Bearer ${session?.accessToken}`;
       }
       const result = await axios(config);
       return { data: result.data };

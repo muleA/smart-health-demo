@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Card, Collapse, Button, Input, Form } from "antd";
+import { Card, Collapse, Button, Input, Form, message } from "antd";
 import axios from "axios";
 import { Notify } from "../shared/notification/notify";
 import { baseUrl } from "../shared/config";
 import { useAuth } from "../shared/auth/use-auth";
 import { PlusOutlined } from "@ant-design/icons";
+import Empty from "../shared/empty-state";
 
 const { Panel } = Collapse;
 
@@ -16,12 +17,11 @@ interface Experience {
   woreda: string;
   kebela: string;
   [key: string]: string | number; // Index signature
-
 }
 
 const ExperinceInformations: React.FC = () => {
   const [experiences, setExperiences] = useState<Experience[]>([]);
-const {session}=useAuth()
+  const { session } = useAuth();
   useEffect(() => {
     fetchExperiences();
   }, []);
@@ -39,14 +39,10 @@ const {session}=useAuth()
   };
   const handleCreateExperiences = async (Experience: Experience) => {
     try {
-      await axios.post(
-        `http://20.21.120.66:3000/api/user/add-Experience`,
-        Experience
-      );
+      await axios.post(`${baseUrl}user/add-Experience`, Experience);
     } catch (error) {
       console.error("Error updating Experience:", error);
-      Notify("success","Experience Info Added successfully")
-
+      message.error("error occurred in adding experience  information's");
     }
   };
 
@@ -62,49 +58,45 @@ const {session}=useAuth()
 
   const handleUpdateExperience = async (experience: Experience) => {
     try {
-      await axios.post(
-        `http://20.21.120.66:3000/api/user/add-experience-to-user`,
-        {
-            kebela:"df",
-            organizationName:"df",
-            subCity:"df",
-            tin:"fds",
-            woreda: "df"
-        }
-      );
-      Notify("success", "Experience info updated successfully");
+      await axios.post(`${baseUrl}user/add-experience-to-user`, {
+        kebela: "df",
+        organizationName: "df",
+        subCity: "df",
+        tin: "fds",
+        woreda: "df",
+      });
+      message.success("Experience info updated successfully");
     } catch (error) {
       console.error("Error updating experience:", error);
-      Notify("error", "Error in updating experience info");
+      message.error("Error in updating experience info");
     }
   };
 
   const handleCreateExperience = async (experience: Experience) => {
+    const { id, ...otherProps } = experience;
+
+    
     try {
-      await axios.post(
-        "http://20.21.120.66:3000/api/user/add-experience",
-        experience
-      );
-      Notify("success", "Experience info added successfully");
+      await axios.post(`${baseUrl}user/add-experience-to-user`, {...otherProps,userId:session?.userInfo?.userId});
+      message.success("Experience info added successfully");
     } catch (error) {
       console.error("Error creating experience:", error);
-      Notify("error", "Error in adding experience info");
+      message.error("Error in adding experience info");
     }
   };
 
   const handleDeleteExperience = async (experience: Experience) => {
+      console.log("expe",experience)
     try {
-      await axios.post(
-        `http://20.21.120.66:3000/api/user/delete-experience/${experience.id}`
-      );
+      await axios.post(`${baseUrl}user/delete-experience/${experience.id}`);
       const updatedExperiences = experiences.filter(
         (exp) => exp.id !== experience.id
       );
       setExperiences(updatedExperiences);
-      Notify("success", "Experience info deleted successfully");
+      message.success("Experience info deleted successfully");
     } catch (error) {
       console.error("Error deleting experience:", error);
-      Notify("error", "Error in deleting experience info");
+      message.error("Error in deleting experience info");
     }
   };
 
@@ -126,7 +118,10 @@ const {session}=useAuth()
   return (
     <Card title="" className="w-3/2 mx-auto mt-6">
       <Collapse activeKey={expanded ? "1" : ""}>
-        <Panel header={<h3 className="font-bold text-lg">Experience information</h3>} key="1"   extra={
+        <Panel
+          header={<h3 className="font-bold text-lg">Experience information</h3>}
+          key="1"
+          extra={
             <>
               <div className="flex">
                 {expanded ? (
@@ -135,7 +130,7 @@ const {session}=useAuth()
                     className="flex justify-center items-center bg-primary text-white hover:text-white"
                     onClick={handleAddExperience}
                   >
-                    <PlusOutlined /> Experience 
+                    <PlusOutlined /> Experience
                   </Button>
                 ) : null}
 
@@ -144,100 +139,99 @@ const {session}=useAuth()
                 </Button>
               </div>
             </>
-          }>
-         {experiences.map((experience: Experience, index: number) => (
+          }
+        >
 
-        <Collapse>
-          <Panel
-            className="mb-2"
-            header={`Experience ${index + 1}`}
-            key={experience.id}
-            extra={
-              <Button
-                type="primary"
-                danger
-                onClick={() => handleDeleteExperience(experience)}
+          {experiences?.length===0?(<><Empty/></>):(<>
+            {experiences.map((experience: Experience, index: number) => (
+            <Collapse>
+              <Panel
+                className="mb-2"
+                header={`Experience ${index + 1}`}
+                key={experience.id}
+                extra={
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => handleDeleteExperience(experience)}
+                  >
+                    Delete
+                  </Button>
+                }
               >
-                Delete
-              </Button>
-            }
-          >
-            <Form layout="vertical">
-              <Form.Item label="TIN">
-                <Input
-                  value={experience.tin}
-                  onChange={(e) =>
-                    handleExperienceChange(index, "tin", e.target.value)
-                  }
-                />
-              </Form.Item>
-              <Form.Item label="Organization Name">
-                <Input
-                  value={experience.organizationName}
-                  onChange={(e) =>
-                    handleExperienceChange(
-                      index,
-                      "organizationName",
-                      e.target.value
-                    )
-                  }
-                />
-              </Form.Item>
-              <Form.Item label="Sub City">
-                <Input
-                  value={experience.subCity}
-                  onChange={(e) =>
-                    handleExperienceChange(index, "subCity", e.target.value)
-                  }
-                />
-              </Form.Item>
-              <Form.Item label="Woreda">
-                <Input
-                  value={experience.woreda}
-                  onChange={(e) =>
-                    handleExperienceChange(index, "woreda", e.target.value)
-                  }
-                />
-              </Form.Item>
-              <Form.Item label="Kebela">
-                <Input
-                  value={experience.kebela}
-                  onChange={(e) =>
-                    handleExperienceChange(index, "kebela", e.target.value)
-                  }
-                />
-              </Form.Item>
-              <div className="flex space-x-4">
-           {/*    <Button htmlType="submit" className="bg-primary" type="primary" onClick={handleCreateExperiences}>
+                <Form layout="vertical">
+                  <Form.Item label="TIN">
+                    <Input
+                      value={experience.tin}
+                      onChange={(e) =>
+                        handleExperienceChange(index, "tin", e.target.value)
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item label="Organization Name">
+                    <Input
+                      value={experience.organizationName}
+                      onChange={(e) =>
+                        handleExperienceChange(
+                          index,
+                          "organizationName",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item label="Sub City">
+                    <Input
+                      value={experience.subCity}
+                      onChange={(e) =>
+                        handleExperienceChange(index, "subCity", e.target.value)
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item label="Woreda">
+                    <Input
+                      value={experience.woreda}
+                      onChange={(e) =>
+                        handleExperienceChange(index, "woreda", e.target.value)
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item label="Kebela">
+                    <Input
+                      value={experience.kebela}
+                      onChange={(e) =>
+                        handleExperienceChange(index, "kebela", e.target.value)
+                      }
+                    />
+                  </Form.Item>
+                  <div className="flex space-x-4">
+                    {/*    <Button htmlType="submit" className="bg-primary" type="primary" onClick={handleCreateExperiences}>
                   Save
                 </Button> */}
 
-                <Button
-                type="primary"
-                className="bg-primary"
-                onClick={() => handleUpdateExperience(experience)}
-              >
-                Update
-              </Button>
-              <Button
-                type="primary"
-                danger
-                onClick={() => handleDeleteExperience(experience)}
-              >
-                Delete
-              </Button>
-              </div>
-
-            </Form>
-          </Panel>
-        
-      </Collapse>
-      ))}
+                    <Button
+                      type="primary"
+                      className="bg-primary"
+                      onClick={() => handleCreateExperience(experience)}
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      type="primary"
+                      danger
+                      onClick={() => handleDeleteExperience(experience)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </Form>
+              </Panel>
+            </Collapse>
+          ))}
+          </>)}
+         
         </Panel>
-      
-        </Collapse>
-    
-    
+      </Collapse>
     </Card>
   );
 };

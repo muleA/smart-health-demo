@@ -33,6 +33,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ visible, onClose }) => {
     onSubmit: (values: FormValues) => {
       console.log(values);
     const response=  submitLoginRequest(values)
+    console.log("response",response)
         if(session){
           router("/home")
         }
