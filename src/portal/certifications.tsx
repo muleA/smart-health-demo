@@ -31,7 +31,7 @@ const CertificateInformation: React.FC = () => {
   const fetchCertificates = async () => {
     try {
       const response = await axios.get(
-        `${baseUrl}user/get-experience-by-userId/${session?.userInfo?.userId}`
+        `${baseUrl}user/get-certificate-by-userId/${session?.userInfo?.userId}`
         // Replace "userId" with the actual ID of the user
       );
       setCertificates(response.data);
@@ -57,6 +57,7 @@ const CertificateInformation: React.FC = () => {
   };
 
   const handleDeleteCertificate = async (certificate: Certificate) => {
+        console.log("certificate",certificate)
     try {
       await axios.post(
         `${baseUrl}user/delete-certificate/${certificate.id}`
@@ -192,8 +193,8 @@ const CertificateInformation: React.FC = () => {
                         label="Issued Date"
                         name={`startDate${index}`}
                         initialValue={
-                          certificate.receivedDate
-                            ? moment(certificate.receivedDate)
+                          certificate.startDate
+                            ? moment(certificate.startDate)
                             : undefined
                         }
                       >
@@ -201,7 +202,7 @@ const CertificateInformation: React.FC = () => {
                           onChange={(date) =>
                             handleCertificateChange(
                               index,
-                              "receivedDate",
+                              "startDate",
                               date ? date.format("YYYY-MM-DD") : ""
                             )
                           }

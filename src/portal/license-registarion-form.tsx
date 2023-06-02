@@ -9,6 +9,7 @@ import {
   Input,
   Collapse,
   Select,
+  Radio,
 } from "antd";
 import { FieldArray, Formik, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
@@ -200,8 +201,26 @@ const LicenseRegistrationForm: React.FC = () => {
           <h1 className="text-xl font-bold mb-2">Application Form</h1>
           <Card className="mx-auto mb-10 space-y-10 w-3/2">
             {/*  */}
+            <Field name="category">
+        <Radio.Group
+          options={[
+            { label: "Health Professionals", value: "healthProfessionals" },
+            { label: "Health Facilities", value: "healthFacilities" },
+            { label: "Food and Health-Related Institutions", value: "foodAndHealthInstitutions" },
+          ]}
+        />
+      
+    </Field>
+    <Field name="applicationType" as={Select}>
+      <Option value="issue">Issue</Option>
+      <Option value="renew">Renew</Option>
+      <Option value="revoke">Revoke</Option>
+      <Option value="suspend">Suspend</Option>
+      <Option value="remove">Remove</Option>
+    </Field>
+<LicenseForm/>
 
-            <Formik
+         {/*    <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
@@ -348,7 +367,7 @@ const LicenseRegistrationForm: React.FC = () => {
                   </Form.Item>
                 </Form>
               )}
-            </Formik>
+            </Formik> */}
 
             {/*  */}
           </Card>

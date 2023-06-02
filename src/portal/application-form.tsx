@@ -8,19 +8,17 @@ import { useApplyToLicenseMutation } from "./portal.query";
 const { Option } = Select;
 
 const LicenseForm = () => {
-  const[apply,{data,isLoading}]=useApplyToLicenseMutation()
-    
+  const [apply, { data, isLoading }] = useApplyToLicenseMutation();
+
   const initialValues = {
-    applicationType: "",
-    applierType: "",
     educationId: [],
     experienceId: [],
     certificateId: [],
   };
 
-  const [educations, setEducations] = useState<any>([]);
-  const [experiences, setExperiences] = useState<any>([]);
-  const [certificates, setCertificates] = useState<any>([]);
+  const [educations, setEducations] = useState([]);
+  const [experiences, setExperiences] = useState([]);
+  const [certificates, setCertificates] = useState([]);
 
   useEffect(() => {
     fetchEducations();
@@ -62,8 +60,6 @@ const LicenseForm = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    applicationType: Yup.string().required("Application Type is required"),
-    applierType: Yup.string().required("Applier Type is required"),
     educationId: Yup.array()
       .min(1, "At least one Education ID is required")
       .required("Education ID is required"),
@@ -78,13 +74,12 @@ const LicenseForm = () => {
   const handleSubmit = (values: any, { setSubmitting }: any) => {
     setSubmitting(false); // Enable the form again
 
-      try{
-       apply(values)
-       message.success("successfully applied")
-      }catch(err){
-  message.error("error happened")
-      }
-     
+    try {
+      apply(values);
+      message.success("Successfully applied");
+    } catch (err) {
+      message.error("An error occurred");
+    }
   };
 
   return (
@@ -96,43 +91,9 @@ const LicenseForm = () => {
       {(formikProps) => (
         <Form layout="vertical" onFinish={formikProps.handleSubmit}>
           <Form.Item
-            label="Application Type"
-            validateStatus={
-              formikProps.errors.applicationType &&
-              formikProps.touched.applicationType
-                ? "error"
-                : ""
-            }
-            help={
-              formikProps.errors.applicationType &&
-              formikProps.touched.applicationType
-                ? formikProps.errors.applicationType
-                : ""
-            }
-          >
-            <Field name="applicationType" as={Input} />
-          </Form.Item>
-
-          <Form.Item
-            label="Applier Type"
-            validateStatus={
-              formikProps.errors?.applierType && formikProps.touched?.applierType
-                ? "error"
-                : ""
-            }
-            help={
-              formikProps.errors?.applierType && formikProps?.touched?.applierType
-                ? formikProps?.errors?.applierType
-                : ""
-            }
-          >
-            <Field name="applierType" as={Input} />
-          </Form.Item>
-
-          <Form.Item
             label="Education ID"
             validateStatus={
-              formikProps?.errors?.educationId && formikProps.touched.educationId
+              formikProps.errors.educationId && formikProps.touched.educationId
                 ? "error"
                 : ""
             }
@@ -148,9 +109,11 @@ const LicenseForm = () => {
               mode="multiple"
               loading={educations.length === 0}
               value={formikProps.values.educationId}
-              onChange={(value: any) => formikProps.setFieldValue("educationId", value)}
+              onChange={(value: any) =>
+                formikProps.setFieldValue("educationId", value)
+              }
             >
-              {educations.map((education: any) => (
+              {educations.map((education:any) => (
                 <Option key={education.id} value={education.id}>
                   {education.professionalTitle}
                 </Option>
@@ -177,9 +140,11 @@ const LicenseForm = () => {
               mode="multiple"
               loading={experiences.length === 0}
               value={formikProps.values.experienceId}
-              onChange={(value: any) => formikProps.setFieldValue("experienceId", value)}
+              onChange={(value: any) =>
+                formikProps.setFieldValue("experienceId", value)
+              }
             >
-              {experiences.map((experience: any) => (
+              {experiences.map((experience:any) => (
                 <Option key={experience.id} value={experience.id}>
                   {experience.name}
                 </Option>
@@ -206,9 +171,11 @@ const LicenseForm = () => {
               mode="multiple"
               loading={certificates.length === 0}
               value={formikProps.values.certificateId}
-              onChange={(value: any) => formikProps.setFieldValue("certificateId", value)}
+              onChange={(value: any) =>
+                formikProps.setFieldValue("certificateId", value)
+              }
             >
-              {certificates?.map((certificate: any) => (
+              {certificates?.map((certificate:any) => (
                 <Option key={certificate?.id} value={certificate?.id}>
                   {certificate?.certificateTitle}
                 </Option>
@@ -217,7 +184,7 @@ const LicenseForm = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button  type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" disabled={isLoading}>
               Submit
             </Button>
           </Form.Item>

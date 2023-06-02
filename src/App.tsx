@@ -21,7 +21,7 @@ const App = () => {
       navigate("/");
     } else if (session && location.pathname === "/") {
       if (session?.userInfo?.EmployeeRoles ===undefined) {
-        navigate("/portal");
+        navigate("/my-profile");
       } else {
         navigate("/home");
       }
