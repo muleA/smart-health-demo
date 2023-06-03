@@ -10,6 +10,7 @@ import ProfileWrapper from './profile-wrapper';
 import { useAuth } from '../shared/auth/use-auth';
 import HomePage from './Home/home-page';
 import Banner from '../pages/banner';
+import HowItWorks from '../pages/how-it-works';
 
 const { Header, Content, Sider } = Layout;
 

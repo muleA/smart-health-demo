@@ -10,6 +10,7 @@ const { Header, Content, Footer } = Layout;
 const HomePage = () => {
     const [showLoginForm, setShowLoginForm] = useState(false);
     const [visible, setVisible] = useState(false);
+    const navigate = useNavigate();
 
     const handleLoginClick = () => {
       setShowLoginForm(true);
@@ -44,7 +45,7 @@ const HomePage = () => {
           </div>
           <Menu  mode="horizontal" className='bg-sky-50' defaultSelectedKeys={['1']}>
             <Menu.Item key="1">Home</Menu.Item>
-            <Menu.Item key="2">How It Works</Menu.Item>
+            <Menu.Item key="2" onClick={()=> navigate("/how-it-works")}>How It Works</Menu.Item>
             <Menu.Item key="3">About Us</Menu.Item>
           </Menu>
           <div className='flex space-x-4'>
