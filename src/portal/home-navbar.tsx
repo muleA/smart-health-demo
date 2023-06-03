@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Dropdown } from 'antd';
-import { UserOutlined, CaretDownOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { UserOutlined, CaretDownOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, HomeFilled, HomeOutlined, SettingOutlined } from '@ant-design/icons';
 import { Link, useNavigate, Outlet, Routes, Route } from 'react-router-dom';
 import AccountSettings from './account-settings';
 import LicenseRegistrationForm from './license-registarion-form';
@@ -8,6 +8,7 @@ import MyApplications from './my-applications';
 import MyLicenses from './my-license';
 import ProfileWrapper from './profile-wrapper';
 import { useAuth } from '../shared/auth/use-auth';
+import HomePage from './Home/home-page';
 import Banner from '../pages/banner';
 
 const { Header, Content, Sider } = Layout;
@@ -77,28 +78,31 @@ const {session}=useAuth()
           defaultSelectedKeys={['1']}
           onSelect={handleMenuSelect}
         >
-          <Menu.Item key="1" icon={<UserOutlined />}>
+           <Menu.Item key="1" icon={<HomeOutlined />}>
+            <Link to="/home">Home</Link>
+          </Menu.Item>
+          <Menu.Item key="2" icon={<UserOutlined />}>
             <Link to="/my-profile">My Profile</Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<MenuFoldOutlined />}>
+          <Menu.Item key="3" icon={<MenuFoldOutlined />}>
             <Link to="/my-applications">My Applications</Link>
           </Menu.Item>
-          <Menu.Item key="7" icon={<MenuFoldOutlined />}>
+          <Menu.Item key="8" icon={<MenuFoldOutlined />}>
             <Link to="/new-application">New Applications</Link>
           </Menu.Item>
-          <Menu.Item key="3" icon={<MenuFoldOutlined />}>
+          <Menu.Item key="4" icon={<MenuFoldOutlined />}>
             <Link to="/my-licenses">Draft Applications</Link>
           </Menu.Item>
-          <Menu.Item key="4" icon={<MenuFoldOutlined />}>
+          <Menu.Item key="5" icon={<MenuFoldOutlined />}>
             <Link to="/my-licenses">Archived Applications</Link>
           </Menu.Item>
           {/* <Menu.Item key="4" icon={<BellOutlined />}>
             <Link to="/notification">Notifications</Link>
           </Menu.Item> */}
-          <Menu.Item key="5" icon={<MenuFoldOutlined />}>
-            <Link to="/settings">Account Settings:</Link>
+          <Menu.Item key="6" icon={<SettingOutlined />}>
+            <Link to="/settings">Account Settings</Link>
           </Menu.Item>
-          <Menu.Item key="6" icon={<MenuFoldOutlined />}>
+          <Menu.Item key="7" icon={<LogoutOutlined />}>
             <Link to="/logout">Logout</Link>
           </Menu.Item>
         </Menu>
@@ -139,6 +143,7 @@ const {session}=useAuth()
 
         <Content style={{ margin: '16px' }}>
           <Routes>
+            <Route path="/home" element ={<HomePage/>} />
             <Route  path='/banner' element={<Banner/>}></Route>
             <Route path="/my-profile" element={<ProfileWrapper />} />
             <Route path="/my-applications" element={<MyApplications />} />

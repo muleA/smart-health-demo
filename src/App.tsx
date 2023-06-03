@@ -22,9 +22,10 @@ const App = () => {
       navigate("/");
     } else if (session && location.pathname === "/") {
       if (session?.userInfo?.EmployeeRoles ===undefined) {
-        navigate("/my-profile");
-      } else {
         navigate("/home");
+
+      } else {
+        navigate("/my-profile");
       }
     }
   }, [session, location.pathname, navigate]);
