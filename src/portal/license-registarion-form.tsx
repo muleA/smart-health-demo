@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Steps,
   Button,
@@ -10,6 +10,7 @@ import {
   Collapse,
   Select,
   Radio,
+  message,
 } from "antd";
 import { FieldArray, Formik, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
@@ -19,19 +20,16 @@ import axios from "axios";
 import { useApplyToLicenseMutation } from "./portal.query";
 import { useAuth } from "../shared/auth/use-auth";
 import { baseUrl } from "../shared/config";
+import type { RadioChangeEvent } from "antd";
+import { Space } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const { Step } = Steps;
 
 interface LicenseRegistrationFormValues {
-  agree: boolean;
-  experienceList: string[];
-  educationList: string[];
-  certificationList: string[];
-  applicationType: string;
-  applierType: string;
-  educationId: string;
-  certificateId: string;
-  experienceId: string;
+  educationId: string[];
+  certificateId: string[];
+  experienceId: string[];
 }
 
 const LicenseRegistrationForm: React.FC = () => {
@@ -40,16 +38,14 @@ const LicenseRegistrationForm: React.FC = () => {
   const { session } = useAuth();
 
   const initialValues = {
-    agree: false,
-    experienceList: [],
-    educationList: [],
-    certificationList: [],
-    applicationType: "",
-    applierType: "",
     educationId: [], // Updated: initialize as an empty array
     certificateId: [], // Updated: initialize as an empty array
     experienceId: [], // Updated: initialize as an empty array
   };
+  const [selectedEducations, setSelectedEducations] = useState([]);
+const [selectedExperiences, setSelectedExperiences] = useState([]);
+const [selectedCertificates, setSelectedCertificates] = useState([]);
+
 
   const [educations, setEducations] = useState<any>([]);
   const [experiences, setExperiences] = useState<any>([]);
@@ -95,8 +91,6 @@ const LicenseRegistrationForm: React.FC = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    applicationType: Yup.string().required("Application Type is required"),
-    applierType: Yup.string().required("Applier Type is required"),
     educationId: Yup.array()
       .min(1, "At least one Education ID is required")
       .required("Education ID is required"),
@@ -108,14 +102,72 @@ const LicenseRegistrationForm: React.FC = () => {
       .required("Certificate ID is required"),
   });
 
+
+  const formRef = useRef<any>(null); // Added: Reference to the Form component
+const navigate=useNavigate()
+  const handleStep1Submit = async (values: LicenseRegistrationFormValues) => {
+      console.log("valeues",values)
+    try {
+      // Submit the form using the formRef
+      await formRef.current.submitForm();
+
+      // Call the Axios POST API
+      const response = await axios.post(
+        `${baseUrl}license-application/apply`,
+        {
+          // Provide the form values in the request body
+          educationId: values.educationId,
+          certificateId: values.certificateId,
+          experienceId: values.experienceId,
+        }
+      );
+
+      // Handle the response as needed
+      console.log("API response:", response.data);
+    } catch (error) {
+      console.error("Error applying to license:", error);
+    }
+  };
+
+
   /*  */
   const [currentStep, setCurrentStep] = useState(0);
   const { Panel } = Collapse;
   const { Option } = Select;
 
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1);
+  const nextStep = async (formikProps:any) => {
+    console.log("formikProps.values.",formikProps.values)
+    if (currentStep === 0) {
+      setCurrentStep(currentStep + 1);
+    } else if (currentStep === 1) {
+      await formikProps.submitForm();
+      if (formikProps.isValid) {
+        setCurrentStep(currentStep + 1);
+      }
+    } else if (currentStep === 2) {
+      try {
+        await formikProps.submitForm();
+  
+        const response = await axios.post(`${baseUrl}user/add-applicationToUser/${session?.userInfo?.userId}`, {
+          educationId: ["a87fd5c3-b5cf-4557-a814-55cb866c4668"],
+          certificateId: ["978de692-d4d2-419c-a11c-e2f95ee5d96b"],
+          experienceId: ["a87fd5c3-b5cf-4557-a814-55cb866c4668"],
+          applierType: selectedType,
+          applicationType: selectedCategory,
+        });
+  
+        console.log("API response:", response.data);
+        message.success("applied successfully")
+        // Handle the response as needed
+  navigate("/my-applications")
+        setCurrentStep(currentStep + 1);
+      } catch (error) {
+        console.error("Error applying to license:", error);
+        message.error("error happened")
+      }
+    }
   };
+  
 
   const prevStep = () => {
     setCurrentStep(currentStep - 1);
@@ -126,9 +178,29 @@ const LicenseRegistrationForm: React.FC = () => {
     // ...
 
     console.log("values", values);
+    try {
+      apply({
+        ...values,
+        applierType: selectedType,
+        applicationType: selectedCategory,
+      });
+      message.success("successfully applied");
+    } catch (err) {
+      message.error("error occurred in applying");
+    }
     setSubmitting(false);
   };
+  const [selectedCategory, setSelectedCategory] = useState<any>("");
+  const [selectedType, setSelectedtype] = useState<any>("");
 
+  const handleChange = (value: string) => {
+    console.log(` selected type ${value}`);
+    setSelectedtype(value);
+  };
+  const handleCategoryChange = (value: string) => {
+    console.log(value);
+    setSelectedCategory(value);
+  };
   const AgreeAndInstruction: React.FC = () => {
     return (
       <>
@@ -200,174 +272,171 @@ const LicenseRegistrationForm: React.FC = () => {
         <div>
           <h1 className="text-xl font-bold mb-2">Application Form</h1>
           <Card className="mx-auto mb-10 space-y-10 w-3/2">
-            {/*  */}
-            <Field name="category">
-        <Radio.Group
-          options={[
-            { label: "Health Professionals", value: "healthProfessionals" },
-            { label: "Health Facilities", value: "healthFacilities" },
-            { label: "Food and Health-Related Institutions", value: "foodAndHealthInstitutions" },
-          ]}
-        />
-      
-    </Field>
-    <Field name="applicationType" as={Select}>
-      <Option value="issue">Issue</Option>
-      <Option value="renew">Renew</Option>
-      <Option value="revoke">Revoke</Option>
-      <Option value="suspend">Suspend</Option>
-      <Option value="remove">Remove</Option>
-    </Field>
-<LicenseForm/>
+            <Card>
+              <Alert
+                type="warning"
+                message="Please first choose application Type and Application Category"
+              ></Alert>
+              <Space wrap className="space-x-6 my-4">
+                <Select
+                  style={{ width: 420, margin: "10px" }}
+                  value={selectedCategory}
+                  onChange={handleCategoryChange}
+                  options={[
+                    {
+                      label: "Health Professionals",
+                      value: "HealthProfessionals",
+                    },
+                    { label: "Health Facilities", value: "HealthFacilities" },
+                    {
+                      label: "Food and Health-Related Institutions",
+                      value: "FoodandHealth-RelatedInstitutions",
+                    },
+                  ]}
+                />
+              </Space>
 
-         {/*    <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}
-            >
-              {(formikProps) => (
-                <Form
-                  layout="vertical"
-                  className="space-between-4 space-y-20"
-                  onFinish={formikProps.handleSubmit}
+              <Space wrap>
+                <Select
+                  style={{ width: 420 }}
+                  value={selectedType}
+                  onChange={handleChange}
+                  options={[
+                    { value: "issue", label: "issue" },
+                    { value: "renew", label: "renew" },
+                    { value: "revoke", label: "revoke" },
+                    { value: "suspend", label: "suspend" },
+                    { value: "remove", label: "remove" },
+                  ]}
+                />
+              </Space>
+            </Card>
+
+            {selectedCategory && selectedType ? (
+              <>
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  onSubmit={handleStep1Submit}
+
                 >
-                  <Form.Item
-                    label="Application Type"
-                    validateStatus={
-                      formikProps.errors.applicationType &&
-                      formikProps.touched.applicationType
-                        ? "error"
-                        : ""
-                    }
-                    help={
-                      formikProps.errors.applicationType &&
-                      formikProps.touched.applicationType
-                        ? formikProps.errors.applicationType
-                        : ""
-                    }
-                  >
-                    <Field name="applicationType" as={Input} />
-                  </Form.Item>
-
-                  <Form.Item
-                    label="Applier Type"
-                    validateStatus={
-                      formikProps.errors?.applierType &&
-                      formikProps.touched?.applierType
-                        ? "error"
-                        : ""
-                    }
-                    help={
-                      formikProps.errors?.applierType &&
-                      formikProps?.touched?.applierType
-                        ? formikProps?.errors?.applierType
-                        : ""
-                    }
-                  >
-                    <Field name="applierType" as={Input} />
-                  </Form.Item>
-
-                  <Form.Item
-                    label="Education"
-                    validateStatus={
-                      formikProps?.errors?.educationId &&
-                      formikProps.touched.educationId
-                        ? "error"
-                        : ""
-                    }
-                    help={
-                      formikProps.errors.educationId &&
-                      formikProps.touched.educationId
-                        ? formikProps.errors.educationId
-                        : ""
-                    }
-                  >
-                    <Field
-                      name="educationId"
-                      as={Select}
-                      mode="multiple"
-                      loading={educations.length === 0}
-                      value={formikProps.values.educationId}
-                      onChange={(value: any) =>
-                        formikProps.setFieldValue("educationId", value)
-                      }
+                  {(formikProps) => (
+                    <Form
+                      layout="vertical"
+                      className="space-between-4 space-y-20"
+                      onFinish={formikProps.handleSubmit}
                     >
-                      {educations.map((education: any) => (
-                        <Option key={education.id} value={education.id}>
-                          {education.professionalTitle}
-                        </Option>
-                      ))}
-                    </Field>
-                  </Form.Item>
+                      <Form.Item
+                        label="Education"
+                        validateStatus={
+                          formikProps?.errors?.educationId &&
+                          formikProps.touched.educationId
+                            ? "error"
+                            : ""
+                        }
+                        help={
+                          formikProps.errors.educationId &&
+                          formikProps.touched.educationId
+                            ? formikProps.errors.educationId
+                            : ""
+                        }
+                      >
+                        <Field
+                          name="educationId"
+                          as={Select}
+                          mode="multiple"
+                          loading={educations.length === 0}
+                          value={formikProps.values.educationId}
+                          onChange={(value: any) =>
+                            formikProps.setFieldValue("educationId", value)
+                          }
+                        >
+                          {educations.map((education: any) => (
+                            <Option key={education.id} value={education.id}>
+                              {education.professionalTitle}
+                            </Option>
+                          ))}
+                        </Field>
+                      </Form.Item>
 
-                  <Form.Item
-                    label="Experience"
-                    validateStatus={
-                      formikProps.errors.experienceId &&
-                      formikProps.touched.experienceId
-                        ? "error"
-                        : ""
-                    }
-                    help={
-                      formikProps.errors.experienceId &&
-                      formikProps.touched.experienceId
-                        ? formikProps.errors.experienceId
-                        : ""
-                    }
-                  >
-                    <Field
-                      name="experienceId"
-                      as={Select}
-                      mode="multiple"
-                      loading={experiences.length === 0}
-                      value={formikProps.values.experienceId}
-                      onChange={(value: any) =>
-                        formikProps.setFieldValue("experienceId", value)
-                      }
-                    >
-                      {experiences.map((experience: any) => (
-                        <Option key={experience.id} value={experience.id}>
-                          {experience.name}
-                        </Option>
-                      ))}
-                    </Field>
-                  </Form.Item>
+                      <Form.Item
+                        label="Experience"
+                        validateStatus={
+                          formikProps.errors.experienceId &&
+                          formikProps.touched.experienceId
+                            ? "error"
+                            : ""
+                        }
+                        help={
+                          formikProps.errors.experienceId &&
+                          formikProps.touched.experienceId
+                            ? formikProps.errors.experienceId
+                            : ""
+                        }
+                      >
+                        <Field
+                          name="experienceId"
+                          as={Select}
+                          mode="multiple"
+                          loading={experiences.length === 0}
+                          value={formikProps.values.experienceId}
+                          onChange={(value: any) =>
+                            formikProps.setFieldValue("experienceId", value)
+                          }
+                        >
+                          {experiences.map((experience: any) => (
+                            <Option key={experience.id} value={experience.id}>
+                              {experience.organizationName}
+                            </Option>
+                          ))}
+                        </Field>
+                      </Form.Item>
 
-                  <Form.Item
-                    label="Certificate"
-                    validateStatus={
-                      formikProps.errors.certificateId &&
-                      formikProps.touched.certificateId
-                        ? "error"
-                        : ""
-                    }
-                    help={
-                      formikProps.errors.certificateId &&
-                      formikProps.touched.certificateId
-                        ? formikProps.errors.certificateId
-                        : ""
-                    }
-                  >
-                    <Field
-                      name="certificateId"
-                      as={Select}
-                      mode="multiple"
-                      loading={certificates.length === 0}
-                      value={formikProps.values.certificateId}
-                      onChange={(value: any) =>
-                        formikProps.setFieldValue("certificateId", value)
-                      }
-                    >
-                      {certificates?.map((certificate: any) => (
-                        <Option key={certificate?.id} value={certificate?.id}>
-                          {certificate?.certificateTitle}
-                        </Option>
-                      ))}
-                    </Field>
-                  </Form.Item>
-                </Form>
-              )}
-            </Formik> */}
+                      <Form.Item
+                        label="Certificate"
+                        validateStatus={
+                          formikProps.errors.certificateId &&
+                          formikProps.touched.certificateId
+                            ? "error"
+                            : ""
+                        }
+                        help={
+                          formikProps.errors.certificateId &&
+                          formikProps.touched.certificateId
+                            ? formikProps.errors.certificateId
+                            : ""
+                        }
+                      >
+                        <Field
+                          name="certificateId"
+                          as={Select}
+                          mode="multiple"
+                          loading={certificates.length === 0}
+                          value={formikProps.values.certificateId}
+                          onChange={(value: any) =>
+                            formikProps.setFieldValue("certificateId", value)
+                          }
+                        >
+                          {certificates?.map((certificate: any) => (
+                            <Option
+                              key={certificate?.id}
+                              value={certificate?.id}
+                            >
+                              {certificate?.certificateTitle}
+                            </Option>
+                          ))}
+                        </Field>
+                      </Form.Item>
+{/*                       <Button onClick={handleStep1Submit}>Save Application</Button>
+ */}
+                    </Form>
+
+                    
+
+                  )}
+                </Formik>
+              </>
+            ) : null}
 
             {/*  */}
           </Card>
@@ -392,7 +461,6 @@ const LicenseRegistrationForm: React.FC = () => {
   const steps = [
     { title: "Instructions", content: <AgreeAndInstruction /> },
     { title: "Application Form", content: <ApplicationForm /> },
-    { title: "Confirmation", content: "Confirmation Content" },
   ];
 
   return (
@@ -410,36 +478,24 @@ const LicenseRegistrationForm: React.FC = () => {
       </h1>
       <Formik
         initialValues={{
-          agree: false,
-          experienceList: [],
-          educationList: [],
-          certificationList: [],
-          applicationType: "",
-          applierType: "",
-          educationId: "",
-          certificateId: "",
-          experienceId: "",
+          educationId: [],
+          certificateId: [],
+          experienceId: [],
         }}
         validationSchema={Yup.object({
-          experienceList: Yup.array().min(
+          experienceId: Yup.array().min(
             1,
             "Please select at least one experience"
           ),
-          educationList: Yup.array().min(
+          educationId: Yup.array().min(
             1,
             "Please select at least one education"
           ),
-          certificationList: Yup.array().min(
+          certificateId: Yup.array().min(
             1,
             "Please select at least one certification"
           ),
-          applicationType: Yup.string().required(
-            "Application Type is required"
-          ),
-          applierType: Yup.string().required("Applier Type is required"),
-          educationId: Yup.string().required("Education ID is required"),
-          certificateId: Yup.string().required("Certificate ID is required"),
-          experienceId: Yup.string().required("Experience ID is required"),
+        
         })}
         onSubmit={handleSubmit}
       >
@@ -454,9 +510,9 @@ const LicenseRegistrationForm: React.FC = () => {
                 <Step key={step.title} title={step.title} />
               ))}
             </Steps>
-            <div className="my-4">{steps[currentStep].content}</div>
+            <div className="my-4">{steps[currentStep]?.content}</div>
             <div className="flex justify-between">
-              {currentStep > 0 && (
+            {/*   {currentStep > 0 && (
                 <Button
                   type="primary"
                   className="bg-primary text-white"
@@ -464,41 +520,16 @@ const LicenseRegistrationForm: React.FC = () => {
                 >
                   Previous
                 </Button>
-              )}
+              )} */}
               <Button
                 type="primary"
                 className="bg-blue-500 flex items-center"
                 icon={currentStep === 0 ? <CheckOutlined /> : null}
-                onClick={nextStep}
+                onClick={()=>nextStep(formikProps)}
               >
-                {currentStep === 0 ? "Agree and Continue" : "Next"}
+                {currentStep === 0 ? "Agree and Continue":currentStep===1?"Next": "Save"}
               </Button>
-              {/* {currentStep === steps.length - 1 && (
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="bg-primary-100 text-primary-100"
-                  disabled={formikProps.isSubmitting}
-                >
-                  Submit
-                </Button>
-              )} */}
             </div>
-            {/* Error messages */}
-            {/* {currentStep === 0 && (
-              <div className="mt-4">
-                <Form.Item>
-                  <Checkbox
-                    name="agree"
-                    checked={formikProps.values.agree}
-                    onChange={formikProps.handleChange}
-                  >
-                    I agree to the terms and conditions
-                  </Checkbox>
-                  <ErrorMessage name="agree" component="div" className="text-red-600" />
-                </Form.Item>
-              </div>
-            )} */}
           </Form>
         )}
       </Formik>

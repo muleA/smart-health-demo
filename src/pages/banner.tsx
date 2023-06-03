@@ -1,7 +1,7 @@
 /* import Slider from 'react-slick';
  */ import { useAuth } from "../shared/auth/use-auth";
 import { useNavigate } from "react-router-dom";
-import { Button, Image } from "antd";
+import { Button } from "antd";
 import Report from "./report";
 
 export default function Carousel() {
@@ -24,7 +24,7 @@ export default function Carousel() {
     <>
       {!session && (
         <div
-          className={`relative mb-2 hidden w-full overflow-hidden bg-gradient-to-l from-sky-300 to-sky-50  md:block`}
+          className={`relative mb-2 hidden w-full  overflow-hidden bg-gradient-to-l from-sky-300 to-sky-50  md:block`}
         >
           <div className="absolute left-0">
             {/*           <Image src="./assets/images/left-hero.png" alt="img" />
@@ -36,8 +36,8 @@ export default function Carousel() {
           </div>
           {/*           <Slider {...sliderSettings}>
            */}{" "}
-          <div>
-            <div className="flex h-96 w-full items-start justify-between">
+          <div className="mx-auto mx-20" >
+            <div className="flex h-96  w-full items-start justify-between">
               <div className="mt-2 ml-10 flex h-full w-6/12 items-center lg:mt-6">
                 <div style={{ fontFamily: "Raleway" }}>
                   <p className="my-2 text-center text-2xl font-semibold leading-snug tracking-normal text-sky-700 md:text-left md:text-2xl lg:text-left lg:text-3xl">
@@ -55,9 +55,9 @@ export default function Carousel() {
                     you with powerful tools to efficiently handle license
                     applications, renewals, verifications, and more.
                   </p>
-                  <div className="flex space-x-3 md:mt-2 lg:mt-10 ">
+                  <div className="flex space-x-3 md:mt-0 lg:mt-2 ">
                     <Button
-                      className="bg-primary"
+                      className="bg-primary text-white"
                       onClick={() => router("/account")}
                     >
                       Sign up

@@ -367,13 +367,7 @@ console.log("baseUrl",baseUrl)
                         >
                           Update
                         </Button> */}
-                        <Button
-                          type="primary"
-                          danger
-                          onClick={() => handleDeleteEducation(education)}
-                        >
-                          Delete
-                        </Button>
+                        
                       </div>
                     </Form>
                   </div>

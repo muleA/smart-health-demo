@@ -10,6 +10,7 @@ import ApplicationList from "./portal/application-list";
 import BackOfficeLayoutWrapper from "./components/layout";
 import PortalNavigation from "./portal/home-navbar";
 import { Dashboard } from "./back-office/dashboard";
+import { HowItworks } from "./pages/how";
 
 const App = () => {
   const { session } = useAuth();
@@ -17,7 +18,7 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (session === null && location.pathname !== "/") {
+    if (session === null && location.pathname !== "/howitworks") {
       navigate("/");
     } else if (session && location.pathname === "/") {
       if (session?.userInfo?.EmployeeRoles ===undefined) {
@@ -32,6 +33,8 @@ const App = () => {
       <Provider store={store}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/howitworks" element={<HowItworks />} />
+
           {session !== null &&
             session?.userInfo?.EmployeeRoles!==undefined && (
               <Route
