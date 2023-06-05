@@ -10,14 +10,13 @@ import moment from "moment";
 const { Panel } = Collapse;
 
 interface Certificate {
-  id:string;
+  id: string;
   Institution: string;
   name: string;
   certificateTitle: string;
   startDate: string;
   receivedDate: string;
   [key: string]: string | number; // Index signature
-
 }
 
 const CertificateInformation: React.FC = () => {
@@ -42,13 +41,17 @@ const CertificateInformation: React.FC = () => {
 
   const handleCreateCertificate = async (certificate: Certificate) => {
     const { id, ...otherProps } = certificate;
-    console.log("otherProps",otherProps)
+    console.log("otherProps", otherProps);
 
     try {
-      await axios.post(
-          `${baseUrl}user/add-certificate-to-user`,
-        {Institution:certificate.Institution,name:certificate.name,certificateTitle:certificate.certificateTitle,startDate:certificate.startDate,receivedDate:certificate.receivedDate,userId:session?.userInfo?.userId}
-      );
+      await axios.post(`${baseUrl}user/add-certificate-to-user`, {
+        Institution: certificate.Institution,
+        name: certificate.name,
+        certificateTitle: certificate.certificateTitle,
+        startDate: certificate.startDate,
+        receivedDate: certificate.receivedDate,
+        userId: session?.userInfo?.userId,
+      });
       message.success("Certificate info added successfully");
     } catch (error) {
       console.error("Error creating certificate:", error);
@@ -57,11 +60,9 @@ const CertificateInformation: React.FC = () => {
   };
 
   const handleDeleteCertificate = async (certificate: Certificate) => {
-        console.log("certificate",certificate)
+    console.log("certificate", certificate);
     try {
-      await axios.post(
-        `${baseUrl}user/delete-certificate/${certificate.id}`
-      );
+      await axios.post(`${baseUrl}user/delete-certificate/${certificate.id}`);
       const updatedCertificates = certificates.filter(
         (cert) => cert.id !== certificate.id
       );
@@ -80,7 +81,7 @@ const CertificateInformation: React.FC = () => {
       certificateTitle: "",
       startDate: "",
       receivedDate: "",
-      id: ""
+      id: "",
     };
     setCertificates([...certificates, newCertificate]);
   };
@@ -117,7 +118,9 @@ const CertificateInformation: React.FC = () => {
     <Card title="" className="w-3/2 mx-auto mt-6">
       <Collapse activeKey={expanded ? "1" : ""}>
         <Panel
-          header={<h3 className="font-bold text-lg">Certificate Information</h3>}
+          header={
+            <h3 className="font-bold text-lg">Certificate Information</h3>
+          }
           key="1"
           extra={
             <>
@@ -146,13 +149,22 @@ const CertificateInformation: React.FC = () => {
                 header={`Certificate ${index + 1}`}
                 key={certificate.id}
                 extra={
-                  <Button
-                    type="primary"
-                    danger
-                    onClick={() => handleDeleteCertificate(certificate)}
-                  >
-                    Delete
-                  </Button>
+                  <div className="flex space-x-2">
+                    <Button
+                      type="primary"
+                      danger
+                      onClick={() => handleDeleteCertificate(certificate)}
+                    >
+                      Archive
+                    </Button>
+                    <Button
+                      type="primary"
+                      danger
+                      onClick={() => handleDeleteCertificate(certificate)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
                 }
               >
                 <Form layout="vertical">
@@ -189,46 +201,46 @@ const CertificateInformation: React.FC = () => {
                     />
                   </Form.Item>
                   <Form.Item
-                      rules={[{ required: true }]}
-                        label="Issued Date"
-                        name={`startDate${index}`}
-                        initialValue={
-                          certificate.startDate
-                            ? moment(certificate.startDate)
-                            : undefined
-                        }
-                      >
-                        <DatePicker
-                          onChange={(date) =>
-                            handleCertificateChange(
-                              index,
-                              "startDate",
-                              date ? date.format("YYYY-MM-DD") : ""
-                            )
-                          }
-                        />
-                      </Form.Item>
+                    rules={[{ required: true }]}
+                    label="Issued Date"
+                    name={`startDate${index}`}
+                    initialValue={
+                      certificate.startDate
+                        ? moment(certificate.startDate)
+                        : undefined
+                    }
+                  >
+                    <DatePicker
+                      onChange={(date) =>
+                        handleCertificateChange(
+                          index,
+                          "startDate",
+                          date ? date.format("YYYY-MM-DD") : ""
+                        )
+                      }
+                    />
+                  </Form.Item>
                   <Form.Item
-                      rules={[{ required: true }]}
-                        label="Received Date"
-                        name={`receivedDate_${index}`}
-                        initialValue={
-                          certificate.receivedDate
-                            ? moment(certificate.receivedDate)
-                            : undefined
-                        }
-                      >
-                        <DatePicker
-                          onChange={(date) =>
-                            handleCertificateChange(
-                              index,
-                              "receivedDate",
-                              date ? date.format("YYYY-MM-DD") : ""
-                            )
-                          }
-                        />
-                      </Form.Item>
-              
+                    rules={[{ required: true }]}
+                    label="Received Date"
+                    name={`receivedDate_${index}`}
+                    initialValue={
+                      certificate.receivedDate
+                        ? moment(certificate.receivedDate)
+                        : undefined
+                    }
+                  >
+                    <DatePicker
+                      onChange={(date) =>
+                        handleCertificateChange(
+                          index,
+                          "receivedDate",
+                          date ? date.format("YYYY-MM-DD") : ""
+                        )
+                      }
+                    />
+                  </Form.Item>
+
                   <div className="flex space-x-4">
                     <Button
                       type="primary"

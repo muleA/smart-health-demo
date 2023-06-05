@@ -123,7 +123,7 @@ const ExperinceInformations: React.FC = () => {
           key="1"
           extra={
             <>
-              <div className="flex">
+              <div className="flex space-x-2">
                 {expanded ? (
                   <Button
                     type="primary"
@@ -132,6 +132,7 @@ const ExperinceInformations: React.FC = () => {
                   >
                     <PlusOutlined /> Experience
                   </Button>
+                  
                 ) : null}
 
                 <Button className="ml-5" onClick={handleButtonClick}>
@@ -150,13 +151,23 @@ const ExperinceInformations: React.FC = () => {
                 header={`Experience ${index + 1}`}
                 key={experience.id}
                 extra={
-                  <Button
-                    type="primary"
-                    danger
-                    onClick={() => handleDeleteExperience(experience)}
-                  >
-                    Delete
-                  </Button>
+                  <div className="flex space-x-2">
+  <Button
+                      type="primary"
+                      danger
+                      onClick={() => handleDeleteExperience(experience)}
+                    >
+                      Archive
+                    </Button>
+                    <Button
+                      type="primary"
+                      danger
+                      onClick={() => handleDeleteExperience(experience)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+               
                 }
               >
                 <Form layout="vertical">
@@ -216,13 +227,7 @@ const ExperinceInformations: React.FC = () => {
                     >
                       Save
                     </Button>
-                    <Button
-                      type="primary"
-                      danger
-                      onClick={() => handleDeleteExperience(experience)}
-                    >
-                      Delete
-                    </Button>
+                  
                   </div>
                 </Form>
               </Panel>

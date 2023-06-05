@@ -71,7 +71,7 @@ function TableCard() {
             Licenses{" "}
           </div>
           <Button className="bg-blue-500 ">
-            <div className="text-white"> Add new </div>
+            <div className="text-white" onClick={()=>navigate("/new-application")}> Add new </div>
           </Button>
         </div>
 

@@ -46,7 +46,6 @@ export function logIn(request: LoginRequest) {
       request,
       );
       console.log("response gtt",response)
-      message.info(response?.data?.message)
       dispatch(setSession({ accessToken: response.data.access_token, userInfo:jwtDecode(response.data.access_token)}));
     } catch (error: any) {
       // Handle error

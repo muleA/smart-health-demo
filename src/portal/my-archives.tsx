@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Table, Button, Tag, Typography, message, Spin } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { useGetArchivedCertificatesQuery, useGetArchivedEducationsQuery, useGetArchivedExperiencesQuery, 
-  useRestoreCertificateMutation, useRestoreEducationMutation, useRestoreExperianceMutation } from "./portal.query";
+  useRestoreCertificateMutation, useRestoreEducationMutation,useGetArchivedApplicationsQuery, useRestoreExperianceMutation } from "./portal.query";
 import { useAuth } from "../shared/auth/use-auth";
 import timeSince from "../shared/utilities/time-since";
 
@@ -12,7 +12,7 @@ const Archives = () => {
   const { data: educations, isLoading: educationLoading } = useGetArchivedEducationsQuery(session?.userInfo?.userId);
   const { data: certificates, isLoading: certificateLoading } = useGetArchivedCertificatesQuery(session?.userInfo?.userId);
   const { data: experiences, isLoading: experienceLoading } = useGetArchivedExperiencesQuery(session?.userInfo?.userId);
-
+const {data:applications,isLoading:applicationLoading}=useGetArchivedApplicationsQuery(0)
   const [restoreEducation, { isLoading: isRestoringEducation }] = useRestoreEducationMutation();
   const [restoreExperience, { isLoading: isRestoringExperience }] = useRestoreExperianceMutation();
   const [restoreCertificate, { isLoading: isRestoringCertificate }] = useRestoreCertificateMutation();
@@ -20,6 +20,11 @@ const Archives = () => {
   const educationTableRowProps = (record:any): React.HTMLAttributes<HTMLElement> => {
     return {
       onClick: () => handleRestoreEducation(record.id),
+    };
+  };
+  const applicationTableRowProps = (record:any): React.HTMLAttributes<HTMLElement> => {
+    return {
+      onClick: () => handleRestoreApplication(record.id),
     };
   };
   const certificateTableRowProps = (record:any): React.HTMLAttributes<HTMLElement> => {
@@ -63,11 +68,20 @@ const Archives = () => {
       message.error("Error occurred while restoring certificate");
     }
   };
+  const handleRestoreApplication= async (row: string) => {
+    console.log("row at cert",row)
+  try {
+    await restoreCertificate(row);
+    message.success("Applicationrestored successfully");
+  } catch (err) {
+    message.error("Error occurred while restoring certificate");
+  }
+};
 
   return (
     /*  */
 <>
-{educationLoading || certificateLoading || experienceLoading ? (
+{educationLoading || certificateLoading || experienceLoading ||applicationLoading? (
   <div className="text-center h-24 mx-auto">
     <Spin size="large" />
   </div>
@@ -77,8 +91,8 @@ const Archives = () => {
       <div>
         <Card title="Archived Applications" className="mt-4">
           <Table
-            dataSource={experiences}
-            onRow={educationTableRowProps}
+            dataSource={applications}
+            onRow={applicationTableRowProps}
       rowKey="id"
             columns={[
               { title: "", dataIndex: "experience" },
@@ -89,7 +103,7 @@ const Archives = () => {
                   <Button
                     type="link"
                     className="flex flex items-center font-bold "
-                    onClick={() => handleRestoreCertificate(row)}
+                    onClick={() => handleRestoreApplication(row)}
                     loading={isRestoringExperience}
                   >
                     <RedoOutlined className="mr-1" />

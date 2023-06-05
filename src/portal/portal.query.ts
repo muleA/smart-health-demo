@@ -17,6 +17,13 @@ const userApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),  
+    getLicenseByStatus: builder.query<any, string>({
+      query: (status) => ({
+        url: `${authEndPoints.getApplicationByStatus}/${status}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),  
     getArchivedCertificates: builder.query<any, string>({
       query: (userId) => ({
         url: `${authEndPoints.getArchivedCertificates}/${userId}`,
@@ -46,6 +53,13 @@ const userApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    getArchivedApplications: builder.query<any, any>({
+      query: () => ({
+        url: `${authEndPoints.getArchivedApplications}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
     createAccount: builder.mutation<any, any>({
       query: (newUser) => ({
         url: authEndPoints.createAccount,
@@ -57,6 +71,46 @@ const userApi = apiSlice.injectEndpoints({
     restoreEducation: builder.mutation<any, any>({
       query: (newUser) => ({
         url: `${authEndPoints.restoreEducation}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    restoreApplication: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${authEndPoints.restoreApplication}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
+
+    archiveApplication: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${authEndPoints.archiveApplication}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    archiveEducation: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${authEndPoints.archiveEducation}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),archiveExperience: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${authEndPoints.archiveExperience}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    archiveCertificate: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${authEndPoints.archiveCertificate}${newUser}`,
         method: "POST",
         data: newUser,
       }),
@@ -120,5 +174,12 @@ export const {
   useRestoreEducationMutation,
    useRestoreExperianceMutation,
    useLazyGetApplicationDetailsQuery,
-   useGetApplicationDetailsQuery
+   useGetApplicationDetailsQuery,
+   useArchiveApplicationMutation,
+   useRestoreApplicationMutation,
+   useGetArchivedApplicationsQuery,
+   useArchiveCertificateMutation,
+   useArchiveEducationMutation,
+   useArchiveExperienceMutation,
+   useGetLicenseByStatusQuery
 } = userApi;

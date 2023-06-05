@@ -6,7 +6,7 @@ import { Notify } from "../shared/notification/notify";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { useAuth } from "../shared/auth/use-auth";
 import { baseUrl } from "../shared/config";
-import { useAddEducationMutation } from "./portal.query";
+import { useAddEducationMutation, useArchiveEducationMutation } from "./portal.query";
 import Empty from "../shared/empty-state";
 
 const { Panel } = Collapse;
@@ -25,6 +25,7 @@ const EducationForm: React.FC = () => {
   const [educations, setEducations] = useState<Education[]>([]);
 
   const [selectedImage, setSelectedImage] = useState<any>(null);
+  const[archive,{isLoading:archiving}]=useArchiveEducationMutation()
    const {session}=useAuth()
   const handleImageUpload = async (
     file: string | Blob,
@@ -173,6 +174,22 @@ console.log("baseUrl",baseUrl)
     }
   };
 
+  const handleArchiveEducation = async (education: Education) => {
+
+    try {
+      await archive(education.id)
+      const updatedEducations = educations.filter(
+        (edu) => edu.id !== education.id
+      );
+      setEducations(updatedEducations);
+      message.success("Education Info Archived successfully");
+    } catch (error) {
+      console.error("Error deleting education:", error);
+      Notify("error", "error in deleting Education Info");
+    }
+  };
+
+
 
   
   const handleAddEducation = () => {
@@ -246,13 +263,24 @@ console.log("baseUrl",baseUrl)
                 header={`Education ${index + 1}`}
                 key={education.id}
                 extra={
-                  <Button
+                  <div className="flex space-x-2">
+                     <Button
+                    type="primary"
+                    danger
+                    loading={archiving}
+                    onClick={() => handleArchiveEducation(education)}
+                  >
+                    Archive
+                  </Button>
+                    <Button
                     type="primary"
                     danger
                     onClick={() => handleDeleteEducation(education)}
                   >
                     Delete
                   </Button>
+                  </div>
+                 
                 }
               >
                 <div className="flex">

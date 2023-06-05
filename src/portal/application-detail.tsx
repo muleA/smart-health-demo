@@ -1,10 +1,10 @@
 /* eslint-disable no-sequences */
 import React, { useState } from "react";
-import { Card, Table, Button, Tag, Typography, Spin, Modal } from "antd";
+import { Card, Table, Button, Tag, Typography, Spin, Modal, message } from "antd";
 import { DeleteOutlined, DownloadOutlined, EyeOutlined, ShareAltOutlined } from "@ant-design/icons";
 import Certificate from "./license";
-import {  useGetApplicationDetailsQuery } from "./portal.query";
-import { useParams } from "react-router-dom";
+import {  useGetApplicationDetailsQuery,useArchiveApplicationMutation } from "./portal.query";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -14,15 +14,28 @@ import {
   LinkedinShareButton,
 } from "react-share";
 import timeSince from "../shared/utilities/time-since";
+import { Notify } from "../shared/notification/notify";
 
 const ApplicationDetail = () => {
   const { id } = useParams();
   const { data: ApplicationDetail, isLoading } = useGetApplicationDetailsQuery(id ?? "");
+  const [archiveApp,{isLoading:applicationArchiving}]=useArchiveApplicationMutation()
   console.log("ApplicationDetail", ApplicationDetail);
   const [modalVisible, setModalVisible] = useState(false);
   const handleViewCertificate = () => {
     setModalVisible(true);
   };
+  const navigate=useNavigate()
+  const handleArchive=async ()=>{
+    try{
+      await archiveApp(id)
+      message.success("application archived successfully")
+navigate("/my-applications")
+    }
+    catch(err){
+      message.error("error happened in archiving")
+    }
+  }
 
   const handleModalClose = () => {
     setModalVisible(false);
@@ -74,15 +87,15 @@ const ApplicationDetail = () => {
                       <tbody>
                         <tr>
                           <td className="px-4">Application Category</td>
-                          <td className="px-4">{ApplicationDetail?.applicationCategory}</td>
+                          <td className="px-8">{ApplicationDetail?.applicationCategory}</td>
                         </tr>
                         <tr>
                           <td className="px-4">Application Type</td>
-                          <td className="px-4">{ApplicationDetail?.applicationType}</td>
+                          <td className="px-8">{ApplicationDetail?.applicationType}</td>
                         </tr>
                         <tr>
                           <td className="px-4">Applier Type</td>
-                          <td className="px-4">{ApplicationDetail?.applierType}</td>
+                          <td className="px-8">{ApplicationDetail?.applierType}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -108,15 +121,12 @@ const ApplicationDetail = () => {
                   <DownloadOutlined className="mr-1" />
                   Download License
                 </Button>
-                <Button className=" text-primary flex items-center">
-                  <EyeOutlined className="mr-1" />
-                  Preview
-                </Button>
+               
                 <Button onClick={handleShare} className="flex text-primary items-center">
                   <ShareAltOutlined className="mr-1" />
                   Share
                 </Button>
-                <Button className="flex items-center text-white hover:text-white bg-red-400">
+                <Button loading={applicationArchiving} onClick={handleArchive} className="flex items-center text-white hover:text-white bg-red-400">
                   <DeleteOutlined className="mr-1" />
                   Archive
                 </Button>
@@ -130,14 +140,14 @@ const ApplicationDetail = () => {
                 columns={[
                   { title: "Education", dataIndex: "education" },
                   {
-                    title: "Attachment",
+                    title: "",
                     dataIndex: "attachment",
-                    render: (attachment) => (
+                  /*   render: (attachment) => (
                       <Button type="link" className="flex items-center">
                         <EyeOutlined className="mr-1" />
                         Preview Attachment
                       </Button>
-                    ),
+                    ), */
                   },
                 ]}
                 pagination={false}
@@ -148,14 +158,14 @@ const ApplicationDetail = () => {
                 columns={[
                   { title: "Certificate", dataIndex: "certificate" },
                   {
-                    title: "Attachment",
+                    title: "",
                     dataIndex: "attachment",
-                    render: (attachment) => (
+                  /*   render: (attachment) => (
                       <Button type="link" className="flex items-center">
                         <EyeOutlined className="mr-1" />
                         Preview Attachment
                       </Button>
-                    ),
+                    ), */
                   },
                 ]}
                 pagination={false}
@@ -169,12 +179,12 @@ const ApplicationDetail = () => {
                   {
                     title: "Attachment",
                     dataIndex: "attachment",
-                    render: (attachment) => (
+                  /*   render: (attachment) => (
                       <Button type="link" className="flex items-center">
                         <EyeOutlined className="mr-1" />
                         Preview Attachment
                       </Button>
-                    ),
+                    ), */
                   },
                 ]}
                 pagination={false}

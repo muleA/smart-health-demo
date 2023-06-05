@@ -10,12 +10,20 @@ export const authEndPoints = {
   deleteEducation: `${baseUrl}user/soft-delete-education/`,
   updateEducation: `${baseUrl}user/update-education`,
   restoreEducation: `${baseUrl}user/restore-education/`,
-  archiveEducation: `${baseUrl}user/archive-education/`,
   getArchivedEducations: `${baseUrl}user/get-archived-educationsby-userId`,
   getEducationByUserId: `${baseUrl}user/get-education-by-userId/`,
   getArchivedExperience: `${baseUrl}user/get-archived-experience-by-userId`,
   getArchivedCertificates: `${baseUrl}user/get-archived-certificate-by-userId`,
+  getArchivedApplications: `${baseUrl}user/get-archived-applications`,
   restoreCertificate: `${baseUrl}user/restore-certificate`,
   restoreExperience: `${baseUrl}user/restore-experience`,
-  getApplicationDetail:`${baseUrl}user/get-application-detail`
+  getApplicationDetail:`${baseUrl}user/get-application-detail`,
+  restoreApplication: `${baseUrl}user/restore-application/`,
+  archiveApplication: `${baseUrl}user/archive-application/`,
+  archiveEducation: `${baseUrl}user/soft-delete-education/`,
+archiveCertificate:`${baseUrl}user/soft-delete-certificate/`,
+archiveExperience:`${baseUrl}user/soft-delete-experience/`,
+getApplicationByStatus:`${baseUrl}user/get-application-by-status`
+
+  
 };
