@@ -238,7 +238,7 @@ const StepperComponent = () => {
                       <div className="mt-2 ">
                         <label>
                           <Field type="radio" name="applierType" value="self" />
-                          <span className="ml-2">Self</span>
+                          <span className="ml-2">Owner</span>
                         </label>
                         <label>
                           <Field
@@ -247,7 +247,7 @@ const StepperComponent = () => {
                             className="ml-6"
                             value="other"
                           />
-                          <span className="ml-2"></span>Other
+                          <span className="ml-2"></span>Delegation
                         </label>
                       </div>
                       <ErrorMessage
