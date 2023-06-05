@@ -10,6 +10,10 @@ import ApplicationList from "./portal/application-list";
 import BackOfficeLayoutWrapper from "./components/layout";
 import PortalNavigation from "./portal/home-navbar";
 import { Dashboard } from "./components/back-office/dashboard";
+import Role from "./components/back-office/role/role";
+import RoleForm from "./components/back-office/role/role-form";
+import Permission from "./components/back-office/permission/permission";
+import PermissionForm from "./components/back-office/permission/permission-form";
 
 const App = () => {
   const { session } = useAuth();
@@ -35,18 +39,15 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           {session !== null &&
             session?.userInfo?.EmployeeRoles!==undefined && (
-              <Route
-                path="*"
-                element={
-                  <React.Fragment>
-                    <BackOfficeLayoutWrapper>
-                      <Routes>
-                        <Route path="/dashboard" element={<Dashboard />} />
-                      </Routes>
-                    </BackOfficeLayoutWrapper>
-                  </React.Fragment>
-                }
-              />
+              <><Route
+              path="*"
+              element={<React.Fragment>
+                <BackOfficeLayoutWrapper>
+                  <Routes>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                  </Routes>
+                </BackOfficeLayoutWrapper>
+              </React.Fragment>} /></>
             )}
           {session !== null &&
             session?.userInfo?.EmployeeRoles ===undefined && (

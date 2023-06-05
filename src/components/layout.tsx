@@ -172,47 +172,66 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           <Menu.Item key="1" icon={<DashboardOutlined />}>
             <Link to="/dashboard">Dashboard</Link>
           </Menu.Item>
-          <SubMenu
-            key="sub1"
-            icon={<UserOutlined />}
-            title="Roles & Permissions"
-          >
-            <Menu.Item key="30">
-              <Link to="/permissions">Permissions</Link>
+           
+          <SubMenu key="sub1" icon={<SolutionOutlined />} title="License">
+            <Menu.Item key="2" itemIcon>
+              <Link to="/active-license">Active License</Link>
             </Menu.Item>
-            <Menu.Item key="2">
-              <Link to="/roles">Roles</Link>
+            <Menu.Item key="3" itemIcon>
+              <Link to="/archived-license">Archived License</Link>
+            </Menu.Item>
+          </SubMenu>  
+          <SubMenu key="sub2" icon={<SolutionOutlined />} title="Application">
+            <Menu.Item key="3" itemIcon>
+              <Link to="/active-app">Active Application</Link>
+            </Menu.Item>
+            <Menu.Item key="4" itemIcon>
+              <Link to="/archived-app">Archived Application</Link>
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub8" icon={<SolutionOutlined />} title="Employees">
-            <Menu.Item key="14" itemIcon>
-              <Link to="/moderators">Active Employees</Link>
+          <SubMenu key="sub3" icon={<SolutionOutlined />} title="Employees">
+            <Menu.Item key="5" itemIcon>
+              <Link to="/active-emp">Active Employees</Link>
             </Menu.Item>
-            <Menu.Item key="19" itemIcon>
-              <Link to="/moderators">Archived Employees</Link>
+            <Menu.Item key="6" itemIcon>
+              <Link to="/archived-emp">Archived Employees</Link>
             </Menu.Item>
           </SubMenu>
           
-          <SubMenu key="sub2" icon={<ShopOutlined />} title="Users">
-            <Menu.Item key="3">
+          <SubMenu key="sub4" icon={<ShopOutlined />} title="Users">
+            <Menu.Item key="7">
               <Link to="/active-users">Active User</Link>
             </Menu.Item>
-            <Menu.Item key="4">
+            <Menu.Item key="8">
               <Link to="/archived-users">Archived User</Link>
             </Menu.Item>
            
           </SubMenu>
-          <SubMenu key="sub3" icon={<CarOutlined />} title="Licenses Applications">
+          <SubMenu
+            key="sub5"
+            icon={<UserOutlined />}
+            title="Roles & Permissions"
+          >
+            <Menu.Item key="9">
+              <Link to="/permissions">Permissions</Link>
+            </Menu.Item>
+            <Menu.Item key="10">
+              <Link to="/roles">Roles</Link>
+            </Menu.Item>
+          </SubMenu>
+          <SubMenu key="sub6" icon={<CarOutlined />} title="Archives">
           <Menu.Item key="34">
-              <Link to="/approved">approved Applications</Link>
+              <Link to="/app-archive">Applications Archives</Link>
             </Menu.Item>
             <Menu.Item key="5">
-              <Link to="/pending">Pending Applications </Link>
+              <Link to="/license-archive">License Archives</Link>
             </Menu.Item>
             <Menu.Item key="6">
-              <Link to="/approved">Rejected Applications</Link>
+              <Link to="/emp-archive">Employee Archives</Link>
             </Menu.Item> 
-
+            <Menu.Item key="7">
+              <Link to="/user-archive">User Archives</Link>
+            </Menu.Item> 
           </SubMenu>    
           <Menu.Item key="56" icon={<SettingOutlined />}>
             <Link to="/settings">Settings</Link>
