@@ -44,7 +44,7 @@ const EducationForm: React.FC = () => {
         }
       );
 
-      setSelectedImage(response.data.imageUrl);
+      setSelectedImage(response.data);
     } catch (error) {
       console.error("Error uploading image:", error);
     }

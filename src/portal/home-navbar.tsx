@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Dropdown } from 'antd';
-import { UserOutlined, CaretDownOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, HomeFilled, HomeOutlined, SettingOutlined } from '@ant-design/icons';
-import { Link, useNavigate, Outlet, Routes, Route } from 'react-router-dom';
-import AccountSettings from './account-settings';
-import LicenseRegistrationForm from './license-registarion-form';
+import { UserOutlined, CaretDownOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, HomeOutlined, SettingOutlined, EditOutlined, FileAddOutlined, FolderOutlined, BellOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { Link, useNavigate, Routes, Route } from 'react-router-dom';
 import MyApplications from './my-applications';
-import MyLicenses from './my-license';
+import MyLicenses from './my-archives';
 import ProfileWrapper from './profile-wrapper';
 import { useAuth } from '../shared/auth/use-auth';
 import HomePage from './Home/home-page';
 import Banner from '../pages/banner';
+import StepperComponent from './application-form';
+import ApplicationDetail  from './application-detail';
+import Archives from './my-archives';
+import Notification from './notification';
 
 const { Header, Content, Sider } = Layout;
 
@@ -53,9 +55,7 @@ const {session}=useAuth()
       /* case '4':
         return <Notification />; */
       case '5':
-        return <AccountSettings />;
-      case '7':
-        return <LicenseRegistrationForm />;
+        return <Notification />;
       default:
         return null;
     }
@@ -84,23 +84,19 @@ const {session}=useAuth()
           <Menu.Item key="2" icon={<UserOutlined />}>
             <Link to="/my-profile">My Profile</Link>
           </Menu.Item>
-          <Menu.Item key="3" icon={<MenuFoldOutlined />}>
-            <Link to="/my-applications">My Applications</Link>
-          </Menu.Item>
-          <Menu.Item key="8" icon={<MenuFoldOutlined />}>
-            <Link to="/new-application">New Applications</Link>
-          </Menu.Item>
-          <Menu.Item key="4" icon={<MenuFoldOutlined />}>
-            <Link to="/my-licenses">Draft Applications</Link>
-          </Menu.Item>
-          <Menu.Item key="5" icon={<MenuFoldOutlined />}>
-            <Link to="/my-licenses">Archived Applications</Link>
-          </Menu.Item>
-          {/* <Menu.Item key="4" icon={<BellOutlined />}>
-            <Link to="/notification">Notifications</Link>
-          </Menu.Item> */}
-          <Menu.Item key="6" icon={<SettingOutlined />}>
-            <Link to="/settings">Account Settings</Link>
+          <Menu.Item key="3" icon={<UnorderedListOutlined />}>
+  <Link to="/my-applications">My Applications</Link>
+</Menu.Item>
+<Menu.Item key="8" icon={<FileAddOutlined />}>
+  <Link to="/new-application">New Applications</Link>
+</Menu.Item>
+
+<Menu.Item key="5" icon={<FolderOutlined />}>
+  <Link to="/my-archives">My Archives</Link>
+</Menu.Item>
+
+          <Menu.Item key="6" icon={<BellOutlined />}>
+            <Link to="/settings">Notifications</Link>
           </Menu.Item>
           <Menu.Item key="7" icon={<LogoutOutlined />}>
             <Link to="/logout">Logout</Link>
@@ -147,8 +143,9 @@ const {session}=useAuth()
             <Route  path='/banner' element={<Banner/>}></Route>
             <Route path="/my-profile" element={<ProfileWrapper />} />
             <Route path="/my-applications" element={<MyApplications />} />
-            <Route path="/new-application" element={<LicenseRegistrationForm />} />
-            <Route path="/my-licenses" element={<MyLicenses />} />
+            <Route path="/new-application" element={<StepperComponent />} />
+            <Route path="/my-archives" element={<Archives />} />
+            <Route path="my-applications/:id" element={<ApplicationDetail/>}/>
             {/* Add more routes here */}
           </Routes>
         </Content>

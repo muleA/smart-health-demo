@@ -6,6 +6,7 @@ import { Session } from "../models/session";
 import { getCurrentSession } from "../shared/current-session";
 import { baseUrl } from "../shared/config";
 import jwtDecode from "jwt-decode";
+import { message } from "antd";
 
 interface AuthState {
   session: Session;
@@ -44,7 +45,8 @@ export function logIn(request: LoginRequest) {
         `${baseUrl}auth/login`,
       request,
       );
-      console.log("response decode",response)
+      console.log("response gtt",response)
+      message.info(response?.data?.message)
       dispatch(setSession({ accessToken: response.data.access_token, userInfo:jwtDecode(response.data.access_token)}));
     } catch (error: any) {
       // Handle error

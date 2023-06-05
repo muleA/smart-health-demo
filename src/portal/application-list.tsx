@@ -35,7 +35,7 @@ const router=useNavigate()
 
   const handleRowClick = (record: User) => {
     const { id } = record;
-    router("/my-applications")
+    router(`/my-applications/${id}`);
   };
 
   const handleMouseEnter = (record: User) => {
@@ -105,6 +105,7 @@ const router=useNavigate()
       className: `cursor-pointer ${selectedRow === record.id ? 'bg-gray-100' : ''}`,
     };
   };
+
 
   return (
     <Table<User>

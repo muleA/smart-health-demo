@@ -9,8 +9,7 @@ import HomePage from "./pages/home";
 import ApplicationList from "./portal/application-list";
 import BackOfficeLayoutWrapper from "./components/layout";
 import PortalNavigation from "./portal/home-navbar";
-import { Dashboard } from "./back-office/dashboard";
-import { HowItworks } from "./pages/how";
+import { Dashboard } from "./components/back-office/dashboard";
 
 const App = () => {
   const { session } = useAuth();
@@ -18,14 +17,14 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (session === null && location.pathname !== "/howitworks") {
+    if (session === null && location.pathname !== "/") {
       navigate("/");
     } else if (session && location.pathname === "/") {
       if (session?.userInfo?.EmployeeRoles ===undefined) {
         navigate("/home");
 
       } else {
-        navigate("/my-profile");
+        navigate("/home");
       }
     }
   }, [session, location.pathname, navigate]);
@@ -34,8 +33,6 @@ const App = () => {
       <Provider store={store}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/howitworks" element={<HowItworks />} />
-
           {session !== null &&
             session?.userInfo?.EmployeeRoles!==undefined && (
               <Route
@@ -60,7 +57,7 @@ const App = () => {
                     <PortalNavigation />
                     <Routes>
                       <Route
-                        path="/my-applications"
+                        path="/home"
                         element={<ApplicationList />}
                       />
                     </Routes>
