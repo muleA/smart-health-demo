@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import {
   Layout,
   Menu,
@@ -26,6 +26,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "../shared/auth/use-auth";
+import HomePage from "../pages/home";
 
 
 const { Sider, Content, Header, Footer } = Layout;
@@ -280,7 +281,13 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </div>
             {/* Content */}
           </div>
-          <div className="py-2 min-h-screen">{children}</div>
+          <div className="py-2 min-h-screen">{children}
+          <Routes>
+            <Route path="/home" element ={<HomePage/>} />       
+            {/* Add more routes here */}
+          </Routes>
+          
+          </div>
         </Content>
         <Footer className="mx-auto text-center ">
           {" "}
