@@ -104,7 +104,7 @@ const {session}=useAuth()
         </Menu>
       </Sider>
       <Layout>
-        <Header
+      {/*   <Header
           className="bg-gray-200"
           style={{
             display: 'flex',
@@ -133,9 +133,9 @@ const {session}=useAuth()
             </Dropdown>
             <CaretDownOutlined className="hover:cursor-pointer text-primary" />
   {/*           <div className="text-primary">  {session?.userInfo?.userName}
-</div> */}
+</div> 
           </div>
-        </Header>
+        </Header> */}
 
         <Content style={{ margin: '16px' }}>
           <Routes>

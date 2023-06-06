@@ -27,6 +27,8 @@ import {
 } from "@ant-design/icons";
 import { useAuth } from "../shared/auth/use-auth";
 import HomePage from "../pages/home";
+import Role from "./back-office/role/role";
+import Permission from "./back-office/permission/permission";
 
 
 const { Sider, Content, Header, Footer } = Layout;
@@ -214,10 +216,10 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             title="Roles & Permissions"
           >
             <Menu.Item key="9">
-              <Link to="/permissions">Permissions</Link>
+              <Link to="/Permission">Permissions</Link>
             </Menu.Item>
             <Menu.Item key="10">
-              <Link to="/roles">Roles</Link>
+              <Link to="/role">Roles</Link>
             </Menu.Item>
           </SubMenu>
           <SubMenu key="sub6" icon={<CarOutlined />} title="Archives">
@@ -302,7 +304,9 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           </div>
           <div className="py-2 min-h-screen">{children}
           <Routes>
-            <Route path="/home" element ={<HomePage/>} />       
+            <Route path="/role" element ={<Role/>} />   
+            <Route path="/permission" element ={<Permission/>} />       
+    
             {/* Add more routes here */}
           </Routes>
           
@@ -319,3 +323,4 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
 };
 
 export default BackOfficeLayoutWrapper;
+
