@@ -29,6 +29,14 @@ import { useAuth } from "../shared/auth/use-auth";
 import HomePage from "../pages/home";
 import Role from "./back-office/role/role";
 import Permission from "./back-office/permission/permission";
+import RoleForm from "./back-office/role/role-form";
+import PermissionForm from "./back-office/permission/permission-form";
+import Employee from "./back-office/employee/employee";
+import EmployeeForm from "./back-office/employee/employee-form";
+import AddRole from "./back-office/role/add-role";
+import UpdateRoleForm from "./back-office/role/update-role";
+import AddPermission from "./back-office/permission/add-permission";
+import UpdatePermissionForm from "./back-office/permission/update-permission";
 
 
 const { Sider, Content, Header, Footer } = Layout;
@@ -175,71 +183,48 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           <Menu.Item key="1" icon={<DashboardOutlined />}>
             <Link to="/dashboard">Dashboard</Link>
           </Menu.Item>
-           
-          <SubMenu key="sub1" icon={<SolutionOutlined />} title="License">
-            <Menu.Item key="2" itemIcon>
-              <Link to="/active-license">Active License</Link>
+          <Menu.Item key="2" icon={<SolutionOutlined />}>
+              <Link to="/license"> License</Link>
             </Menu.Item>
-            <Menu.Item key="3" itemIcon>
-              <Link to="/archived-license">Archived License</Link>
+            <Menu.Item key="3" icon={<SolutionOutlined />}>
+              <Link to="/application"> Application</Link>
             </Menu.Item>
-          </SubMenu>  
-          <SubMenu key="sub2" icon={<SolutionOutlined />} title="Application">
-            <Menu.Item key="3" itemIcon>
-              <Link to="/active-app">Active Application</Link>
+            <Menu.Item key="4" icon={<SolutionOutlined />}>
+              <Link to="/employee"> Employees</Link>
             </Menu.Item>
-            <Menu.Item key="4" itemIcon>
-              <Link to="/archived-app">Archived Application</Link>
+            <Menu.Item key="5" icon={<ShopOutlined />} >
+              <Link to="/users">Active User</Link>
             </Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub3" icon={<SolutionOutlined />} title="Employees">
-            <Menu.Item key="5" itemIcon>
-              <Link to="/active-emp">Active Employees</Link>
-            </Menu.Item>
-            <Menu.Item key="6" itemIcon>
-              <Link to="/archived-emp">Archived Employees</Link>
-            </Menu.Item>
-          </SubMenu>
-          
-          <SubMenu key="sub4" icon={<ShopOutlined />} title="Users">
-            <Menu.Item key="7">
-              <Link to="/active-users">Active User</Link>
-            </Menu.Item>
-            <Menu.Item key="8">
-              <Link to="/archived-users">Archived User</Link>
-            </Menu.Item>
-           
-          </SubMenu>
           <SubMenu
             key="sub5"
             icon={<UserOutlined />}
             title="Roles & Permissions"
           >
-            <Menu.Item key="9">
+            <Menu.Item key="6">
               <Link to="/Permission">Permissions</Link>
             </Menu.Item>
-            <Menu.Item key="10">
+            <Menu.Item key="7">
               <Link to="/role">Roles</Link>
             </Menu.Item>
           </SubMenu>
           <SubMenu key="sub6" icon={<CarOutlined />} title="Archives">
-          <Menu.Item key="34">
+          <Menu.Item key="8">
               <Link to="/app-archive">Applications Archives</Link>
             </Menu.Item>
-            <Menu.Item key="5">
+            <Menu.Item key="9">
               <Link to="/license-archive">License Archives</Link>
             </Menu.Item>
-            <Menu.Item key="6">
+            <Menu.Item key="10">
               <Link to="/emp-archive">Employee Archives</Link>
             </Menu.Item> 
-            <Menu.Item key="7">
+            <Menu.Item key="11">
               <Link to="/user-archive">User Archives</Link>
             </Menu.Item> 
           </SubMenu>    
-          <Menu.Item key="56" icon={<SettingOutlined />}>
+          <Menu.Item key="12" icon={<SettingOutlined />}>
             <Link to="/settings">Settings</Link>
           </Menu.Item>    
-          <Menu.Item key="45" icon={<LogoutOutlined />}>
+          <Menu.Item key="13" icon={<LogoutOutlined />}>
             <Link to="/logout">Logout</Link>
           </Menu.Item>   
         </Menu>
@@ -305,8 +290,13 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           <div className="py-2 min-h-screen">{children}
           <Routes>
             <Route path="/role" element ={<Role/>} />   
+            <Route path="/add-role" element={<AddRole/>} />
+            <Route path="/update-role" element={<UpdateRoleForm/>} />
             <Route path="/permission" element ={<Permission/>} />       
-    
+            <Route path="/add-permission" element={<AddPermission/>} />
+            <Route path="/update-permission" element={<UpdatePermissionForm/>} />
+            <Route path="/employee" element ={<Employee/>} />       
+            <Route path="/employee-form" element={<EmployeeForm/>} />
             {/* Add more routes here */}
           </Routes>
           
