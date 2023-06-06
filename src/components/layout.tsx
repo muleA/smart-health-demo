@@ -1,50 +1,34 @@
-import React, { useState } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
 import {
-  Layout,
-  Menu,
-  Breadcrumb,
-  Avatar,
-  Dropdown,
-  Space,
-  MenuProps,
-} from "antd";
-import {
-  UserOutlined,
-  ShopOutlined,
   CarOutlined,
-  AppstoreOutlined,
-  FileTextOutlined,
-  EnvironmentOutlined,
-  ShoppingOutlined,
-  SolutionOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
+  CaretDownOutlined,
   DashboardOutlined,
   LogoutOutlined,
-  CaretDownOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
   SettingOutlined,
+  ShopOutlined,
+  SolutionOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
+import { Breadcrumb, Dropdown, Layout, Menu } from "antd";
+import React, { useState } from "react";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "../shared/auth/use-auth";
-import HomePage from "../pages/home";
-import Role from "./back-office/role/role";
-import Permission from "./back-office/permission/permission";
-import RoleForm from "./back-office/role/role-form";
-import PermissionForm from "./back-office/permission/permission-form";
 import Employee from "./back-office/employee/employee";
 import EmployeeForm from "./back-office/employee/employee-form";
-import AddRole from "./back-office/role/add-role";
-import UpdateRoleForm from "./back-office/role/update-role";
 import AddPermission from "./back-office/permission/add-permission";
+import Permission from "./back-office/permission/permission";
 import UpdatePermissionForm from "./back-office/permission/update-permission";
-
+import AddRole from "./back-office/role/add-role";
+import Role from "./back-office/role/role";
+import UpdateRoleForm from "./back-office/role/update-role";
 
 const { Sider, Content, Header, Footer } = Layout;
 const { SubMenu } = Menu;
 
 const BackOfficeLayoutWrapper = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
-  const {logOut}=useAuth()
+  const { logOut } = useAuth();
   const handleLogOut = (): void => {
     logOut();
   };
@@ -63,7 +47,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
       </Breadcrumb.Item>
     );
   });
-  
+
   const accountMenu = (
     <Menu className="text-primary">
       <Menu.Item key="1" onClick={handleLogOut} icon={<LogoutOutlined />}>
@@ -79,7 +63,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
     month: "short",
   })} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
   const { session } = useAuth();
-  console.log("session",session?.userInfo?.userName)
+  console.log("session", session?.userInfo?.userName);
 
   return (
     <div className="flex bg-gray-100 text-sm">
@@ -184,17 +168,17 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             <Link to="/dashboard">Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<SolutionOutlined />}>
-              <Link to="/license"> License</Link>
-            </Menu.Item>
-            <Menu.Item key="3" icon={<SolutionOutlined />}>
-              <Link to="/application"> Application</Link>
-            </Menu.Item>
-            <Menu.Item key="4" icon={<SolutionOutlined />}>
-              <Link to="/employee"> Employees</Link>
-            </Menu.Item>
-            <Menu.Item key="5" icon={<ShopOutlined />} >
-              <Link to="/users">Active User</Link>
-            </Menu.Item>
+            <Link to="/license"> License</Link>
+          </Menu.Item>
+          <Menu.Item key="3" icon={<SolutionOutlined />}>
+            <Link to="/application"> Application</Link>
+          </Menu.Item>
+          <Menu.Item key="4" icon={<SolutionOutlined />}>
+            <Link to="/employee"> Employees</Link>
+          </Menu.Item>
+          <Menu.Item key="5" icon={<ShopOutlined />}>
+            <Link to="/users">Active User</Link>
+          </Menu.Item>
           <SubMenu
             key="sub5"
             icon={<UserOutlined />}
@@ -208,7 +192,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </Menu.Item>
           </SubMenu>
           <SubMenu key="sub6" icon={<CarOutlined />} title="Archives">
-          <Menu.Item key="8">
+            <Menu.Item key="8">
               <Link to="/app-archive">Applications Archives</Link>
             </Menu.Item>
             <Menu.Item key="9">
@@ -216,17 +200,17 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </Menu.Item>
             <Menu.Item key="10">
               <Link to="/emp-archive">Employee Archives</Link>
-            </Menu.Item> 
+            </Menu.Item>
             <Menu.Item key="11">
               <Link to="/user-archive">User Archives</Link>
-            </Menu.Item> 
-          </SubMenu>    
+            </Menu.Item>
+          </SubMenu>
           <Menu.Item key="12" icon={<SettingOutlined />}>
             <Link to="/settings">Settings</Link>
-          </Menu.Item>    
+          </Menu.Item>
           <Menu.Item key="13" icon={<LogoutOutlined />}>
             <Link to="/logout">Logout</Link>
-          </Menu.Item>   
+          </Menu.Item>
         </Menu>
       </Sider>
 
@@ -244,24 +228,19 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             )}
           </div>
           <div className="flex">
-  <Dropdown overlay={accountMenu}  trigger={['click']}>
-    
-    <a className="ant-dropdown-link text-primary" onClick={(e) => e.preventDefault()}>
-      <UserOutlined style={{ fontSize: '20px' }} />
-      <CaretDownOutlined className="hover:cursor-pointer text-primary" />
+            <Dropdown overlay={accountMenu} trigger={["click"]}>
+              <a
+                className="ant-dropdown-link text-primary"
+                onClick={(e) => e.preventDefault()}
+              >
+                <UserOutlined style={{ fontSize: "20px" }} />
+                <CaretDownOutlined className="hover:cursor-pointer text-primary" />
+              </a>
+            </Dropdown>
+            <div className="text-primary"> {session?.userInfo?.userName}</div>
+          </div>
 
-
-    </a>
-
-  </Dropdown>
-  <div className="text-primary">  {session?.userInfo?.userName}
-</div>
-
-</div>
-
-
-
-         {/*  <div className="flex items-center">
+          {/*  <div className="flex items-center">
             <Dropdown menu={accountMenu}>
               <a onClick={(e) => e.preventDefault()}>
                 <Space>
@@ -287,25 +266,27 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </div>
             {/* Content */}
           </div>
-          <div className="py-2 min-h-screen">{children}
-          <Routes>
-            <Route path="/role" element ={<Role/>} />   
-            <Route path="/add-role" element={<AddRole/>} />
-            <Route path="/update-role" element={<UpdateRoleForm/>} />
-            <Route path="/permission" element ={<Permission/>} />       
-            <Route path="/add-permission" element={<AddPermission/>} />
-            <Route path="/update-permission" element={<UpdatePermissionForm/>} />
-            <Route path="/employee" element ={<Employee/>} />       
-            <Route path="/employee-form" element={<EmployeeForm/>} />
-            {/* Add more routes here */}
-          </Routes>
-          
+          <div className="py-2 min-h-screen">
+            {children}
+            <Routes>
+              <Route path="/role" element={<Role />} />
+              <Route path="/add-role" element={<AddRole />} />
+              <Route path="/update-role" element={<UpdateRoleForm />} />
+              <Route path="/permission" element={<Permission />} />
+              <Route path="/add-permission" element={<AddPermission />} />
+              <Route
+                path="/update-permission"
+                element={<UpdatePermissionForm />}
+              />
+              <Route path="/employee" element={<Employee />} />
+              <Route path="/employee-form" element={<EmployeeForm />} />
+              {/* Add more routes here */}
+            </Routes>
           </div>
         </Content>
         <Footer className="mx-auto text-center ">
           {" "}
-          &copy; {new Date().getFullYear()} {""}All Rights Reserved
-          Technologies{" "}
+          &copy; {new Date().getFullYear()} {""}All Rights Reserved Technologies{" "}
         </Footer>
       </div>
     </div>
@@ -313,4 +294,3 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
 };
 
 export default BackOfficeLayoutWrapper;
-

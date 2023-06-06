@@ -1,30 +1,24 @@
-import React, { useState } from "react";
-import { Layout, Menu, Dropdown } from "antd";
 import {
-  UserOutlined,
-  CaretDownOutlined,
-  LogoutOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  HomeOutlined,
-  SettingOutlined,
-  EditOutlined,
+  BellOutlined,
   FileAddOutlined,
   FolderOutlined,
-  BellOutlined,
+  HomeOutlined,
+  LogoutOutlined,
   UnorderedListOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Link, useNavigate, Routes, Route } from "react-router-dom";
-import MyApplications from "./my-applications";
-import MyLicenses from "./my-archives";
-import ProfileWrapper from "./profile-wrapper";
+import { Layout, Menu } from "antd";
+import { useState } from "react";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import Banner from "../pages/banner";
 import { useAuth } from "../shared/auth/use-auth";
 import HomePage from "./Home/home-page";
-import Banner from "../pages/banner";
-import StepperComponent from "./application-form";
 import ApplicationDetail from "./application-detail";
-import Archives from "./my-archives";
+import StepperComponent from "./application-form";
+import MyApplications from "./my-applications";
+import { default as Archives, default as MyLicenses } from "./my-archives";
 import Notification from "./notification";
+import ProfileWrapper from "./profile-wrapper";
 
 const { Header, Content, Sider } = Layout;
 
