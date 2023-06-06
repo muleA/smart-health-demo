@@ -9,6 +9,7 @@ import {
     FolderOutlined,
     MoreOutlined,
     PlusOutlined,
+    SaveOutlined,
   } from '@ant-design/icons';
   import {
     Breadcrumb,
@@ -34,12 +35,6 @@ import TextArea from 'antd/es/input/TextArea';
   
   
     return (
-      <div className="m-4 bg-white p-4 rounded-l shadow-lg ">
-        <div className="flex header justify-between">
-            <span className="text-2xl font-bold text-blue-400">
-              New Permission
-            </span>
-          </div>
   
           <div>
       <Form
@@ -98,13 +93,13 @@ import TextArea from 'antd/es/input/TextArea';
               </Form>
         </div>
         <div className="flex gap-4 justify-end font-bold pt-20 ">
-        <Button className="bg-blue-500 ">
-            <div className="text-white"> Finish </div>
+        <Button className="bg-blue-500 flex justify-between">
+              <SaveOutlined className="py-1 px-1 text-white" />
+            <div className="text-white"> Save</div>
           </Button>
         </div>
       </Form>
     </div>
-      </div>
     );
   }
   

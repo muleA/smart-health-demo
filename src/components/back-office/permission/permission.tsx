@@ -1,14 +1,8 @@
 import {
-  AlignRightOutlined,
-  ArrowRightOutlined,
-  DeleteOutlined,
   DownOutlined,
-  EditOutlined,
-  EllipsisOutlined,
   FilterOutlined,
-  FolderOutlined,
-  MoreOutlined,
   PlusOutlined,
+  RightOutlined,
 } from '@ant-design/icons';
 import {
   Breadcrumb,
@@ -32,37 +26,6 @@ function Permission() {
   const navigate = useNavigate();
   const { Search } = Input;
 
-
-  const popUpMenus = () => {
-    return (
-      <Menu style={{ width: '200px' }}>
-        <Menu.Item>
-          <div style={{ display: 'flex' }}>
-            <ArrowRightOutlined />
-            <p style={{ marginLeft: '10px' }}> Open </p>
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div style={{ display: 'flex' }}>
-            <EditOutlined />
-            <p style={{ marginLeft: '10px' }}> Edit </p>
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div style={{ display: 'flex' }}>
-            <AlignRightOutlined />
-            <p style={{ marginLeft: '10px' }}> Some Option.. </p>
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div style={{ display: 'flex' }}>
-            <DeleteOutlined />
-            <p style={{ marginLeft: '10px' }}> Delete </p>
-          </div>
-        </Menu.Item>
-      </Menu>
-    );
-  };
   const menu = () => {
     return (
       <Menu style={{ width: '200px' }}>
@@ -222,12 +185,8 @@ function Permission() {
       render: (action:any) => {
         return (
           <>
-            <EditOutlined />
-            <Dropdown overlay={popUpMenus()} trigger={['click']}>
-              <a data-id={action} className="ant-dropdown-link">
-                <MoreOutlined />
-              </a>
-            </Dropdown>
+        <RightOutlined/>
+
           </>
         );
       },
@@ -244,7 +203,7 @@ function Permission() {
         </div>
         <div className="flex">
             <div>
-              <Button className="bg-blue-500 flex justify-between">
+              <Button onClick={() =>navigate('/add-permission')} className="bg-blue-500 flex justify-between">
               <PlusOutlined className="py-1 px-1 text-white" />
             <div className="text-white"> New Permission</div>
           </Button>
@@ -275,7 +234,12 @@ function Permission() {
       </div>
       <div>
         <div className="py-4 flex gap-4">
-            <Table dataSource={rows} columns={columns} />
+            <Table dataSource={rows} columns={columns}   
+            onRow={() => {
+              return {
+                onClick: (event) => {navigate('/update-permission') },
+              };
+            }} />
       
         </div>
       </div>
