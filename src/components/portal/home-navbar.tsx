@@ -5,9 +5,9 @@ import { Link, useNavigate, Routes, Route } from 'react-router-dom';
 import MyApplications from './my-applications';
 import MyLicenses from './my-archives';
 import ProfileWrapper from './profile-wrapper';
-import { useAuth } from '../shared/auth/use-auth';
+import { useAuth } from '../../shared/auth/use-auth';
 import HomePage from './Home/home-page';
-import Banner from '../pages/banner';
+import Banner from '../../pages/banner';
 import StepperComponent from './application-form';
 import ApplicationDetail  from './application-detail';
 import Archives from './my-archives';
@@ -104,7 +104,7 @@ const {session}=useAuth()
         </Menu>
       </Sider>
       <Layout>
-      {/*   <Header
+       <Header
           className="bg-gray-200"
           style={{
             display: 'flex',
@@ -132,10 +132,10 @@ const {session}=useAuth()
               </a>
             </Dropdown>
             <CaretDownOutlined className="hover:cursor-pointer text-primary" />
-  {/*           <div className="text-primary">  {session?.userInfo?.userName}
+            <div className="text-primary">  {session?.userInfo?.userName}
 </div> 
           </div>
-        </Header> */}
+        </Header> 
 
         <Content style={{ margin: '16px' }}>
           <Routes>

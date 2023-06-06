@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Card, Collapse, Button, Input, DatePicker, Form, Upload, message } from "antd";
+import { Card, Collapse, Button, Input, DatePicker, Form, Upload, message, Empty } from "antd";
 import moment from "moment";
 import axios from "axios";
-import { Notify } from "../shared/notification/notify";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import { useAuth } from "../shared/auth/use-auth";
-import { baseUrl } from "../shared/config";
-import { useAddEducationMutation, useArchiveEducationMutation } from "./portal.query";
-import Empty from "../shared/empty-state";
+import { useAddEducationMutation, useArchiveEducationMutation } from "../portal.query";
+import { baseUrl } from "../../configs/config";
+import { useAuth } from "../../shared/auth/use-auth";
+import { Notify } from "../../shared/notification/notify";
+
 
 const { Panel } = Collapse;
 
@@ -147,9 +147,6 @@ console.log("baseUrl",baseUrl)
 
     try {
       addEducation({...otherProps,userId:session?.userInfo?.userId})
-    /*   await axios.post(`${baseUrl}api/user/add-education`,
-        education
-      ); */
       message.success("Education Info updated successfully");
 
     } catch (error) {

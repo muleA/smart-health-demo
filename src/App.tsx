@@ -6,15 +6,10 @@ import { Provider } from "react-redux";
 import { store } from "./store/app.store";
 import { useAuth } from "./shared/auth/use-auth";
 import HomePage from "./pages/home";
-import ApplicationList from "./portal/application-list";
-import BackOfficeLayoutWrapper from "./components/layout";
-import PortalNavigation from "./portal/home-navbar";
+import BackOfficeLayoutWrapper from "./components/back-office-layout";
 import { Dashboard } from "./components/back-office/dashboard";
-import Role from "./components/back-office/role/role";
-import RoleForm from "./components/back-office/role/role-form";
-import Permission from "./components/back-office/permission/permission";
-import PermissionForm from "./components/back-office/permission/permission-form";
-
+import PortalNavigation from "./components/portal/home-navbar";
+import ApplicationList from "./components/portal/application-list";
 const App = () => {
   const { session } = useAuth();
   const location = useLocation();

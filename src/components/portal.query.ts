@@ -1,68 +1,68 @@
 import { apiSlice } from "../store/app.api";
-import { authEndPoints } from "./portal-endpoint";
+import { portalEndPoints } from "./portal-endpoint";
 
-const userApi = apiSlice.injectEndpoints({
+const portalApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<any, void>({
       query: () => ({
-        url: authEndPoints.getUsers,
+        url: portalEndPoints.getUsers,
         method: "GET",
       }),
       providesTags: ["user"],
     }),
     getArchivedEducations: builder.query<any, string>({
       query: (userId) => ({
-        url: `${authEndPoints.getArchivedEducations}/${userId}`,
+        url: `${portalEndPoints.getArchivedEducations}/${userId}`,
         method: "GET",
       }),
-      providesTags: ["user"],
+      providesTags: ["Education"],
     }),  
     getLicenseByStatus: builder.query<any, string>({
       query: (status) => ({
-        url: `${authEndPoints.getApplicationByStatus}/${status}`,
+        url: `${portalEndPoints.getApplicationByStatus}/${status}`,
         method: "GET",
       }),
       providesTags: ["user"],
     }),  
     getArchivedCertificates: builder.query<any, string>({
       query: (userId) => ({
-        url: `${authEndPoints.getArchivedCertificates}/${userId}`,
+        url: `${portalEndPoints.getArchivedCertificates}/${userId}`,
         method: "GET",
       }),
       providesTags: ["user"],
     }),    
     getArchivedExperiences: builder.query<any, string>({
       query: (userId) => ({
-        url: `${authEndPoints.getArchivedExperience}/${userId}`,
+        url: `${portalEndPoints.getArchivedExperience}/${userId}`,
         method: "GET",
       }),
-      providesTags: ["user"],
+      providesTags: ["Experience"],
     }),      
 
     getAccounts: builder.query<any, void>({
       query: () => ({
-        url: authEndPoints.getAccounts,
+        url: portalEndPoints.getAccounts,
         method: "GET",
       }),
       providesTags: ["user"],
     }),
     getApplicationDetails: builder.query<any, any>({
       query: (id:any) => ({
-        url: `${authEndPoints.getApplicationDetail}/${id}`,
+        url: `${portalEndPoints.getApplicationDetail}/${id}`,
         method: "GET",
       }),
       providesTags: ["user"],
     }),
     getArchivedApplications: builder.query<any, any>({
       query: () => ({
-        url: `${authEndPoints.getArchivedApplications}`,
+        url: `${portalEndPoints.getArchivedApplications}`,
         method: "GET",
       }),
       providesTags: ["user"],
     }),
     createAccount: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: authEndPoints.createAccount,
+        url: portalEndPoints.createAccount,
         method: "POST",
         data: newUser,
       }),
@@ -70,15 +70,15 @@ const userApi = apiSlice.injectEndpoints({
     }),
     restoreEducation: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${authEndPoints.restoreEducation}${newUser}`,
+        url: `${portalEndPoints.restoreEducation}${newUser}`,
         method: "POST",
         data: newUser,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["Education"],
     }),
     restoreApplication: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${authEndPoints.restoreApplication}${newUser}`,
+        url: `${portalEndPoints.restoreApplication}${newUser}`,
         method: "POST",
         data: newUser,
       }),
@@ -87,7 +87,7 @@ const userApi = apiSlice.injectEndpoints({
 
     archiveApplication: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${authEndPoints.archiveApplication}${newUser}`,
+        url: `${portalEndPoints.archiveApplication}${newUser}`,
         method: "POST",
         data: newUser,
       }),
@@ -95,22 +95,22 @@ const userApi = apiSlice.injectEndpoints({
     }),
     archiveEducation: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${authEndPoints.archiveEducation}${newUser}`,
+        url: `${portalEndPoints.archiveEducation}${newUser}`,
         method: "POST",
         data: newUser,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["Education"],
     }),archiveExperience: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${authEndPoints.archiveExperience}${newUser}`,
+        url: `${portalEndPoints.archiveExperience}${newUser}`,
         method: "POST",
         data: newUser,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["Experience"],
     }),
     archiveCertificate: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${authEndPoints.archiveCertificate}${newUser}`,
+        url: `${portalEndPoints.archiveCertificate}${newUser}`,
         method: "POST",
         data: newUser,
       }),
@@ -119,15 +119,15 @@ const userApi = apiSlice.injectEndpoints({
 
     restoreExperiance: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${authEndPoints.restoreExperience}${newUser}`,
+        url: `${portalEndPoints.restoreExperience}${newUser}`,
         method: "POST",
         data: newUser,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["Experience"],
     }),
     restoreCertificate: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${authEndPoints.restoreCertificate}/${newUser}`,
+        url: `${portalEndPoints.restoreCertificate}/${newUser}`,
         method: "POST",
         data: newUser,
       }),
@@ -135,15 +135,15 @@ const userApi = apiSlice.injectEndpoints({
     }),
     addEducation: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: authEndPoints.addEducation,
+        url: portalEndPoints.addEducation,
         method: "POST",
         data: newUser,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["Education"],
     }),
     applyToLicense: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: authEndPoints.apply,
+        url: `${portalEndPoints.apply}/${newUser}`,
         method: "POST",
         data: newUser,
       }),
@@ -151,7 +151,7 @@ const userApi = apiSlice.injectEndpoints({
     }),
     createUser: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: authEndPoints.createUser,
+        url: portalEndPoints.createUser,
         method: "POST",
         data: newUser,
       }),
@@ -182,4 +182,4 @@ export const {
    useArchiveEducationMutation,
    useArchiveExperienceMutation,
    useGetLicenseByStatusQuery
-} = userApi;
+} = portalApi;

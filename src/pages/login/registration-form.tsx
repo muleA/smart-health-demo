@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { Notify } from "../../shared/notification/notify";
-import { baseUrl } from "../../shared/config";
+import { baseUrl } from "../../configs/config";
 import { useAuth } from "../../shared/auth/use-auth";
 
 const { Step } = Steps;

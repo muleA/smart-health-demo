@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Card, Collapse, Button, Input, Form, message, DatePicker } from "antd";
 import axios from "axios";
-import { Notify } from "../shared/notification/notify";
-import { baseUrl } from "../shared/config";
-import { useAuth } from "../shared/auth/use-auth";
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
+import { useArchiveCertificateMutation } from "../portal.query";
+import { useAuth } from "../../shared/auth/use-auth";
+import { Notify } from "../../shared/notification/notify";
+import { baseUrl } from "../../configs/config";
 
 const { Panel } = Collapse;
 
@@ -22,6 +23,7 @@ interface Certificate {
 const CertificateInformation: React.FC = () => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const { session } = useAuth();
+  const[archiveCertificate,{isLoading}]=useArchiveCertificateMutation()
 
   useEffect(() => {
     fetchCertificates();
@@ -71,6 +73,23 @@ const CertificateInformation: React.FC = () => {
     } catch (error) {
       console.error("Error deleting certificate:", error);
       message.error("Error in deleting certificate info");
+    }
+  };
+
+
+  
+  const handleArchiveCertificate = async (certificate: Certificate) => {
+    console.log("certificate", certificate);
+    try {
+    await archiveCertificate (certificate.id);
+      const updatedCertificates = certificates.filter(
+        (cert) => cert.id !== certificate.id
+      );
+      setCertificates(updatedCertificates);
+      message.success("Certificate info archive successfully");
+    } catch (error) {
+      console.error("Error archiving certificate:", error);
+      message.error("Error in archiving certificate info");
     }
   };
 
@@ -153,7 +172,7 @@ const CertificateInformation: React.FC = () => {
                     <Button
                       type="primary"
                       danger
-                      onClick={() => handleDeleteCertificate(certificate)}
+                      onClick={() => handleArchiveCertificate(certificate)}
                     >
                       Archive
                     </Button>

@@ -1,4 +1,4 @@
-import { baseUrl } from "../../../shared/config";
+import { baseUrl } from "../../../configs/config";
 
 export const UserEndPoints={
     getUser:`${baseUrl}users`,

@@ -3,8 +3,8 @@ import { Badge, Table } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { baseUrl } from '../shared/config';
-import { useAuth } from '../shared/auth/use-auth';
+import { baseUrl } from '../../configs/config';
+import { useAuth } from '../../shared/auth/use-auth';
 
 interface User {
   id: string;

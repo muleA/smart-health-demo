@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Card, Table, Button, Tag, Typography, Spin, Modal, message } from "antd";
 import { DeleteOutlined, DownloadOutlined, EyeOutlined, ShareAltOutlined } from "@ant-design/icons";
 import Certificate from "./license";
-import {  useGetApplicationDetailsQuery,useArchiveApplicationMutation } from "./portal.query";
+import {  useGetApplicationDetailsQuery,useArchiveApplicationMutation } from "../portal.query";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   FacebookShareButton,
@@ -13,8 +13,8 @@ import {
   LinkedinIcon,
   LinkedinShareButton,
 } from "react-share";
-import timeSince from "../shared/utilities/time-since";
-import { Notify } from "../shared/notification/notify";
+import timeSince from "../../shared/utilities/time-since";
+
 
 const ApplicationDetail = () => {
   const { id } = useParams();
@@ -50,26 +50,7 @@ navigate("/my-applications")
     setShareVisible(false);
   };
   // Sample data for demonstration
-  const application = {
-    title: "License Application",
-    category: "Category A",
-    type: "Type B",
-    applierType: "Type C",
-    attachments: ["Attachment 1", "Attachment 2"],
-    educations: [
-      { education: "Education 1", attachment: "Attachment 1" },
-      { education: "Education 2", attachment: "Attachment 2" },
-    ],
-    certificates: [
-      { certificate: "Certificate 1", attachment: "Attachment 1" },
-      { certificate: "Certificate 2", attachment: "Attachment 2" },
-    ],
-    experiences: [
-      { experience: "Experience 1", attachment: "Attachment 1" },
-      { experience: "Experience 2", attachment: "Attachment 2" },
-    ],
-    status: "Approved",
-  };
+
 
   return (
     <>
@@ -107,8 +88,8 @@ navigate("/my-applications")
               title="Status of Application"
               className="mt-4"
               extra={
-                <Tag color={`${application?.status==='SUBMITED'?'blue':application?.status==='REJECTED'?'red':"green"}`} className="font-bold 3xl">
-                  {application?.status}
+                <Tag color={`${ApplicationDetail?.status==='SUBMITED'?'blue':ApplicationDetail?.status==='REJECTED'?'red':"green"}`} className="font-bold 3xl">
+                  {ApplicationDetail?.status}
                 </Tag>
               }
             >
@@ -136,7 +117,7 @@ navigate("/my-applications")
           <div>
             <Card title="Educations" className="h-full">
               <Table
-                dataSource={application.educations}
+                dataSource={ApplicationDetail?.educationId}
                 columns={[
                   { title: "Education", dataIndex: "education" },
                   {
@@ -154,9 +135,9 @@ navigate("/my-applications")
               />
                    <Card title="Certificates" className="mt-4 h-full">
               <Table
-                dataSource={application.certificates}
+                dataSource={ApplicationDetail?.certificateId}
                 columns={[
-                  { title: "Certificate", dataIndex: "certificate" },
+                  { title: "Certificate", dataIndex: "Id" },
                   {
                     title: "",
                     dataIndex: "attachment",
@@ -173,7 +154,7 @@ navigate("/my-applications")
             </Card>
             <Card title="Experiences" className="mt-4 h-full">
               <Table
-                dataSource={application.experiences}
+                dataSource={ApplicationDetail?.experienceId}
                 columns={[
                   { title: "Experience", dataIndex: "experience" },
                   {

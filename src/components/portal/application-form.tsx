@@ -3,9 +3,11 @@ import { Steps, Button, message, Collapse, Card, Alert } from "antd";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classNames from "classnames";
-import { useAuth } from "../shared/auth/use-auth";
-import { baseUrl } from "../shared/config";
+
 import axios from "axios";
+import { useApplyToLicenseMutation } from "../portal.query";
+import { baseUrl } from "../../configs/config";
+import { useAuth } from "../../shared/auth/use-auth";
 
 const { Step } = Steps;
 
@@ -25,7 +27,7 @@ const StepperComponent = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const { Panel } = Collapse;
   const { session } = useAuth();
-
+const[apply,{isLoading}]=useApplyToLicenseMutation()
   const [educations, setEducations] = useState<any>([]);
   const [experiences, setExperiences] = useState<any>([]);
   const [certificates, setCertificates] = useState<any>([]);
@@ -149,12 +151,17 @@ const StepperComponent = () => {
             experienceId: [],
           }}
           validationSchema={StepTwoSchema}
-          onSubmit={(values) => {
+          onSubmit={ async(values) => {
             // Perform API call for Step 2
             // Replace the API call with your own implementation
             // Here, we're just logging the form values
             console.log("Step 2 form values:", values);
-
+  try{
+    await apply(values)
+    message.success("application submitted successfully")
+  }catch(err){
+    message.error("error happened in applying")
+  }
             setCurrentStep(2);
           }}
         >
@@ -192,8 +199,8 @@ const StepperComponent = () => {
                     <option value="issue">Issue</option>
                     <option value="renew">Renew</option>
                     <option value="revoke">Revoke</option>
-                    <option value="suspend">Revoke</option>
-                    <option value="remove">Revoke</option>
+                    <option value="suspend">Suspend</option>
+                    <option value="remove">remove</option>
                   </Field>
                   <ErrorMessage
                     name="applicationType"
@@ -388,6 +395,7 @@ const StepperComponent = () => {
                         type="primary"
                         className="bg-primary text-white"
                         htmlType="submit"
+                        loading={isLoading}
                       >
                         Submit
                       </Button>

@@ -29,6 +29,7 @@ import { useAuth } from "../shared/auth/use-auth";
 import HomePage from "../pages/home";
 import Role from "./back-office/role/role";
 import Permission from "./back-office/permission/permission";
+import { User } from "../pages/back-office/user";
 
 
 const { Sider, Content, Header, Footer } = Layout;
@@ -203,7 +204,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           
           <SubMenu key="sub4" icon={<ShopOutlined />} title="Users">
             <Menu.Item key="7">
-              <Link to="/active-users">Active User</Link>
+              <Link to="/users">Active User</Link>
             </Menu.Item>
             <Menu.Item key="8">
               <Link to="/archived-users">Archived User</Link>
@@ -306,7 +307,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           <Routes>
             <Route path="/role" element ={<Role/>} />   
             <Route path="/permission" element ={<Permission/>} />       
-    
+            <Route path="/users" element={<User/>} />
             {/* Add more routes here */}
           </Routes>
           

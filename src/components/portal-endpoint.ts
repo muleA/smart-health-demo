@@ -1,5 +1,5 @@
-import { baseUrl } from "../shared/config";
-export const authEndPoints = {
+import { baseUrl } from "../configs/config";
+export const portalEndPoints = {
   createAccount: `${baseUrl}user/create-account`,
   apply: `${baseUrl}user/add-applicationToUser`,
   createUser: `${baseUrl}user/create-user`,

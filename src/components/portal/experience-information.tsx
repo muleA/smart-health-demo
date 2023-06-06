@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Card, Collapse, Button, Input, Form, message } from "antd";
 import axios from "axios";
-import { Notify } from "../shared/notification/notify";
-import { baseUrl } from "../shared/config";
-import { useAuth } from "../shared/auth/use-auth";
+import { useAuth } from "../../shared/auth/use-auth";
 import { PlusOutlined } from "@ant-design/icons";
-import Empty from "../shared/empty-state";
+import Empty from "../../shared/empty-state";
+import { useArchiveExperienceMutation } from "../portal.query";
+import { baseUrl } from "../../configs/config";
 
 const { Panel } = Collapse;
 
@@ -21,6 +21,7 @@ interface Experience {
 
 const ExperinceInformations: React.FC = () => {
   const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [archiveExperience,{isLoading}]=useArchiveExperienceMutation()
   const { session } = useAuth();
   useEffect(() => {
     fetchExperiences();
@@ -100,6 +101,22 @@ const ExperinceInformations: React.FC = () => {
     }
   };
 
+  
+  const handleArchiveExperience = async (experience: Experience) => {
+    console.log("expe",experience)
+  try {
+    await archiveExperience(experience.id);
+    const updatedExperiences = experiences.filter(
+      (exp) => exp.id !== experience.id
+    );
+    setExperiences(updatedExperiences);
+    message.success("Experience info Archived successfully");
+  } catch (error) {
+    console.error("Error archiving experience:", error);
+    message.error("Error in archiving experience info");
+  }
+};
+
   const handleAddExperience = () => {
     const newExperience: Experience = {
       id: "", // Generate a unique ID for the new experience
@@ -145,7 +162,7 @@ const ExperinceInformations: React.FC = () => {
 
           {experiences?.length===0?(<><Empty/></>):(<>
             {experiences.map((experience: Experience, index: number) => (
-            <Collapse>
+            <Collapse key={index}>
               <Panel
                 className="mb-2"
                 header={`Experience ${index + 1}`}
@@ -155,7 +172,7 @@ const ExperinceInformations: React.FC = () => {
   <Button
                       type="primary"
                       danger
-                      onClick={() => handleDeleteExperience(experience)}
+                      onClick={() => handleArchiveExperience(experience)}
                     >
                       Archive
                     </Button>

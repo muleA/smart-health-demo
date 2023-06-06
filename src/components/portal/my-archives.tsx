@@ -1,10 +1,10 @@
 import React from "react";
-import { Card, Table, Button, Tag, Typography, message, Spin } from "antd";
+import { Card, Table, Button, Tag, message, Spin } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { useGetArchivedCertificatesQuery, useGetArchivedEducationsQuery, useGetArchivedExperiencesQuery, 
-  useRestoreCertificateMutation, useRestoreEducationMutation,useGetArchivedApplicationsQuery, useRestoreExperianceMutation } from "./portal.query";
-import { useAuth } from "../shared/auth/use-auth";
-import timeSince from "../shared/utilities/time-since";
+  useRestoreCertificateMutation, useRestoreEducationMutation,useGetArchivedApplicationsQuery, useRestoreExperianceMutation } from "../portal.query";
+import { useAuth } from "../../shared/auth/use-auth";
+import timeSince from "../../shared/utilities/time-since";
 
 const Archives = () => {
   const { session } = useAuth();

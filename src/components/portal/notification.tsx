@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table } from 'antd';
-import { useGetUsersQuery } from './portal.query';
+import { useGetUsersQuery } from '../portal.query';
 import { RightOutlined } from '@ant-design/icons';
 
 interface User {

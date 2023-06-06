@@ -4,7 +4,7 @@ import { RootState } from "./app.store";
 import { LoginRequest } from "../models/login-request";
 import { Session } from "../models/session";
 import { getCurrentSession } from "../shared/current-session";
-import { baseUrl } from "../shared/config";
+import { baseUrl } from "../configs/config";
 import jwtDecode from "jwt-decode";
 import { message } from "antd";
 

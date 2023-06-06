@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import CounterCard from "./Components/counter-card";
 import TableCard from './Components/table-card';
 import ProgressChartCard from './Components/progress-chart-card';
-import { useGetLicenseByStatusQuery } from "../portal.query";
+import { useGetLicenseByStatusQuery } from "../../portal.query";
 export default function HomePage(){
   const router=useNavigate();
   const {data:approvedLicense,isLoading:approvedLicenseLoading}=useGetLicenseByStatusQuery("APPROVED")

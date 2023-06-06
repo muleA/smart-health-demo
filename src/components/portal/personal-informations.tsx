@@ -1,12 +1,10 @@
 import { Card, Collapse, Form, Input, Button, Radio } from 'antd';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useAuth } from '../shared/auth/use-auth';
-import { useGetUsersQuery } from './portal.query';
+import { useAuth } from '../../shared/auth/use-auth';
 import { useState, useEffect } from 'react';
-import { baseUrl } from '../shared/config';
 import axios from 'axios';
-import { getCurrentSession } from '../shared/current-session';
+import { baseUrl } from '../../configs/config';
 
 const { Panel } = Collapse;
 

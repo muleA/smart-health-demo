@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Divider, Select, Space, Table, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useGetLicensesQuery } from "../home-query";
-import timeSince from "../../../shared/utilities/time-since";
+import timeSince from "../../../../shared/utilities/time-since";
 
 function TableCard() {
   const navigate = useNavigate();

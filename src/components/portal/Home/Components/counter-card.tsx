@@ -2,9 +2,8 @@ import React from 'react';
 import { BookTwoTone,  CheckCircleTwoTone,  CloseCircleTwoTone, InfoCircleTwoTone} from '@ant-design/icons';
 import  { useEffect, useState } from "react";
 import axios from "axios";
-import { baseUrl } from "../../../shared/config";
 import { useGetLicensesQuery } from '../home-query';
-import { useGetLicenseByStatusQuery } from '../../portal.query';
+import { useGetLicenseByStatusQuery } from '../../../portal.query';
 import { Spin } from 'antd';
 export interface CounterCardHeaderProps {
   header: any;
@@ -76,8 +75,8 @@ function CounterCard({approvedLicense,draftLicese,submittedLicese,REJECTEDLicese
   <Spin />
 ) : (
   <div className="flex flex-wrap">
-    {Headers.map((header) => (
-      <div className="w-full mb-4 sm:w-1/4">
+    {Headers.map((header:any,index:number) => (
+      <div className="w-full mb-4 sm:w-1/4" key={index}>
         <div className="bg-white p-5 rounded-2xl shadow-lg mr-4">
           <div className="flex gap-3">
             <div className="p-5">{header.icon}</div>

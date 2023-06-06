@@ -1,4 +1,4 @@
-import { apiSlice } from "../../store/app.api";
+import { apiSlice } from "../../../store/app.api";
 import { HomeEndPoints } from "./home-endpoint";
 
 const HomeApi = apiSlice.injectEndpoints({
