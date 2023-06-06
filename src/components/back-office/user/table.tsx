@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Table } from 'antd';
-import { useGetUsersQuery } from './user-query';
-import { Link, useNavigate } from 'react-router-dom';
-import { RightOutlined } from '@ant-design/icons';
-import timeSince from '../../../shared/utilities/time-since';
+import React, { useState } from "react";
+import { Table } from "antd";
+import { useGetUsersQuery } from "./user-query";
+import { Link, useNavigate } from "react-router-dom";
+import { RightOutlined } from "@ant-design/icons";
+import timeSince from "../../../shared/utilities/time-since";
 
 interface User {
   _id: string | null;
@@ -34,58 +34,58 @@ export const CustomTable = (): JSX.Element => {
     setSelectedRow(null);
   };
 
-
   const columns = [
     {
-      title: '',
-      dataIndex: 'id',
-      key: 'id',
+      title: "",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: 'Profile Picture',
-      dataIndex: 'profilePicture',
-      key: 'profilePicture',
+      title: "Profile Picture",
+      dataIndex: "profilePicture",
+      key: "profilePicture",
     },
     {
-      title: 'First Name',
-      dataIndex: 'firstName',
-      key: 'firstName',
+      title: "First Name",
+      dataIndex: "firstName",
+      key: "firstName",
     },
     {
-      title: 'Last Name',
-      dataIndex: 'lastName',
-      key: 'lastName',
+      title: "Last Name",
+      dataIndex: "lastName",
+      key: "lastName",
     },
     {
-      title: 'Phone Number',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title:"Created",
-      dataIndex:"updatedAt",
-      key:"updatedAt",
-      render:(updatedAt:any)=>timeSince(updatedAt)
+      title: "Created",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (updatedAt: any) => timeSince(updatedAt),
     },
     {
-      title: 'Active',
-      dataIndex: 'state',
-      key: 'state',
-      render:(state:any)=>state==='Active'?"Yes":"No"
-
+      title: "Active",
+      dataIndex: "state",
+      key: "state",
+      render: (state: any) => (state === "Active" ? "Yes" : "No"),
     },
     {
-      title: '',
-      dataIndex: '',
-      key: 'arrow',
+      title: "",
+      dataIndex: "",
+      key: "arrow",
       render: (_: any, record: User) => (
         <RightOutlined
-          className={`arrow-icon ${selectedRow === record._id ? 'visible' : 'invisible'}`}
+          className={`arrow-icon ${
+            selectedRow === record._id ? "visible" : "invisible"
+          }`}
         />
       ),
     },
@@ -96,14 +96,15 @@ export const CustomTable = (): JSX.Element => {
       onClick: () => handleRowClick(record),
       onMouseEnter: () => handleMouseEnter(record),
       onMouseLeave: handleMouseLeave,
-      className: `cursor-pointer ${selectedRow === record._id ? 'bg-gray-100' : ''}`,
+      className: `cursor-pointer ${
+        selectedRow === record._id ? "bg-gray-100" : ""
+      }`,
     };
   };
-  
 
   return (
     <Table<User>
-      dataSource={users?.data?.users??[]}
+      dataSource={users?.data?.users ?? []}
       columns={columns}
       loading={isLoading}
       onRow={rowProps}
