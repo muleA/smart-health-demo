@@ -1,36 +1,25 @@
-import React, { useState } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
 import {
-  Layout,
-  Menu,
-  Breadcrumb,
-  Avatar,
-  Dropdown,
-  Space,
-  MenuProps,
-} from "antd";
-import {
-  UserOutlined,
-  ShopOutlined,
   CarOutlined,
-  AppstoreOutlined,
-  FileTextOutlined,
-  EnvironmentOutlined,
-  ShoppingOutlined,
-  SolutionOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
+  CaretDownOutlined,
   DashboardOutlined,
   LogoutOutlined,
-  CaretDownOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
   SettingOutlined,
+  ShopOutlined,
+  SolutionOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
+import { Breadcrumb, Dropdown, Layout, Menu } from "antd";
+import React, { useState } from "react";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "../shared/auth/use-auth";
 import Role from "./back-office/role/role";
 import Permission from "./back-office/permission/permission";
 import Employee from "./back-office/employee/employee";
 import AddRole from "./back-office/role/add-role";
 import UpdateRoleForm from "./back-office/role/update-role";
+import EmployeeForm from "./back-office/employee/employee-form";
 import AddPermission from "./back-office/permission/add-permission";
 import UpdatePermissionForm from "./back-office/permission/update-permission";
 import AddEmployee from "./back-office/employee/add-employee";
@@ -41,14 +30,12 @@ import UpdatedLicenseForm from "./back-office/license/update-license";
 import Application from "./back-office/application/application";
 import AddApplication from "./back-office/application/add-application";
 import UpdatedApplicationForm from "./back-office/application/update-application";
-
-
 const { Sider, Content, Header, Footer } = Layout;
 const { SubMenu } = Menu;
 
 const BackOfficeLayoutWrapper = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
-  const {logOut}=useAuth()
+  const { logOut } = useAuth();
   const handleLogOut = (): void => {
     logOut();
   };
@@ -67,7 +54,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
       </Breadcrumb.Item>
     );
   });
-  
+
   const accountMenu = (
     <Menu className="text-primary">
       <Menu.Item key="1" onClick={handleLogOut} icon={<LogoutOutlined />}>
@@ -83,7 +70,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
     month: "short",
   })} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
   const { session } = useAuth();
-  console.log("session",session?.userInfo?.userName)
+  console.log("session", session?.userInfo?.userName);
 
   return (
     <div className="flex bg-gray-100 text-sm">
@@ -212,7 +199,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </Menu.Item>
           </SubMenu>
           <SubMenu key="sub6" icon={<CarOutlined />} title="Archives">
-          <Menu.Item key="8">
+            <Menu.Item key="8">
               <Link to="/app-archive">Applications Archives</Link>
             </Menu.Item>
             <Menu.Item key="9">
@@ -220,17 +207,17 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </Menu.Item>
             <Menu.Item key="10">
               <Link to="/emp-archive">Employee Archives</Link>
-            </Menu.Item> 
+            </Menu.Item>
             <Menu.Item key="11">
               <Link to="/user-archive">User Archives</Link>
-            </Menu.Item> 
-          </SubMenu>    
+            </Menu.Item>
+          </SubMenu>
           <Menu.Item key="12" icon={<SettingOutlined />}>
             <Link to="/settings">Settings</Link>
-          </Menu.Item>    
+          </Menu.Item>
           <Menu.Item key="13" icon={<LogoutOutlined />}>
             <Link to="/logout">Logout</Link>
-          </Menu.Item>   
+          </Menu.Item>
         </Menu>
       </Sider>
 
@@ -248,24 +235,19 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             )}
           </div>
           <div className="flex">
-  <Dropdown overlay={accountMenu}  trigger={['click']}>
-    
-    <a className="ant-dropdown-link text-primary" onClick={(e) => e.preventDefault()}>
-      <UserOutlined style={{ fontSize: '20px' }} />
-      <CaretDownOutlined className="hover:cursor-pointer text-primary" />
+            <Dropdown overlay={accountMenu} trigger={["click"]}>
+              <a
+                className="ant-dropdown-link text-primary"
+                onClick={(e) => e.preventDefault()}
+              >
+                <UserOutlined style={{ fontSize: "20px" }} />
+                <CaretDownOutlined className="hover:cursor-pointer text-primary" />
+              </a>
+            </Dropdown>
+            <div className="text-primary"> {session?.userInfo?.userName}</div>
+          </div>
 
-
-    </a>
-
-  </Dropdown>
-  <div className="text-primary">  {session?.userInfo?.userName}
-</div>
-
-</div>
-
-
-
-         {/*  <div className="flex items-center">
+          {/*  <div className="flex items-center">
             <Dropdown menu={accountMenu}>
               <a onClick={(e) => e.preventDefault()}>
                 <Space>
@@ -316,8 +298,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
         </Content>
         <Footer className="mx-auto text-center ">
           {" "}
-          &copy; {new Date().getFullYear()} {""}All Rights Reserved
-          Technologies{" "}
+          &copy; {new Date().getFullYear()} {""}All Rights Reserved Technologies{" "}
         </Footer>
       </div>
     </div>
@@ -325,4 +306,3 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
 };
 
 export default BackOfficeLayoutWrapper;
-
