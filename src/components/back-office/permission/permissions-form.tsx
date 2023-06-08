@@ -2,11 +2,11 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Checkbox, Button, Input, message } from 'antd';
 import * as Yup from 'yup';
-import { useCreateRoleMutation, useDeleteRoleMutation, useUpdateRoleMutation } from './role.query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DeleteFilled, SaveFilled } from '@ant-design/icons';
-import { Role } from '../../../models/role';
+import { Permission } from '../../../models/permission';
 import { Edit } from '@mui/icons-material';
+import { useCreatePermissionMutation, useDeletePermissionMutation, useUpdatePermissionMutation } from './permission.query';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -14,48 +14,48 @@ const validationSchema = Yup.object().shape({
   description: Yup.string().required('Description is required'),
 });
 
-const RoleForm = (props: { mode: "new" | 'update', id?: string,data?:Role }) => {
-  const [createRole, { isLoading }] = useCreateRoleMutation();
-  const [updateRole, { isLoading:updateLoading }] = useUpdateRoleMutation();
-  const [deleteRole, { isLoading:deleteLoading }] = useDeleteRoleMutation();
+const PermissionForm = (props: { mode: "new" | 'update', id?: string,data?:Permission }) => {
+  const [createPermission, { isLoading }] = useCreatePermissionMutation();
+  const [updatePermission, { isLoading:updateLoading }] = useUpdatePermissionMutation();
+  const [deletePermission, { isLoading:deleteLoading }] = useDeletePermissionMutation();
 const {id}=useParams()
   const navigate = useNavigate();
   const handleDelete=async ()=>{
     try {
-      // Call the createRole API with the form values
-      await deleteRole(id);
+      // Call the createPermission API with the form values
+      await deletePermission(id);
 
       // Display success message
-      message.success('Role deleted successfully');
-      navigate("/roles");
+      message.success('Permission deleted successfully');
+      navigate("/Permissions");
     } catch (error) {
       // Display error message
-      message.error('Failed to delete role');
+      message.error('Failed to delete Permission');
     }
   }
 
   const handleSubmit = async (values: any) => {
     if(props?.mode==='new'){
       try {
-        // Call the createRole API with the form values
-        await createRole(values);
+        // Call the createPermission API with the form values
+        await createPermission(values);
   
         // Display success message
-        message.success('Role created successfully');
-        navigate("/roles");
+        message.success('Permission created successfully');
+        navigate("/Permissions");
       } catch (error) {
         // Display error message
-        message.error('Failed to create role');
+        message.error('Failed to create Permission');
       }
     }else {
       try {
-        // Call the createRole API with the form values
-        await updateRole({...values,id:id});
+        // Call the createPermission API with the form values
+        await updatePermission({...values,id:id});
         // Display success message
-        message.success('Role Updated successfully');
+        message.success('Permission Updated successfully');
       } catch (error) {
         // Display error message
-        message.error('Failed to create role');
+        message.error('Failed to create Permission');
       }
     }
    
@@ -66,13 +66,13 @@ const {id}=useParams()
         name: props?.data?.name || '',
         key: props?.data?.key || '',
         description: props?.data?.description || '',
-        isDefault: props?.data?.isDefault || false,
+        isActive: props?.data?.isActive || false,
       }
     : {
         name: '',
         key: '',
         description: '',
-        isDefault: false,
+        isActive: false,
       };
 
   return (
@@ -102,8 +102,8 @@ const {id}=useParams()
           </div>
 
           <div className='mb-2'>
-            <label htmlFor="isDefault">Is Default</label>
-            <Field type="checkbox" id="isDefault" className="ml-2" name="isDefault" as={Checkbox} />
+            <label htmlFor="isActive">Is Active</label>
+            <Field type="checkbox" id="isActive" className="ml-2" name="isActive" as={Checkbox} />
           </div>
 
           <div className='mb-2 space-x-4'>
@@ -138,4 +138,4 @@ const {id}=useParams()
   );
 };
 
-export default RoleForm;
+export default PermissionForm;

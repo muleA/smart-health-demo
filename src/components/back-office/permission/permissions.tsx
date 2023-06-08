@@ -2,25 +2,22 @@ import { useNavigate } from "react-router-dom";
 import React, { useMemo } from "react";
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_ColumnDef } from 'material-react-table';
-import { IconButton, Typography } from '@mui/material';
-import {AddCircle, ArrowRightAlt } from '@mui/icons-material';
-import timeSince from "../../../shared/utilities/time-since";
-import { User } from "../../../models/user";
-import { useGetRolesQuery } from "../../back-office.query";
 import { DefaultPage } from "../../../shared/default-page";
-import { Role } from "../../../models/role";
+import { useGetPermissionsQuery } from "./permission.query";
+import { Permission } from "../../../models/permission";
 
-export function Roles() {
+export default function PermissionsList() {
   const navigate = useNavigate();
-  const { data: roles, isLoading, isSuccess, isError, isFetching } = useGetRolesQuery();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { data: permissions, isLoading, isSuccess, isError, isFetching } = useGetPermissionsQuery();
   const handleRowClick = (row: any) => {
     console.log("row",row)
-    navigate(`/roles/detail/${row?.original.id}`);
+    navigate(`/permissions/detail/${row?.original.id}`);
   };
 
  
 
-  const columns = useMemo<MRT_ColumnDef<Role>[]>(
+  const columns = useMemo<MRT_ColumnDef<Permission>[]>(
     () => [
       {
         accessorKey: 'name',
@@ -35,9 +32,9 @@ export function Roles() {
         header: ' Description',
       },
       {
-        accessorKey: 'isDefault',
-        header: ' Default',
-        Cell: (isDefault) => (isDefault ? 'True' : 'False'),
+        accessorKey: 'isActive',
+        header: ' Active',
+        Cell: (isActive) => (isActive ? 'True' : 'False'),
       },
      
     ],
@@ -46,16 +43,16 @@ export function Roles() {
 
   return (
     <>
- <DefaultPage title={"roles"} backButtonLink="/roles"   primaryButtonProps={{
+ <DefaultPage title={"permissions"} backButtonLink="/permissions"   primaryButtonProps={{
       children: "New",
       onClick: () => {
-        navigate("/roles/new")
+        navigate("/permissions/new")
       },
     }} >
   <div style={{width:"1200px"}}>
   <MaterialReactTable
         columns={columns}
-        data={roles ?? []}
+        data={permissions ?? []}
         muiTableBodyRowProps={({ row }) => ({
           onClick: () => handleRowClick(row),
           sx: {

@@ -6,27 +6,27 @@ import { Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { AddCircleOutlineOutlined, ArrowRightAlt } from '@mui/icons-material';
 import timeSince from "../../../shared/utilities/time-since";
 import { User } from "../../../models/user";
-import { useGetUsersQuery } from "../../back-office.query";
 import { DefaultPage } from "../../../shared/default-page";
+import { useGetEmployeesQuery } from "./employee.query";
 
-export function Users() {
+export function Employees() {
   const navigate = useNavigate();
-  const { data: users, isLoading, isSuccess, isError, isFetching } = useGetUsersQuery();
+  const { data: Employees, isLoading, isSuccess, isError, isFetching } = useGetEmployeesQuery();
 
   const handleAddClick = () => {
-    navigate('/add-user');
+    navigate('/add-employee');
   };
 
   const handleRowClick = (row: any) => {
     console.log("row",row)
-    navigate(`/users/detail/${row?.original.id}`);
+    navigate(`/Employees/detail/${row?.original.id}`);
   };
 
   const CustomHeader = () => {
     return (
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Users
+          Employees
         </Typography>
         <Button color="primary" onClick={handleAddClick}>
           <AddCircleOutlineOutlined />
@@ -108,11 +108,17 @@ export function Users() {
 
  */}      
  
- <DefaultPage title={"Users"} backButtonLink="/users" >
+ <DefaultPage title={"Employees"} backButtonLink="/Employees" 
+ primaryButtonProps={{
+      children: "New",
+      onClick: () => {
+        navigate("/employees/new")
+      },
+    }}  >
   <div style={{width:"1200px"}}>
   <MaterialReactTable
         columns={columns}
-        data={users ?? []}
+        data={Employees ?? []}
         muiTableBodyRowProps={({ row }) => ({
           onClick: () => handleRowClick(row),
           sx: {

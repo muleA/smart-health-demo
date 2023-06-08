@@ -1,76 +1,41 @@
 import { apiSlice } from "../store/app.api";
-import { portalEndPoints } from "./portal-endpoint";
+import { backOfficeEndPoints } from "./back-office.endpoint";
 
 const backOfficeApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<any, void>({
       query: () => ({
-        url: portalEndPoints.getUsers,
+        url: backOfficeEndPoints.getUsers,
         method: "GET",
       }),
       providesTags: ["user"],
     }),
-    getArchivedEducations: builder.query<any, string>({
-      query: (userId) => ({
-        url: `${portalEndPoints.getArchivedEducations}/${userId}`,
-        method: "GET",
-      }),
-      providesTags: ["Education"],
-    }),  
-    getLicenseByStatus: builder.query<any, string>({
-      query: (status) => ({
-        url: `${portalEndPoints.getApplicationByStatus}/${status}`,
-        method: "GET",
-      }),
-      providesTags: ["user"],
-    }),  
-    getArchivedCertificates: builder.query<any, string>({
-      query: (userId) => ({
-        url: `${portalEndPoints.getArchivedCertificates}/${userId}`,
-        method: "GET",
-      }),
-      providesTags: ["user"],
-    }),    
-    getArchivedExperiences: builder.query<any, string>({
-      query: (userId) => ({
-        url: `${portalEndPoints.getArchivedExperience}/${userId}`,
-        method: "GET",
-      }),
-      providesTags: ["Experience"],
-    }),      
-
-    getAccounts: builder.query<any, void>({
+    getRoles: builder.query<any, void>({
       query: () => ({
-        url: portalEndPoints.getAccounts,
+        url: backOfficeEndPoints.getRoles,
         method: "GET",
       }),
-      providesTags: ["user"],
+      providesTags: ["Role"],
     }),
-    getApplicationDetails: builder.query<any, any>({
-      query: (id:any) => ({
-        url: `${portalEndPoints.getApplicationDetail}/${id}`,
-        method: "GET",
-      }),
-      providesTags: ["user"],
-    }),
-    getArchivedApplications: builder.query<any, any>({
+    getApplications: builder.query<any, void>({
       query: () => ({
-        url: `${portalEndPoints.getArchivedApplications}`,
+        url: backOfficeEndPoints.getLicenses,
         method: "GET",
       }),
       providesTags: ["user"],
     }),
-    createAccount: builder.mutation<any, any>({
+  
+    restoreEducation: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: portalEndPoints.createAccount,
+        url: `${backOfficeEndPoints.createAccount}${newUser}`,
         method: "POST",
         data: newUser,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["Education"],
     }),
-    restoreEducation: builder.mutation<any, any>({
+    updatedUser: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${portalEndPoints.restoreEducation}${newUser}`,
+        url: `${backOfficeEndPoints.createUser}`,
         method: "POST",
         data: newUser,
       }),
@@ -78,108 +43,22 @@ const backOfficeApi = apiSlice.injectEndpoints({
     }),
     restoreApplication: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${portalEndPoints.restoreApplication}${newUser}`,
+        url: `${backOfficeEndPoints}${newUser}`,
         method: "POST",
         data: newUser,
       }),
       invalidatesTags: ["user"],
     }),
 
-    archiveApplication: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: `${portalEndPoints.archiveApplication}${newUser}`,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["user"],
-    }),
-    archiveEducation: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: `${portalEndPoints.archiveEducation}${newUser}`,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["Education"],
-    }),archiveExperience: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: `${portalEndPoints.archiveExperience}${newUser}`,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["Experience"],
-    }),
-    archiveCertificate: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: `${portalEndPoints.archiveCertificate}${newUser}`,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["user"],
-    }),
-
-    restoreExperiance: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: `${portalEndPoints.restoreExperience}${newUser}`,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["Experience"],
-    }),
-    restoreCertificate: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: `${portalEndPoints.restoreCertificate}/${newUser}`,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["user"],
-    }),
-    addEducation: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: portalEndPoints.addEducation,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["Education"],
-    }),
-    applyToLicense: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: `${portalEndPoints.apply}/${newUser}`,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["user"],
-    }),
-    createUser: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: portalEndPoints.createUser,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["user"],
-    }),
-  }),
+  })
 });
 
 export const {
-  useCreateAccountMutation,
-  useCreateUserMutation,
-  useGetAccountsQuery,
+
   useGetUsersQuery,
-  useApplyToLicenseMutation,
-  useAddEducationMutation,
-  useGetArchivedEducationsQuery,
-  useGetArchivedCertificatesQuery,
-  useGetArchivedExperiencesQuery,
-  useRestoreCertificateMutation,
   useRestoreEducationMutation,
-   useRestoreExperianceMutation,
-   useLazyGetApplicationDetailsQuery,
-   useGetApplicationDetailsQuery,
-   useArchiveApplicationMutation,
    useRestoreApplicationMutation,
-   useGetArchivedApplicationsQuery,
-   useArchiveCertificateMutation,
-   useArchiveEducationMutation,
-   useArchiveExperienceMutation,
-   useGetLicenseByStatusQuery
+   useUpdatedUserMutation,
+   useGetRolesQuery,
+   useGetApplicationsQuery
 } = backOfficeApi;

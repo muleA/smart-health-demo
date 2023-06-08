@@ -27,17 +27,25 @@ import {
 } from "@ant-design/icons";
 import { useAuth } from "../shared/auth/use-auth";
 import HomePage from "../pages/home";
-import Role from "./back-office/role/role";
-import Permission from "./back-office/permission/permission";
 import { User } from "../pages/back-office/user";
-
+import { UserDetail } from "./back-office/user/detail";
+import Sidebar from "../shared/shell/sidebar";
+import { Roles } from "./back-office/role/role";
+import DetailRole from "./back-office/role/detail.";
+import NewRole from "./back-office/role/new-role";
+import { PermissionLists } from "../pages/back-office/permissions/permission";
+import DetailPermissions from "./back-office/permission/detail.";
+import NewPermission from "./back-office/permission/new-permissions";
+import { EmployeeDetailsPage } from "../pages/back-office/employee/detail";
+import { EmployeesPage } from "../pages/back-office/employee/employees";
+import { NewEmployee } from "./back-office/employee/new-employee";
 
 const { Sider, Content, Header, Footer } = Layout;
 const { SubMenu } = Menu;
 
 const BackOfficeLayoutWrapper = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
-  const {logOut}=useAuth()
+  const { logOut } = useAuth();
   const handleLogOut = (): void => {
     logOut();
   };
@@ -56,7 +64,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
       </Breadcrumb.Item>
     );
   });
-  
+
   const accountMenu = (
     <Menu className="text-primary">
       <Menu.Item key="1" onClick={handleLogOut} icon={<LogoutOutlined />}>
@@ -72,7 +80,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
     month: "short",
   })} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
   const { session } = useAuth();
-  console.log("session",session?.userInfo?.userName)
+  console.log("session", session?.userInfo?.userName);
 
   return (
     <div className="flex bg-gray-100 text-sm">
@@ -166,84 +174,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </g>
           </svg>
         </div>
-        <Menu
-          mode="inline"
-          className="bg-gray-100"
-          defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
-          style={{ height: "100%", borderRight: 0 }}
-        >
-          <Menu.Item key="1" icon={<DashboardOutlined />}>
-            <Link to="/dashboard">Dashboard</Link>
-          </Menu.Item>
-           
-          <SubMenu key="sub1" icon={<SolutionOutlined />} title="License">
-            <Menu.Item key="2" itemIcon>
-              <Link to="/active-license">Active License</Link>
-            </Menu.Item>
-            <Menu.Item key="3" itemIcon>
-              <Link to="/archived-license">Archived License</Link>
-            </Menu.Item>
-          </SubMenu>  
-          <SubMenu key="sub2" icon={<SolutionOutlined />} title="Application">
-            <Menu.Item key="3" itemIcon>
-              <Link to="/active-app">Active Application</Link>
-            </Menu.Item>
-            <Menu.Item key="4" itemIcon>
-              <Link to="/archived-app">Archived Application</Link>
-            </Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub3" icon={<SolutionOutlined />} title="Employees">
-            <Menu.Item key="5" itemIcon>
-              <Link to="/active-emp">Active Employees</Link>
-            </Menu.Item>
-            <Menu.Item key="6" itemIcon>
-              <Link to="/archived-emp">Archived Employees</Link>
-            </Menu.Item>
-          </SubMenu>
-          
-          <SubMenu key="sub4" icon={<ShopOutlined />} title="Users">
-            <Menu.Item key="7">
-              <Link to="/users">Active User</Link>
-            </Menu.Item>
-            <Menu.Item key="8">
-              <Link to="/archived-users">Archived User</Link>
-            </Menu.Item>
-           
-          </SubMenu>
-          <SubMenu
-            key="sub5"
-            icon={<UserOutlined />}
-            title="Roles & Permissions"
-          >
-            <Menu.Item key="9">
-              <Link to="/Permission">Permissions</Link>
-            </Menu.Item>
-            <Menu.Item key="10">
-              <Link to="/role">Roles</Link>
-            </Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub6" icon={<CarOutlined />} title="Archives">
-          <Menu.Item key="34">
-              <Link to="/app-archive">Applications Archives</Link>
-            </Menu.Item>
-            <Menu.Item key="5">
-              <Link to="/license-archive">License Archives</Link>
-            </Menu.Item>
-            <Menu.Item key="6">
-              <Link to="/emp-archive">Employee Archives</Link>
-            </Menu.Item> 
-            <Menu.Item key="7">
-              <Link to="/user-archive">User Archives</Link>
-            </Menu.Item> 
-          </SubMenu>    
-          <Menu.Item key="56" icon={<SettingOutlined />}>
-            <Link to="/settings">Settings</Link>
-          </Menu.Item>    
-          <Menu.Item key="45" icon={<LogoutOutlined />}>
-            <Link to="/logout">Logout</Link>
-          </Menu.Item>   
-        </Menu>
+        <Sidebar />
       </Sider>
 
       <div className="flex-1 bg-white" style={{ minHeight: "100vh" }}>
@@ -260,24 +191,19 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             )}
           </div>
           <div className="flex">
-  <Dropdown overlay={accountMenu}  trigger={['click']}>
-    
-    <a className="ant-dropdown-link text-primary" onClick={(e) => e.preventDefault()}>
-      <UserOutlined style={{ fontSize: '20px' }} />
-      <CaretDownOutlined className="hover:cursor-pointer text-primary" />
+            <Dropdown overlay={accountMenu} trigger={["click"]}>
+              <a
+                className="ant-dropdown-link text-primary"
+                onClick={(e) => e.preventDefault()}
+              >
+                <UserOutlined style={{ fontSize: "20px" }} />
+                <CaretDownOutlined className="hover:cursor-pointer text-primary" />
+              </a>
+            </Dropdown>
+            <div className="text-primary"> {session?.userInfo?.userName}</div>
+          </div>
 
-
-    </a>
-
-  </Dropdown>
-  <div className="text-primary">  {session?.userInfo?.userName}
-</div>
-
-</div>
-
-
-
-         {/*  <div className="flex items-center">
+          {/*  <div className="flex items-center">
             <Dropdown menu={accountMenu}>
               <a onClick={(e) => e.preventDefault()}>
                 <Space>
@@ -303,20 +229,34 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </div>
             {/* Content */}
           </div>
-          <div className="py-2 min-h-screen">{children}
-          <Routes>
-            <Route path="/role" element ={<Role/>} />   
-            <Route path="/permission" element ={<Permission/>} />       
-            <Route path="/users" element={<User/>} />
-            {/* Add more routes here */}
-          </Routes>
-          
+          <div className="py-2 min-h-screen">
+            {children}
+            <Routes>
+              <Route path="/employees" element={<EmployeesPage />} />
+              <Route
+                path="employees/detail/:id"
+                element={<EmployeeDetailsPage />}
+              />
+              <Route path="employees/new" element={<NewEmployee />} />
+              <Route path="/roles" element={<Roles />} />
+              <Route path="roles/detail/:id" element={<DetailRole />} />
+              <Route path="roles/new" element={<NewRole />} />
+              <Route
+                path="permissions/detail/:id"
+                element={<DetailPermissions />}
+              />
+              <Route path="permissions/new" element={<NewPermission />} />
+              <Route path="/permissions" element={<PermissionLists />} />
+              <Route path="/users" element={<User />} />
+              <Route path="users/detail/:id" element={<UserDetail />} />
+
+              {/* Add more routes here */}
+            </Routes>
           </div>
         </Content>
         <Footer className="mx-auto text-center ">
           {" "}
-          &copy; {new Date().getFullYear()} {""}All Rights Reserved
-          Technologies{" "}
+          &copy; {new Date().getFullYear()} {""}All Rights Reserved Technologies{" "}
         </Footer>
       </div>
     </div>
@@ -324,4 +264,3 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
 };
 
 export default BackOfficeLayoutWrapper;
-

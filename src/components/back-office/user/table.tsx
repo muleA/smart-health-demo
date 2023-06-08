@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table } from 'antd';
-import { useGetUsersQuery } from './user-query';
+import { useGetUsersQuery } from '../../back-office.query';
 import { Link, useNavigate } from 'react-router-dom';
 import { RightOutlined } from '@ant-design/icons';
 import timeSince from '../../../shared/utilities/time-since';
@@ -15,7 +15,7 @@ interface User {
 }
 
 export const CustomTable = (): JSX.Element => {
-  const { data: users, isLoading } = useGetUsersQuery(0);
+  const { data: users, isLoading } = useGetUsersQuery();
 
   const history = useNavigate();
   const [selectedRow, setSelectedRow] = useState<string | null>(null);

@@ -2,20 +2,16 @@ import { useNavigate } from "react-router-dom";
 import React, { useMemo } from "react";
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_ColumnDef } from 'material-react-table';
-import { IconButton, Typography } from '@mui/material';
-import {AddCircle, ArrowRightAlt } from '@mui/icons-material';
-import timeSince from "../../../shared/utilities/time-since";
-import { User } from "../../../models/user";
-import { useGetRolesQuery } from "../../back-office.query";
 import { DefaultPage } from "../../../shared/default-page";
 import { Role } from "../../../models/role";
+import { useGetLicenseQuery } from "./license.query";
 
-export function Roles() {
+export function License() {
   const navigate = useNavigate();
-  const { data: roles, isLoading, isSuccess, isError, isFetching } = useGetRolesQuery();
+  const { data: license, isLoading, isSuccess, isError, isFetching } = useGetLicenseQuery();
   const handleRowClick = (row: any) => {
     console.log("row",row)
-    navigate(`/roles/detail/${row?.original.id}`);
+    navigate(`/license/detail/${row?.original.id}`);
   };
 
  
@@ -46,16 +42,16 @@ export function Roles() {
 
   return (
     <>
- <DefaultPage title={"roles"} backButtonLink="/roles"   primaryButtonProps={{
+ <DefaultPage title={"license"} backButtonLink="/license"   primaryButtonProps={{
       children: "New",
       onClick: () => {
-        navigate("/roles/new")
+        navigate("/license/new")
       },
     }} >
   <div style={{width:"1200px"}}>
   <MaterialReactTable
         columns={columns}
-        data={roles ?? []}
+        data={license ?? []}
         muiTableBodyRowProps={({ row }) => ({
           onClick: () => handleRowClick(row),
           sx: {
