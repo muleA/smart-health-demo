@@ -26,17 +26,21 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "../shared/auth/use-auth";
-import HomePage from "../pages/home";
 import Role from "./back-office/role/role";
 import Permission from "./back-office/permission/permission";
-import RoleForm from "./back-office/role/role-form";
-import PermissionForm from "./back-office/permission/permission-form";
 import Employee from "./back-office/employee/employee";
-import EmployeeForm from "./back-office/employee/employee-form";
 import AddRole from "./back-office/role/add-role";
 import UpdateRoleForm from "./back-office/role/update-role";
 import AddPermission from "./back-office/permission/add-permission";
 import UpdatePermissionForm from "./back-office/permission/update-permission";
+import AddEmployee from "./back-office/employee/add-employee";
+import UpdatedEmployeeForm from "./back-office/employee/update-employee";
+import License from "./back-office/license/license";
+import AddLicense from "./back-office/license/add-license";
+import UpdatedLicenseForm from "./back-office/license/update-license";
+import Application from "./back-office/application/application";
+import AddApplication from "./back-office/application/add-application";
+import UpdatedApplicationForm from "./back-office/application/update-application";
 
 
 const { Sider, Content, Header, Footer } = Layout;
@@ -193,7 +197,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
               <Link to="/employee"> Employees</Link>
             </Menu.Item>
             <Menu.Item key="5" icon={<ShopOutlined />} >
-              <Link to="/users">Active User</Link>
+              <Link to="/users"> User</Link>
             </Menu.Item>
           <SubMenu
             key="sub5"
@@ -296,7 +300,15 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             <Route path="/add-permission" element={<AddPermission/>} />
             <Route path="/update-permission" element={<UpdatePermissionForm/>} />
             <Route path="/employee" element ={<Employee/>} />       
-            <Route path="/employee-form" element={<EmployeeForm/>} />
+            <Route path="/add-employee" element={<AddEmployee/>} />
+            <Route path="/update-employee" element={<UpdatedEmployeeForm/>} />
+            <Route path="/license" element ={<License/>} />       
+            <Route path="/add-license" element={<AddLicense/>} />
+            <Route path="/update-license" element={<UpdatedLicenseForm/>} />   
+            <Route path="/application" element ={<Application/>} />       
+            <Route path="/add-application" element={<AddApplication/>} />
+            <Route path="/update-application" element={<UpdatedApplicationForm/>} />
+
             {/* Add more routes here */}
           </Routes>
           

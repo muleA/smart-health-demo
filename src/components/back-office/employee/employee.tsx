@@ -9,6 +9,7 @@ import {
   FolderOutlined,
   MoreOutlined,
   PlusOutlined,
+  RightOutlined,
 } from '@ant-design/icons';
 import {
   Breadcrumb,
@@ -32,37 +33,6 @@ function Employee() {
   const navigate = useNavigate();
   const { Search } = Input;
 
-
-  const popUpMenus = () => {
-    return (
-      <Menu style={{ width: '200px' }}>
-        <Menu.Item>
-          <div style={{ display: 'flex' }}>
-            <ArrowRightOutlined />
-            <p style={{ marginLeft: '10px' }}> Open </p>
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div style={{ display: 'flex' }}>
-            <EditOutlined />
-            <p style={{ marginLeft: '10px' }}> Edit </p>
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div style={{ display: 'flex' }}>
-            <AlignRightOutlined />
-            <p style={{ marginLeft: '10px' }}> Some Option.. </p>
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div style={{ display: 'flex' }}>
-            <DeleteOutlined />
-            <p style={{ marginLeft: '10px' }}> Delete </p>
-          </div>
-        </Menu.Item>
-      </Menu>
-    );
-  };
   const menu = () => {
     return (
       <Menu style={{ width: '200px' }}>
@@ -89,75 +59,135 @@ function Employee() {
   const rows = [
     {
       id:"1",
-      name: 'John Brown',
-      description: 'lorem enim ad minim veris nostrud ex ea commado',
+      accountId:"JB-14541",
+      firstName: 'John ',
+      middleName: ' Brown',
+      lastName: 'John ',
+      gender:'male',
+      city:'United States',
+      subCity:'Arizona',
+      wereda:'5',
+      kebele:'14',
+      phone: '+12354545',
+      email:'john@gmail.com',
+      houseNumber:'1234',
       updatedAt: '2014-12-24 23:12:00',
       createdAt: '2014-12-28 23:12:00',
       deletedAt: '2014-12-28 23:12:00',
       updatedBy:"Adam Smith",
       createdBy:"Heather Smith",
       deletedBy:"John Snow",
-      isActive: ['Yes'],
+      status: ['Yes'],
     },
     {
       id:"2",
-      name: 'Jim Green',
-      description: 'lorem enim ad minim veris nostrud ex ea commado',
+      accountId:"JB-14542",
+      firstName: 'John ',
+      middleName: ' Brown',
+      lastName: 'John ',
+      gender:'male',
+      city:'United States',
+      subCity:'Arizona',
+      wereda:'5',
+      kebele:'14',
+      phone: '+12354545',
+      email:'john@gmail.com',
+      houseNumber:'1234',
       updatedAt: '2014-12-24 23:12:00',
       createdAt: '2014-12-28 23:12:00',
       deletedAt: '2014-12-28 23:12:00',
       updatedBy:"Adam Smith",
       createdBy:"Heather Smith",
       deletedBy:"John Snow",
-      isActive: ['Yes'],
+      status: ['Yes'],
     },
     {
       id:"3",
-      name: 'Joe Black',
-      description: 'lorem enim ad minim veris nostrud ex ea commado',
+      accountId:"JB-14543",
+      firstName: 'John ',
+      middleName: ' Brown',
+      lastName: 'John ',
+      gender:'male',
+      city:'United States',
+      subCity:'Arizona',
+      wereda:'5',
+      kebele:'14',
+      phone: '+12354545',
+      email:'john@gmail.com',
+      houseNumber:'1234',
       updatedAt: '2014-12-24 23:12:00',
       createdAt: '2014-12-28 23:12:00',
       deletedAt: '2014-12-28 23:12:00',
       updatedBy:"Adam Smith",
       createdBy:"Heather Smith",
       deletedBy:"John Snow",
-      isActive: ['No'],
+      status: ['No'],
     },
     {
       id:"4",
-      name: 'John Brown',
-      description: 'lorem enim ad minim veris nostrud ex ea commado',
+      accountId:"JB-14544",
+      firstName: 'Kate ',
+      middleName: ' Brown',
+      lastName: 'Kate ',
+      gender:'male',
+      city:'United States',
+      subCity:'Arizona',
+      wereda:'5',
+      kebele:'14',
+      phone: '+12354545',
+      email:'john@gmail.com',
+      houseNumber:'1234',
       updatedAt: '2014-12-24 23:12:00',
       createdAt: '2014-12-28 23:12:00',
       deletedAt: '2014-12-28 23:12:00',
       updatedBy:"Adam Smith",
       createdBy:"Heather Smith",
       deletedBy:"John Snow",
-      isActive: ['Yes'],
+      status: ['Yes'],
     },
     {
       id:"5",
-      name: 'Jim Green',
-      description: 'lorem enim ad minim veris nostrud ex ea commado',
+      accountId:"JB-14545",
+      firstName: 'Smith ',
+      middleName: ' Brown',
+      lastName: 'Smith ',
+      gender:'male',
+      city:'United States',
+      subCity:'Arizona',
+      wereda:'5',
+      kebele:'14',
+      phone: '+12354545',
+      email:'john@gmail.com',
+      houseNumber:'1234',
       updatedAt: '2014-12-24 23:12:00',
       createdAt: '2014-12-28 23:12:00',
       deletedAt: '2014-12-28 23:12:00',
       updatedBy:"Adam Smith",
       createdBy:"Heather Smith",
-      deletedBy:"John Snow",
-      isActive: ['Yes'],
+      deletedBy:"Smith Snow",
+      status: ['Yes'],
     },
     {
       id:"6",
-      name: 'Joe Black',
-      description: 'lorem enim ad minim veris nostrud ex ea commado',
+      accountId:"JB-14546",
+      firstName: 'Samantha ',
+      middleName: ' Brown',
+      lastName: 'Samantha ',
+      gender:'male',
+      city:'United States',
+      subCity:'Arizona',
+      wereda:'5',
+      kebele:'14',
+      phone: '+12354545',
+      email:'john@gmail.com',
+      houseNumber:'1234',
       updatedAt: '2014-12-24 23:12:00',
       createdAt: '2014-12-28 23:12:00',
       deletedAt: '2014-12-28 23:12:00',
       updatedBy:"Adam Smith",
       createdBy:"Heather Smith",
       deletedBy:"John Snow",
-      isActive: ['No'],
+      status: ['No'],
     },
   ];
   const columns = [
@@ -167,21 +197,64 @@ function Employee() {
       key: 'id',
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Account Id',
+      dataIndex: 'accountId',
+      key: 'accountId',
+    },
+    {
+      title: 'First Name',
+      dataIndex: 'firstName',
+      key: 'firstName',
       render: (text:any) => (
         <a>
           {text}
         </a>
       ),
-      sorter: (a:any, b:any) => a.name.length - b.name.length,
+      sorter: (a:any, b:any) => a.firstName.length - b.firstName.length,
     },
     {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-    },
+      title: 'Middle Name',
+      dataIndex: 'middleName',
+      key: 'middleName', },
+    
+    {
+      title: 'Last Name',
+      dataIndex: 'lastName',
+      key: 'lastName', },
+      {
+        title: 'Gender',
+        dataIndex: 'gender',
+        key: 'gender', },
+        {
+          title: 'City',
+          dataIndex: 'city',
+          key: 'city', },
+          {
+            title: 'Sub City',
+            dataIndex: 'subCity',
+            key: 'subCity', },
+            {
+              title: 'Wereda',
+              dataIndex: 'wereda',
+              key: 'wereda', },
+                          
+              {
+                title: 'Kebele',
+                dataIndex: 'kebele',
+                key: 'kebele',
+              },{
+                title: 'Phone',
+                dataIndex: 'phone',
+                key: 'phone',
+              },{
+                title: 'Email',
+                dataIndex: 'email',
+                key: 'email',
+              },{
+                title: 'House Number',
+                dataIndex: 'houseNumber',
+                key: 'houseNumber',
+              },
     { title: 'Created At', dataIndex: 'createdAt', key: 'createdAt' },
     {
       title: 'Created By', dataIndex: 'createdBy', key: 'createdB',
@@ -193,9 +266,9 @@ function Employee() {
     { title: 'Deleted At', dataIndex: 'deletedAt', key: 'deletedAt' },
     { title: ' Deleted By', dataIndex: 'deletedBy', key: 'deletedBy'},
     {
-      title: 'Is Active',
-      key: 'isActive',
-      dataIndex: 'isActive',
+      title: 'Status',
+      key: 'status',
+      dataIndex: 'status',
       render: (status:any) => (
         <span>
           {status.map((tag:any) => {
@@ -222,12 +295,8 @@ function Employee() {
       render: (action:any) => {
         return (
           <>
-            <EditOutlined />
-            <Dropdown overlay={popUpMenus()} trigger={['click']}>
-              <a data-id={action} className="ant-dropdown-link">
-                <MoreOutlined />
-              </a>
-            </Dropdown>
+                    <RightOutlined/>
+
           </>
         );
       },
@@ -235,7 +304,7 @@ function Employee() {
   ];
 
   return (
-    <div className="m-4 bg-white p-4 rounded-l shadow-lg ">
+    <div className="m-4 bg-white p-4 rounded-l shadow-lg " style={{width: "82vw"}}>
       <div className="flex header justify-between">
         <div className="flex flex-col">
           <span className="text-2xl font-bold text-blue-400">
@@ -244,7 +313,7 @@ function Employee() {
         </div>
         <div className="flex">
             <div>
-              <Button onClick={() =>navigate('/employee-form')} className="bg-blue-500 flex justify-between">
+              <Button onClick={() =>navigate('/add-employee')} className="bg-blue-500 flex justify-between">
               <PlusOutlined className="py-1 px-1 text-white" />
             <div className="text-white"> New Employee</div>
           </Button>
@@ -274,8 +343,15 @@ function Employee() {
         </div>
       </div>
       <div>
-        <div className="py-4 flex gap-4">
-            <Table dataSource={rows} columns={columns} />
+        <div >
+            <Table dataSource={rows} columns={columns}  scroll={{ x: "calc(500px + 50%)" }}
+              onRow={() => {
+                return {
+                  onClick: (event) => {navigate('/update-employee') },
+                };
+                
+              }}
+               />
       
         </div>
       </div>
