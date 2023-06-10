@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Certificate Design</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    P , h1,h2, h3 {
+        margin: 5px;
+    }
+    p{
+        font-size: 20px;
+    }
+    .container {
+      width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 4px double #000;
+      border-radius: 10px;
+      background-color: #f8f8f8;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .logo {
+      width: 100px;
+    }
+    .certificate-code {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .user-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .user-image {
+      width: 150px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+    .user-name {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .content {
+      display: flex;
+    }
+    .left-header {
+      width: 10%;
+      height: 15%;
+      text-align: right;
+    }
+    .center-header {
+      width: 80%;
+      text-align: center;
+    }
+    .right-header {
+      width: 20%;
+      height: 15%;
+      text-align: left;
+    }
+    .left-content {
+      width: 50%;
+      padding-right: 20px;
+      border-right: 2px solid #ccc;
+      text-align: right;
+    }
+    .right-content {
+      width: 50%;
+      padding-left: 20px;
+      text-align: left;
+    }
+    .border{
+      border: 2px solid #000;
+      
+    }
+    .center{
+display: flex;
+justify-content: center;    }
+    .column {
+  float: left;
+  width: 30.33%;
+  border: 2px solid;
+  padding: 5px;
+  height: 150px;
+}
+
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="content">
+                <div class="left-header ">
+                    <img src="https://media.licdn.com/dms/image/D4E03AQG4jgEziXXBEg/profile-displayphoto-shrink_400_400/0/1677379760383?e=1691625600&v=beta&t=6Kzp_ovzQASomlB5_6q0Y7-EYRBZ45dhtbtkHK_OtBE" alt="User" class="user-image">
+                </div>
+                <div class="center-header">
+                   <img src="data:image/jpeg;base64,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" alt="Logo" width="100">
+                   <div class="certificate-code">
+                    <h1>በአዲስ አበባ ከተማ አስተዳደር የምግብ፣የመድኃኒትና</h1>
+                    <h1>የጤና ክብካቤ አስተዳደርና ቁጥጥር ባለስልጣን </h1>
+                    <h1>የቴሌሄልዝ ሴንተር የብቃት ማረጋገጫ</h1>
+                  </div>
+                  </div>
+                  <div class="right-header border">
+                    <p> ቁጥር ጤ/ተ/ባ </p>
+                    <p>ቅን 16/05/2015 ዓ.ም</p>
+                  </div>
+                
+              </div>
+      
+        <div >
+            <div class="content">
+                <p>የድርጅቱ ስምና ደረጃ</p>
+                <p style="text-decoration: underline; font-weight: bold;">አቢሲኒያ መድኃኒት ቤት ቁጥር.5</p>
+            </div><div class="content">
+                <p>የድርጅቱ አድራሻ፤ መስተዳድር </p>
+                <p style="text-decoration: underline; font-weight: bold;">አ/አ</p>
+                <p>ክ/ከተማ</p>
+                <p style="text-decoration: underline; font-weight: bold;">ን/ስ/ሳ</p>
+                <p> ወረዳ</p>
+                <p style="text-decoration: underline; font-weight: bold;">06</p>
+                <p>የቤት ቁጥር</p>
+                <p style="text-decoration: underline; font-weight: bold;">3495</p>
+                <p>የስልክ ቁጥር </p>
+                <p style="text-decoration: underline; font-weight: bold;">090930097848</p>
+            </div>  
+            <div class="content">
+                <p>የድርጅቱ ባለንብረት ስም</p>
+                <p style="text-decoration: underline; font-weight: bold;">አቶ ሳምሶን አሰፋ</p>
+            </div>  <div class="content">
+                <p>የየድርጅቱ ባለሙያ ስም</p>
+                <p style="text-decoration: underline; font-weight: bold;">ወ/ሪች ህይወት ምትኩ</p>
+                <p>የአያት ስም</p>
+                <p style="text-decoration: underline; font-weight: bold;">አኑሎ </p>
+                <p>የስልክ ቁጥር</p>
+                <p style="text-decoration: underline; font-weight: bold;">093767306/0930097848</p>
+            </div>  <div class="content">
+                <p>የሙያ ደረጃ </p>
+                <p style="text-decoration: underline; font-weight: bold;">ጁኒየር ፋርማሲስት</p>
+            </div>  <div class="content">
+                <p>የመያ ምዝገባ ቁጥር </p>
+                <p style="text-decoration: underline; font-weight: bold;">JP=1906/2011</p>
+            </div>   
+                <p>ድርጅቱ ተፈላጊውን ሙያዊ፤ ድርጅታዊና ሌሎች መስፈርቶችን ማሟላቱ ይህ የብቃት ማረጋገጫ ምስክር ወረቀት የምግብ፣የመድኃኒትና የጤና ክብካቤ አስተዳደርና ቁጥጥር አዋጅ 64/2011 ቁጥር ፤44መሠረት በባለሙያው/ዋ <b> ወ/ሪት ህይወት ምትኩ </b> ሰም ተሰጥቷል፡፡</p>
+               <div >
+                        <div class="column" >
+                          <h2>ለ 2015 ዓ.ም </h2>
+                          <p> በደረሰኝ ቁጥር-----------------</p>
+                          <p>የአገልግሎት ክፍያ ተከፍሎ ታድሷል፡፡</p>
+                          <p>ፊርማና ቀን--------------</p>
+                        </div>
+                        <div class="column" >
+                          <h2>ለ 2016 ዓ.ም</h2>
+                          <p> በደረሰኝ ቁጥር-----------------</p>
+                          <p>የአገልግሎት ክፍያ ተከፍሎ ታድሷል፡፡</p>
+                          <p>ፊርማና ቀን--------------</p>
+                        </div>
+                        <div class="column">
+                          <h2>ለ 2017 ዓ.ም</h2>
+                          <p> በደረሰኝ ቁጥር-----------------</p>
+                          <p>የአገልግሎት ክፍያ ተከፍሎ ታድሷል፡፡</p>
+                          <p> ፊርማና ቀን--------------</p>
+                        </div>
+                      </div>
+                      <div>
+                    <p style="text-decoration: underline; font-weight: bold;">ማስጠንቀቂያ፣</p>
+                    <ol>
+                        <li><p>የብቃት ማረጋገጫ ምስክር ወረቀት</p></li>
+                        <ul style="list-style-type:square">
+                        <li><p>የሚሰጠው ወይም የማቷደሰው በተደረገው ቅድመ ወይም ድህረ ፈቃድ ኢንስፔክሽን ድርጅቱ ብቁ ሆኖ ሲገኝና የአገልግሎት ክፍያ ሲከፈል፡፡ በድርጅቱ ውስጥ ፊት ለፊት ሆኖ በሚታይ ስፍራ መኖር አለበት፡፡</p></li>
+                        <li style="text-decoration: underline; font-weight: bold;"><p>በየዓመቱ ከሐምሌ አስከ መስከረም ባለው የጊዜ ገደብ ውስጥ ካልታደሰ አንደተሰረዘ ይቆጠራል፡፡</p></li>
+                        <li><p>ባለሙያው ስራውን ሲለቅ ወይም ድርጅቱ ሲዘጋ መመለስና ድርጅቱም ወዲያው መዘጋት አለበት፡፡</p></li>
+                       <li><p>ድርጅቱ ስለጤና ተቋማት አገልግሎት አሰጣጥ የወጡትን ህጎች ፣ ደንቦችና መመሪያዎች የማይከተል ከሆነ ሊታገድ ወይም ሊሠረዝ ይችላል፡፡ </p></li>
+                      </ul>
+                        <li><p>ድርጅቱ ክፍት ሆኖ አገልግሎት መስጠት የሚችለው በስመ- የብቃት ማረጋገጫ ምስክር ወረቀት የተሰጠው ባለሙያ ባለበት ብቻ ነው፡፡</p></li>
+                        <li><p>የብቃት ማረጋገጫ ምስክር ወረቀት ሰጪው አካል ሣይፈቅድ በድርጅቱ ማንኛውንም ዓይነት ለውጥ ማድረግ የተከለከለ ነው፡:</p></li>
+                      </ol> 
+                    </div>
+                    <div class=" center">
+                        <p class="fa fa-envelope"></p>
+                        <p>15286</p>
+                        <p class="fa fa-phone"></p>
+                        <p>0118-12 75 98/0118-281013</p>
+                    </div>
+        </div>
+         
+         
+        </div>
+    
+    </div>
+</body>
+</html>
