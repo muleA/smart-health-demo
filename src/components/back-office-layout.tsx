@@ -1,30 +1,18 @@
-import React, { useState } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
 import {
-  Layout,
-  Menu,
-  Breadcrumb,
-  Avatar,
-  Dropdown,
-  Space,
-  MenuProps,
-} from "antd";
-import {
-  UserOutlined,
-  ShopOutlined,
   CarOutlined,
-  AppstoreOutlined,
-  FileTextOutlined,
-  EnvironmentOutlined,
-  ShoppingOutlined,
-  SolutionOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
+  CaretDownOutlined,
   DashboardOutlined,
   LogoutOutlined,
-  CaretDownOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
   SettingOutlined,
+  ShopOutlined,
+  SolutionOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
+import { Breadcrumb, Dropdown, Layout, Menu } from "antd";
+import React, { useState } from "react";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "../shared/auth/use-auth";
 import HomePage from "../pages/home";
 import { User } from "../pages/back-office/user";
@@ -39,6 +27,10 @@ import NewPermission from "./back-office/permission/new-permissions";
 import { EmployeeDetailsPage } from "../pages/back-office/employee/detail";
 import { EmployeesPage } from "../pages/back-office/employee/employees";
 import { NewEmployee } from "./back-office/employee/new-employee";
+import { License } from "./back-office/license/license";
+import { DetailLicensePage } from "../pages/back-office/license/detail";
+import { ApplicationDetailPage } from "../pages/back-office/application/detail";
+import { ApplicationListPage } from "../pages/back-office/application/applications";
 
 const { Sider, Content, Header, Footer } = Layout;
 const { SubMenu } = Menu;
@@ -241,6 +233,10 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
               <Route path="/roles" element={<Roles />} />
               <Route path="roles/detail/:id" element={<DetailRole />} />
               <Route path="roles/new" element={<NewRole />} />
+              <Route path="/licenses" element={<License />} />
+              <Route path="license/detail/:id" element={<DetailLicensePage />} />
+              <Route path="/applications" element={<ApplicationListPage />} />
+              <Route path="application/detail/:id" element={<ApplicationDetailPage />} />
               <Route
                 path="permissions/detail/:id"
                 element={<DetailPermissions />}

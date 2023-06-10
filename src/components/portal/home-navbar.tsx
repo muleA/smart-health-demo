@@ -22,17 +22,17 @@ const PortalNavigation = () => {
   };
   const { logOut } = useAuth();
   const router = useNavigate();
-  const [selectedMenu, setSelectedMenu] = useState('1'); // Track the selected menu item
+  const [selectedMenu, setSelectedMenu] = useState("1"); // Track the selected menu item
 
   const handleLogout = () => {
     logOut();
-    router('/');
+    router("/");
   };
 
-  const handleMenuSelect = ({ key }:any) => {
+  const handleMenuSelect = ({ key }: any) => {
     setSelectedMenu(key);
   };
-const {session}=useAuth()
+  const { session } = useAuth();
   const accountMenu = (
     <Menu className="text-primary">
       <Menu.Item key="1" onClick={handleLogout} icon={<LogoutOutlined />}>
@@ -46,15 +46,15 @@ const {session}=useAuth()
 
   const renderContent = () => {
     switch (selectedMenu) {
-      case '1':
+      case "1":
         return <ProfileWrapper />;
-      case '2':
+      case "2":
         return <MyApplications />;
-      case '3':
+      case "3":
         return <MyLicenses />;
       /* case '4':
         return <Notification />; */
-      case '5':
+      case "5":
         return <Notification />;
       default:
         return null;
@@ -62,7 +62,7 @@ const {session}=useAuth()
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Sider
         width={200}
         theme="light"
@@ -75,25 +75,25 @@ const {session}=useAuth()
           mode="vertical"
           className="mt-2"
           theme="light"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={["1"]}
           onSelect={handleMenuSelect}
         >
-           <Menu.Item key="1" icon={<HomeOutlined />}>
+          <Menu.Item key="1" icon={<HomeOutlined />}>
             <Link to="/home">Home</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<UserOutlined />}>
             <Link to="/my-profile">My Profile</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<UnorderedListOutlined />}>
-  <Link to="/my-applications">My Applications</Link>
-</Menu.Item>
-<Menu.Item key="8" icon={<FileAddOutlined />}>
-  <Link to="/new-application">New Applications</Link>
-</Menu.Item>
+            <Link to="/my-applications">My Applications</Link>
+          </Menu.Item>
+          <Menu.Item key="8" icon={<FileAddOutlined />}>
+            <Link to="/new-application">New Applications</Link>
+          </Menu.Item>
 
-<Menu.Item key="5" icon={<FolderOutlined />}>
-  <Link to="/my-archives">My Archives</Link>
-</Menu.Item>
+          <Menu.Item key="5" icon={<FolderOutlined />}>
+            <Link to="/my-archives">My Archives</Link>
+          </Menu.Item>
 
           <Menu.Item key="6" icon={<BellOutlined />}>
             <Link to="/settings">Notifications</Link>
@@ -137,15 +137,15 @@ const {session}=useAuth()
           </div>
         </Header> 
 
-        <Content style={{ margin: '16px' }}>
+        <Content style={{ margin: "16px" }}>
           <Routes>
-            <Route path="/home" element ={<HomePage/>} />
-            <Route  path='/banner' element={<Banner/>}></Route>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/banner" element={<Banner />}></Route>
             <Route path="/my-profile" element={<ProfileWrapper />} />
             <Route path="/my-applications" element={<MyApplications />} />
             <Route path="/new-application" element={<StepperComponent />} />
             <Route path="/my-archives" element={<Archives />} />
-            <Route path="my-applications/:id" element={<ApplicationDetail/>}/>
+            <Route path="my-applications/:id" element={<ApplicationDetail />} />
             {/* Add more routes here */}
           </Routes>
         </Content>

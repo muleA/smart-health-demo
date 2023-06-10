@@ -5,6 +5,13 @@ const roleApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getLicense: builder.query<any, void>({
       query: () => ({
+        url: licenseEndPoints.getLicenses,
+        method: "GET",
+      }),
+      providesTags: ["Role"],
+    }),
+    getApplications: builder.query<any, void>({
+      query: () => ({
         url: licenseEndPoints.getLicense,
         method: "GET",
       }),
@@ -35,5 +42,7 @@ const roleApi = apiSlice.injectEndpoints({
 
 export const {
 useGetLicenseQuery,
-useGetRoleByRoleIdQuery
+useGetRoleByRoleIdQuery,
+useGetApplicationsQuery
+
 } = roleApi;

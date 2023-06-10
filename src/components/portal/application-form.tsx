@@ -75,10 +75,9 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
     {
       title: "Step 1",
       content: (
-        <>
-          <h2 className="text-2xl font-bold mb-8">
-            Step 1: Agree and Continue
-          </h2>
+        <Card>
+          <h1 className="text-xl font-bold mb-2">Step 1: Agree and Continue</h1>
+          <hr className="mt-4 mb-4" />
           <div>
             <h1 className="text-xl font-bold mb-2">Application Description</h1>
             <p>
@@ -135,7 +134,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
           >
             Agree and Continue
           </Button>
-        </>
+        </Card>
       ),
     },
     {
@@ -166,244 +165,245 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
           }}
         >
           {({ values, errors, touched }) => (
-            <Form className="p-4 border rounded shadow-md">
-              <h1 className="text-xl font-bold mb-2">
-                Fill The Application Form
-              </h1>
-              <Card className="mx-auto mb-10 space-y-10 w-3/2">
-                {!(values?.applicationType && values?.applicationCategory) ? (
-                  <>
-                    <Alert
-                      type="warning"
-                      className="mb-4"
-                      showIcon
-                      closable
-                      message="Please first choose application Type and Application Category"
-                    ></Alert>
-                  </>
-                ) : null}
+            <Card className="shadow-sm">
+              <Form className="rounded">
+                <h1 className="text-xl font-bold mb-2">
+                  Step 2: Fill The Application Form
+                </h1>
+                <hr className="mt-4 mb-4" />
+                <Card className="mx-auto mb-10 space-y-10 w-3/2">
+                  {!(values?.applicationType && values?.applicationCategory) ? (
+                    <>
+                      <Alert
+                        type="warning"
+                        className="mb-4"
+                        showIcon
+                        closable
+                        message="Please first choose application Type and Application Category"
+                      ></Alert>
+                    </>
+                  ) : null}
 
-                <div className="mb-4">
-                  <label htmlFor="applicationType" className="font-bold">
-                    Application Type <span className="text-red-400">*</span>
-                  </label>
-                  <Field
-                    as="select"
-                    name="applicationType"
-                    className={classNames("w-full p-2 mt-2 border", {
-                      "border-red-500 ":
-                        errors.applicationType && touched.applicationType,
-                    })}
-                  >
-                    <option value="">Select Application Type</option>
-                    <option value="issue">Issue</option>
-                    <option value="renew">Renew</option>
-                    <option value="revoke">Revoke</option>
-                    <option value="suspend">Suspend</option>
-                    <option value="remove">remove</option>
-                  </Field>
-                  <ErrorMessage
-                    name="applicationType"
-                    component="div"
-                    className="text-red-500"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="applicationCategory" className="font-bold">
-                    Application Category <span className="text-red-400">*</span>
-                  </label>
-                  <Field
-                    as="select"
-                    name="applicationCategory"
-                    className={classNames("w-full p-2 mt-2 border", {
-                      "border-red-500":
-                        errors.applicationCategory &&
-                        touched.applicationCategory,
-                    })}
-                  >
-                    <option value="">Select Application Category</option>
-                    <option value="HealthProfessional">
-                      Health Professionals
-                    </option>
-                    <option value="HealthFacility">Health Facilities</option>
-                    <option value="FoodandHealth-RelatedInstitutions">
-                      Food and Health-Related Institutions
-                    </option>
-                  </Field>
-                  <ErrorMessage
-                    name="applicationCategory"
-                    component="div"
-                    className="text-red-500"
-                  />
-                </div>
-                {values?.applicationType && values?.applicationCategory && (
-                  <>
-                    <div className="mb-4">
-                      <label className="font-bold">
-                        Applier Type <span className="text-red-400">*</span>
-                      </label>
-                      <div className="mt-2 ">
-                        <label>
-                          <Field type="radio" name="applierType" value="self" />
-                          <span className="ml-2">Owner</span>
-                        </label>
-                        <label>
-                          <Field
-                            type="radio"
-                            name="applierType"
-                            className="ml-6"
-                            value="other"
-                          />
-                          <span className="ml-2"></span>Delegation
-                        </label>
-                      </div>
-                      <ErrorMessage
-                        name="applierType"
-                        component="div"
-                        className="text-red-500"
-                      />
-                    </div>
-                    {values?.applierType === "other" && (
+                  <div className="mb-4">
+                    <label htmlFor="applicationType" className="font-bold">
+                      Application Type <span className="text-red-400">*</span>
+                    </label>
+                    <Field
+                      as="select"
+                      name="applicationType"
+                      className={classNames("w-full p-2 mt-2 border", {
+                        "border-red-500 ":
+                          errors.applicationType && touched.applicationType,
+                      })}
+                    >
+                      <option value="">Select Application Type</option>
+                      <option value="issue">Issue</option>
+                      <option value="renew">Renew</option>
+                      <option value="revoke">Revoke</option>
+                      <option value="suspend">Revoke</option>
+                      <option value="remove">Revoke</option>
+                    </Field>
+                    <ErrorMessage
+                      name="applicationType"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="applicationCategory" className="font-bold">
+                      Application Category{" "}
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Field
+                      as="select"
+                      name="applicationCategory"
+                      className={classNames("w-full p-2 mt-2 border", {
+                        "border-red-500":
+                          errors.applicationCategory &&
+                          touched.applicationCategory,
+                      })}
+                    >
+                      <option value="">Select Application Category</option>
+                      <option value="HealthProfessional">
+                        Health Professionals
+                      </option>
+                      <option value="HealthFacility">Health Facilities</option>
+                      <option value="FoodandHealth-RelatedInstitutions">
+                        Food and Health-Related Institutions
+                      </option>
+                    </Field>
+                    <ErrorMessage
+                      name="applicationCategory"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
+                  {values?.applicationType && values?.applicationCategory && (
+                    <>
                       <div className="mb-4">
-                        <label
-                          htmlFor="file"
-                          className="block mb-2 text-sm font-medium text-gray-700"
-                        >
-                          Upload File
+                        <label className="font-bold">
+                          Applier Type <span className="text-red-400">*</span>
                         </label>
-                        <div className="flex items-center">
+                        <div className="mt-2 ">
+                          <label>
+                            <Field
+                              type="radio"
+                              name="applierType"
+                              value="self"
+                            />
+                            <span className="ml-2">Owner</span>
+                          </label>
+                          <label>
+                            <Field
+                              type="radio"
+                              name="applierType"
+                              className="ml-6"
+                              value="other"
+                            />
+                            <span className="ml-2"></span>Delegation
+                          </label>
+                        </div>
+                        <ErrorMessage
+                          name="applierType"
+                          component="div"
+                          className="text-red-500"
+                        />
+                      </div>
+                      {values?.applierType === "other" && (
+                        <div className="mb-4">
                           <label
                             htmlFor="file"
-                            className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            className="block mb-2 text-sm font-medium text-gray-700"
                           >
-                            Choose File
+                            Upload File
                           </label>
-                          <Field
-                            type="file"
-                            name="file"
-                            id="file"
-                            className="hidden"
+                          <div className="flex items-center">
+                            <label
+                              htmlFor="file"
+                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            >
+                              Choose File
+                            </label>
+                            <Field
+                              type="file"
+                              name="file"
+                              id="file"
+                              className="hidden"
+                            />
+                            <span className="ml-2 text-gray-600" id="file-name">
+                              No file selected
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                      <div className="mb-4">
+                        <label className="mb-2 text-sm font-bold">
+                          Educations <span className="text-red-400">*</span>
+                        </label>
+                        <div className="flex flex-col gap-4 mt-4 ">
+                          {educations?.map((item: any) => (
+                            <div
+                              className="flex items-center justify-start "
+                              key={item.id}
+                            >
+                              <label className="flex items-center">
+                                <Field
+                                  type="checkbox"
+                                  name="educationId"
+                                  value={item.id}
+                                  className="form-checkbox"
+                                />
+                                <span className="ml-2">
+                                  {" "}
+                                  {item.professionalTitle}
+                                </span>
+                              </label>
+                              <div></div>
+                            </div>
+                          ))}
+                          <ErrorMessage
+                            name="educationId"
+                            component="div"
+                            className="text-red-500"
                           />
-                          <span className="ml-2 text-gray-600" id="file-name">
-                            No file selected
-                          </span>
                         </div>
                       </div>
-                    )}
-                    <div className="mb-4">
-                      <label className="mb-2 text-sm font-bold">
-                        Educations <span className="text-red-400">*</span>
-                      </label>
-                      <div className="flex flex-col gap-4 mt-4 ">
-                        {educations?.map((item: any) => (
+
+                      <div className="mb-2">
+                        <label className="mb-2 text-sm font-bold  ">
+                          Experiences <span className="text-red-400">*</span>
+                        </label>
+                        {experiences?.map((item: any) => (
                           <div
-                            className="flex items-center justify-start "
+                            className="flex items-center justify-start mt-4 mb-4"
                             key={item.id}
                           >
                             <label className="flex items-center">
                               <Field
                                 type="checkbox"
-                                name="educationId"
+                                name="experienceId"
                                 value={item.id}
                                 className="form-checkbox"
                               />
                               <span className="ml-2">
                                 {" "}
-                                {item.professionalTitle}
+                                {item.organizationName}
                               </span>
                             </label>
-                            <div>
-                        
-                            </div>
+                            <div></div>
                           </div>
                         ))}
                         <ErrorMessage
-                          name="educationId"
+                          name="experienceId"
                           component="div"
                           className="text-red-500"
                         />
                       </div>
-                    </div>
 
-                    <div className="mb-2">
-                      <label className="mb-2 text-sm font-bold  ">
-                        Experiences <span className="text-red-400">*</span>
-                      </label>
-                      {experiences?.map((item: any) => (
-                        <div
-                          className="flex items-center justify-start mt-4 mb-4"
-                          key={item.id}
-                        >
-                          <label className="flex items-center">
-                            <Field
-                              type="checkbox"
-                              name="experienceId"
-                              value={item.id}
-                              className="form-checkbox"
-                            />
-                            <span className="ml-2">
-                              {" "}
-                              {item.organizationName}
-                            </span>
-                          </label>
-                          <div>
-                     
-                          </div>
-                        </div>
-                      ))}
-                      <ErrorMessage
-                        name="experienceId"
-                        component="div"
-                        className="text-red-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2 text-sm font-bold ">
-                        Certificates <span className="text-red-500">*</span>
-                      </label>
-                      <div className="flex flex-col gap-4 mb-4 mt-4">
-                        {certificates?.map((item: any) => (
-                          <div
-                            className="flex items-center justify-start"
-                            key={item.id}
-                          >
-                            <label className="flex items-center">
-                              <Field
-                                type="checkbox"
-                                name="certificateId"
-                                value={item.id}
-                                className="form-checkbox"
-                              />
-                              <span className="ml-2"> {item.name}</span>
-                            </label>
-                            <div>
-                        
+                      <div className="flex flex-col">
+                        <label className="mb-2 text-sm font-bold ">
+                          Certificates <span className="text-red-500">*</span>
+                        </label>
+                        <div className="flex flex-col gap-4 mb-4 mt-4">
+                          {certificates?.map((item: any) => (
+                            <div
+                              className="flex items-center justify-start"
+                              key={item.id}
+                            >
+                              <label className="flex items-center">
+                                <Field
+                                  type="checkbox"
+                                  name="certificateId"
+                                  value={item.id}
+                                  className="form-checkbox"
+                                />
+                                <span className="ml-2"> {item.name}</span>
+                              </label>
+                              <div></div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
+                        <ErrorMessage
+                          name="certificateId"
+                          component="div"
+                          className="text-red-500"
+                        />
                       </div>
-                      <ErrorMessage
-                        name="certificateId"
-                        component="div"
-                        className="text-red-500"
-                      />
-                    </div>
 
-                    <div className="flex justify-between mt-2">
-                      <Button
-                        type="primary"
-                        className="bg-primary text-white"
-                        htmlType="submit"
-                        loading={isLoading}
-                      >
-                        Submit
-                      </Button>
-                    </div>
-                  </>
-                )}
-              </Card>
-            </Form>
+                      <div className="flex justify-between mt-2">
+                        <Button
+                          type="primary"
+                          className="bg-primary text-white"
+                          htmlType="submit"
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </Card>
+              </Form>
+            </Card>
           )}
         </Formik>
       ),
@@ -411,10 +411,13 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
     {
       title: "Step 3",
       content: (
-        <>
-          <h2>Step 3: Success Information</h2>
+        <Card>
+          <h1 className="text-xl font-bold mb-2">
+            Step 3: Success Information
+          </h1>
+          <hr className="mt-4 mb-4" />
           <p>Form submitted successfully!</p>
-        </>
+        </Card>
       ),
     },
   ];

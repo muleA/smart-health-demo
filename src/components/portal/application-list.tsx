@@ -15,22 +15,24 @@ interface User {
 }
 
 export const ApplicationList = (): JSX.Element => {
-    const [data, setData] = useState(null);
-    const {session}=useAuth()
-const router=useNavigate()
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`${baseUrl}user/get-application-by-userId/${session?.userInfo?.userId}`);
-          const responseData = response.data;
-          setData(responseData);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-  
-      fetchData();
-    }, []);
+  const [data, setData] = useState(null);
+  const { session } = useAuth();
+  const router = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${baseUrl}user/get-application-by-userId/${session?.userInfo?.userId}`
+        );
+        const responseData = response.data;
+        setData(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const [selectedRow, setSelectedRow] = useState<string | null>(null);
 
   const handleRowClick = (record: User) => {
@@ -49,49 +51,57 @@ const router=useNavigate()
 
   const columns = [
     {
-      title: 'applicationType',
-      dataIndex: 'applicationType',
-      key: 'applicationType',
+      title: "Application Type",
+      dataIndex: "applicationType",
+      key: "applicationType",
     },
     {
-      title: 'applierType',
-      dataIndex: 'applierType',
-      key: 'applierType',
+      title: "Applier Type",
+      dataIndex: "applierType",
+      key: "applierType",
     },
     {
-      title: 'comment',
-      dataIndex: 'comment',
-      key: 'comment',
+      title: "Comment",
+      dataIndex: "comment",
+      key: "comment",
     },
     {
-      title: 'license',
-      dataIndex: 'license',
-      key: 'license',
+      title: "Licence",
+      dataIndex: "license",
+      key: "license",
     },
     {
-      title: 'appointmentDate',
-      dataIndex: 'appointmentDate',
-      key: 'appointmentDate',
+      title: "Appointment Date",
+      dataIndex: "appointmentDate",
+      key: "appointmentDate",
     },
     {
-        title: 'status',
-        dataIndex: 'status',
-        key: 'status',
-        
-        render: (status:any) => (
-          <Badge
-            color={status === 'SUBMITED' ? 'blue' : status === 'Rejected' ? 'red' : 'green'}
-            text={status}
-          />
-        ),
-      },
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+
+      render: (status: any) => (
+        <Badge
+          color={
+            status === "SUBMITED"
+              ? "blue"
+              : status === "Rejected"
+              ? "red"
+              : "green"
+          }
+          text={status}
+        />
+      ),
+    },
     {
-      title: '',
-      dataIndex: '',
-      key: 'arrow',
+      title: "",
+      dataIndex: "",
+      key: "arrow",
       render: (_: any, record: User) => (
         <RightOutlined
-          className={`arrow-icon ${selectedRow === record.id ? 'visible' : 'invisible'}`}
+          className={`arrow-icon ${
+            selectedRow === record.id ? "visible" : "invisible"
+          }`}
         />
       ),
     },
@@ -102,14 +112,15 @@ const router=useNavigate()
       onClick: () => handleRowClick(record),
       onMouseEnter: () => handleMouseEnter(record),
       onMouseLeave: handleMouseLeave,
-      className: `cursor-pointer ${selectedRow === record.id ? 'bg-gray-100' : ''}`,
+      className: `cursor-pointer ${
+        selectedRow === record.id ? "bg-gray-100" : ""
+      }`,
     };
   };
 
-
   return (
     <Table<User>
-      dataSource={data??[]}
+      dataSource={data ?? []}
       columns={columns}
       onRow={rowProps}
       rowKey="id"

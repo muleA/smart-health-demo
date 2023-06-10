@@ -9,50 +9,51 @@ import { baseUrl } from '../../configs/config';
 const { Panel } = Collapse;
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required('First Name is required'),
-  middleName: Yup.string().required('Middle Name is required'),
-  lastName: Yup.string().required('Last Name is required'),
-  gender: Yup.string().required('Gender is required'),
-  state: Yup.string().required('State is required'),
-  city: Yup.string().required('City is required'),
-  wereda: Yup.string().required('wereda is required'),
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  phone: Yup.string().required('Phone Number is required'),
+  firstName: Yup.string().required("First Name is required"),
+  middleName: Yup.string().required("Middle Name is required"),
+  lastName: Yup.string().required("Last Name is required"),
+  gender: Yup.string().required("Gender is required"),
+  state: Yup.string().required("State is required"),
+  city: Yup.string().required("City is required"),
+  wereda: Yup.string().required("wereda is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  phone: Yup.string().required("Phone Number is required"),
 });
 
 const UserPage = () => {
   const { session } = useAuth();
   const [userData, setUserData] = useState<any>({});
-  console.log("decodedToken sessio  check",session)
+  console.log("decodedToken sessio  check", session);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${baseUrl}user/get-user/${session?.userInfo?.userId}`);
+        const response = await axios.get(
+          `${baseUrl}user/get-user/${session?.userInfo?.userId}`
+        );
         setUserData(response.data);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       }
     };
     fetchUserData();
   }, []);
-  console.log("userData",userData)
+  console.log("userData", userData);
 
   const formik = useFormik({
     initialValues: {
       firstName: userData.firstName,
-      middleName: userData.middleName || '',
-      lastName: userData.lastName || '',
-      gender: userData.gender || '',
-      state: userData.state || '',
-      city: userData.city || '',
-      wereda: userData.wereda || '',
-      email: userData.email || '',
-      phone: userData.phone || '',
-      kebele:userData.kebele||"",
-      subCity:userData.subCity||"",
-      houseNumber:userData.houseNumber||"",
-      id:userData.id
-
+      middleName: userData.middleName || "",
+      lastName: userData.lastName || "",
+      gender: userData.gender || "",
+      state: userData.state || "",
+      city: userData.city || "",
+      wereda: userData.wereda || "",
+      email: userData.email || "",
+      phone: userData.phone || "",
+      kebele: userData.kebele || "",
+      subCity: userData.subCity || "",
+      houseNumber: userData.houseNumber || "",
+      id: userData.id,
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -62,25 +63,25 @@ const UserPage = () => {
         const response = await axios.post(`${baseUrl}user/update-user`);
         setUserData(response.data);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       }
     },
   });
   useEffect(() => {
     formik.setValues({
-      firstName: userData.firstName || '',
-      middleName: userData.middleName || '',
-      lastName: userData.lastName || '',
-      gender: userData.gender || '',
-      state: userData.state || '',
-      city: userData.city || '',
-      wereda: userData.wereda || '',
-      email: userData.email || '',
-      phone: userData.phone || '',
-      kebele:userData.kebele||"",
-      subCity:userData.subCity||"",
-      houseNumber:userData.houseNumber,
-      id:userData.id
+      firstName: userData.firstName || "",
+      middleName: userData.middleName || "",
+      lastName: userData.lastName || "",
+      gender: userData.gender || "",
+      state: userData.state || "",
+      city: userData.city || "",
+      wereda: userData.wereda || "",
+      email: userData.email || "",
+      phone: userData.phone || "",
+      kebele: userData.kebele || "",
+      subCity: userData.subCity || "",
+      houseNumber: userData.houseNumber,
+      id: userData.id,
     });
   }, [userData]);
   const [expanded, setExpanded] = useState(false);
@@ -89,12 +90,21 @@ const UserPage = () => {
   };
   return (
     <Card className="w-3/2 mx-auto mt-6">
-      <Collapse defaultActiveKey={['1']}>
-        <Panel header={<h3 className="font-bold text-lg">Personal Information</h3>} key="1"
-        extra={  <Button className="ml-5" onClick={handleButtonClick}>
-        {expanded ? "Collapse" : "Expand"}
-      </Button>}>
-          <Form layout="vertical" onFinish={formik.handleSubmit} className="grid grid-cols-2 gap-4">
+      <Collapse defaultActiveKey={["1"]}>
+        <Panel
+          header={<h3 className="font-bold text-lg">Personal Information</h3>}
+          key="1"
+          extra={
+            <Button className="ml-5" onClick={handleButtonClick}>
+              {expanded ? "Collapse" : "Expand"}
+            </Button>
+          }
+        >
+          <Form
+            layout="vertical"
+            onFinish={formik.handleSubmit}
+            className="grid grid-cols-2 gap-4"
+          >
             <div>
               <Form.Item label="First Name" required>
                 <Input
@@ -219,7 +229,10 @@ const UserPage = () => {
                 </Button>
               </Form.Item>
               <Form.Item>
-                <Button className="bg-red-400 hover:bg-red-500 text-white" htmlType="button">
+                <Button
+                  className="bg-red-400 hover:bg-red-500 text-white"
+                  htmlType="button"
+                >
                   Delete
                 </Button>
               </Form.Item>

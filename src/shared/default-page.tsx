@@ -10,7 +10,7 @@ type DefaultPageProps = {
 export const DefaultPage = (props: PropsWithChildren<DefaultPageProps>): JSX.Element => {
   return (
     <>
-      <Card
+      <div
         {...(props.narrow && {
           alignSelf: "center",
           width: "500px",
@@ -20,7 +20,7 @@ export const DefaultPage = (props: PropsWithChildren<DefaultPageProps>): JSX.Ele
         <DefaultPageHeader {...props} />
         {props.otherComponent}
 
-        <Card
+        <div
           style={{ minWidth: "500px" }}
           {...(props.narrow && {
             style: {
@@ -29,8 +29,8 @@ export const DefaultPage = (props: PropsWithChildren<DefaultPageProps>): JSX.Ele
           })}
         >
           {props.children}
-        </Card>
-      </Card>
+        </div>
+      </div>
     </>
   );
 };

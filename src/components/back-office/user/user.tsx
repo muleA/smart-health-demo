@@ -40,7 +40,6 @@ export function Users() {
       {
         accessorKey: 'firstName',
         header: 'First Name',
-        muiTableHeadCellProps: { sx: { color: 'green' } },
       },
       {
         accessorKey: 'lastName',

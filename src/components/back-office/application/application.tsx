@@ -3,15 +3,15 @@ import React, { useMemo } from "react";
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_ColumnDef } from 'material-react-table';
 import { DefaultPage } from "../../../shared/default-page";
-import { Role } from "../../../models/role";
-import { useGetLicenseQuery } from "./license.query";
+import { useGetApplicationsQuery } from "../license/license.query";
 
-export function License() {
+export function ApplicationListComponent() {
   const navigate = useNavigate();
-  const { data: license, isLoading, isSuccess, isError, isFetching } = useGetLicenseQuery();
+  const { data: applications, isLoading, isSuccess, isError, isFetching } = useGetApplicationsQuery();
+  console.log("applications",applications)
   const handleRowClick = (row: any) => {
     console.log("row",row)
-    navigate(`/license/detail/${row?.original.id}`);
+    navigate(`/application/detail/${row?.original.id}`);
   };
 
  
@@ -19,21 +19,27 @@ export function License() {
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
+        accessorKey: 'applicationType',
+        header: ' applicationType',
+      },
+      {
+        accessorKey: 'applicationCategory',
+        header: ' applicationCategory',
+      },
+      {
+        accessorKey: 'applierType',
+        header: ' applierType',
+      },
+      {
         accessorKey: 'comment',
         header: ' comment',
-      },
-      {
-        accessorKey: 'validFrom',
-        header: ' validFrom',
-      },
-      {
-        accessorKey: 'validTo',
-        header: ' validTo',
+      }, {
+        accessorKey: 'createdAt',
+        header: ' createdAt',
       },
       {
         accessorKey: 'status',
         header: ' status',
-        Cell: (status) => (status ? 'True' : 'False'),
       },
      
     ],
@@ -42,11 +48,11 @@ export function License() {
 
   return (
     <>
- <DefaultPage title={"license"} backButtonLink="/license"   >
+ <DefaultPage title={"Applications"} backButtonLink="/license"   >
   <div style={{width:"1200px"}}>
   <MaterialReactTable
         columns={columns}
-        data={license ?? []}
+        data={applications ?? []}
         muiTableBodyRowProps={({ row }) => ({
           onClick: () => handleRowClick(row),
           sx: {

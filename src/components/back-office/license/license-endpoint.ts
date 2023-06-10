@@ -1,6 +1,8 @@
 import { baseUrl } from "../../../configs/config";
 export const licenseEndPoints = {
-  getLicense: `${baseUrl}user/get-license`,
+  getLicenses: `${baseUrl}user/get-licenses`,
+  getLicense: `${baseUrl}user/get-applications`,
+  getApplications: `${baseUrl}user/get-applications`,
   getLicenseById: `${baseUrl}license/get-license-by-licenseId`,
   getArchivedLicense: `${baseUrl}license/get-archived-license`,
   getArchivedLicenseById: `${baseUrl}license/get-archived-license-by-licenseId`,
