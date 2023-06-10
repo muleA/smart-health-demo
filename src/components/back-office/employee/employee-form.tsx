@@ -241,7 +241,7 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
               />
             </Form.Item>
             <Form.Item
-              label="Geneder"
+              label="Gender"
               validateStatus={formik.errors.gender ? "error" : ""}
               help={formik.errors.gender}
             >
