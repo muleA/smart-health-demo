@@ -1,23 +1,15 @@
 import React, { useState } from "react";
-import { Modal, Steps, Form, Input, Button, Radio } from "antd";
+import { Modal, Steps, Form, Input, Button, Radio, Card, Alert } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { Notify } from "../../shared/notification/notify";
-import { baseUrl } from "../../shared/config";
+import { baseUrl } from "../../configs/config";
 import { useAuth } from "../../shared/auth/use-auth";
 
 const { Step } = Steps;
 
-interface RegistrationFormProps {
-  visible: boolean;
-  onClose: () => void;
-}
-
-const RegistrationForm: React.FC<RegistrationFormProps> = ({
-  visible,
-  onClose,
-}) => {
+const RegistrationForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [accountInfo,setAccountInfo]=useState<any>(null)
   console.log("accountInfo",accountInfo)
@@ -33,7 +25,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         phone: Yup.string().required("Phone number is required"),
         password: Yup.string().required("Password is required"),
         username: Yup.string().required("name is required"),
-        status: Yup.string().required("Status is required"),
       }),
     },
     {
@@ -61,7 +52,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       password: "",
       confirmPassword: "",
       subCity:"",
-      status: "",
       firstName: "",
       lastName: "",
       woreda: "",
@@ -76,11 +66,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     },
     validationSchema: steps[currentStep].validationSchema,
     onSubmit: async (values) => {
-/*       await createAc({  userName: values?.username,
-          email: values?.email,
-          phone: values?.phone,
-          status: "active",
-          Password: values?.password}).unwrap() */
+
        axios
         .post(`${baseUrl}user/create-account`, {
           userName: values?.username,
@@ -138,8 +124,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             // Handle the error
           });
   
-          onClose();
-        } catch (error) {
+/*           onClose();
+ */        } catch (error) {
 
           console.error(error); // Handles the mutation error if necessary
         }
@@ -152,27 +138,20 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const handlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
-  console.log("process.env.API_BASE_URL", process.env.API_BASE_URL);
 
   return (
-    <Modal
-      visible={visible}
-      title="Registration"
-      onCancel={onClose}
-      footer={null}
-      width={1500} // Set the width of the Modal
-
-    >
-      <Steps
+ <div>
+ <Steps
         current={currentStep}
         items={steps.map((step) => ({ title: step.title }))}
-      />
+      /> 
 
       <Form
         onFinish={formik.handleSubmit}
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 15 }}
-        layout="horizontal"
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 16 }}
+        layout="vertical"
+
         style={{ maxWidth: 700 }}
       >
         {currentStep === 0 && (
@@ -222,17 +201,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               />
             </Form.Item>
 
-            <Form.Item
-              label="Status"
-              name="status"
-              validateStatus={formik.errors.status ? "error" : ""}
-              help={formik.errors.status}
-            >
-              <Input
-                value={formik.values.status}
-                onChange={formik.handleChange}
-              />
-            </Form.Item>
+           
           </>
         )}
 
@@ -360,21 +329,28 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         )}
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
+
           {currentStep > 0 && (
             <Button type="primary" className="bg-primary" onClick={handlePrev}>
               Previous
             </Button>
           )}
-          <Button
-            type="primary"
-            className="bg-primary"
-            htmlType="submit"
-          >
-            {currentStep === steps.length - 1 ? "Finish" : "Next"}
-          </Button>
+               <div >
+
+<Button
+  type="primary"
+  className="bg-primary"
+  htmlType="submit"
+>
+  {currentStep === steps.length - 1 ? "Save" : "Next"}
+</Button>
+               </div>
+              
         </div>
       </Form>
-    </Modal>
+ </div>
+     
+
   );
 };
 

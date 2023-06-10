@@ -6,11 +6,10 @@ import { Provider } from "react-redux";
 import { store } from "./store/app.store";
 import { useAuth } from "./shared/auth/use-auth";
 import HomePage from "./pages/home";
-import ApplicationList from "./portal/application-list";
-import BackOfficeLayoutWrapper from "./components/layout";
-import PortalNavigation from "./portal/home-navbar";
-import { Dashboard } from "./back-office/dashboard";
-
+import BackOfficeLayoutWrapper from "./components/back-office-layout";
+import { Dashboard } from "./components/back-office/dashboard";
+import PortalNavigation from "./components/portal/home-navbar";
+import ApplicationList from "./components/portal/application-list";
 const App = () => {
   const { session } = useAuth();
   const location = useLocation();
@@ -21,9 +20,10 @@ const App = () => {
       navigate("/");
     } else if (session && location.pathname === "/") {
       if (session?.userInfo?.EmployeeRoles ===undefined) {
-        navigate("/my-profile");
-      } else {
         navigate("/home");
+
+      } else {
+        navigate("/dashboard");
       }
     }
   }, [session, location.pathname, navigate]);
@@ -34,18 +34,15 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           {session !== null &&
             session?.userInfo?.EmployeeRoles!==undefined && (
-              <Route
-                path="*"
-                element={
-                  <React.Fragment>
-                    <BackOfficeLayoutWrapper>
-                      <Routes>
-                        <Route path="/dashboard" element={<Dashboard />} />
-                      </Routes>
-                    </BackOfficeLayoutWrapper>
-                  </React.Fragment>
-                }
-              />
+              <><Route
+              path="*"
+              element={<React.Fragment>
+                <BackOfficeLayoutWrapper>
+                  <Routes>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                  </Routes>
+                </BackOfficeLayoutWrapper>
+              </React.Fragment>} /></>
             )}
           {session !== null &&
             session?.userInfo?.EmployeeRoles ===undefined && (
@@ -56,7 +53,7 @@ const App = () => {
                     <PortalNavigation />
                     <Routes>
                       <Route
-                        path="/my-applications"
+                        path="/home"
                         element={<ApplicationList />}
                       />
                     </Routes>

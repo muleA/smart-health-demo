@@ -1,86 +1,112 @@
-import { Layout, Menu, Breadcrumb, Button, Dropdown } from 'antd';
-import { CreditCardTwoTone, DropboxCircleFilled, IdcardOutlined, UserAddOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-import LoginForm from './login/login-form';
-import { useNavigate } from 'react-router-dom';
-import RegistrationForm from './login/registration-form';
-import Carousel from './banner';
+import React, { useState } from "react";
+import { Layout, Menu, Button, Select } from "antd";
+import { DownOutlined, LoginOutlined } from "@ant-design/icons";
+import { SafetyCertificateOutlined, UserAddOutlined } from "@ant-design/icons";
+import LoginForm from "./login/login-form";
+import RegistrationForm from "./login/registration-form";
+import Carousel from "./banner";
+import HowItWorks from "./how-it-works";
+import { Registration } from "./login/registration";
+
 const { Header, Content, Footer } = Layout;
 
 const HomePage = () => {
-    const [showLoginForm, setShowLoginForm] = useState(false);
-    const [visible, setVisible] = useState(false);
+  const [activeMenuKey, setActiveMenuKey] = useState("1");
+  const handleRegistration = () => {
+    setActiveMenuKey("6");
+  };
+  const handleLogin = () => {
+    setActiveMenuKey("5");
+  };
 
-    const handleLoginClick = () => {
-      setShowLoginForm(true);
-    };
-  
-    const handleLoginClose = () => {
-      setShowLoginForm(false);
-    };
+  const { Option } = Select;
 
-    const handleClose = () => {
-        setVisible(false);
-      };
-    
-      const handleOpen = () => {
-        setVisible(true);
-      };
-  
-      const languageMenu = (
-        <Menu>
-          <Menu.Item>English</Menu.Item>
-          <Menu.Item>አማርኛ</Menu.Item>
-          {/* Add more language options as needed */}
-        </Menu>
-      );
+  const handleChange = (value: any) => {
+    console.log(`Selected language: ${value}`);
+  };
+
+  const handleMenuClick = (key: React.SetStateAction<string>) => {
+    setActiveMenuKey(key);
+    // You can perform additional actions based on the menu click here
+  };
+
   return (
     <Layout className="min-h-screen">
-      <Header className="bg-white shadow-sm bg-sky-50">
-        <div className="flex items-center justify-between bg-sky-100">
-        <div className="flex items-center bg-sky-50">
-            <CreditCardTwoTone className='text-primary bg-sky-50' style={{ fontSize: '34px' }} />
-            <span className="ml-2 font-bold text-primary">Professional License Management</span>
+      <Header className="bg-white shadow-md">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <SafetyCertificateOutlined
+              className="text-primary"
+              style={{ fontSize: "24px" }}
+            />
+            <span className="ml-2 font-bold text-primary">Smart Health eLicense System</span>
           </div>
-          <Menu  mode="horizontal" className='bg-sky-50' defaultSelectedKeys={['1']}>
+          <Menu
+            mode="horizontal"
+            className=""
+            selectedKeys={[activeMenuKey]}
+            onClick={({ key }) => handleMenuClick(key)}
+          >
             <Menu.Item key="1">Home</Menu.Item>
-            <Menu.Item key="2">How It Works</Menu.Item>
-            <Menu.Item key="3">About Us</Menu.Item>
+            <Menu.Item key="2">Search Licensee(Holder)</Menu.Item>
+            <Menu.Item key="3">How It Works</Menu.Item>
+            <Menu.Item key="4">About Us</Menu.Item>
+            
           </Menu>
-          <div className='flex space-x-4'>
-          <Dropdown overlay={languageMenu} placement="bottomRight">
-              <Button icon={<DropboxCircleFilled/>} className="ant-dropdown-link">Select Language</Button>
-            </Dropdown>
-            <Button onClick={handleLoginClick} type="primary" className="mr-2 bg-primary flex"> 
-             <svg color='white'
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mr-1 h-4 w-4 self-center text-primary"
-                  viewBox="0 0 80 80"
-                  fill="#fff"
-                >
-                  <path
-                    d="M40 7C29.277344 7 19.742188 12.144531 13.714844 20.089844L15.152344 21.527344C20.804688 13.9375 29.828125 9 40 9C57.09375 9 71 22.90625 71 40C71 57.09375 57.09375 71 40 71C29.828125 71 20.804688 66.0625 15.152344 58.472656L13.714844 59.910156C19.742188 67.855469 29.277344 73 40 73C58.195313 73 73 58.195313 73 40C73 21.804688 58.195313 7 40 7 Z M 40 12C39.449219 12 39 12.449219 39 13C39 13.550781 39.449219 14 40 14C40.550781 14 41 13.550781 41 13C41 12.449219 40.550781 12 40 12 Z M 45.292969 12.515625C44.804688 12.503906 44.382813 12.84375 44.285156 13.324219C44.179688 13.863281 44.53125 14.390625 45.074219 14.5C45.613281 14.605469 46.140625 14.253906 46.25 13.714844C46.355469 13.171875 46.003906 12.644531 45.464844 12.535156C45.40625 12.527344 45.351563 12.519531 45.292969 12.515625 Z M 34.738281 12.519531C34.671875 12.519531 34.605469 12.523438 34.539063 12.535156C33.996094 12.644531 33.644531 13.171875 33.753906 13.714844C33.804688 13.972656 33.957031 14.203125 34.179688 14.351563C34.398438 14.496094 34.667969 14.550781 34.929688 14.5C35.472656 14.390625 35.824219 13.867188 35.714844 13.324219C35.621094 12.859375 35.214844 12.523438 34.738281 12.519531 Z M 29.675781 14.054688C29.542969 14.054688 29.410156 14.078125 29.285156 14.128906C28.773438 14.34375 28.53125 14.925781 28.746094 15.4375C28.957031 15.949219 29.539063 16.191406 30.050781 15.980469C30.5625 15.765625 30.804688 15.183594 30.59375 14.671875C30.4375 14.300781 30.078125 14.058594 29.675781 14.054688 Z M 50.355469 14.054688C49.941406 14.046875 49.566406 14.289063 49.40625 14.671875C49.195313 15.183594 49.4375 15.765625 49.949219 15.980469C50.460938 16.191406 51.042969 15.949219 51.253906 15.4375C51.46875 14.925781 51.226563 14.34375 50.714844 14.128906C50.601563 14.082031 50.476563 14.058594 50.355469 14.054688 Z M 25.011719 16.546875C24.808594 16.546875 24.609375 16.605469 24.441406 16.71875C23.984375 17.023438 23.859375 17.644531 24.167969 18.105469C24.472656 18.5625 25.09375 18.6875 25.554688 18.378906C26.015625 18.074219 26.136719 17.453125 25.832031 16.996094C25.648438 16.71875 25.339844 16.550781 25.011719 16.546875 Z M 55.015625 16.546875C54.675781 16.542969 54.355469 16.710938 54.167969 16.996094C53.859375 17.453125 53.984375 18.074219 54.441406 18.378906C54.902344 18.6875 55.523438 18.5625 55.828125 18.105469C55.976563 17.886719 56.03125 17.613281 55.980469 17.355469C55.929688 17.09375 55.777344 16.863281 55.554688 16.71875C55.394531 16.609375 55.210938 16.550781 55.015625 16.546875 Z M 20.921875 19.90625C20.652344 19.90625 20.390625 20.011719 20.203125 20.203125C19.8125 20.589844 19.8125 21.226563 20.203125 21.613281C20.589844 22.003906 21.226563 22.003906 21.613281 21.613281C22.003906 21.226563 22.003906 20.589844 21.613281 20.203125C21.429688 20.015625 21.183594 19.910156 20.921875 19.90625 Z M 59.105469 19.90625C58.835938 19.90625 58.574219 20.011719 58.386719 20.203125C57.996094 20.589844 57.996094 21.226563 58.386719 21.613281C58.773438 22.003906 59.410156 22.003906 59.796875 21.613281C60.1875 21.226563 60.1875 20.589844 59.796875 20.203125C59.613281 20.015625 59.367188 19.910156 59.105469 19.90625 Z M 62.460938 24C62.257813 23.996094 62.0625 24.054688 61.894531 24.167969C61.4375 24.472656 61.3125 25.09375 61.621094 25.550781C61.925781 26.011719 62.546875 26.136719 63.003906 25.828125C63.464844 25.519531 63.589844 24.902344 63.28125 24.441406C63.097656 24.167969 62.789063 24 62.460938 24 Z M 64.953125 28.667969C64.820313 28.664063 64.6875 28.691406 64.5625 28.742188C64.050781 28.953125 63.808594 29.539063 64.019531 30.046875C64.234375 30.558594 64.816406 30.800781 65.328125 30.589844C65.839844 30.378906 66.082031 29.792969 65.871094 29.28125C65.714844 28.914063 65.355469 28.667969 64.953125 28.667969 Z M 30.808594 29.394531L29.394531 30.808594L37.585938 39L8 39L8 41L37.585938 41L29.394531 49.191406L30.808594 50.605469L41.414063 40 Z M 66.484375 33.734375C66.417969 33.730469 66.351563 33.738281 66.285156 33.75C65.746094 33.859375 65.394531 34.386719 65.5 34.925781C65.609375 35.46875 66.136719 35.820313 66.675781 35.714844C67.21875 35.605469 67.570313 35.078125 67.464844 34.535156C67.371094 34.070313 66.960938 33.734375 66.484375 33.734375 Z M 67 39C66.449219 39 66 39.449219 66 40C66 40.550781 66.449219 41 67 41C67.550781 41 68 40.550781 68 40C68 39.449219 67.550781 39 67 39 Z M 66.507813 44.265625C66.019531 44.253906 65.597656 44.59375 65.5 45.074219C65.394531 45.613281 65.746094 46.140625 66.285156 46.25C66.828125 46.355469 67.355469 46.003906 67.464844 45.464844C67.570313 44.921875 67.21875 44.394531 66.675781 44.285156C66.621094 44.277344 66.566406 44.269531 66.507813 44.265625 Z M 64.96875 49.328125C64.554688 49.320313 64.179688 49.566406 64.019531 49.949219C63.808594 50.457031 64.050781 51.042969 64.5625 51.253906C65.074219 51.464844 65.65625 51.222656 65.871094 50.714844C66.082031 50.203125 65.839844 49.617188 65.328125 49.40625C65.214844 49.359375 65.089844 49.332031 64.96875 49.328125 Z M 62.46875 54C62.128906 53.992188 61.808594 54.160156 61.621094 54.441406C61.3125 54.902344 61.4375 55.519531 61.894531 55.828125C62.113281 55.976563 62.386719 56.03125 62.644531 55.976563C62.90625 55.925781 63.136719 55.773438 63.28125 55.550781C63.589844 55.09375 63.464844 54.472656 63.003906 54.167969C62.847656 54.058594 62.660156 54 62.46875 54 Z M 20.921875 58.09375C20.652344 58.089844 20.390625 58.195313 20.203125 58.386719C19.8125 58.773438 19.8125 59.410156 20.203125 59.796875C20.589844 60.1875 21.226563 60.1875 21.613281 59.796875C22.003906 59.410156 22.003906 58.773438 21.613281 58.386719C21.429688 58.199219 21.183594 58.09375 20.921875 58.09375 Z M 59.105469 58.09375C58.835938 58.089844 58.574219 58.195313 58.386719 58.386719C57.996094 58.773438 57.996094 59.410156 58.386719 59.796875C58.773438 60.1875 59.410156 60.1875 59.796875 59.796875C60.1875 59.410156 60.1875 58.773438 59.796875 58.386719C59.613281 58.199219 59.367188 58.09375 59.105469 58.09375 Z M 25.019531 61.449219C24.679688 61.441406 24.359375 61.609375 24.171875 61.890625C23.863281 62.351563 23.988281 62.972656 24.449219 63.28125C24.90625 63.585938 25.527344 63.460938 25.832031 63.003906C26.140625 62.542969 26.015625 61.925781 25.558594 61.617188C25.398438 61.511719 25.210938 61.449219 25.019531 61.449219 Z M 55.011719 61.449219C54.808594 61.445313 54.613281 61.503906 54.445313 61.613281C54.222656 61.761719 54.070313 61.992188 54.019531 62.253906C53.96875 62.511719 54.023438 62.785156 54.171875 63.003906C54.476563 63.460938 55.097656 63.585938 55.558594 63.28125C56.015625 62.972656 56.140625 62.351563 55.832031 61.890625C55.652344 61.617188 55.34375 61.449219 55.011719 61.449219 Z M 29.691406 63.941406C29.277344 63.933594 28.902344 64.179688 28.746094 64.5625C28.535156 65.070313 28.777344 65.65625 29.285156 65.867188C29.796875 66.078125 30.382813 65.835938 30.59375 65.328125C30.804688 64.816406 30.5625 64.230469 30.050781 64.019531C29.9375 63.972656 29.816406 63.945313 29.691406 63.941406 Z M 50.339844 63.941406C50.207031 63.941406 50.074219 63.96875 49.953125 64.019531C49.707031 64.121094 49.511719 64.316406 49.410156 64.558594C49.308594 64.804688 49.308594 65.082031 49.40625 65.328125C49.621094 65.835938 50.203125 66.078125 50.714844 65.867188C50.960938 65.765625 51.15625 65.570313 51.257813 65.328125C51.359375 65.082031 51.359375 64.804688 51.257813 64.5625C51.105469 64.1875 50.742188 63.945313 50.339844 63.941406 Z M 34.761719 65.480469C34.273438 65.46875 33.847656 65.808594 33.753906 66.285156C33.644531 66.828125 33.996094 67.351563 34.539063 67.460938C35.082031 67.570313 35.605469 67.21875 35.714844 66.675781C35.824219 66.132813 35.472656 65.609375 34.929688 65.5C34.875 65.488281 34.816406 65.480469 34.761719 65.480469 Z M 45.269531 65.484375C45.203125 65.480469 45.136719 65.488281 45.074219 65.5C44.53125 65.609375 44.179688 66.132813 44.285156 66.675781C44.339844 66.9375 44.492188 67.164063 44.710938 67.3125C44.933594 67.460938 45.203125 67.515625 45.464844 67.464844C45.722656 67.410156 45.953125 67.257813 46.101563 67.039063C46.246094 66.816406 46.300781 66.546875 46.25 66.285156C46.15625 65.820313 45.746094 65.484375 45.269531 65.484375 Z M 40 66C39.449219 66 39 66.449219 39 67C39 67.550781 39.449219 68 40 68C40.550781 68 41 67.550781 41 67C41 66.449219 40.550781 66 40 66Z"
-                    fill="#fff"
-                  />
-                </svg>{' '}Login</Button>
-            <Button type='primary' onClick={handleOpen} className='bg-primary flex min-w-fit cursor-pointer items-center
-                  self-center rounded border border-white py-1
-                   text-sm text-white hover:bg-white  hover:text-primary' icon={<UserAddOutlined/>}>Sign Up</Button>
+          <div className="flex space-x-4">
+            <Select
+              defaultValue="en"
+              onChange={handleChange}
+              className="w-40"
+              suffixIcon={<DownOutlined />}
+            >
+              <Option value="en">English</Option>
+              <Option value="am">አማርኛ</Option>
+              {/* Add more language options as needed */}
+            </Select>
+            <Button
+              onClick={handleLogin}
+              type="primary"
+              className="mr-2 bg-primary flex items-center justify-center"
+              icon={<LoginOutlined />}
+            >
+              Login
+            </Button>
+            <Button
+              type="primary"
+              onClick={handleRegistration}
+              className="bg-primary flex min-w-fit cursor-pointer items-center justify-center self-center rounded border border-white py-1 text-sm text-white hover:bg-white hover:text-primary"
+              icon={<UserAddOutlined />}
+            >
+              Sign Up
+            </Button>
           </div>
         </div>
       </Header>
-      <Content className="p-4" style={{ backgroundImage: 'url("/background-image.jpg")', backgroundSize: 'cover' }}>
-      <Carousel/>
-          {/* Your license management content goes here */}
-{/*           <iframe src="https://embed.lottiefiles.com/animation/72157" height={600} width={600}></iframe>
- */}      </Content>
+
+      <Content
+        className="p-2 w-100"
+        style={{
+          backgroundImage: 'url("/background-image.jpg")',
+          backgroundSize: "cover",
+        }}
+      >
+        {activeMenuKey === "1" && <Carousel />}
+        {activeMenuKey === "2" && (
+          <h1>
+            <HowItWorks />
+          </h1>
+        )}
+        {activeMenuKey === "3" && <h1>how it works page</h1>}
+        {activeMenuKey === "4" && <h1>About Us Page Content</h1>}
+        {activeMenuKey === "6" && <Registration />}
+        {activeMenuKey === "5" && <LoginForm />}
+
+      </Content>
       <Footer className="text-center bg-white py-2 text-primary">
         Professional License Management &copy; {new Date().getFullYear()}
       </Footer>
-      <LoginForm visible={showLoginForm} onClose={handleLoginClose} />
-<RegistrationForm visible={visible} onClose={handleClose}/>
     </Layout>
-
   );
 };
 
