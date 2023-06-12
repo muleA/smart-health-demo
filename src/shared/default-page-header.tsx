@@ -48,7 +48,7 @@ export const DefaultPageHeader = (props: DefaultPageHeaderProps): JSX.Element =>
             props?.subTitle
           )}
         </Col>
-        <Col flex="end">
+        <Col flex="end" style={{marginRight:"40px"}}>
           
           {props.primaryButtonProps && (
             <Button
