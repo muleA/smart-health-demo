@@ -200,8 +200,8 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       <option value="issue">Issue</option>
                       <option value="renew">Renew</option>
                       <option value="revoke">Revoke</option>
-                      <option value="suspend">Revoke</option>
-                      <option value="remove">Revoke</option>
+                      <option value="suspend">Suspend</option>
+                      <option value="remove">Remove</option>
                     </Field>
                     <ErrorMessage
                       name="applicationType"

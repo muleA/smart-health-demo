@@ -213,12 +213,12 @@ console.log("baseUrl",baseUrl)
       receivedDate: "",
     };
   
-    setEducations([...educations, newEducation]);
+    setEducations([newEducation,...educations]);
   };
 
   
   
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   const handleButtonClick = () => {
     setExpanded(!expanded);
   };
