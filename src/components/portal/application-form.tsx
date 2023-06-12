@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Steps, Button, message, Collapse, Card, Alert } from "antd";
+import { Steps, Button, message, Collapse, Card, Alert, Input, Divider } from "antd";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classNames from "classnames";
@@ -223,14 +223,24 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                           touched.applicationCategory,
                       })}
                     >
-                      <option value="">Select Application Category</option>
+                      {/* <option value="">Select Application Category</option>
                       <option value="HealthProfessional">
                         Health Professionals
                       </option>
                       <option value="HealthFacility">Health Facilities</option>
                       <option value="FoodandHealth-RelatedInstitutions">
                         Food and Health-Related Institutions
+                      </option> */}
+                      <option value="">Select Application Category</option>
+                      <option value="FoodMedicineandHealthCareAdminstrationandControlAuthority">
+                      Food Medicine and Health Care Adminstration and Control Authority
                       </option>
+                        <option value="CompetencyCertificateforGeneralHospital">Competency Certificate for General Hospital</option>
+                      <option value="CompetencyCertificateforSpecialtyCenter">
+                      Competency Certificate for Specialty Center
+                      </option>
+                      <option value="CompetencyCertificateforRetailPharmacy">Competency Certificate for Retail Pharmacy</option>
+                      
                     </Field>
                     <ErrorMessage
                       name="applicationCategory"
@@ -238,7 +248,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       className="text-red-500"
                     />
                   </div>
-                  {values?.applicationType && values?.applicationCategory && (
+                  {/* {values?.applicationType && values?.applicationCategory && (
                     <>
                       <div className="mb-4">
                         <label className="font-bold">
@@ -399,6 +409,311 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                           Submit
                         </Button>
                       </div>
+                    </>
+                  )} */}
+                  {values?.applicationType && values?.applicationCategory !== "FoodMedicineandHealthCareAdminstrationandControlAuthority" && ( 
+                    <>
+                    <div className="font-bold text-md"> Personal Information</div>
+                    <Divider className='m-2'/>
+                     <div className="grid grid-cols-2 gap-2">
+                     <div className="mb-4">
+                    <label htmlFor="nameOfHealthFacility">
+                    Name of Health Facility and Type of Service
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="nameOfHealthFacility"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="nameOfHealthFacility"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="facilityOwnerName">
+                    Facility Owner Name
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="facilityOwnerName"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="facilityOwnerName"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="technicalLeaderFullName">
+                    Technical Leader full Name
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="technicalLeaderFullName"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="technicalLeaderFullName"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="qualification">
+                    Qualification
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="qualification"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="qualification"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                          <label
+                            htmlFor="file"
+                            className="block mb-2 text-sm font-medium text-gray-700"
+                          >
+                            Upload Picture
+                          </label>
+                          <div className="flex items-center">
+                            <label
+                              htmlFor="file"
+                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            >
+                              Choose Picture
+                            </label>
+                            <Field
+                              type="file"
+                              name="file"
+                              id="file"
+                              className="hidden"
+                            />
+                            <span className="ml-2 text-gray-600" id="file-name">
+                              No picture selected
+                            </span>
+                          </div>
+                        </div>
+                    <div className="mb-4">
+                    <label htmlFor="address">
+                    Address
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="address"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="address"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="city">
+                    City
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="city"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="city"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="subCity">
+                    SubCity
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="subCity"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="subCity"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="woreda">
+                    Woreda
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="woreda"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="woreda"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="houseNo">
+                    House No.
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="houseNo"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="houseNo"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="telNo">
+                    Telephone No.
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="telNo"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="telNo"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="registration">
+                    Registration No.
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="registration"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="registration"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                          <label
+                            htmlFor="file"
+                            className="block mb-2 text-sm font-medium text-gray-700"
+                          >
+                            Upload Signature
+                          </label>
+                          <div className="flex items-center">
+                            <label
+                              htmlFor="file"
+                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            >
+                              Choose Signature
+                            </label>
+                            <Field
+                              type="file"
+                              name="file"
+                              id="file"
+                              className="hidden"
+                            />
+                            <span className="ml-2 text-gray-600" id="file-name">
+                              No Signature selected
+                            </span>
+                          </div>
+                        </div>
+                        </div>
+                        <div className="flex justify-between mt-8">
+                        <Button
+                          type="primary"
+                          className="bg-primary text-white"
+                          htmlType="submit"
+                        >
+                          Submit
+                        </Button>
+                      
+                    </div>
+                    </>
+                  )}
+                  {values?.applicationType && values?.applicationCategory === "FoodMedicineandHealthCareAdminstrationandControlAuthority" && ( 
+                    <>
+                     <div className="font-bold text-md"> Personal Information</div>
+                    <Divider className='m-2'/>
+                     <div className="mb-4">
+                    <label htmlFor="fullName">
+                    Full Name
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="fullName"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="fullName"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+
+                    <div className="mb-4">
+                          <label
+                            htmlFor="file"
+                            className="block mb-2 text-sm font-medium text-gray-700"
+                          >
+                            Upload Picture
+                          </label>
+                          <div className="flex items-center">
+                            <label
+                              htmlFor="file"
+                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            >
+                              Choose Picture
+                            </label>
+                            <Field
+                              type="file"
+                              name="file"
+                              id="file"
+                              className="hidden"
+                            />
+                            <span className="ml-2 text-gray-600" id="file-name">
+                              No picture selected
+                            </span>
+                          </div>
+                        </div>
+                        <div className="mb-4">
+                          <label
+                            htmlFor="file"
+                            className="block mb-2 text-sm font-medium text-gray-700"
+                          >
+                            Upload Signature
+                          </label>
+                          <div className="flex items-center">
+                            <label
+                              htmlFor="file"
+                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            >
+                              Choose Signature
+                            </label>
+                            <Field
+                              type="file"
+                              name="file"
+                              id="file"
+                              className="hidden"
+                            />
+                            <span className="ml-2 text-gray-600" id="file-name">
+                              No signature selected
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                    <div className="flex justify-between mt-8">
+                        <Button
+                          type="primary"
+                          className="bg-primary text-white"
+                          htmlType="submit"
+                        >
+                          Submit
+                        </Button>
+                    </div>
                     </>
                   )}
                 </Card>
