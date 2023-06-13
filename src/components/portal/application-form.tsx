@@ -248,7 +248,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       className="text-red-500"
                     />
                   </div>
-                  {/* {values?.applicationType && values?.applicationCategory && (
+                  {values?.applicationType && values?.applicationCategory && (
                     <>
                       <div className="mb-4">
                         <label className="font-bold">
@@ -259,7 +259,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                             <Field
                               type="radio"
                               name="applierType"
-                              value="self"
+                              value="owner"
                             />
                             <span className="ml-2">Owner</span>
                           </label>
@@ -268,7 +268,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                               type="radio"
                               name="applierType"
                               className="ml-6"
-                              value="other"
+                              value="delegation"
                             />
                             <span className="ml-2"></span>Delegation
                           </label>
@@ -279,7 +279,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                           className="text-red-500"
                         />
                       </div>
-                      {values?.applierType === "other" && (
+                      {values?.applierType === "delegation" && (
                         <div className="mb-4">
                           <label
                             htmlFor="file"
@@ -399,20 +399,11 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                           className="text-red-500"
                         />
                       </div>
-
-                      <div className="flex justify-between mt-2">
-                        <Button
-                          type="primary"
-                          className="bg-primary text-white"
-                          htmlType="submit"
-                        >
-                          Submit
-                        </Button>
-                      </div>
                     </>
-                  )} */}
-                  {values?.applicationType && values?.applicationCategory !== "FoodMedicineandHealthCareAdminstrationandControlAuthority" && ( 
+                  )}
+                  {values?.applicationType && values?.applicationCategory && values?.applicationCategory != "FoodMedicineandHealthCareAdminstrationandControlAuthority" && ( 
                     <>
+                    
                     <div className="font-bold text-md"> Personal Information</div>
                     <Divider className='m-2'/>
                      <div className="grid grid-cols-2 gap-2">
@@ -430,6 +421,8 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                           className="text-red-500"
                         />
                     </div>
+                    {values?.applierType === "delegation" && (
+
                     <div className="mb-4">
                     <label htmlFor="facilityOwnerName">
                     Facility Owner Name
@@ -443,7 +436,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                           component="div"
                           className="text-red-500"
                         />
-                    </div>
+                    </div> )}
                     <div className="mb-4">
                     <label htmlFor="technicalLeaderFullName">
                     Technical Leader full Name
@@ -464,7 +457,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       <span className="text-red-400">*</span>
                     </label>
                     <Input type="text"
-                      name="qualification"                     
+                      name="qualificationLevel"                     
                     ></Input >
                      <ErrorMessage
                           name="qualification"
@@ -636,23 +629,36 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                   {values?.applicationType && values?.applicationCategory === "FoodMedicineandHealthCareAdminstrationandControlAuthority" && ( 
                     <>
                      <div className="font-bold text-md"> Personal Information</div>
-                    <Divider className='m-2'/>
+                    <Divider className='m-2'/>             
+                    <div className="grid grid-cols-2 gap-2">
                      <div className="mb-4">
-                    <label htmlFor="fullName">
-                    Full Name
+                    <label htmlFor="professionalName">
+                    First Name
                       <span className="text-red-400">*</span>
                     </label>
                     <Input type="text"
-                      name="fullName"                     
+                      name="professionalName"                     
                     ></Input >
                      <ErrorMessage
-                          name="fullName"
+                          name="professionalName"
                           component="div"
                           className="text-red-500"
                         />
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
-
+                    <div className="mb-4">
+                    <label htmlFor="professionalLastName">
+                    Last Name
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="professionalLastName"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="professionalLastName"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
                     <div className="mb-4">
                           <label
                             htmlFor="file"
