@@ -1,6 +1,6 @@
 /* eslint-disable no-sequences */
 import React, { useState } from "react";
-import { Card, Table, Button, Tag, Typography, Spin, Modal, message } from "antd";
+import { Card, Table, Button, Tag, Typography, Spin, Modal, message, App } from "antd";
 import { DeleteOutlined, DownloadOutlined, EyeOutlined, ShareAltOutlined } from "@ant-design/icons";
 import Certificate from "./license";
 import {  useGetApplicationDetailsQuery,useArchiveApplicationMutation } from "../portal.query";
@@ -98,7 +98,10 @@ navigate("/my-applications")
  </Typography>
 
               <div className="flex justify-between">
+              <App/>
+
                 <Button className="text-primary flex items-center" onClick={handleViewCertificate}>
+
                   <DownloadOutlined className="mr-1" />
                   Download License
                 </Button>

@@ -1,18 +1,18 @@
-import { Card, Collapse, Form, Input, Button, Radio } from "antd";
+import { Card, Collapse, Form, Input, Button, Radio, message } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../shared/auth/use-auth";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../configs/config";
-import { userInfo } from "os";
-
+import { JointContent } from "antd/es/message/interface";
+import {useUpdateProfileMutation,useGetUserByIdQuery} from '../portal.query'
 const { Panel } = Collapse;
 
 const UserPage = () => {
   const { session } = useAuth();
-  const [userData, setUserData] = useState<any>({});
-
+/*   const [userData, setUserData] = useState<any>({});
+ *//* 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -25,14 +25,15 @@ const UserPage = () => {
       }
     };
     fetchUserData();
-  }, []);
+  }, []); */
 
+  const {data:userData,isLoading}=useGetUserByIdQuery(session?.userInfo?.userId)
+  const[updateProfile,{isLoading:updating}]=useUpdateProfileMutation()
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required"),
     middleName: Yup.string().required("Middle Name is required"),
     lastName: Yup.string().required("Last Name is required"),
     gender: Yup.string().required("Gender is required"),
-    state: Yup.string().required("State is required"),
     city: Yup.string().required("City is required"),
     subCity: Yup.string().required("Sub City is required"),
     wereda: Yup.string().required("wereda is required"),
@@ -45,7 +46,6 @@ const UserPage = () => {
     formik.setFieldValue('middleName', userData?.middleName || "");
     formik.setFieldValue('lastName', userData?.lastName || "");
     formik.setFieldValue('gender', userData?.gender || "");
-    formik.setFieldValue('state', userData?.state || "");
     formik.setFieldValue('city', userData?.city || "");
     formik.setFieldValue('wereda', userData?.wereda || "");
     formik.setFieldValue('email', userData?.email || "");
@@ -58,26 +58,26 @@ const UserPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: userData.firstName || "",
-      middleName: userData.middleName || "",
-      lastName: userData.lastName || "",
-      gender: userData.gender || "",
-      state: userData.state || "",
-      city: userData.city || "",
-      wereda: userData.wereda || "",
-      email: userData.email || "",
-      phone: userData.phone || "",
-      kebele: userData.kebele || "",
-      subCity: userData.subCity || "",
-      houseNumber: userData.houseNumber || "",
+      firstName: userData?.firstName || "",
+      middleName: userData?.middleName || "",
+      lastName: userData?.lastName || "",
+      gender: userData?.gender || "",
+      city: userData?.city || "",
+      wereda: userData?.wereda || "",
+      email: userData?.email || "",
+      phone: userData?.phone || "",
+      kebele: userData?.kebele || "",
+      subCity: userData?.subCity || "",
+      houseNumber: userData?.houseNumber || "",
     },
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post(`${baseUrl}user/update-user`, {...values,id:session?.userInfo?.userId},);
-        setUserData(response.data);
+        const response = await updateProfile({...values,id:session?.userInfo?.userId});
+        message.success("Profile updated Successfully")
       } catch (error) {
         console.error("Error updating user data:", error);
+        message.error(error as JointContent)
       }
     },
   });
@@ -87,7 +87,7 @@ const UserPage = () => {
   };
 
   return (
-    <Card className="w-3/2 mx-auto mt-6">
+    <Card className="w-3/2 mx-auto mt-6" loading={isLoading}>
       <Collapse defaultActiveKey={["1"]}>
         <Panel
           header={<h3 className="font-bold text-lg">Personal Information</h3>}
@@ -150,6 +150,7 @@ const UserPage = () => {
                 <Form.Item label="Email" required>
                   <Input
                     name="email"
+                    disabled
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -189,87 +190,7 @@ const UserPage = () => {
                 </Form.Item>
               </div>
 
-              <div>
-                <Form.Item label="State" required>
-                  <Input
-                    name="state"
-                    value={formik.values.state}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.state && formik.errors.state && (
-                    <div className="error">{formik.errors.state as string}</div>
-                  )}
-                </Form.Item>
-
-                <Form.Item label="City" required>
-                  <Input
-                    name="city"
-                    value={formik.values.city}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.city && formik.errors.city && (
-                    <div className="error">{formik.errors.city as string}</div>
-                  )}
-                </Form.Item>
-
-                <Form.Item label="Sub City" required>
-                  <Input
-                    name="subCity"
-                    value={formik.values.subCity}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.subCity && formik.errors.subCity && (
-                    <div className="error">
-                      {formik.errors.subCity as string}
-                    </div>
-                  )}
-                </Form.Item>
-
-                <Form.Item label="wereda" required>
-                  <Input
-                    name="wereda"
-                    value={formik.values.wereda}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.wereda && formik.errors.wereda && (
-                    <div className="error">
-                      {formik.errors.wereda as string}
-                    </div>
-                  )}
-                </Form.Item>
-
-                <Form.Item label="Kebele" required>
-                  <Input
-                    name="kebele"
-                    value={formik.values.kebele}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.kebele && formik.errors.kebele && (
-                    <div className="error">
-                      {formik.errors.kebele as string}
-                    </div>
-                  )}
-                </Form.Item>
-
-                <Form.Item label="House Number" required>
-                  <Input
-                    name="houseNumber"
-                    value={formik.values.houseNumber}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.houseNumber && formik.errors.houseNumber && (
-                    <div className="error">
-                      {formik.errors.houseNumber as string}
-                    </div>
-                  )}
-                </Form.Item>
-              </div>
+      
 
               <div className="col-span-2 flex gap-4">
                 <Form.Item>
@@ -277,8 +198,9 @@ const UserPage = () => {
                     type="primary"
                     className="bg-primary"
                     htmlType="submit"
+                    loading={updating}
                   >
-                    Submit
+                    Update
                   </Button>
                 </Form.Item>
                 <Form.Item></Form.Item>
