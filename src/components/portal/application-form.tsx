@@ -746,6 +746,13 @@ Owner Name                            </label>
 
   return (
     <div>
+  <Alert className="m-2"
+      message="Note"
+      description="The name you use on the application is going to be used on the license."
+      type="warning"
+      showIcon
+      closable
+    />
       <Steps current={currentStep}>
         {steps.map((step) => (
           <Step key={step.title} title={step.title} />
