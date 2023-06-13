@@ -17,6 +17,21 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Education"],
     }),  
+    getEducationById: builder.query<any, string>({
+      query: (userId) => ({
+        url: `${portalEndPoints.getEducationByUserId}/${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["Education"],
+    }),  
+    getExperienceByUserId: builder.query<any, string>({
+      query: (userId) => ({
+        url: `${portalEndPoints.getEducationByUserId}/${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["Education"],
+    }),  
+
     getLicenseByStatus: builder.query<any, string>({
       query: (status) => ({
         url: `${portalEndPoints.getApplicationByStatus}/${status}`,
@@ -200,5 +215,6 @@ export const {
    useArchiveExperienceMutation,
    useGetLicenseByStatusQuery,
    useUpdateProfileMutation,
-   useGetUserByIdQuery
+   useGetUserByIdQuery,
+   useGetEducationByIdQuery
 } = portalApi;

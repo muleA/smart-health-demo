@@ -104,38 +104,37 @@ const PortalNavigation = () => {
         </Menu>
       </Sider>
       <Layout>
-       <Header
-          className="bg-gray-200"
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingRight: '24px'
-          }}
-        >
-          <div className="flex items-center">
-            {React.createElement(
-              collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-              {
-                className:
-                  "p-0 text-2xl leading-none cursor-pointer transition-colors",
-                onClick: toggle,
-              }
-            )}
-          </div>
+      <Header
+  className="bg-gray-200"
+  style={{
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: '24px'
+  }}
+>
+  <div className="flex items-center">
+    {React.createElement(
+      collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+      {
+        className:
+          "p-0 text-2xl leading-none cursor-pointer transition-colors",
+        onClick: toggle,
+      }
+    )}
+  </div>
 
-          <div>
-            <Dropdown overlay={accountMenu} trigger={['click']}>
-              <a className="ant-dropdown-link text-primary" onClick={(e) => e.preventDefault()}>
-                <UserOutlined style={{ fontSize: '30px' }} />
-                <span></span>
-              </a>
-            </Dropdown>
-            <CaretDownOutlined className="hover:cursor-pointer text-primary" />
-            <div className="text-primary">  {session?.userInfo?.userName}
-</div> 
-          </div>
-        </Header> 
+  <div className="flex gap-2 items-center">
+    <Dropdown overlay={accountMenu} trigger={['hover']}>
+      <a className="ant-dropdown-link text-primary" onClick={(e) => e.preventDefault()}>
+        <UserOutlined style={{ fontSize: '30px' }} />
+        <span></span>
+      </a>
+    </Dropdown>
+    <CaretDownOutlined className="hover:cursor-pointer text-primary ml-1" />
+    <div className="text-primary">{session?.userInfo?.userName}</div>
+  </div>
+</Header>
 
         <Content style={{ margin: "16px" }}>
           <Routes>
