@@ -35,6 +35,8 @@ const StepTwoSchema = Yup.object().shape({
   woreda: Yup.string().required("Woreda is required"),
   houseNumber: Yup.string().required("House Number is required"),
   phone: Yup.string().required("Phone is required"),
+  oldProfessionalLicenseNumber: Yup.string().required("Old Professional License Number is required"),
+
 
 });
 
@@ -177,6 +179,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
             houseNumber: "",
             phone: "",
             professionalLicenseNumber: "",
+            oldProfessionalLicenseNumber: "",
           }}
           validationSchema={StepTwoSchema}
           onSubmit={ async(values) => {
@@ -256,9 +259,12 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       <option value="HealthProfessional">
                         Health Professionals
                       </option>
-                      <option value="FoodandHealthRelatedInstitutions">
-                        Food and Health-Related Institutions
+                      <option value="CompetencyCertificateforGeneralHospital">Competency Certificate for General Hospital</option>
+                      <option value="CompetencyCertificateforSpecialtyCenter">
+                      Competency Certificate for Specialty Center
                       </option>
+                      <option value="CompetencyCertificateforRetailPharmacy">Competency Certificate for Retail Pharmacy</option>
+                      
                     </Field>
                     <ErrorMessage
                       name="applicationCategory"
@@ -499,7 +505,7 @@ Owner Name                            </label>
                       name="qualificationLevel"                     
                     ></Input >
                      <ErrorMessage
-                          name="qualification"
+                          name="qualificationLevel"
                           component="div"
                           className="text-red-500"
                         />
@@ -618,7 +624,7 @@ Owner Name                            </label>
                     </div>
                     <div className="mb-4">
                     <label htmlFor="professionalLicenseNumber">
-                    professionalLicenseNumber No.
+                    Professional License Number
                       <span className="text-red-400">*</span>
                     </label>
                     <Input type="text"
@@ -630,6 +636,23 @@ Owner Name                            </label>
                           className="text-red-500"
                         />
                     </div>
+                    {values?.applicationType !== "issue" && (
+
+                    <div className="mb-4">
+                    <label htmlFor="oldProfessionalLicenseNumber">
+                    Old Professional License Number
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="oldProfessionalLicenseNumber"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="oldProfessionalLicenseNumber"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                        )}
                         </div>
                         <div className="flex justify-end mt-8">
                         <Button
