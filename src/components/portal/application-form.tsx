@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Steps, Button, message, Collapse, Card, Alert, Input, Divider } from "antd";
+import { Steps, Button, message, Collapse, Card, Alert, Input } from "antd";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classNames from "classnames";
@@ -19,13 +19,25 @@ const StepTwoSchema = Yup.object().shape({
   ),
   applierType: Yup.string().required("Applier Type is required"),
   OwnerName:Yup.string().required("Owner Name is required"),
-  professionalName: Yup.string().required("professionalName is required"),
-  professionalNameLastName: Yup.string().required("professionalNameLastName is required"),
-  qualificationLevel: Yup.string().required("qualificationLevel is required"),
-  professionalLicenseNumber:Yup.string().required("professionalLicenseNumber type is Required"),
+  professionalName: Yup.string().required("Professional Name is required"),
+  professionalNameLastName: Yup.string().required("Professional Last Name is required"),
+  qualificationLevel: Yup.string().required("Qualification Level is required"),
+  professionalLicenseNumber:Yup.string().required("Professional License Number type is Required"),
   educationId: Yup.array().min(1, "At least one Education ID is required"),
   certificateId: Yup.array().min(1, "At least one Certificate ID is required"),
   experienceId: Yup.array().min(1, "At least one Experience ID is required"),
+  nameOfHealthFacility: Yup.string().required("Name of Health Facility is required"),
+  facilityOwnerName: Yup.string().required("Facility Owner Name is required"),
+  technicalLeaderFullName: Yup.string().required("Technical Leader Full Name is required"),
+  address: Yup.string().required("Address is required"),
+  city: Yup.string().required("City is required"),
+  subCity: Yup.string().required("Sub City is required"),
+  woreda: Yup.string().required("Woreda is required"),
+  houseNumber: Yup.string().required("House Number is required"),
+  phone: Yup.string().required("Phone is required"),
+  oldProfessionalLicenseNumber: Yup.string().required("Old Professional License Number is required"),
+
+
 });
 
 const StepperComponent = () => {
@@ -153,6 +165,21 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
             educationId: [],
             certificateId: [],
             experienceId: [],
+            ownerName: "",
+            professionalName: "",
+            professionalNameLastName: "",
+            qualificationLevel: "",
+            nameOfHealthFacility: "",
+            facilityOwnerName: "",
+            technicalLeaderFullName: "",
+            address: "",
+            city: "",
+            subCity: "",
+            woreda: "",
+            houseNumber: "",
+            phone: "",
+            professionalLicenseNumber: "",
+            oldProfessionalLicenseNumber: "",
           }}
           validationSchema={StepTwoSchema}
           onSubmit={ async(values) => {
@@ -232,9 +259,12 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       <option value="HealthProfessional">
                         Health Professionals
                       </option>
-                      <option value="FoodandHealthRelatedInstitutions">
-                        Food and Health-Related Institutions
+                      <option value="CompetencyCertificateforGeneralHospital">Competency Certificate for General Hospital</option>
+                      <option value="CompetencyCertificateforSpecialtyCenter">
+                      Competency Certificate for Specialty Center
                       </option>
+                      <option value="CompetencyCertificateforRetailPharmacy">Competency Certificate for Retail Pharmacy</option>
+                      
                     </Field>
                     <ErrorMessage
                       name="applicationCategory"
@@ -242,6 +272,8 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       className="text-red-500"
                     />
                   </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
                   {values?.applicationType && values?.applicationCategory && (
                     <>
                       <div className="mb-4">
@@ -298,7 +330,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                               No file selected
                             </span>
                           </div>
-                          <div className="mb-4 ml-10">
+                          {/* <div className="mb-4 ml-10">
                           <label
                             htmlFor="file"
                             className="block mb-2 text-sm font-medium text-gray-700"
@@ -316,7 +348,7 @@ Owner Name                            </label>
                             />
                       
                           </div>
-                        </div>
+                        </div> */}
                         </div>
                       )}
                       <div className="mb-4">
@@ -414,11 +446,11 @@ Owner Name                            </label>
                       </div>
                     </>
                   )}
-                  {values?.applicationType && values?.applicationCategory && values?.applicationCategory != "FoodMedicineandHealthCareAdminstrationandControlAuthority" && ( 
+                  </div>
+                  <div>
+                  {values?.applicationType && values?.applicationCategory && values?.applicationCategory != "HealthProfessional" && ( 
                     <>
-                    
-                    <div className="font-bold text-md"> Personal Information</div>
-                    <Divider className='m-2'/>
+                    <div className="font-bold text-md mb-2"> Personal Information</div>
                      <div className="grid grid-cols-2 gap-2">
                      <div className="mb-4">
                     <label htmlFor="nameOfHealthFacility">
@@ -473,7 +505,7 @@ Owner Name                            </label>
                       name="qualificationLevel"                     
                     ></Input >
                      <ErrorMessage
-                          name="qualification"
+                          name="qualificationLevel"
                           component="div"
                           className="text-red-500"
                         />
@@ -508,9 +540,12 @@ Owner Name                            </label>
                     Address
                       <span className="text-red-400">*</span>
                     </label>
+                    <div>
+                      
                     <Input type="text"
                       name="address"                     
-                    ></Input >
+                      ></Input >
+                      </div>
                      <ErrorMessage
                           name="address"
                           component="div"
@@ -560,74 +595,66 @@ Owner Name                            </label>
                         />
                     </div>
                     <div className="mb-4">
-                    <label htmlFor="houseNo">
+                    <label htmlFor="houseNumber">
                     House No.
                       <span className="text-red-400">*</span>
                     </label>
                     <Input type="text"
-                      name="houseNo"                     
+                      name="houseNumber"                     
                     ></Input >
                      <ErrorMessage
-                          name="houseNo"
+                          name="houseNumber"
                           component="div"
                           className="text-red-500"
                         />
                     </div>
                     <div className="mb-4">
-                    <label htmlFor="telNo">
+                    <label htmlFor="phone">
                     Telephone No.
                       <span className="text-red-400">*</span>
                     </label>
                     <Input type="text"
-                      name="telNo"                     
+                      name="phone"                     
                     ></Input >
                      <ErrorMessage
-                          name="telNo"
+                          name="phone"
                           component="div"
                           className="text-red-500"
                         />
                     </div>
                     <div className="mb-4">
-                    <label htmlFor="registration">
-                    Registration No.
+                    <label htmlFor="professionalLicenseNumber">
+                    Professional License Number
                       <span className="text-red-400">*</span>
                     </label>
                     <Input type="text"
-                      name="registration"                     
+                      name="professionalLicenseNumber"                     
                     ></Input >
                      <ErrorMessage
-                          name="registration"
+                          name="professionalLicenseNumber"
                           component="div"
                           className="text-red-500"
                         />
                     </div>
+                    {values?.applicationType !== "issue" && (
+
                     <div className="mb-4">
-                          <label
-                            htmlFor="file"
-                            className="block mb-2 text-sm font-medium text-gray-700"
-                          >
-                            Upload Signature
-                          </label>
-                          <div className="flex items-center">
-                            <label
-                              htmlFor="file"
-                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
-                            >
-                              Choose Signature
-                            </label>
-                            <Field
-                              type="file"
-                              name="file"
-                              id="file"
-                              className="hidden"
-                            />
-                            <span className="ml-2 text-gray-600" id="file-name">
-                              No Signature selected
-                            </span>
-                          </div>
+                    <label htmlFor="oldProfessionalLicenseNumber">
+                    Old Professional License Number
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="oldProfessionalLicenseNumber"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="oldProfessionalLicenseNumber"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                        )}
                         </div>
-                        </div>
-                        <div className="flex justify-between mt-8">
+                        <div className="flex justify-end mt-8">
                         <Button
                           type="primary"
                           className="bg-primary text-white"
@@ -639,10 +666,9 @@ Owner Name                            </label>
                     </div>
                     </>
                   )}
-                  {values?.applicationType && values?.applicationCategory === "FoodMedicineandHealthCareAdminstrationandControlAuthority" && ( 
+                  {values?.applicationType && values?.applicationCategory === "HealthProfessional" && ( 
                     <>
-                     <div className="font-bold text-md"> Personal Information</div>
-                    <Divider className='m-2'/>             
+                     <div className="font-bold text-md mb-2"> Personal Information</div>
                     <div className="grid grid-cols-2 gap-2">
                      <div className="mb-4">
                     <label htmlFor="professionalName">
@@ -659,15 +685,15 @@ Owner Name                            </label>
                         />
                     </div>
                     <div className="mb-4">
-                    <label htmlFor="professionalLastName">
+                    <label htmlFor="professionalNameLastName">
                     Last Name
                       <span className="text-red-400">*</span>
                     </label>
                     <Input type="text"
-                      name="professionalLastName"                     
+                      name="professionalNameLastName"                     
                     ></Input >
                      <ErrorMessage
-                          name="professionalLastName"
+                          name="professionalNameLastName"
                           component="div"
                           className="text-red-500"
                         />
@@ -697,34 +723,9 @@ Owner Name                            </label>
                             </span>
                           </div>
                         </div>
-                        <div className="mb-4">
-                          <label
-                            htmlFor="file"
-                            className="block mb-2 text-sm font-medium text-gray-700"
-                          >
-                            Upload Signature
-                          </label>
-                          <div className="flex items-center">
-                            <label
-                              htmlFor="file"
-                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
-                            >
-                              Choose Signature
-                            </label>
-                            <Field
-                              type="file"
-                              name="file"
-                              id="file"
-                              className="hidden"
-                            />
-                            <span className="ml-2 text-gray-600" id="file-name">
-                              No signature selected
-                            </span>
-                          </div>
-                        </div>
                       </div>
 
-                    <div className="flex justify-between mt-8">
+                    <div className="flex justify-end mt-8">
                         <Button
                           type="primary"
                           className="bg-primary text-white"
@@ -735,6 +736,8 @@ Owner Name                            </label>
                     </div>
                     </>
                   )}
+                  </div>
+                  </div>
                 </Card>
               </Form>
             </Card>
@@ -766,6 +769,13 @@ Owner Name                            </label>
 
   return (
     <div>
+  <Alert className="m-2"
+      message="Note"
+      description="The name you use on the application is going to be used on the license."
+      type="warning"
+      showIcon
+      closable
+    />
       <Steps current={currentStep}>
         {steps.map((step) => (
           <Step key={step.title} title={step.title} />
