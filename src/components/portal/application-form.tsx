@@ -510,31 +510,7 @@ Owner Name                            </label>
                           className="text-red-500"
                         />
                     </div>
-                    <div className="mb-4">
-                          <label
-                            htmlFor="file"
-                            className="block mb-2 text-sm font-medium text-gray-700"
-                          >
-                            Upload Picture
-                          </label>
-                          <div className="flex items-center">
-                            <label
-                              htmlFor="file"
-                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
-                            >
-                              Choose Picture
-                            </label>
-                            <Field
-                              type="file"
-                              name="file"
-                              id="file"
-                              className="hidden"
-                            />
-                            <span className="ml-2 text-gray-600" id="file-name">
-                              No picture selected
-                            </span>
-                          </div>
-                        </div>
+                
                     <div className="mb-4">
                     <label htmlFor="address">
                     Address
