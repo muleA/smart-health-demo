@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Steps, Button, message, Collapse, Card, Alert } from "antd";
+import { Steps, Button, message, Collapse, Card, Alert, Input } from "antd";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classNames from "classnames";
@@ -18,9 +18,26 @@ const StepTwoSchema = Yup.object().shape({
     "Application Category is required"
   ),
   applierType: Yup.string().required("Applier Type is required"),
+  OwnerName:Yup.string().required("Owner Name is required"),
+  professionalName: Yup.string().required("Professional Name is required"),
+  professionalNameLastName: Yup.string().required("Professional Last Name is required"),
+  qualificationLevel: Yup.string().required("Qualification Level is required"),
+  professionalLicenseNumber:Yup.string().required("Professional License Number type is Required"),
   educationId: Yup.array().min(1, "At least one Education ID is required"),
   certificateId: Yup.array().min(1, "At least one Certificate ID is required"),
   experienceId: Yup.array().min(1, "At least one Experience ID is required"),
+  nameOfHealthFacility: Yup.string().required("Name of Health Facility is required"),
+  facilityOwnerName: Yup.string().required("Facility Owner Name is required"),
+  technicalLeaderFullName: Yup.string().required("Technical Leader Full Name is required"),
+  address: Yup.string().required("Address is required"),
+  city: Yup.string().required("City is required"),
+  subCity: Yup.string().required("Sub City is required"),
+  woreda: Yup.string().required("Woreda is required"),
+  houseNumber: Yup.string().required("House Number is required"),
+  phone: Yup.string().required("Phone is required"),
+  oldProfessionalLicenseNumber: Yup.string().required("Old Professional License Number is required"),
+
+
 });
 
 const StepperComponent = () => {
@@ -148,6 +165,21 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
             educationId: [],
             certificateId: [],
             experienceId: [],
+            ownerName: "",
+            professionalName: "",
+            professionalNameLastName: "",
+            qualificationLevel: "",
+            nameOfHealthFacility: "",
+            facilityOwnerName: "",
+            technicalLeaderFullName: "",
+            address: "",
+            city: "",
+            subCity: "",
+            woreda: "",
+            houseNumber: "",
+            phone: "",
+            professionalLicenseNumber: "",
+            oldProfessionalLicenseNumber: "",
           }}
           validationSchema={StepTwoSchema}
           onSubmit={ async(values) => {
@@ -200,8 +232,8 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       <option value="issue">Issue</option>
                       <option value="renew">Renew</option>
                       <option value="revoke">Revoke</option>
-                      <option value="suspend">Revoke</option>
-                      <option value="remove">Revoke</option>
+                      <option value="suspend">Suspend</option>
+                      <option value="remove">Remove</option>
                     </Field>
                     <ErrorMessage
                       name="applicationType"
@@ -227,10 +259,12 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       <option value="HealthProfessional">
                         Health Professionals
                       </option>
-                      <option value="HealthFacility">Health Facilities</option>
-                      <option value="FoodandHealth-RelatedInstitutions">
-                        Food and Health-Related Institutions
+                      <option value="CompetencyCertificateforGeneralHospital">Competency Certificate for General Hospital</option>
+                      <option value="CompetencyCertificateforSpecialtyCenter">
+                      Competency Certificate for Specialty Center
                       </option>
+                      <option value="CompetencyCertificateforRetailPharmacy">Competency Certificate for Retail Pharmacy</option>
+                      
                     </Field>
                     <ErrorMessage
                       name="applicationCategory"
@@ -238,6 +272,8 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                       className="text-red-500"
                     />
                   </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
                   {values?.applicationType && values?.applicationCategory && (
                     <>
                       <div className="mb-4">
@@ -249,7 +285,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                             <Field
                               type="radio"
                               name="applierType"
-                              value="self"
+                              value="owner"
                             />
                             <span className="ml-2">Owner</span>
                           </label>
@@ -258,7 +294,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                               type="radio"
                               name="applierType"
                               className="ml-6"
-                              value="other"
+                              value="delegation"
                             />
                             <span className="ml-2"></span>Delegation
                           </label>
@@ -269,7 +305,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                           className="text-red-500"
                         />
                       </div>
-                      {values?.applierType === "other" && (
+                      {values?.applierType === "delegation" && (
                         <div className="mb-4">
                           <label
                             htmlFor="file"
@@ -277,7 +313,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                           >
                             Upload File
                           </label>
-                          <div className="flex items-center">
+                          <div className="flex items-end">
                             <label
                               htmlFor="file"
                               className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
@@ -294,6 +330,25 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                               No file selected
                             </span>
                           </div>
+                          {/* <div className="mb-4 ml-10">
+                          <label
+                            htmlFor="file"
+                            className="block mb-2 text-sm font-medium text-gray-700"
+                          >
+Owner Name                          </label>
+                          <div className="flex items-center">
+                            <label
+                              className="px-10 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            >
+Owner Name                            </label>
+                            <Field
+                              type="text"
+                              name="Owner Name"
+                              id="ownerName"
+                            />
+                      
+                          </div>
+                        </div> */}
                         </div>
                       )}
                       <div className="mb-4">
@@ -389,8 +444,193 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                           className="text-red-500"
                         />
                       </div>
+                    </>
+                  )}
+                  </div>
+                  <div>
+                  {values?.applicationType && values?.applicationCategory && values?.applicationCategory != "HealthProfessional" && ( 
+                    <>
+                    <div className="font-bold text-md mb-2"> Personal Information</div>
+                     <div className="grid grid-cols-2 gap-2">
+                     <div className="mb-4">
+                    <label htmlFor="nameOfHealthFacility">
+                    Name of Health Facility and Type of Service
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="nameOfHealthFacility"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="nameOfHealthFacility"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    {values?.applierType === "delegation" && (
 
-                      <div className="flex justify-between mt-2">
+                    <div className="mb-4">
+                    <label htmlFor="facilityOwnerName">
+                    Facility Owner Name
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="facilityOwnerName"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="facilityOwnerName"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div> )}
+                    <div className="mb-4">
+                    <label htmlFor="technicalLeaderFullName">
+                    Technical Leader full Name
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="technicalLeaderFullName"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="technicalLeaderFullName"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="qualification">
+                    Qualification
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="qualificationLevel"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="qualificationLevel"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                
+                    <div className="mb-4">
+                    <label htmlFor="address">
+                    Address
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <div>
+                      
+                    <Input type="text"
+                      name="address"                     
+                      ></Input >
+                      </div>
+                     <ErrorMessage
+                          name="address"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="city">
+                    City
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="city"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="city"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="subCity">
+                    SubCity
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="subCity"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="subCity"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="woreda">
+                    Woreda
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="woreda"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="woreda"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="houseNumber">
+                    House No.
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="houseNumber"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="houseNumber"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="phone">
+                    Telephone No.
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="phone"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="phone"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="professionalLicenseNumber">
+                    Professional License Number
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="professionalLicenseNumber"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="professionalLicenseNumber"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    {values?.applicationType !== "issue" && (
+
+                    <div className="mb-4">
+                    <label htmlFor="oldProfessionalLicenseNumber">
+                    Old Professional License Number
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="oldProfessionalLicenseNumber"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="oldProfessionalLicenseNumber"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                        )}
+                        </div>
+                        <div className="flex justify-end mt-8">
                         <Button
                           type="primary"
                           className="bg-primary text-white"
@@ -398,9 +638,82 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                         >
                           Submit
                         </Button>
-                      </div>
+                      
+                    </div>
                     </>
                   )}
+                  {values?.applicationType && values?.applicationCategory === "HealthProfessional" && ( 
+                    <>
+                     <div className="font-bold text-md mb-2"> Personal Information</div>
+                    <div className="grid grid-cols-2 gap-2">
+                     <div className="mb-4">
+                    <label htmlFor="professionalName">
+                    First Name
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="professionalName"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="professionalName"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                    <label htmlFor="professionalNameLastName">
+                    Last Name
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Input type="text"
+                      name="professionalNameLastName"                     
+                    ></Input >
+                     <ErrorMessage
+                          name="professionalNameLastName"
+                          component="div"
+                          className="text-red-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                          <label
+                            htmlFor="file"
+                            className="block mb-2 text-sm font-medium text-gray-700"
+                          >
+                            Upload Picture
+                          </label>
+                          <div className="flex items-center">
+                            <label
+                              htmlFor="file"
+                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            >
+                              Choose Picture
+                            </label>
+                            <Field
+                              type="file"
+                              name="file"
+                              id="file"
+                              className="hidden"
+                            />
+                            <span className="ml-2 text-gray-600" id="file-name">
+                              No picture selected
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                    <div className="flex justify-end mt-8">
+                        <Button
+                          type="primary"
+                          className="bg-primary text-white"
+                          htmlType="submit"
+                        >
+                          Submit
+                        </Button>
+                    </div>
+                    </>
+                  )}
+                  </div>
+                  </div>
                 </Card>
               </Form>
             </Card>
@@ -432,6 +745,13 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
 
   return (
     <div>
+  <Alert className="m-2"
+      message="Note"
+      description="The name you use on the application is going to be used on the license."
+      type="warning"
+      showIcon
+      closable
+    />
       <Steps current={currentStep}>
         {steps.map((step) => (
           <Step key={step.title} title={step.title} />

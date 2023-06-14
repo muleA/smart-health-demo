@@ -102,13 +102,10 @@ export function Users() {
 
   return (
     <>
-{/*       <CustomHeader />
 
-
- */}      
  
  <DefaultPage title={"Users"} backButtonLink="/users" >
-  <div style={{width:"1200px"}}>
+  <div >
   <MaterialReactTable
         columns={columns}
         data={users ?? []}

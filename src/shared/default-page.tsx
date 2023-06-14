@@ -1,4 +1,3 @@
-import {Card } from "antd";
 import { PropsWithChildren, ReactNode } from "react";
 import { DefaultPageHeader, DefaultPageHeaderProps } from "./default-page-header";
 
@@ -13,7 +12,6 @@ export const DefaultPage = (props: PropsWithChildren<DefaultPageProps>): JSX.Ele
       <div
         {...(props.narrow && {
           alignSelf: "center",
-          width: "500px",
           marginBottom: "10px",
         })}
       >
@@ -21,7 +19,6 @@ export const DefaultPage = (props: PropsWithChildren<DefaultPageProps>): JSX.Ele
         {props.otherComponent}
 
         <div
-          style={{ minWidth: "500px" }}
           {...(props.narrow && {
             style: {
               padding: 25,

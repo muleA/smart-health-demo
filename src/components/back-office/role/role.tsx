@@ -52,7 +52,7 @@ export function Roles() {
         navigate("/roles/new")
       },
     }} >
-  <div style={{width:"1200px"}}>
+  <div>
   <MaterialReactTable
         columns={columns}
         data={roles ?? []}

@@ -49,7 +49,7 @@ export function ApplicationListComponent() {
   return (
     <>
  <DefaultPage title={"Applications"} backButtonLink="/license"   >
-  <div style={{width:"1200px"}}>
+  <div>
   <MaterialReactTable
         columns={columns}
         data={applications ?? []}

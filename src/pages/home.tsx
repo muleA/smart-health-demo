@@ -3,13 +3,10 @@ import { Layout, Menu, Button, Select } from "antd";
 import { DownOutlined, LoginOutlined } from "@ant-design/icons";
 import { SafetyCertificateOutlined, UserAddOutlined } from "@ant-design/icons";
 import LoginForm from "./login/login-form";
-import RegistrationForm from "./login/registration-form";
 import Carousel from "./banner";
 import HowItWorks from "./how-it-works";
 import { Registration } from "./login/registration";
-
 const { Header, Content, Footer } = Layout;
-
 const HomePage = () => {
   const [activeMenuKey, setActiveMenuKey] = useState("1");
   const handleRegistration = () => {
@@ -101,7 +98,6 @@ const HomePage = () => {
         {activeMenuKey === "4" && <h1>About Us Page Content</h1>}
         {activeMenuKey === "6" && <Registration />}
         {activeMenuKey === "5" && <LoginForm />}
-
       </Content>
       <Footer className="text-center bg-white py-2 text-primary">
         Professional License Management &copy; {new Date().getFullYear()}

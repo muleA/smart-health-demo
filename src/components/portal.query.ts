@@ -17,6 +17,21 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Education"],
     }),  
+    getEducationById: builder.query<any, string>({
+      query: (userId) => ({
+        url: `${portalEndPoints.getEducationByUserId}/${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["Education"],
+    }),  
+    getExperienceByUserId: builder.query<any, string>({
+      query: (userId) => ({
+        url: `${portalEndPoints.getEducationByUserId}/${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["Education"],
+    }),  
+
     getLicenseByStatus: builder.query<any, string>({
       query: (status) => ({
         url: `${portalEndPoints.getApplicationByStatus}/${status}`,
@@ -53,6 +68,15 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    
+    getUserById: builder.query<any, any>({
+      query: (id:any) => ({
+        url: `${portalEndPoints.getUserById}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+
     getArchivedApplications: builder.query<any, any>({
       query: () => ({
         url: `${portalEndPoints.getArchivedApplications}`,
@@ -71,6 +95,14 @@ const portalApi = apiSlice.injectEndpoints({
     restoreEducation: builder.mutation<any, any>({
       query: (newUser) => ({
         url: `${portalEndPoints.restoreEducation}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["Education"],
+    }),
+    updateProfile: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${portalEndPoints.updateUser}`,
         method: "POST",
         data: newUser,
       }),
@@ -181,5 +213,8 @@ export const {
    useArchiveCertificateMutation,
    useArchiveEducationMutation,
    useArchiveExperienceMutation,
-   useGetLicenseByStatusQuery
+   useGetLicenseByStatusQuery,
+   useUpdateProfileMutation,
+   useGetUserByIdQuery,
+   useGetEducationByIdQuery
 } = portalApi;

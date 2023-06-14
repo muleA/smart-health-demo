@@ -118,6 +118,21 @@ const ExperinceInformations: React.FC = () => {
 };
 
   const handleAddExperience = () => {
+   
+    if (experiences.length > 0) {
+      const firstEducation = experiences[0];
+      const isFirstEducationEmpty = Object.values(firstEducation).every(
+        (value) => value === ""
+      );
+
+      if (isFirstEducationEmpty) {
+        message.error(
+          "Please fill in the experience  information before adding another ."
+        );
+        return; // Exit the function early if the first education is empty
+      }
+    }
+
     const newExperience: Experience = {
       id: "", // Generate a unique ID for the new experience
       tin: "",
@@ -126,8 +141,11 @@ const ExperinceInformations: React.FC = () => {
       woreda: "",
       kebela: "",
     };
-    setExperiences([...experiences, newExperience]);
+    setExperiences([newExperience,...experiences]);
   };
+
+
+  
   const [expanded, setExpanded] = useState(false);
   const handleButtonClick = () => {
     setExpanded(!expanded);
@@ -162,7 +180,7 @@ const ExperinceInformations: React.FC = () => {
 
           {experiences?.length===0?(<><Empty/></>):(<>
             {experiences.map((experience: Experience, index: number) => (
-            <Collapse key={index}>
+            <Collapse key={index} defaultActiveKey={0}>
               <Panel
                 className="mb-2"
                 header={`Experience ${index + 1}`}

@@ -49,7 +49,7 @@ export default function PermissionsList() {
         navigate("/permissions/new")
       },
     }} >
-  <div style={{width:"1200px"}}>
+  <div>
   <MaterialReactTable
         columns={columns}
         data={permissions ?? []}
