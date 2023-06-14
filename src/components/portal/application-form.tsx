@@ -747,7 +747,7 @@ Owner Name                            </label>
     <div>
   <Alert className="m-2"
       message="Note"
-      description="The name you use on the application is going to be used on the license."
+      description="The name on your profile is going to be used on the license."
       type="warning"
       showIcon
       closable
