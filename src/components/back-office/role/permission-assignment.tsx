@@ -2,7 +2,7 @@
   import { SetStateAction, useEffect, useRef, useState } from 'react';
 import {  useParams } from 'react-router-dom';
 import { Button, Table, message } from 'antd';
-import { CollectionSelectorConfig, ModalCollectionSelector } from '../../../shared/modal-collection-selctor';
+import { CollectionSelector, CollectionSelectorConfig } from '../../../shared/modal-collection-selctor';
 import Empty from '../../../shared/empty-state';
 import { DeleteColumnOutlined } from '@ant-design/icons';
 import { SavedSearchOutlined } from '@mui/icons-material';
@@ -88,7 +88,7 @@ import { useGetPermissionsQuery, useUpdatePermissionMutation } from '../permissi
     return (
       <div>
         <>
-          <ModalCollectionSelector
+          <CollectionSelector
             onDone={onDone}
             search={onSearch}
             total={tags?.length ?? 0}
@@ -99,8 +99,6 @@ import { useGetPermissionsQuery, useUpdatePermissionMutation } from '../permissi
             itemsLoading={isTagsFetching}
             items={tags ?? []}
             config={config}
-            hasSort={true}
-            inputRef={inputRef}
             selectedRows={currentAssignedTags}
           />
           {!currentAssignedTags?.length && <Empty />}

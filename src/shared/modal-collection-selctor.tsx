@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Checkbox, Input, Modal, Table } from 'antd';
+import { useState } from 'react';
+import { Button, Input, Modal, Table } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { localPipe } from './local';
 import { ColumnsType } from 'antd/es/table';
 
 /* Rest of the imports */
@@ -57,144 +56,92 @@ interface CollectionSelectorProps {
     onDone?: (event: any) => void;
     selectedRows?: any[];
   }
-
-export function ModalCollectionSelector(props: CollectionSelectorProps) {
-  /* Rest of the code */
-
-  const [checkedItems, setCheckedItems] = useState<any[]>(props?.selectedRows ? props?.selectedRows : []);
-  const [isCheckAll, setIsCheckAll] = useState<boolean>(false);
-  const [order, setOrder] = useState('ASC');
-
-  /* Rest of the code */
-
-  const checkAll = (event: any) => {
-    if (event.target.checked) {
-      setCheckedItems(props?.items ? props?.items : []);
-      setIsCheckAll(true);
-    } else {
-      setCheckedItems([]);
-      setIsCheckAll(false);
-    }
-  };
-  const childeView = (item: any, keys: string[]) => {
-    if (keys.length && item) {
-      keys.forEach((key: any) => {
-        if (item[key] !== null && item[key] !== undefined) {
-          item = item[key];
+  interface CollectionSelectorState {
+    search: string;
+    selectedRows: any[];
+  }
+  
+ export  const CollectionSelector: React.FC<CollectionSelectorProps> = ({
+    config = { visibleColumn: [] },
+    items = [],
+    total,
+    itemsLoading,
+    title,
+    endPoint,
+    buttonLoading,
+    modalOpened,
+    setModalOpened,
+    search,
+    onDone,
+    selectedRows = [],
+  }) => {
+    const [state, setState] = useState<CollectionSelectorState>({
+      search: "",
+      selectedRows,
+    });
+  
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+      setState((prevState) => ({ ...prevState, search: value }));
+      search(value);
+    };
+  
+    const handleRowClick = (row: any) => {
+      const { multiple } = config;
+      let newSelectedRows = [...state.selectedRows];
+      if (multiple) {
+        const index = newSelectedRows.findIndex((r) => r.id === row.id);
+        if (index === -1) {
+          newSelectedRows.push(row);
         } else {
-          item = '';
+          newSelectedRows.splice(index, 1);
         }
-      });
-    }
-
-    return item;
-  };
-
-  const handleCheckbox = (event: any, element: any) => {
-    if (event.target.checked) {
-      setCheckedItems((prev) => [...prev, element]);
-    } else {
-      const checked = checkedItems.filter((e) => e.id !== element.id);
-      setCheckedItems(checked);
-      setIsCheckAll(false);
-    }
-  };
-
-  /* Rest of the code */
-
-  const headers = props.config?.visibleColumn?.map((column) => (
-    <th key={Array.isArray(column.key) ? column.key[0] : column.key}>
-      <div className="flex">
+      } else {
+        newSelectedRows = [row];
+      }
+      setState((prevState) => ({ ...prevState, selectedRows: newSelectedRows }));
+    };
+  
+    const handleDone = () => {
+      onDone && onDone(state.selectedRows);
+      setModalOpened(false);
+    };
+  
+    const { visibleColumn, size } = config;
+    const { search: searchValue, selectedRows: selectedRowsValue } = state;
+  
+    const columns: ColumnsType<any> = visibleColumn.map((column: Column) => ({
+      title: column.name,
+      dataIndex: column.key,
+      key: column.key,
+    }));
+  
+    return (
+      <Modal visible={modalOpened} onCancel={() => setModalOpened(false)} width={size}>
         <div>
-          {column.isTranslate ? column?.name ? column.name : '' : column?.name}
-        </div>
-      
-      </div>
-    </th>
-  ));
-
-  const checkIsChecked = (element: any) => {
-    if (Array.isArray(checkedItems)) {
-      const found = checkedItems?.some((el) => el?.id === element.id) ?? [];
-      if (found) return true;
-      return false;
-    }
-  };
-
-  const rows = props?.items?.map((element: any, index: number) => (
-    <tr key={index} className="group">
-      <td>
-        <Checkbox
-          onChange={(event) => handleCheckbox(event, element)}
-          checked={checkIsChecked(element)}
-        />
-      </td>
-      {props.config?.visibleColumn.map((column) => {
-        if (column?.deep && column?.deepKey) {
-          return (
-            <td>
-              <ul>
-                {element[column.key]?.map((item: any) => (
-                  <li className={'list-disc'} key={item?.toString()}>
-                    {column.hasLocale
-                      ? localPipe(item[`${column.deepKey}`],"en")
-                      : item[`${column.name}`]}
-                  </li>
-                ))}
-              </ul>
-            </td>
-          );
-        }
-        return (
-          <td>
-            {!Array.isArray(column.key)
-              ? column.hasLocale
-                ? localPipe(element[column.key], "en")
-                : element[column.key]
-              : childeView(element, column.key)}
-          </td>
-        );
-      })}
-    </tr>
-  ));
-
-  /* Rest of the code */
-
-  return (
-   <>
-        <Modal
-        visible={props?.modalOpened}
-        onCancel={()=>props?.setModalOpened(false)}
-        onOk={()=>props?.setModalOpened(false)}
-        width={800}
-        centered
-        title={props.title}
-        okText={'OK'}
-        cancelText={'Cancel'}
-      >
-        <div className="flex items-center mb-2">
           <Input
+            placeholder="Search"
+            value={searchValue}
+            onChange={handleSearchChange}
             prefix={<SearchOutlined />}
-            placeholder={'Search'}
-            onChange={props?.search}
-            className="mr-2"
+            style={{ marginBottom: 16 }}
           />
-         {/*  {props.hasSelectAll && (
-            <Checkbox onChange={checkAll} checked={isCheckAll}>
-              {t('Select All')}
-            </Checkbox>
-          )} */}
         </div>
         <Table
-          columns={headers as ColumnsType<any> | undefined}
-          dataSource={props?.items}
-          rowKey={(record) => record.id}
-          pagination={false}
-        >
-          {rows}
-        </Table>
-   
+          columns={columns}
+          dataSource={items}
+          rowKey="id"
+          onRow={(record) => ({
+            onClick: () => handleRowClick(record),
+            style: { cursor: "pointer" },
+          })}
+        />
+        <div style={{ marginTop: 16, textAlign: "right" }}>
+          <Button onClick={() => setModalOpened(false)}>Cancel</Button>
+          <Button onClick={handleDone} disabled={!state.selectedRows.length}>
+            OK
+          </Button>
+        </div>
       </Modal>
-    </>
-  );
-}
+    );
+  };
