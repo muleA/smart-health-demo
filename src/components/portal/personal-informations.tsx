@@ -7,6 +7,7 @@ import axios from "axios";
 import { baseUrl } from "../../configs/config";
 import { JointContent } from "antd/es/message/interface";
 import {useUpdateProfileMutation,useGetUserByIdQuery} from '../portal.query'
+import { Edit } from "@mui/icons-material";
 const { Panel } = Collapse;
 
 const UserPage = () => {
@@ -199,6 +200,7 @@ const UserPage = () => {
                     className="bg-primary"
                     htmlType="submit"
                     loading={updating}
+                    icon={<Edit/>}
                   >
                     Update
                   </Button>

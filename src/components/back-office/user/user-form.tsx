@@ -7,6 +7,8 @@ import {
 } from "../../back-office.query";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { SaveFilled } from "@ant-design/icons";
+import { Edit } from "@mui/icons-material";
 
 const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
   const [createUser, { isLoading: isCreating }] = useUpdatedUserMutation();
@@ -173,6 +175,7 @@ const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
                 htmlType="submit"
                 className="bg-primary"
                 loading={isCreating || isUpdating}
+                icon={ <Edit/>}
               >
                 {props.mode === "new" ? "Save" : "Update"}
               </Button>

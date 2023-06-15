@@ -4,7 +4,7 @@ import CollapsibleCard from '../../../shared/card';
 
 function NewPermission() {
   return (
-    <CollapsibleCard title={"Permission Information's"}>
+    <CollapsibleCard title={"Permission Information's"} dropped={true}>
     <PermissionForm mode={"new"}/>
     
     </CollapsibleCard>
