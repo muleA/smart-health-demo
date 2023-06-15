@@ -35,7 +35,7 @@ const StepTwoSchema = Yup.object().shape({
   woreda: Yup.string().required("Woreda is required"),
   houseNumber: Yup.string().required("House Number is required"),
   phone: Yup.string().required("Phone is required"),
-  oldProfessionalLicenseNumber: Yup.string().required("Old Professional License Number is required"),
+  oldLicenseNumber: Yup.string().required("Old License Number is required"),
 
 
 });
@@ -179,7 +179,7 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
             houseNumber: "",
             phone: "",
             professionalLicenseNumber: "",
-            oldProfessionalLicenseNumber: "",
+            oldLicenseNumber: "",
           }}
           validationSchema={StepTwoSchema}
           onSubmit={ async(values) => {
@@ -330,25 +330,6 @@ const[apply,{isLoading}]=useApplyToLicenseMutation()
                               No file selected
                             </span>
                           </div>
-                          {/* <div className="mb-4 ml-10">
-                          <label
-                            htmlFor="file"
-                            className="block mb-2 text-sm font-medium text-gray-700"
-                          >
-Owner Name                          </label>
-                          <div className="flex items-center">
-                            <label
-                              className="px-10 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
-                            >
-Owner Name                            </label>
-                            <Field
-                              type="text"
-                              name="Owner Name"
-                              id="ownerName"
-                            />
-                      
-                          </div>
-                        </div> */}
                         </div>
                       )}
                       <div className="mb-4">
@@ -408,6 +389,31 @@ Owner Name                            </label>
                             <div></div>
                           </div>
                         ))}
+                         <div className="mb-4">
+                          <label
+                            htmlFor="file"
+                            className="block mb-2 text-sm font-medium text-gray-700"
+                          >
+                            Upload File
+                          </label>
+                          <div className="flex items-end">
+                            <label
+                              htmlFor="file"
+                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            >
+                              Choose File
+                            </label>
+                            <Field
+                              type="file"
+                              name="file"
+                              id="file"
+                              className="hidden"
+                            />
+                            <span className="ml-2 text-gray-600" id="file-name">
+                              No file selected
+                            </span>
+                          </div>
+                        </div>
                         <ErrorMessage
                           name="experienceId"
                           component="div"
@@ -437,6 +443,31 @@ Owner Name                            </label>
                               <div></div>
                             </div>
                           ))}
+                        </div>
+                        <div className="mb-4">
+                          <label
+                            htmlFor="file"
+                            className="block mb-2 text-sm font-medium text-gray-700"
+                          >
+                            Upload File
+                          </label>
+                          <div className="flex items-end">
+                            <label
+                              htmlFor="file"
+                              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                            >
+                              Choose File
+                            </label>
+                            <Field
+                              type="file"
+                              name="file"
+                              id="file"
+                              className="hidden"
+                            />
+                            <span className="ml-2 text-gray-600" id="file-name">
+                              No file selected
+                            </span>
+                          </div>
                         </div>
                         <ErrorMessage
                           name="certificateId"
@@ -615,15 +646,15 @@ Owner Name                            </label>
                     {values?.applicationType !== "issue" && (
 
                     <div className="mb-4">
-                    <label htmlFor="oldProfessionalLicenseNumber">
-                    Old Professional License Number
+                    <label htmlFor="oldLicenseNumber">
+                    Old License Number
                       <span className="text-red-400">*</span>
                     </label>
                     <Input type="text"
-                      name="oldProfessionalLicenseNumber"                     
+                      name="oldLicenseNumber"                     
                     ></Input >
                      <ErrorMessage
-                          name="oldProfessionalLicenseNumber"
+                          name="oldLicenseNumber"
                           component="div"
                           className="text-red-500"
                         />
