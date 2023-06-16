@@ -222,7 +222,14 @@ const navigate=useNavigate()
           
           <Form.Item>
             <div className="flex space-x-4">
-             
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="bg-primary"
+                loading={isCreating || isUpdating}
+              >
+                {props.mode === "new" ? "Save" : "Update"}
+              </Button>
               {props?.mode !== "new" && (
                 <>
                

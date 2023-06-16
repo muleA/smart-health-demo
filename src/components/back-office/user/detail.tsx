@@ -1,5 +1,3 @@
-import { Button, Card } from "antd";
-import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from "react-router-dom";
 import UserForm from "./user-form";
 import React from "react";
@@ -17,10 +15,7 @@ return(<>
 <CollapsibleCard title={"Applications"}>
 <UserApplicationsDetail id={id}/>
 </CollapsibleCard>
-<CollapsibleCard title={"License"}>
 
-     licenses
-</CollapsibleCard>
 
 
 

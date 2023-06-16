@@ -83,18 +83,18 @@ export const UserApplicationsDetail = ({ id }: any) => {
                     <Text strong>Status:</Text> {application.status}
                   </p>
                   <p>
-                    <Text strong>Comment:</Text> {application.comment}
+                    <Text strong>Comment:</Text> {application?.comment}
                   </p>
                   <p>
-                    <Text strong>Education:</Text> {application.id}{" "}
+                    <Text strong>Education:</Text> {application?.education?.name}{" "}
                     <a>Attachment 1</a>
                   </p>
                   <p>
-                    <Text strong>Experience:</Text> {application.id}{" "}
+                    <Text strong>Experience:</Text> {application?.experience?.name}{" "}
                     <a>Attachemnt2</a>
                   </p>
                   <p>
-                    <Text strong>Certificates:</Text> {application.id}
+                    <Text strong>Certificates:</Text> {application?.certificate?.certificateTitle}
                     <a>Attachment3</a>
                   </p>
 
@@ -107,7 +107,7 @@ export const UserApplicationsDetail = ({ id }: any) => {
                     </Button>
                     <Button className="bg-red-500">Reject</Button>
 
-                    {application.status === "SUBMITTED" ? (
+                    {application.status === "APPROVE" ? (
                       <>
                         <Button
                           className="text-primary flex items-center"

@@ -191,7 +191,7 @@ const StepperComponent = () => {
             houseNumber: "",
             phone: "",
             professionalLicenseNumber: "",
-            oldProfessionalLicenseNumber: "",
+            oldLicenseNumber: "",
           }}
           validationSchema={StepTwoSchema}
           onSubmit={async (values) => {
