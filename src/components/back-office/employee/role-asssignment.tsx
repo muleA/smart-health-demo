@@ -37,13 +37,14 @@ export const RoleAssignment = (props: {
 
   const onSave = async () => {
     try {
-      await assignTags({
-        roleId: id?.toString(),
-        id: currentAssignedTags?.map((item) =>item.id)
-      }).unwrap();
-      message.success('Permission has been assigned to Roles successfully.');
+      const payload = currentAssignedTags?.map((item) => ({
+        roleName: item.name,
+        roleId: item.id.toString(),
+      }));
+      await assignTags({...payload}).unwrap();
+      message.success("Permission has been assigned to Roles successfully.");
     } catch (err) {
-      message.error('Sorry, an error encountered while assigning Permissions.');
+      message.error("Sorry, an error encountered while assigning Permissions.");
     }
   };
 
