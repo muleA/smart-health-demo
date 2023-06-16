@@ -2,40 +2,46 @@ import { Card, Form, Input, Button, message, Spin, Upload } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
+  useArchiveUserMutation,
+  useGetUserByIdQuery,
   useGetUsersQuery,
+  useLazyGetUserByIdQuery,
   useUpdatedUserMutation,
 } from "../../back-office.query";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { SaveFilled } from "@ant-design/icons";
-import { Edit } from "@mui/icons-material";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
   const [createUser, { isLoading: isCreating }] = useUpdatedUserMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdatedUserMutation();
   const { data: user, isLoading: isDetailsLoading } = useGetUsersQuery();
-
+const navigate=useNavigate()
   // Define the form validation schema using Yup
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    phoneNumber: Yup.string().required("Phone number is required"),
-    profilePicture: Yup.string().required("Profile picture is required"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters long"),
+    city: Yup.string().required("Phone number is required"),
+    gneder: Yup.string().required("Last name is required"),
+    houseNumber: Yup.string().required("Last name is required"),
+    kebele: Yup.string().required("Last name is required"),
+    wereda: Yup.string().required("Last name is required"),
+  middleName: Yup.string().required("Last name is required"),
+  subCity: Yup.string().required("Last name is required"),
+
   });
 
   const { id } = useParams();
   console.log("id", id);
   console.log("mode", id);
-  /*   useEffect(() => {
+  const[trigger, {data:userInfo,isLoading}]=useLazyGetUserByIdQuery()
+  const[archiveUser,{data:archive,isLoading:archivingUser}]=useArchiveUserMutation()
+   useEffect(() => {
     if (id) {
-      trigger(id);
+      trigger(props?.id);
     }
   }, [id, trigger]);
- */
+ 
   // Define the form submission function
   const handleSubmit = async (values: any) => {
     try {
@@ -50,6 +56,15 @@ const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
       message.error("Error occurred while saving user");
     }
   };
+  const handleArchive=async()=>{
+    try {
+        await archiveUser(props?.id);
+        message.success("User archived successfully");
+    navigate("/users")
+    } catch (error) {
+      message.error("Error occurred while archiving user");
+    }
+  }
 
   // Use Formik to handle form state and submission
   const formik = useFormik({
@@ -57,14 +72,19 @@ const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
       firstName: "",
       lastName: "",
       email: "",
-      phoneNumber: "",
-      profilePicture: null,
-      password: "",
+      phone: "",
+      city:"",
+      subCity:"",
+      gender:"",
+      wereda:"",
+      kebele:"",
+      middleName:""
     },
     validationSchema,
     onSubmit: handleSubmit,
   });
 
+  console.log("useriNfo",userInfo)
   // Fetch user details when in "update" mode
   /*  useEffect(() => {
     if (props.mode === 'update' && props.id) {
@@ -73,13 +93,12 @@ const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
   }, [props.mode, props.id, trigger]); */
 
   // Update form data when user details are fetched
-  console.log("user", user);
-  /*   useEffect(() => {
-    if (props.mode === 'update' && user) {
-      const { firstName, lastName, email, phoneNumber, profilePicture ,password} = user?.data?.users;
-      formik.setValues({ firstName, lastName, email, phoneNumber, profilePicture,password });
+   useEffect(() => {
+    if (props?.mode === 'update' && userInfo) {
+      const { firstName, lastName, email, phone,gender,kebele,city,subCity,middleName,wereda} = userInfo;
+      formik.setValues({ firstName, lastName, email, phone,gender,kebele,wereda,city,subCity,middleName});
     }
-  }, [props.mode, user]); */
+  }, [ props?.mode, userInfo]);
 
   return (
     <div>
@@ -96,27 +115,7 @@ const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
         </div>
       ) : (
         <Form layout="vertical" onFinish={formik.handleSubmit}>
-          {props.mode === "new" && (
-            <Form.Item label="Profile Picture" required>
-              <Upload
-                accept="image/*"
-                name="profilePicture"
-                listType="picture"
-                beforeUpload={(file) => {
-                  formik.setFieldValue("profilePicture", file.uid); // Convert the value to a string
-                  return false;
-                }}
-              >
-                <Button>Select Picture</Button>
-              </Upload>
-              {formik.touched.profilePicture &&
-                formik.errors.profilePicture && (
-                  <div className="text-red-500">
-                    {formik.errors.profilePicture}
-                  </div>
-                )}
-            </Form.Item>
-          )}
+      
           <Form.Item label="First Name" required>
             <Input
               name="firstName"
@@ -127,6 +126,17 @@ const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
               <div className="text-red-500">{formik.errors.firstName}</div>
             )}
           </Form.Item>
+          <Form.Item label="Middle Name" required>
+            <Input
+              name="middleName"
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.phone && formik.errors.phone && (
+              <div className="text-red-500">{formik.errors.phone}</div>
+            )}
+          </Form.Item>
+          
           <Form.Item label="Last Name" required>
             <Input
               name="lastName"
@@ -150,24 +160,66 @@ const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
           <Form.Item label="Phone Number" required>
             <Input
               name="phoneNumber"
-              value={formik.values.phoneNumber}
+              value={formik.values.phone}
               onChange={formik.handleChange}
             />
-            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <div className="text-red-500">{formik.errors.phoneNumber}</div>
+            {formik.touched.phone && formik.errors.phone && (
+              <div className="text-red-500">{formik.errors.phone}</div>
             )}
           </Form.Item>
-          <Form.Item label="Password" required>
+          <Form.Item label="Gender" required>
             <Input
-              type="password"
-              name="password"
-              value={formik.values.password}
+              name="gender"
+              value={formik.values.gender}
               onChange={formik.handleChange}
             />
-            {formik.touched.password && formik.errors.password && (
-              <div className="text-red-500">{formik.errors.password}</div>
+            {formik.touched.gender && formik.errors.gender && (
+              <div className="text-red-500">{formik.errors.gender}</div>
             )}
           </Form.Item>
+          <Form.Item label="city" required>
+            <Input
+              name="city"
+              value={formik.values.city}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.city && formik.errors.city && (
+              <div className="text-red-500">{formik.errors.city}</div>
+            )}
+          </Form.Item>
+          <Form.Item label="SUb City" required>
+            <Input
+              name="subCity"
+              value={formik.values.subCity}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.subCity && formik.errors.subCity && (
+              <div className="text-red-500">{formik.errors.subCity}</div>
+            )}
+          </Form.Item>
+          
+          <Form.Item label="Kebele" required>
+            <Input
+              name="kebele"
+              value={formik.values.kebele}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.kebele && formik.errors.kebele && (
+              <div className="text-red-500">{formik.errors.kebele}</div>
+            )}
+          </Form.Item>
+          <Form.Item label="woreda" required>
+            <Input
+              name="wereda"
+              value={formik.values.wereda}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.wereda && formik.errors.wereda && (
+              <div className="text-red-500">{formik.errors.wereda}</div>
+            )}
+          </Form.Item>
+          
+          
           <Form.Item>
             <div className="flex space-x-4">
               <Button
@@ -175,30 +227,21 @@ const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
                 htmlType="submit"
                 className="bg-primary"
                 loading={isCreating || isUpdating}
-                icon={ <Edit/>}
               >
                 {props.mode === "new" ? "Save" : "Update"}
               </Button>
               {props?.mode !== "new" && (
                 <>
+               
                   <Button
                     htmlType="button"
                     className="hover:bg-red-400 hover:text-white text-white bg-red-600"
-                  >
-                    Delete
-                  </Button>
-                  <Button
-                    htmlType="button"
-                    className="hover:bg-red-400 hover:text-white text-white bg-red-600"
+                     onClick={handleArchive}
+                     loading={archivingUser}
                   >
                     Archive
                   </Button>
-                  <Button
-                    htmlType="button"
-                    className="hover:bg-red-400 hover:text-white text-white bg-red-600"
-                  >
-                    Activate{" "}
-                  </Button>
+                
                 </>
               )}
             </div>

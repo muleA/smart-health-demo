@@ -1,15 +1,13 @@
-import { SetStateAction, useEffect, useRef, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Table, message } from 'antd';
-import Empty from '../../../shared/empty-state';
-import { DeleteColumnOutlined, DeleteFilled } from '@ant-design/icons';
-import { Delete, SavedSearchOutlined } from '@mui/icons-material';
-import { useGetPermissionByRoleIdQuery, useGetPermissionsQuery, useUpdatePermissionMutation } from '../permission/permission.query';
+import { DeleteFilled } from '@ant-design/icons';
 import ModalCollectionSelector from '../../../shared/modal-collection-selctor';
 import { CollectionSelectorConfig } from '../../../shared/collection-selector-config';
-import { useAddPermissionToRoleMutation } from './role.query';
+import { useGetRolesQuery } from '../../back-office.query';
+import { useAddRoleToEmployeeMutation, useGetRoleToEmployeeQuery } from './employee.query';
 
-export const PermissionAssignment = (props: {
+export const RoleAssignment = (props: {
   tagAssignmentModalOpened: boolean;
   setTagAssignmentModalOpened: (visibility: boolean) => void;
   tid: unknown;
@@ -19,11 +17,11 @@ export const PermissionAssignment = (props: {
   /* Hooks */
   const router = useParams();
   const { id } = router;
-  const { data: assignedTags } = useGetPermissionByRoleIdQuery(id?.toString()??"");
+  const { data: assignedTags } = useGetRoleToEmployeeQuery(id?.toString()??"");
 
-  const { data: tags, isLoading: isTagsFetching } = useGetPermissionsQuery();
+  const { data: tags, isLoading: isTagsFetching } = useGetRolesQuery();
 
-  const [assignTags, { isLoading: isAssigningTags }] = useAddPermissionToRoleMutation();
+  const [assignTags, { isLoading: isAssigningTags }] = useAddRoleToEmployeeMutation();
 
   /* Variables */
   const config: CollectionSelectorConfig = {
@@ -41,10 +39,7 @@ export const PermissionAssignment = (props: {
     try {
       await assignTags({
         roleId: id?.toString(),
-        permissions: currentAssignedTags?.map((item) => ({
-          permissionId: item.id,
-          permissionName: item.name
-        })),
+        id: currentAssignedTags?.map((item) =>item.id)
       }).unwrap();
       message.success('Permission has been assigned to Roles successfully.');
     } catch (err) {

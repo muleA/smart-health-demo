@@ -12,7 +12,7 @@ const permissionApi = apiSlice.injectEndpoints({
     }),
     getPermissionByRoleId: builder.query<any, string>({
       query: (roleId) => ({
-        url: `${permissionEndPoints.getPermissionById}/${roleId}`,
+        url: `${permissionEndPoints.getPermissionByRoleId}/${roleId}`,
         method: "GET",
       }),
       providesTags: ["user"],
@@ -82,5 +82,7 @@ const permissionApi = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetPermissionsQuery,useGetPermissionByIdQuery,useCreatePermissionMutation,useUpdatePermissionMutation,useDeletePermissionMutation,useGetPermissionByRoleIdQuery
+  useGetPermissionsQuery,useLazyGetPermissionByRoleIdQuery,
+  useGetPermissionByIdQuery,useCreatePermissionMutation,useUpdatePermissionMutation,
+  useDeletePermissionMutation,useGetPermissionByRoleIdQuery
 } = permissionApi;

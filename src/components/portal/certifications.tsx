@@ -75,13 +75,19 @@ const CertificateInformation: React.FC = () => {
       console.error("Error fetching certificates:", error);
     }
   };
+  const [file, setFile] = useState<any>();
 
+  const handleFileChange = (file:any) => {
+    setFile(file);
+  };
   const handleCreateCertificate = async (certificate: Certificate) => {
     const { id, ...otherProps } = certificate;
     console.log("otherProps", otherProps);
 
+    const formData = new FormData();
+    formData.append("attachmentUrl",file)
     try {
-      await axios.post(`${baseUrl}user/add-certificate-to-user`, {
+    const response=  await axios.post(`${baseUrl}user/add-certificate-to-user`, {
         Institution: certificate.Institution,
         name: certificate.name,
         certificateTitle: certificate.certificateTitle,
@@ -89,6 +95,17 @@ const CertificateInformation: React.FC = () => {
         receivedDate: certificate.receivedDate,
         userId: session?.userInfo?.userId,
       });
+      if(response){
+        await axios.post(
+          `${baseUrl}user/add-certificate-attachment/${response.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
       message.success("Certificate info added successfully");
     } catch (error) {
       console.error("Error creating certificate:", error);
@@ -332,6 +349,23 @@ const CertificateInformation: React.FC = () => {
                       }
                     />
                   </Form.Item>
+                  
+                  <Form.Item
+        name="attachment"
+        label="Attachment"
+        rules={[{ required: true, message: "Please upload a file" }]}
+      >
+        <Upload
+          name="attachment"
+          listType="picture"
+          beforeUpload={(file) => {
+            handleFileChange(file);
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>Click to upload</Button>
+        </Upload>
+      </Form.Item>
 
                   <div className="flex space-x-4">
                     <Button

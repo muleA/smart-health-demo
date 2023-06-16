@@ -2,7 +2,7 @@ import { RedEnvelopeTwoTone } from '@ant-design/icons';
 import './certificate2.css';
 import { Email, Phone } from '@mui/icons-material';
 
-export default function Certificate2()  {
+export default function Certificate2({licenseInfo}:any)  {
 return(
   <div className="container">
   <div className="header">

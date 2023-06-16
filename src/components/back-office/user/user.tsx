@@ -49,30 +49,12 @@ export function Users() {
         accessorKey: 'gender',
         header: 'Gender',
       },
-      {
-        accessorKey: 'wereda',
-        header: 'Wereda',
-      },
-      {
-        accessorKey: 'kebele',
-        header: 'Kebele',
-      },
-      {
-        accessorKey: 'city',
-        header: 'City',
-      },
+     
       {
         accessorKey: 'phone',
         header: 'Phone',
       },
-      {
-        accessorKey: 'subCity',
-        header: 'Sub City',
-      },
-      {
-        accessorKey: 'houseNumber',
-        header: 'House Number',
-      },
+  
       {
         accessorKey: 'email',
         header: 'Email',
@@ -117,6 +99,7 @@ export function Users() {
         })}
         muiTablePaginationProps={{
           rowsPerPageOptions: [5, 10, 15, 25, 50, 100, 1000],
+          
         }}
         enableGrouping
         enablePagination
