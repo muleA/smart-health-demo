@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Card, Collapse, Button, Input, Form, message, DatePicker } from "antd";
+import { Card, Collapse, Button, Input, Form, message, DatePicker, Upload } from "antd";
 import axios from "axios";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useArchiveCertificateMutation } from "../portal.query";
 import { useAuth } from "../../shared/auth/use-auth";
 import { Notify } from "../../shared/notification/notify";
 import { baseUrl } from "../../configs/config";
+import Empty from "../../shared/empty-state";
 
 const { Panel } = Collapse;
 
@@ -24,7 +25,41 @@ const CertificateInformation: React.FC = () => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const { session } = useAuth();
   const[archiveCertificate,{isLoading}]=useArchiveCertificateMutation()
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const handleImageUpload = async (
+    file: string | Blob,
+    certificateId: string | undefined
+  ) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
 
+      const response = await axios.post(
+        `${baseUrl}user/add-certificate-attachment/${certificateId}/${session?.userInfo?.userId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      setSelectedImage(response.data);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+  const handleImageRemove = () => {
+    setSelectedImage(null);
+  };
+
+  const handleUploadClick = () => {
+    // Trigger the image upload manually
+    const uploadInput = document.getElementById("image-upload-input");
+    if (uploadInput) {
+      uploadInput.click();
+    }
+  };
   useEffect(() => {
     fetchCertificates();
   }, []);
@@ -40,13 +75,19 @@ const CertificateInformation: React.FC = () => {
       console.error("Error fetching certificates:", error);
     }
   };
+  const [file, setFile] = useState<any>();
 
+  const handleFileChange = (file:any) => {
+    setFile(file);
+  };
   const handleCreateCertificate = async (certificate: Certificate) => {
     const { id, ...otherProps } = certificate;
     console.log("otherProps", otherProps);
 
+    const formData = new FormData();
+    formData.append("attachmentUrl",file)
     try {
-      await axios.post(`${baseUrl}user/add-certificate-to-user`, {
+    const response=  await axios.post(`${baseUrl}user/add-certificate-to-user`, {
         Institution: certificate.Institution,
         name: certificate.name,
         certificateTitle: certificate.certificateTitle,
@@ -54,6 +95,17 @@ const CertificateInformation: React.FC = () => {
         receivedDate: certificate.receivedDate,
         userId: session?.userInfo?.userId,
       });
+      if(response){
+        await axios.post(
+          `${baseUrl}user/add-certificate-attachment/${response.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
       message.success("Certificate info added successfully");
     } catch (error) {
       console.error("Error creating certificate:", error);
@@ -93,7 +145,37 @@ const CertificateInformation: React.FC = () => {
     }
   };
 
+  const handleImageChange = (info: any, educationId: any) => {
+    if (info.file.status === "done") {
+      setSelectedImage(info.file.originFileObj);
+    }
+  };
+  const handleImagePreview = async (file: File | null) => {
+    if (file && file.type.startsWith("image/")) {
+      const imageUrl = await new Promise<string | ArrayBuffer | null>(
+        (resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.readAsDataURL(file);
+        }
+      );
+      setSelectedImage(imageUrl);
+    }
+  };
   const handleAddCertificate = () => {
+    if (certificates.length > 0) {
+      const firstInstitution = certificates[0];
+      const isFirstInstitutionEmpty = Object.values(firstInstitution).every(
+        (value) => value === ""
+      );
+
+      if (isFirstInstitutionEmpty) {
+        message.error(
+          "Please fill in the certificate  information before adding another ."
+        );
+        return; // Exit the function early if the first Institution is empty
+      }
+    }
     const newCertificate: Certificate = {
       Institution: "",
       name: "",
@@ -159,10 +241,16 @@ const CertificateInformation: React.FC = () => {
                 </Button>
               </div>
             </>
-          }
+          }  
         >
+           {certificates?.length === 0 ? (
+            <>
+            <Empty/>
+            </>
+            ):(
+            <>
           {certificates.map((certificate: Certificate, index: number) => (
-            <Collapse key={index}>
+            <Collapse key={index} defaultActiveKey={0}>
               <Panel
                 className="mb-2"
                 header={`Certificate ${index + 1}`}
@@ -186,6 +274,8 @@ const CertificateInformation: React.FC = () => {
                   </div>
                 }
               >
+                  <div className="flex">
+                      <div className="w-1/2 h-100">
                 <Form layout="vertical">
                   <Form.Item label="Institution">
                     <Input
@@ -259,13 +349,30 @@ const CertificateInformation: React.FC = () => {
                       }
                     />
                   </Form.Item>
+                  
+                  <Form.Item
+        name="attachment"
+        label="Attachment"
+        rules={[{ required: true, message: "Please upload a file" }]}
+      >
+        <Upload
+          name="attachment"
+          listType="picture"
+          beforeUpload={(file) => {
+            handleFileChange(file);
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>Click to upload</Button>
+        </Upload>
+      </Form.Item>
 
                   <div className="flex space-x-4">
                     <Button
                       type="primary"
                       className="bg-primary"
                       onClick={() => handleCreateCertificate(certificate)}
-                    >
+                   >
                       Save
                     </Button>
                     <Button
@@ -277,9 +384,76 @@ const CertificateInformation: React.FC = () => {
                     </Button>
                   </div>
                 </Form>
+                </div>
+                <div className="w-1/2 h-100 mx-10">
+                        <div className="mt-24 text-center">
+                          <input
+                            id="image-upload-input"
+                            type="file"
+                            style={{ display: "none" }}
+                            onChange={(e: any) =>
+                              handleImageChange(e, certificate.id)
+                            }
+                          />
+                          <Upload.Dragger
+                            name="image"
+                            className="h-20"
+                            showUploadList={false}
+                            beforeUpload={handleImagePreview}
+                            onChange={() => handleImageChange}
+                          >
+                            {selectedImage ? (
+                              <img
+                                src={selectedImage}
+                                alt="Selected"
+                                className="mb-4 h-20 mx-auto"
+                              />
+                            ) : (
+                              <div className="text-center h-30">
+                                <p className="mb-2">
+                                  Drag & Drop or Click to Upload
+                                </p>
+
+                                <Button
+                                  icon={<UploadOutlined />}
+                                  onClick={handleUploadClick}
+                                >
+                                  Select Image
+                                </Button>
+                              </div>
+                            )}
+                          </Upload.Dragger>
+                        </div>
+
+                        {selectedImage && (
+                          <>
+                            <Button
+                              className="mt-4"
+                              type="link"
+                              danger
+                              onClick={handleImageRemove}
+                            >
+                              Remove Image
+                            </Button>
+                            <Button
+                              type="primary"
+                              className="bg-primary"
+                              onClick={() =>
+                                handleImageUpload(selectedImage, certificate.id)
+                              }
+                            >
+                              Upload
+                            </Button>
+                          </>
+                        )}
+
+                        <div></div>
+                      </div>
+                      </div>
               </Panel>
             </Collapse>
           ))}
+          </>)}
         </Panel>
       </Collapse>
     </Card>

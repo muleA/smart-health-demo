@@ -1,150 +1,97 @@
-
-  import { SetStateAction, useEffect, useRef, useState } from 'react';
-import {  useParams } from 'react-router-dom';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Button, Table, message } from 'antd';
-import { CollectionSelector, CollectionSelectorConfig } from '../../../shared/modal-collection-selctor';
 import Empty from '../../../shared/empty-state';
-import { DeleteColumnOutlined } from '@ant-design/icons';
-import { SavedSearchOutlined } from '@mui/icons-material';
-import { useGetPermissionsQuery, useUpdatePermissionMutation } from '../permission/permission.query';
-  
-  const PermissionAssignment = (props: {
-    tagAssignmentModalOpened: boolean;
-    setTagAssignmentModalOpened: (visibility: boolean) => void;
-    tid: unknown;
-  }) => {
-    const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
-    const [currentAssignedTags, setCurrentAssignedTags] = useState<any[]>([]);
-    /* collectionQuery for assigned tags */
+import { DeleteColumnOutlined, DeleteFilled } from '@ant-design/icons';
+import { Delete, SavedSearchOutlined } from '@mui/icons-material';
+import { useGetPermissionByRoleIdQuery, useGetPermissionsQuery, useUpdatePermissionMutation } from '../permission/permission.query';
+import ModalCollectionSelector from '../../../shared/modal-collection-selctor';
+import { CollectionSelectorConfig } from '../../../shared/collection-selector-config';
+import { useAddPermissionToRoleMutation } from './role.query';
 
-  
-    /* Hooks */
-    const router = useParams();
-    const { id } = router;
-    const 
-      { data: assignedTags } = useGetPermissionsQuery();
-  
-    const {data: tags, isLoading: isTagsFetching } =
-    useGetPermissionsQuery();
-  
-    const [assignTags, { isLoading: isAssigningTags }] =
-      useUpdatePermissionMutation();
-  
-    /* Variables */
-    const config: CollectionSelectorConfig = {
-      visibleColumn: [{ key: 'name', name: 'Name' },{key:"description",name:"Description"}],
-      title: 'Permissions',
-      size: 'md',
-    };
-  
-    /* Event handlers */
-    /* Event handlers */
-    const inputRef = useRef<any>();
-    const onSearch = (data: any) => {
-      //Clear the previous timeout.
-  console.log(data)
-    };
- 
-  
-    const onDone = async (data: SetStateAction<any[]>) => {
-      setCurrentAssignedTags(data);
-      setButtonDisabled(false);
-    };
-  
-    const onSave = async () => {
-      try {
-        await assignTags({
-          id: id?.toString(),
-          tags: currentAssignedTags?.map((item) => item.id),
-        }).unwrap();
-        setButtonDisabled(true);
-        message.success('Permission has been assigned to Roles successfully.');
-      } catch (err) {
-        message.error('Sorry, an error encountered while assigning Permissions.');
-      }
-    };
-  
-    const removeService = (tagId: any) => {
-      setCurrentAssignedTags(
-        currentAssignedTags.filter((item) => item.id !== tagId)
-      );
-      setButtonDisabled(false);
-    };
-  
-    /* useEffect hooks */
-    useEffect(() => {
-        setCurrentAssignedTags(assignedTags?.data);
-      
-    }, [assignTags, assignedTags]);
-  
-/*     useEffect(() => {
-      if (!props.tagAssignmentModalOpened) {
-        triggerAssigned(id?.toString(), true);
-      }
-    }, [id, props.tagAssignmentModalOpened, triggerAssigned]); */
-  
-;
-  
-    return (
-      <div>
-        <>
-          <CollectionSelector
-            onDone={onDone}
-            search={onSearch}
-            total={tags?.length ?? 0}
-            modalOpened={props.tagAssignmentModalOpened}
-            setModalOpened={(visibility: boolean) =>
-              props.setTagAssignmentModalOpened(visibility)
-            }
-            itemsLoading={isTagsFetching}
-            items={tags ?? []}
-            config={config}
-            selectedRows={currentAssignedTags}
-          />
-          {!currentAssignedTags?.length && <Empty />}
-          {currentAssignedTags?.length > 0 && (
-            <>
-              <Table className="my-4">
-                <thead>
-                  <tr className="bg-gray-200">
-                    <th>Name</th>
-                    <th className="w-1">Action</th>
-                  </tr>
-                </thead>
-  
-                <tbody className="border-b">
-                  {currentAssignedTags?.map((item) => (
-                    <tr key={item.id}>
-                      <td>{item.name}</td>
-                      <td className="flex justify-end">
-                        <Button
-                          color={'red'}
-                          className="bg-danger p-1"
-                          onClick={() => removeService(item.id)}
-                        >
-                          {<DeleteColumnOutlined className="flex" size={16} />}
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </>
-          )}
-  
-          <Button
-            disabled={buttonDisabled}
-            loading={isAssigningTags}
-            className="my-2 bg-primary"
-            onClick={onSave}
-          >
-            <SavedSearchOutlined />
-            Save
-          </Button>
-        </>
-      </div>
-    );
+export const PermissionAssignment = (props: {
+  tagAssignmentModalOpened: boolean;
+  setTagAssignmentModalOpened: (visibility: boolean) => void;
+  tid: unknown;
+}) => {
+  const [currentAssignedTags, setCurrentAssignedTags] = useState<any[]>([]);
+
+  /* Hooks */
+  const router = useParams();
+  const { id } = router;
+  const { data: assignedTags } = useGetPermissionByRoleIdQuery(id?.toString()??"");
+
+  const { data: tags, isLoading: isTagsFetching } = useGetPermissionsQuery();
+
+  const [assignTags, { isLoading: isAssigningTags }] = useAddPermissionToRoleMutation();
+
+  /* Variables */
+  const config: CollectionSelectorConfig = {
+    visibleColumn: [{ key: 'name', name: 'Name' }, { key: 'description', name: 'Description' }],
+    title: 'Permissions',
+    size: 'md',
   };
+
+  const onDone = async (data: SetStateAction<any[]>) => {
+    console.log('data', data);
+    setCurrentAssignedTags(data);
+  };
+
+  const onSave = async () => {
+    try {
+      await assignTags({
+        roleId: id?.toString(),
+        permissions: currentAssignedTags?.map((item) => ({
+          permissionId: item.id,
+          permissionName: item.name
+        })),
+      }).unwrap();
+      message.success('Permission has been assigned to Roles successfully.');
+    } catch (err) {
+      message.error('Sorry, an error encountered while assigning Permissions.');
+    }
+  };
+
+  const removeService = (tagId: any) => {
+    setCurrentAssignedTags(currentAssignedTags.filter((item) => item.id !== tagId));
+  };
+
+   
+   useEffect(() => {
+    setCurrentAssignedTags(assignedTags);
+
+  }, [assignTags, assignedTags]); 
   
-  export default PermissionAssignment;
+ /*  useEffect(() => {
+  if (!props.tagAssignmentModalOpened) {
+  triggerAssigned(id?.toString(), true);
+  }
+  }, [id, props.tagAssignmentModalOpened]);
+   */
+  return (
+  <>
+  <ModalCollectionSelector
+  onDone={onDone}
+  loading={isTagsFetching}
+  modalOpened={props.tagAssignmentModalOpened}
+  setModalOpened={(visibility: boolean) => props.setTagAssignmentModalOpened(visibility)}
+  items={tags ?? []}
+  config={config}
+  />
   
+  <Table className="my-4" dataSource={currentAssignedTags}>
+  <Table.Column title="Name" dataIndex="name" />
+  <Table.Column
+  title="Action"
+  dataIndex="id"
+  render={(id: string) => (
+  <Button color={'red'} className="bg-danger p-1" onClick={() => removeService(id)}>Delete
+  {<DeleteFilled className="flex text-red-500" size={16} />}
+  </Button>
+  )}
+  />
+  </Table>
+  <Button onClick={onSave} loading={isAssigningTags}>Save</Button>
+  </>
+  )
+}

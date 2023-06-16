@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Card, Collapse, Button, Input, Form, message } from "antd";
+import { Card, Collapse, Button, Input, Form, message, Upload } from "antd";
 import axios from "axios";
 import { useAuth } from "../../shared/auth/use-auth";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import Empty from "../../shared/empty-state";
 import { useArchiveExperienceMutation } from "../portal.query";
 import { baseUrl } from "../../configs/config";
@@ -21,12 +21,52 @@ interface Experience {
 
 const ExperinceInformations: React.FC = () => {
   const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [selectedImage, setSelectedImage] = useState<any>(null);
   const [archiveExperience,{isLoading}]=useArchiveExperienceMutation()
   const { session } = useAuth();
+  const handleImageUpload = async (
+    file: string | Blob,
+    experienceID: string | undefined
+  ) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await axios.post(
+        `${baseUrl}user/add-experience-attachment/${experienceID}/${session?.userInfo?.userId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      setSelectedImage(response.data);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+  const handleImageRemove = () => {
+    setSelectedImage(null);
+  };
+
+  const handleUploadClick = () => {
+    // Trigger the image upload manually
+    const uploadInput = document.getElementById("image-upload-input");
+    if (uploadInput) {
+      uploadInput.click();
+    }
+  };
   useEffect(() => {
     fetchExperiences();
   }, []);
 
+  const [file, setFile] = useState<any>();
+
+  const handleFileChange = (file:any) => {
+    setFile(file);
+  };
   const fetchExperiences = async () => {
     try {
       const response = await axios.get(
@@ -46,7 +86,23 @@ const ExperinceInformations: React.FC = () => {
       message.error("error occurred in adding experience  information's");
     }
   };
-
+  const handleImageChange = (info: any, experienceID: any) => {
+    if (info.file.status === "done") {
+      setSelectedImage(info.file.originFileObj);
+    }
+  };
+  const handleImagePreview = async (file: File | null) => {
+    if (file && file.type.startsWith("image/")) {
+      const imageUrl = await new Promise<string | ArrayBuffer | null>(
+        (resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.readAsDataURL(file);
+        }
+      );
+      setSelectedImage(imageUrl);
+    }
+  };
   const handleExperienceChange = (
     index: number,
     field: string,
@@ -76,9 +132,21 @@ const ExperinceInformations: React.FC = () => {
   const handleCreateExperience = async (experience: Experience) => {
     const { id, ...otherProps } = experience;
 
-    
+    const formData = new FormData();
+    formData.append("attachmentUrl",file)
     try {
-      await axios.post(`${baseUrl}user/add-experience-to-user`, {...otherProps,userId:session?.userInfo?.userId});
+   const response=   await axios.post(`${baseUrl}user/add-experience-to-user`, {...otherProps,userId:session?.userInfo?.userId});
+      if(response){
+        await axios.post(
+          `${baseUrl}user/add-experience-attachment/${response.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
       message.success("Experience info added successfully");
     } catch (error) {
       console.error("Error creating experience:", error);
@@ -120,12 +188,12 @@ const ExperinceInformations: React.FC = () => {
   const handleAddExperience = () => {
    
     if (experiences.length > 0) {
-      const firstEducation = experiences[0];
-      const isFirstEducationEmpty = Object.values(firstEducation).every(
+      const firstOrganization = experiences[0];
+      const isFirstOrganizationEmpty = Object.values(firstOrganization).every(
         (value) => value === ""
       );
 
-      if (isFirstEducationEmpty) {
+      if (isFirstOrganizationEmpty) {
         message.error(
           "Please fill in the experience  information before adding another ."
         );
@@ -178,7 +246,12 @@ const ExperinceInformations: React.FC = () => {
           }
         >
 
-          {experiences?.length===0?(<><Empty/></>):(<>
+          {experiences?.length === 0 ? (
+          <>
+          <Empty/>
+          </>
+          ):(
+          <>
             {experiences.map((experience: Experience, index: number) => (
             <Collapse key={index} defaultActiveKey={0}>
               <Panel
@@ -205,6 +278,8 @@ const ExperinceInformations: React.FC = () => {
                
                 }
               >
+                  <div className="flex">
+           <div className="w-1/2 h-100">
                 <Form layout="vertical">
                   <Form.Item label="TIN">
                     <Input
@@ -250,6 +325,24 @@ const ExperinceInformations: React.FC = () => {
                       }
                     />
                   </Form.Item>
+
+                  <Form.Item
+        name="attachment"
+        label="Attachment"
+        rules={[{ required: true, message: "Please upload a file" }]}
+      >
+        <Upload
+          name="attachment"
+          listType="picture"
+          beforeUpload={(file) => {
+            handleFileChange(file);
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>Click to upload</Button>
+        </Upload>
+      </Form.Item>
+        
                   <div className="flex space-x-4">
                     {/*    <Button htmlType="submit" className="bg-primary" type="primary" onClick={handleCreateExperiences}>
                   Save
@@ -265,6 +358,72 @@ const ExperinceInformations: React.FC = () => {
                   
                   </div>
                 </Form>
+                </div>
+                <div className="w-1/2 h-100 mx-10">
+                        <div className="mt-24 text-center">
+                          <input
+                            id="image-upload-input"
+                            type="file"
+                            style={{ display: "none" }}
+                            onChange={(e: any) =>
+                              handleImageChange(e, experience.id)
+                            }
+                          />
+                          <Upload.Dragger
+                            name="image"
+                            className="h-20"
+                            showUploadList={false}
+                            beforeUpload={handleImagePreview}
+                            onChange={() => handleImageChange}
+                          >
+                            {selectedImage ? (
+                              <img
+                                src={selectedImage}
+                                alt="Selected"
+                                className="mb-4 h-20 mx-auto"
+                              />
+                            ) : (
+                              <div className="text-center h-30">
+                                <p className="mb-2">
+                                  Drag & Drop or Click to Upload
+                                </p>
+
+                                <Button
+                                  icon={<UploadOutlined />}
+                                  onClick={handleUploadClick}
+                                >
+                                  Select Image
+                                </Button>
+                              </div>
+                            )}
+                          </Upload.Dragger>
+                        </div>
+
+                        {selectedImage && (
+                          <>
+                            <Button
+                              className="mt-4"
+                              type="link"
+                              danger
+                              onClick={handleImageRemove}
+                            >
+                              Remove Image
+                            </Button>
+                            <Button
+                              type="primary"
+                              className="bg-primary"
+                              onClick={() =>
+                                handleImageUpload(selectedImage, experience.id)
+                              }
+                            >
+                              Upload
+                            </Button>
+                          </>
+                        )}
+
+                        <div></div>
+                      </div>
+                      </div>
               </Panel>
             </Collapse>
           ))}

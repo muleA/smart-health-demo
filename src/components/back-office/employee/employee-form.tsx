@@ -6,6 +6,7 @@ import axios from "axios";
 import { useAuth } from "../../../shared/auth/use-auth";
 import { baseUrl } from "../../../configs/config";
 import { Notify } from "../../../shared/notification/notify";
+import { SaveFilled } from "@ant-design/icons";
 
 const { Step } = Steps;
 
@@ -74,6 +75,7 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
           phone: values?.phone,
           status: "active",
           Password: values?.password,
+          accountType:"Employee"
         })
         .then((response) => {
           console.log("====response", response.data);
@@ -341,8 +343,10 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
   type="primary"
   className="bg-primary"
   htmlType="submit"
+  icon={<SaveFilled />}
+  
 >
-  {currentStep === steps.length - 1 ? "Save" : "Next"}
+  {currentStep === steps.length - 1 ? "Create" : "Next"}
 </Button>
                </div>
               

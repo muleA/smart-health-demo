@@ -4,7 +4,7 @@ import RoleForm from './role-form';
 import { Breadcrumb, Button } from 'antd';
 import CollapsibleCard from '../../../shared/card';
 import { useGetRoleByRoleIdQuery } from './role.query';
-import PermissionAssignment from './permission-assignment';
+import {PermissionAssignment} from './permission-assignment';
 import { PlusCircleFilled } from '@ant-design/icons';
 
 function DetailRole() {

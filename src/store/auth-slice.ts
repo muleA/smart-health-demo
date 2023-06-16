@@ -7,6 +7,7 @@ import { getCurrentSession } from "../shared/current-session";
 import { baseUrl } from "../configs/config";
 import jwtDecode from "jwt-decode";
 import { message } from "antd";
+import { Notify } from "../shared/notification/notify";
 
 interface AuthState {
   session: Session;
@@ -46,9 +47,11 @@ export function logIn(request: LoginRequest) {
       request,
       );
       console.log("response gtt",response)
+      
       dispatch(setSession({ accessToken: response.data.access_token, userInfo:jwtDecode(response.data.access_token)}));
     } catch (error: any) {
       // Handle error
+      message.error("error incorrect  password or username ")
     } finally {
       dispatch(setLoading(false)); // Stop loading
     }

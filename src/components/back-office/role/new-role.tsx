@@ -4,7 +4,7 @@ import CollapsibleCard from '../../../shared/card';
 
 function NewRole() {
   return (
-    <CollapsibleCard title={"Role Form"}>
+    <CollapsibleCard title={"Role Form"} dropped ={true} >
     <RoleForm mode={"new"}/>
     
     </CollapsibleCard>

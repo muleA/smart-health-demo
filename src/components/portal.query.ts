@@ -165,17 +165,20 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
-    addEducation: builder.mutation<any, any>({
+    addEducation: builder.mutation<string, any>({
       query: (newUser) => ({
         url: portalEndPoints.addEducation,
         method: "POST",
         data: newUser,
       }),
+      extraOptions: {
+        prefetch: false,
+      },
       invalidatesTags: ["Education"],
     }),
     applyToLicense: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${portalEndPoints.apply}/${newUser}`,
+        url: `${portalEndPoints.apply}/${newUser.userId}`,
         method: "POST",
         data: newUser,
       }),
