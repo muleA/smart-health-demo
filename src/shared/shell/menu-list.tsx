@@ -48,22 +48,22 @@ export const menus: Menu[] = [
     child: [
       {
         name: "Users",
-        path: "/users",
+        path: "/archived-users",
         icon: Icon.UserOutlined,
       },
       {
         name: "employees",
-        path: "/employees",
+        path: "/archived-employees",
         icon: Icon.TeamOutlined,
       },
       {
         name: "applications",
-        path: "/applications",
+        path: "/archived-applications",
         icon: Icon.AppstoreOutlined,
       },
       {
         name: "license",
-        path: "/license",
+        path: "/archived-license",
         icon: Icon.BookOutlined,
       },
 

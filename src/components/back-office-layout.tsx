@@ -31,6 +31,14 @@ import { License } from "./back-office/license/license";
 import { DetailLicensePage } from "../pages/back-office/license/detail";
 import { ApplicationDetailPage } from "../pages/back-office/application/detail";
 import { ApplicationListPage } from "../pages/back-office/application/applications";
+import { ArchivedUsers } from "./back-office/archives/user/archived-user";
+import { ArchivedUserDetail } from "./back-office/archives/user/archived-user-detail";
+import { ArchivedEmployees } from "./back-office/archives/employee/archived-employees";
+import { ArchivedEmployeeDetails } from "./back-office/archives/employee/archived-employee-detail";
+import { ArchivedLicense } from "./back-office/archives/license/archived-license";
+import ArchivedLicenseDetail from "./back-office/archives/license/archived-license-detail.";
+import { ArchivedApplication } from "./back-office/archives/application/archived-application";
+import ArchivedApplicationDetail from "./back-office/archives/application/archived-application-detail";
 
 const { Sider, Content, Header, Footer } = Layout;
 const { SubMenu } = Menu;
@@ -39,7 +47,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
   const { logOut } = useAuth();
   const handleLogOut = (): void => {
-    logOut();
+    logOut(); 
   };
   const toggle = () => {
     setCollapsed((prev) => !prev);
@@ -245,6 +253,17 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
               <Route path="/permissions" element={<PermissionLists />} />
               <Route path="/users" element={<User />} />
               <Route path="users/detail/:id" element={<UserDetail />} />
+              <Route path="/archives/archived-users" element={<ArchivedUsers />} />
+            <Route path="archived-users/detail/:id" element={<ArchivedUserDetail />} />
+            <Route path="/archives/archived-employees" element={<ArchivedEmployees />} />
+            <Route path="archived-employees/detail/:id" element={<ArchivedEmployeeDetails />} />
+            
+            <Route path="/archives/archived-license" element={<ArchivedLicense />} />
+            <Route path="archived-license/detail/:id" element={<ArchivedLicenseDetail />} />
+            <Route path="/archives/archived-applications" element={<ArchivedApplication />} />
+            <Route path="archived-applications/detail/:id" element={<ArchivedApplicationDetail />} />
+
+
 
               {/* Add more routes here */}
             </Routes>
