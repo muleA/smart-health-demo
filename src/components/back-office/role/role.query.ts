@@ -73,7 +73,7 @@ const roleApi = apiSlice.injectEndpoints({
     }),
     addPermissionToRole: builder.mutation<any, any>({
       query: (roleId) => ({
-        url: `${roleEndPoints.addPermissionToRole}/${roleId}`,
+        url: `${roleEndPoints.addPermissionToRole}/${roleId.roleId}`,
         method: "POST",
         data: roleId,
       }),
@@ -88,5 +88,6 @@ export const {
   useGetArchivedRoleByRoleIdQuery,
   useUpdateRoleMutation,
   useDeleteRoleMutation,
-  useCreateRoleMutation
+  useCreateRoleMutation,
+  useAddPermissionToRoleMutation
 } = roleApi;

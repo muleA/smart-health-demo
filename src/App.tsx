@@ -23,7 +23,7 @@ const App = () => {
         navigate("/home");
 
       } else {
-        navigate("/dashboard");
+        navigate("/home");
       }
     }
   }, [session, location.pathname, navigate]);

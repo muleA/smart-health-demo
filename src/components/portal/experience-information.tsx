@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Card, Collapse, Button, Input, Form, message } from "antd";
+import { Card, Collapse, Button, Input, Form, message, Upload } from "antd";
 import axios from "axios";
 import { useAuth } from "../../shared/auth/use-auth";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import Empty from "../../shared/empty-state";
 import { useArchiveExperienceMutation } from "../portal.query";
 import { baseUrl } from "../../configs/config";
@@ -27,6 +27,11 @@ const ExperinceInformations: React.FC = () => {
     fetchExperiences();
   }, []);
 
+  const [file, setFile] = useState<any>();
+
+  const handleFileChange = (file:any) => {
+    setFile(file);
+  };
   const fetchExperiences = async () => {
     try {
       const response = await axios.get(
@@ -76,9 +81,21 @@ const ExperinceInformations: React.FC = () => {
   const handleCreateExperience = async (experience: Experience) => {
     const { id, ...otherProps } = experience;
 
-    
+    const formData = new FormData();
+    formData.append("attachmentUrl",file)
     try {
-      await axios.post(`${baseUrl}user/add-experience-to-user`, {...otherProps,userId:session?.userInfo?.userId});
+   const response=   await axios.post(`${baseUrl}user/add-experience-to-user`, {...otherProps,userId:session?.userInfo?.userId});
+      if(response){
+        await axios.post(
+          `${baseUrl}user/add-experience-attachment/${response.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
       message.success("Experience info added successfully");
     } catch (error) {
       console.error("Error creating experience:", error);
@@ -250,6 +267,24 @@ const ExperinceInformations: React.FC = () => {
                       }
                     />
                   </Form.Item>
+
+                  <Form.Item
+        name="attachment"
+        label="Attachment"
+        rules={[{ required: true, message: "Please upload a file" }]}
+      >
+        <Upload
+          name="attachment"
+          listType="picture"
+          beforeUpload={(file) => {
+            handleFileChange(file);
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>Click to upload</Button>
+        </Upload>
+      </Form.Item>
+        
                   <div className="flex space-x-4">
                     {/*    <Button htmlType="submit" className="bg-primary" type="primary" onClick={handleCreateExperiences}>
                   Save

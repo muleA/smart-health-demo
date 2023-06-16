@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import {
   Card,
@@ -26,6 +27,7 @@ const { Panel } = Collapse;
 interface Education {
   id: string; // Unique identifier for each education
   Institution: string;
+  attachment?: any;
   professionalTitle: string;
   studentIdNumber: string;
   fieldOfStudy: string;
@@ -35,34 +37,14 @@ interface Education {
 
 const EducationForm: React.FC = () => {
   const [educations, setEducations] = useState<Education[]>([]);
+  const [file, setFile] = useState<any>();
 
-  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const handleFileChange = (file:any) => {
+    setFile(file);
+  };
   const [archive, { isLoading: archiving }] = useArchiveEducationMutation();
   const { session } = useAuth();
-  const handleImageUpload = async (
-    file: string | Blob,
-    educationId: string | undefined
-  ) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
-
-      const response = await axios.post(
-        `${baseUrl}user/add-education-attachment/${educationId}/${session?.userInfo?.userId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      setSelectedImage(response.data);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
-
+  
   const url = `${baseUrl}user/get-education-file-name-by-userId/${session?.userInfo.userId}/001b684f-0e88-43af-8ab9-c7b18ad7b3d0`;
 
   useEffect(() => {
@@ -73,25 +55,12 @@ const EducationForm: React.FC = () => {
           type: response.headers["content-type"],
         });
         const fileUrl = URL.createObjectURL(file);
-        setSelectedImage(fileUrl);
         // Display the file as a link
       })
       .catch((error) => {
         console.error("Error retrieving the file:", error);
       });
-  }, []);
-
-  const handleImageRemove = () => {
-    setSelectedImage(null);
-  };
-
-  const handleUploadClick = () => {
-    // Trigger the image upload manually
-    const uploadInput = document.getElementById("image-upload-input");
-    if (uploadInput) {
-      uploadInput.click();
-    }
-  };
+  }, [url]);
 
   useEffect(() => {
     fetchEducations();
@@ -121,12 +90,11 @@ const EducationForm: React.FC = () => {
 
   const handleUpdateEducation = async (education: Education) => {
     const { id, ...otherProps } = education;
-
     try {
       addEducation(otherProps);
       /*   await axios.post(`${baseUrl}api/user/add-education`,
 c        education
-      ); */
+    ); */
       message.success("Education Info updated successfully");
     } catch (error) {
       console.error("Error updating education:", error);
@@ -136,33 +104,32 @@ c        education
   console.log("baseUrl", baseUrl);
   const handleCreateEducations = async (education: Education) => {
     const { id, ...otherProps } = education;
-
+    const formData = new FormData();
+formData.append("attachmentUrl",file)
     try {
-      addEducation({ ...otherProps, userId: session?.userInfo?.userId });
+    const response=  await addEducation({ ...otherProps, userId: session?.userInfo?.userId });
+    if(response){
+      await axios.post(
+        `${baseUrl}user/add-education-attachment/${response??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    }
+ 
       message.success("Education Info updated successfully");
     } catch (error) {
       console.error("Error updating education:", error);
       message.error("error happened in Education Info updated successfully");
     }
+
+  
   };
 
-  const handleImageChange = (info: any, educationId: any) => {
-    if (info.file.status === "done") {
-      setSelectedImage(info.file.originFileObj);
-    }
-  };
-  const handleImagePreview = async (file: File | null) => {
-    if (file && file.type.startsWith("image/")) {
-      const imageUrl = await new Promise<string | ArrayBuffer | null>(
-        (resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.readAsDataURL(file);
-        }
-      );
-      setSelectedImage(imageUrl);
-    }
-  };
+ 
   const handleDeleteEducation = async (education: Education) => {
     try {
       await axios.post(`${baseUrl}user/delete-education/${education.id}`);
@@ -212,6 +179,7 @@ c        education
       professionalTitle: "",
       studentIdNumber: "",
       fieldOfStudy: "",
+      attachment:"",
       receivedDate: "",
     };
 
@@ -268,7 +236,6 @@ c        education
                         <Button
                           type="primary"
                           danger
-                          loading={archiving}
                           onClick={() => handleArchiveEducation(education)}
                         >
                           Archive
@@ -288,7 +255,8 @@ c        education
                         <Form
                           form={form}
                           layout="vertical"
-                          onFinish={() => handleUpdateEducation(education)}
+                          className="my-2"
+                          onFinish={() => handleCreateEducations(education)}
                         >
                           <Form.Item
                             label="Institution"
@@ -375,13 +343,27 @@ c        education
                               }
                             />
                           </Form.Item>
+        <Form.Item
+        name="attachment"
+        label="Attachment"
+        rules={[{ required: true, message: "Please upload a file" }]}
+      >
+        <Upload
+          name="attachment"
+          listType="picture"
+          beforeUpload={(file) => {
+            handleFileChange(file);
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>Click to upload</Button>
+        </Upload>
+      </Form.Item>
                           <div className="flex justify-between">
                             <Button
                               htmlType="submit"
                               className="bg-primary"
                               type="primary"
-                              loading={isLoading}
-                              onClick={() => handleCreateEducations(education)}
                             >
                               Save
                             </Button>
@@ -394,71 +376,6 @@ c        education
                         </Button> */}
                           </div>
                         </Form>
-                      </div>
-
-                      <div className="w-1/2 h-100 mx-10">
-                        <div className="mt-24 text-center">
-                          <input
-                            id="image-upload-input"
-                            type="file"
-                            style={{ display: "none" }}
-                            onChange={(e: any) =>
-                              handleImageChange(e, education.id)
-                            }
-                          />
-                          <Upload.Dragger
-                            name="image"
-                            className="h-20"
-                            showUploadList={false}
-                            beforeUpload={handleImagePreview}
-                            onChange={() => handleImageChange}
-                          >
-                            {selectedImage ? (
-                              <img
-                                src={selectedImage}
-                                alt="Selected"
-                                className="mb-4 h-20 mx-auto"
-                              />
-                            ) : (
-                              <div className="text-center h-30">
-                                <p className="mb-2">
-                                  Drag & Drop or Click to Upload
-                                </p>
-
-                                <Button
-                                  icon={<UploadOutlined />}
-                                  onClick={handleUploadClick}
-                                >
-                                  Select Image
-                                </Button>
-                              </div>
-                            )}
-                          </Upload.Dragger>
-                        </div>
-
-                        {selectedImage && (
-                          <>
-                            <Button
-                              className="mt-4"
-                              type="link"
-                              danger
-                              onClick={handleImageRemove}
-                            >
-                              Remove Image
-                            </Button>
-                            <Button
-                              type="primary"
-                              className="bg-primary"
-                              onClick={() =>
-                                handleImageUpload(selectedImage, education.id)
-                              }
-                            >
-                              Upload
-                            </Button>
-                          </>
-                        )}
-
-                        <div></div>
                       </div>
                     </div>
                   </Panel>

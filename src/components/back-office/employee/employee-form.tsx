@@ -74,6 +74,7 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
           phone: values?.phone,
           status: "active",
           Password: values?.password,
+          accountType:"Employee"
         })
         .then((response) => {
           console.log("====response", response.data);

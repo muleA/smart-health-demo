@@ -43,7 +43,7 @@
     "redux": "^4.2.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "yup": "^1.2.0"
+    "yup": "^1.0.0"
   },
   "scripts": {
     "start": "set PORT=3456 && react-scripts start",

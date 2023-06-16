@@ -10,6 +10,13 @@ const backOfficeApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    getUserById: builder.query<any, any>({
+      query: (id) => ({
+        url: `${backOfficeEndPoints.getUserById}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
     getRoles: builder.query<any, void>({
       query: () => ({
         url: backOfficeEndPoints.getRoles,
@@ -20,6 +27,13 @@ const backOfficeApi = apiSlice.injectEndpoints({
     getApplications: builder.query<any, void>({
       query: () => ({
         url: backOfficeEndPoints.getLicenses,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+    getApplicationDetailByUserId: builder.query<any, void>({
+      query: (id) => ({
+        url: `${backOfficeEndPoints.getApplicationDetailByUserId}/${id}`,
         method: "GET",
       }),
       providesTags: ["user"],
@@ -49,6 +63,14 @@ const backOfficeApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    archiveUser: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${backOfficeEndPoints.archiveUser}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
 
   })
 });
@@ -60,5 +82,8 @@ export const {
    useRestoreApplicationMutation,
    useUpdatedUserMutation,
    useGetRolesQuery,
-   useGetApplicationsQuery
+   useGetApplicationsQuery,
+   useArchiveUserMutation,
+   useGetApplicationDetailByUserIdQuery,
+   useGetUserByIdQuery,useLazyGetUserByIdQuery
 } = backOfficeApi;
