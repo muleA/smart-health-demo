@@ -8,6 +8,7 @@ import { useGetPermissionByRoleIdQuery, useGetPermissionsQuery, useUpdatePermiss
 import ModalCollectionSelector from '../../../shared/modal-collection-selctor';
 import { CollectionSelectorConfig } from '../../../shared/collection-selector-config';
 import { useAddPermissionToRoleMutation } from './role.query';
+import { useGetRoleByRoleIdQuery } from '../license/license.query';
 
 export const PermissionAssignment = (props: {
   tagAssignmentModalOpened: boolean;
@@ -19,7 +20,7 @@ export const PermissionAssignment = (props: {
   /* Hooks */
   const router = useParams();
   const { id } = router;
-  const { data: assignedTags } = useGetPermissionByRoleIdQuery(id?.toString()??"");
+  const { data: assignedTags } = useGetRoleByRoleIdQuery(id?.toString()??"");
 
   const { data: tags, isLoading: isTagsFetching } = useGetPermissionsQuery();
 
@@ -32,9 +33,20 @@ export const PermissionAssignment = (props: {
     size: 'md',
   };
 
-  const onDone = async (data: SetStateAction<any[]>) => {
-    console.log('data', data);
+  const onDone = async (data: any[]) => {
     setCurrentAssignedTags(data);
+    try {
+      await assignTags({
+        roleId: id?.toString(),
+        permissions: data?.map((item: { id: any; name: any; }) => ({
+          permissionId: item.id,
+          permissionName: item.name
+        })),
+      }).unwrap();
+      message.success('Permission has been assigned to Roles successfully.');
+    } catch (err) {
+      message.error('Sorry, an error encountered while assigning Permissions.');
+    }
   };
 
   const onSave = async () => {
@@ -53,12 +65,12 @@ export const PermissionAssignment = (props: {
   };
 
   const removeService = (tagId: any) => {
-    setCurrentAssignedTags(currentAssignedTags.filter((item) => item.id !== tagId));
+    setCurrentAssignedTags(currentAssignedTags?.filter((item) => item.permissionId !== tagId));
   };
 
    
    useEffect(() => {
-    setCurrentAssignedTags(assignedTags);
+    setCurrentAssignedTags(assignedTags?.rolePermission??[]);
 
   }, [assignTags, assignedTags]); 
   
@@ -80,18 +92,11 @@ export const PermissionAssignment = (props: {
   />
   
   <Table className="my-4" dataSource={currentAssignedTags}>
-  <Table.Column title="Name" dataIndex="name" />
-  <Table.Column
-  title="Action"
-  dataIndex="id"
-  render={(id: string) => (
-  <Button color={'red'} className="bg-danger p-1" onClick={() => removeService(id)}>Delete
-  {<DeleteFilled className="flex text-red-500" size={16} />}
-  </Button>
-  )}
-  />
+  <Table.Column title="permissionName" dataIndex="permissionName" />
+
+
   </Table>
-  <Button onClick={onSave} loading={isAssigningTags}>Save</Button>
-  </>
+{/*   <Button onClick={onSave} loading={isAssigningTags}>Save</Button>
+ */}  </>
   )
 }

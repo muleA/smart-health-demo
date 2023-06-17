@@ -61,6 +61,11 @@ export const ApplicationList = (): JSX.Element => {
       key: "applierType",
     },
     {
+      title: "application Category",
+      dataIndex: "applicationCategory",
+      key: "applicationCategory",
+    },
+    {
       title: "Comment",
       dataIndex: "comment",
       key: "comment",

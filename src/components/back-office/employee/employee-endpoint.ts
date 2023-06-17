@@ -10,6 +10,6 @@ export const employeeEndPoints = {
   restoreEmployee: `${baseUrl}employees/restore-employees`,
   deleteEmployee: `${baseUrl}employees/delete-employees`,
   updateEmployee: `${baseUrl}employees/update-employees`, 
-  addRoleToEmployee: `${baseUrl}employees/add-role-to-employees`,  
+  addRoleToEmployee: `${baseUrl}employees/add-role-to-employee`,  
 
 };

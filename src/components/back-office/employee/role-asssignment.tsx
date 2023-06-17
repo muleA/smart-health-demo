@@ -41,7 +41,7 @@ export const RoleAssignment = (props: {
         roleName: item.name,
         roleId: item.id.toString(),
       }));
-      await assignTags({...payload}).unwrap();
+      await assignTags(payload).unwrap();
       message.success("Permission has been assigned to Roles successfully.");
     } catch (err) {
       message.error("Sorry, an error encountered while assigning Permissions.");
