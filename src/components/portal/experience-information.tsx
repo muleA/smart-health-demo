@@ -137,9 +137,9 @@ const ExperinceInformations: React.FC = () => {
     try {
    const response=   await axios.post(`${baseUrl}user/add-experience-to-user`, {...otherProps,userId:session?.userInfo?.userId});
      console.log("response 23",response)
-   if(response?.id){
+   if(response){
         await axios.post(
-          `${baseUrl}user/add-experience-attachment/${response.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+          `${baseUrl}user/add-experience-attachment/${response??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
           formData,
           {
             headers: {

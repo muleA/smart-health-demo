@@ -97,7 +97,7 @@ const CertificateInformation: React.FC = () => {
       });
       if(response){
         await axios.post(
-          `${baseUrl}user/add-certificate-attachment/${response.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+          `${baseUrl}user/add-certificate-attachment/${response??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
           formData,
           {
             headers: {
