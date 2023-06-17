@@ -675,7 +675,6 @@ const StepperComponent = () => {
           </h1>
           <hr className="mt-4 mb-4" />
           <p>Form submitted successfully!</p>
-          <RequestForm/>
 
         </Card>
       ),
