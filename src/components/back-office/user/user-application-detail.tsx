@@ -18,6 +18,7 @@ import axios from "axios";
 import { baseUrl } from "../../../configs/config";
 import { DownloadOutlined } from "@ant-design/icons";
 import Certificate from "../certificate2";
+import { useAuth } from "../../../shared/auth/use-auth";
 
 export const UserApplicationsDetail = ({ id }: any) => {
   const { data, isLoading } = useGetApplicationDetailByUserIdQuery(id);
@@ -26,22 +27,24 @@ export const UserApplicationsDetail = ({ id }: any) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
-  const handleApproveClick = () => {
+const[appId,setAppId]=useState('')
+  const handleApproveClick = (id:string) => {
+    setAppId(id)
     setIsModalVisible(true);
   };
 
   const handleViewCertificate = () => {
     setModalVisible(true);
   };
-
+  const {session}=useAuth()
+console.log("session",session)
   const handleModalOk = async (values: any) => {
     console.log(values);
     try {
       // Call API using Axios
       const response = await axios.post(
-        `${baseUrl}user/change-application-status-By-applicationId/${id}`,
-        values
+        `${baseUrl}user/change-application-status-By-applicationId/${appId}`,
+        {...values,userId:id?.toString()}
       );
       console.log(response.data);
       setIsModalVisible(false);
@@ -101,7 +104,7 @@ export const UserApplicationsDetail = ({ id }: any) => {
                   <div className="flex space-x-2">
                     <Button
                       className="bg-primary text-white"
-                      onClick={handleApproveClick}
+                      onClick={()=>handleApproveClick(application.id)}
                     >
                       Approve
                     </Button>
@@ -188,7 +191,7 @@ export const UserApplicationsDetail = ({ id }: any) => {
               <Form.Item label="Start Date" name="validFrom">
                 <DatePicker />
               </Form.Item>
-              <Form.Item label="End Date" name="validaTo">
+              <Form.Item label="End Date" name="validTo">
                 <DatePicker />
               </Form.Item>
               <Form.Item>

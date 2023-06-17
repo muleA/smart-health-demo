@@ -81,7 +81,7 @@ const{data:educations,isLoading:educationLaoding}=useGetEducationByIdQuery(sessi
 
               <div className="flex justify-between">
 
-{ApplicationDetail?.status==='APPROVED'?(
+{ApplicationDetail?.status==='APPROVE'?(
 <>
 <Button className="text-primary flex items-center" onClick={handleViewCertificate}>
 
@@ -174,7 +174,7 @@ const{data:educations,isLoading:educationLaoding}=useGetEducationByIdQuery(sessi
                   { title: "Education", dataIndex: "education" },
                   {
                     title: "",
-                    dataIndex: "attachment",
+                    dataIndex: "",
                   /*   render: (attachment) => (
                       <Button type="link" className="flex items-center">
                         <EyeOutlined className="mr-1" />
@@ -210,7 +210,7 @@ const{data:educations,isLoading:educationLaoding}=useGetEducationByIdQuery(sessi
                 columns={[
                   { title: "Experience", dataIndex: "experience" },
                   {
-                    title: "Attachment",
+                    title: "",
                     dataIndex: "attachment",
                   /*   render: (attachment) => (
                       <Button type="link" className="flex items-center">

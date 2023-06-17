@@ -191,7 +191,7 @@ const StepperComponent = () => {
             houseNumber: "",
             phone: "",
             professionalLicenseNumber: "",
-            oldLicenseNumber: "",
+            oldProfessionalLicenseNumber: "",
           }}
           validationSchema={StepTwoSchema}
           onSubmit={async (values) => {
@@ -201,8 +201,8 @@ const StepperComponent = () => {
             // Here, we're just logging the form values
             console.log("Step 2 form values:", values);
             try {
-/*               await apply({...values,userId:session?.userInfo?.userId}).unwrap;
- */              message.success("application submitted successfully");
+              await apply({...values,userId:session?.userInfo?.userId}).unwrap;
+               message.success("application submitted successfully");
             } catch (err) {
               message.error("error happened in applying");
             }

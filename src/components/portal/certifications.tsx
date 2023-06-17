@@ -385,70 +385,7 @@ const CertificateInformation: React.FC = () => {
                   </div>
                 </Form>
                 </div>
-                <div className="w-1/2 h-100 mx-10">
-                        <div className="mt-24 text-center">
-                          <input
-                            id="image-upload-input"
-                            type="file"
-                            style={{ display: "none" }}
-                            onChange={(e: any) =>
-                              handleImageChange(e, certificate.id)
-                            }
-                          />
-                          <Upload.Dragger
-                            name="image"
-                            className="h-20"
-                            showUploadList={false}
-                            beforeUpload={handleImagePreview}
-                            onChange={() => handleImageChange}
-                          >
-                            {selectedImage ? (
-                              <img
-                                src={selectedImage}
-                                alt="Selected"
-                                className="mb-4 h-20 mx-auto"
-                              />
-                            ) : (
-                              <div className="text-center h-30">
-                                <p className="mb-2">
-                                  Drag & Drop or Click to Upload
-                                </p>
-
-                                <Button
-                                  icon={<UploadOutlined />}
-                                  onClick={handleUploadClick}
-                                >
-                                  Select Image
-                                </Button>
-                              </div>
-                            )}
-                          </Upload.Dragger>
-                        </div>
-
-                        {selectedImage && (
-                          <>
-                            <Button
-                              className="mt-4"
-                              type="link"
-                              danger
-                              onClick={handleImageRemove}
-                            >
-                              Remove Image
-                            </Button>
-                            <Button
-                              type="primary"
-                              className="bg-primary"
-                              onClick={() =>
-                                handleImageUpload(selectedImage, certificate.id)
-                              }
-                            >
-                              Upload
-                            </Button>
-                          </>
-                        )}
-
-                        <div></div>
-                      </div>
+             
                       </div>
               </Panel>
             </Collapse>

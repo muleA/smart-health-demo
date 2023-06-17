@@ -21,6 +21,7 @@ import {
 import { baseUrl } from "../../configs/config";
 import { useAuth } from "../../shared/auth/use-auth";
 import { Notify } from "../../shared/notification/notify";
+import FileViewer from "../../shared/file-viwer";
 
 const { Panel } = Collapse;
 
@@ -45,22 +46,8 @@ const EducationForm: React.FC = () => {
   const [archive, { isLoading: archiving }] = useArchiveEducationMutation();
   const { session } = useAuth();
   
-  const url = `${baseUrl}user/get-education-file-name-by-userId/${session?.userInfo.userId}/001b684f-0e88-43af-8ab9-c7b18ad7b3d0`;
 
-  useEffect(() => {
-    axios
-      .get(url, { responseType: "arraybuffer" })
-      .then((response) => {
-        const file = new Blob([response.data], {
-          type: response.headers["content-type"],
-        });
-        const fileUrl = URL.createObjectURL(file);
-        // Display the file as a link
-      })
-      .catch((error) => {
-        console.error("Error retrieving the file:", error);
-      });
-  }, [url]);
+ 
 
   useEffect(() => {
     fetchEducations();
@@ -110,7 +97,7 @@ formData.append("attachmentUrl",file)
     const response=  await addEducation({ ...otherProps, userId: session?.userInfo?.userId });
     if(response){
       await axios.post(
-        `${baseUrl}user/add-education-attachment/${response??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+        `${baseUrl}user/add-education-attachment/${response??""}/${session?.userInfo?.userId}`,
         formData,
         {
           headers: {
@@ -359,11 +346,15 @@ formData.append("attachmentUrl",file)
           <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>
       </Form.Item>
+
+      <FileViewer fileNameEndpoint={`${baseUrl}user/get-education-file-name-by-userId/${session?.userInfo.userId}/${education.id}
+      `}/>
                           <div className="flex justify-between">
                             <Button
                               htmlType="submit"
                               className="bg-primary"
                               type="primary"
+                              loading={isLoading}
                             >
                               Save
                             </Button>
