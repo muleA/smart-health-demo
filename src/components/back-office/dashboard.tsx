@@ -1,6 +1,7 @@
 import { Card, Spin } from "antd";
 import Chart from "./chart";
 import SimplePieChart from "./pie-chart";
+import BackOfficeCounterCard from "./backoffice-counter-card";
 export function Dashboard() {
   const data = [
     { name: "Data 1", value: 10 },
@@ -23,7 +24,7 @@ export function Dashboard() {
         </>
       ) : ( */}
         <>
-          <Card className="text-center mx-auto">
+          {/* <Card className="text-center mx-auto">
             <div className="grid grid-cols-1 gap-4 px-4  sm:grid-cols-4 sm:px-8">
               <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
                 <div className="p-4 bg-green-400">
@@ -96,12 +97,16 @@ export function Dashboard() {
                 </div>
               </div>
             </div>
-          </Card>
-
-          <div className="container mt-2 flex mx-auto p-4 bg-gay-50">
+          </Card> */}
+          <BackOfficeCounterCard/>
+          <div className="flex ">
+            <div className="w-2/3">
             <Chart data={data} />
+            </div>
+            <div>
             <SimplePieChart totalRestaurant={34} 
             totalUser={12} totalDriver={15} totalOrder={17} />
+            </div>
           </div>
         </>
       

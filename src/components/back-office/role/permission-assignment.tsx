@@ -38,9 +38,10 @@ export const PermissionAssignment = (props: {
     try {
       await assignTags({
         roleId: id?.toString(),
-        permissions: data?.map((item: { id: any; name: any; }) => ({
+        permissions: data?.map((item: { id: any; name: any; description:any}) => ({
           permissionId: item.id,
-          permissionName: item.name
+          permissionName: item.name,
+          permissionDescription: item.description
         })),
       }).unwrap();
       message.success('Permission has been assigned to Roles successfully.');
@@ -54,8 +55,9 @@ export const PermissionAssignment = (props: {
       await assignTags({
         roleId: id?.toString(),
         permissions: currentAssignedTags?.map((item) => ({
-          permissionId: item.id,
-          permissionName: item.name
+          permissionId: item.id.toString(),
+          permissionName: item.name,
+          permissionDescription: item.description,
         })),
       }).unwrap();
       message.success('Permission has been assigned to Roles successfully.');
@@ -92,7 +94,9 @@ export const PermissionAssignment = (props: {
   />
   
   <Table className="my-4" dataSource={currentAssignedTags}>
-  <Table.Column title="permissionName" dataIndex="permissionName" />
+  <Table.Column title="Name of Permission" dataIndex="name" />
+  <Table.Column title="Description" dataIndex="description" />
+
 
 
   </Table>

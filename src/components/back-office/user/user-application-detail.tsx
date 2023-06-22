@@ -19,7 +19,7 @@ import { baseUrl } from "../../../configs/config";
 import { DownloadOutlined } from "@ant-design/icons";
 import Certificate from "../certificate2";
 import { useAuth } from "../../../shared/auth/use-auth";
-
+ 
 export const UserApplicationsDetail = ({ id }: any) => {
   const { data, isLoading } = useGetApplicationDetailByUserIdQuery(id);
   const { Panel } = Collapse;
@@ -69,36 +69,36 @@ console.log("session",session)
               {data?.map((application: any) => (
                 <Panel
                   header={
-                    <Text strong>{`Application ${application.status}`}</Text>
+                    <Text strong>{`${application.status} Application `}</Text>
                   }
                   key={application.id}
                 >
                   <p>
-                    <Text strong>Type:</Text> {application.type}
+                    <Text strong>Type:</Text> <Text strong>{application.type}</Text>
                   </p>
                   <p>
-                    <Text strong>Category:</Text> {application.category}
+                    <Text strong>Category:</Text> <Text strong>{application.category}</Text>
                   </p>
                   <p>
-                    <Text strong>Applier Type:</Text> {application.applierType}
+                    <Text strong>Applier Type:</Text> <Text strong>{application.applierType}</Text>
                   </p>
                   <p>
-                    <Text strong>Status:</Text> {application.status}
+                    <Text strong>Status:</Text>  <Text strong>{application.status}</Text>
                   </p>
                   <p>
-                    <Text strong>Comment:</Text> {application?.comment}
+                    <Text strong>Comment:</Text> <Text strong>{application?.comment}</Text>
                   </p>
                   <p>
-                    <Text strong>Education:</Text> {application?.education?.name}{" "}
-                    <a>Attachment 1</a>
+                    <Text strong>Education:</Text> <Text strong>{application?.education?.name}</Text>
+                    <Text strong>Attachment 1</Text>
                   </p>
                   <p>
-                    <Text strong>Experience:</Text> {application?.experience?.name}{" "}
-                    <a>Attachemnt2</a>
+                    <Text strong>Experience:</Text> <Text strong>{application?.experience?.name}</Text>
+                    <Text strong>Attachemnt2</Text>
                   </p>
                   <p>
-                    <Text strong>Certificates:</Text> {application?.certificate?.certificateTitle}
-                    <a>Attachment3</a>
+                    <Text strong>Certificates:</Text> <Text strong>{application?.certificate?.certificateTitle}</Text>
+                    <Text strong>Attachment3</Text>
                   </p>
 
                   <div className="flex space-x-2">
@@ -132,42 +132,42 @@ console.log("session",session)
             {data && data.length > 0 ? (
               <>
                 <p>
-                  <Text strong>State:</Text> {data[0]?.state}
+                  <Text strong>State:</Text> <Text strong>{data[0]?.state}</Text>
                 </p>
                 <p>
-                  <Text strong>Sub City:</Text> {data[0]?.subCity}
+                  <Text strong>Sub City:</Text> <Text strong>{data[0]?.subCity}</Text>
                 </p>
                 <p>
-                  <Text strong>Woreda:</Text> {data[0]?.woreda}
+                  <Text strong>Woreda:</Text> <Text strong>{data[0]?.woreda}</Text>
                 </p>
                 <p>
-                  <Text strong>Kebele:</Text> {data[0]?.kebele}
+                  <Text strong>Kebele:</Text> <Text strong> {data[0]?.kebele}</Text>
                 </p>
                 <p>
-                  <Text strong>House Number:</Text> {data[0]?.houseNumber}
+                  <Text strong>House Number:</Text> <Text strong>{data[0]?.houseNumber}</Text>
                 </p>
                 <p>
-                  <Text strong>Phone:</Text> {data[0]?.phone}
+                  <Text strong>Phone:</Text> <Text strong>{data[0]?.phone}</Text>
                 </p>
                 <p>
-                  <Text strong>Professional Name:</Text>{" "}
-                  {data[0]?.professionalName}
+                  <Text strong>Professional Name:</Text> <Text strong>{data[0]?.professionalName}</Text>
+                  
                 </p>
                 <p>
-                  <Text strong>Professional Last Name:</Text>{" "}
-                  {data[0]?.professionalLastName}
+                  <Text strong>Professional Last Name:</Text> <Text strong>{data[0]?.professionalLastName}</Text>
+                  
                 </p>
                 <p>
-                  <Text strong>Qualification Level:</Text>{" "}
-                  {data[0]?.qualificationLevel}
+                  <Text strong>Qualification Level:</Text> <Text strong>{data[0]?.qualificationLevel}</Text>
+                  
                 </p>
                 <p>
-                  <Text strong>Professional License Number:</Text>{" "}
-                  {data[0]?.professionalLicenseNumber}
+                  <Text strong>Professional License Number:</Text> <Text strong>{data[0]?.professionalLicenseNumber}</Text>
+                  
                 </p>
                 <p>
-                  <Text strong>Created At:</Text>{" "}
-                  {timeSince(data[0]?.createdAt)}
+                  <Text strong>Created At:</Text> <Text strong> {timeSince(data[0]?.createdAt)}</Text>
+                 
                 </p>
               </>
             ) : (

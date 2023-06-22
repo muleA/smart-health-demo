@@ -39,12 +39,13 @@ export const RoleAssignment = (props: {
     try {
       const payload = currentAssignedTags?.map((item) => ({
         roleName: item.name,
+        roleDescription:item.description,
         roleId: item.id.toString(),
       }));
       await assignTags(payload).unwrap();
-      message.success("Permission has been assigned to Roles successfully.");
+      message.success("Role has been assigned to Employee successfully.");
     } catch (err) {
-      message.error("Sorry, an error encountered while assigning Permissions.");
+      message.error("Sorry, an error encountered while assigning Roles.");
     }
   };
 
@@ -76,7 +77,8 @@ export const RoleAssignment = (props: {
   />
   
   <Table className="my-4" dataSource={currentAssignedTags}>
-  <Table.Column title="Name" dataIndex="name" />
+  <Table.Column title="Name of Roles" dataIndex="name" />
+  <Table.Column title="Description" dataIndex="description" />
   <Table.Column
   title="Action"
   dataIndex="id"
