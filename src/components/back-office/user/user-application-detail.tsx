@@ -1,15 +1,13 @@
 import {
   Button,
   Card,
-  Col,
   Collapse,
-  DatePicker,
   Empty,
   Form,
   Input,
   Modal,
-  Row,
   Typography,
+  message,
 } from "antd";
 import { useGetApplicationDetailByUserIdQuery } from "../../back-office.query";
 import timeSince from "../../../shared/utilities/time-since";
@@ -18,7 +16,6 @@ import axios from "axios";
 import { baseUrl } from "../../../configs/config";
 import { DownloadOutlined } from "@ant-design/icons";
 import Certificate from "../certificate2";
-import { useAuth } from "../../../shared/auth/use-auth";
 
 export const UserApplicationsDetail = ({ id }: any) => {
   const { data, isLoading } = useGetApplicationDetailByUserIdQuery(id);
@@ -26,30 +23,46 @@ export const UserApplicationsDetail = ({ id }: any) => {
   const { Text } = Typography;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [appCat, setAppCat] = useState("");
+
   const [modalVisible, setModalVisible] = useState(false);
-const[appId,setAppId]=useState('')
-  const handleApproveClick = (id:string) => {
-    setAppId(id)
+  const [rejectClicked, setRejectClicked] = useState(false);
+
+  const [appId, setAppId] = useState("");
+  const handleApproveClick = (id: string) => {
+    setAppId(id);
     setIsModalVisible(true);
   };
-
-  const handleViewCertificate = () => {
-    setModalVisible(true);
+  const handleRejectClick = (id: string) => {
+    setAppId(id);
+    setIsModalVisible(true);
+    setRejectClicked(true);
   };
-  const {session}=useAuth()
-console.log("session",session)
+
+  const handleViewCertificate = (cat:string) => {
+    setModalVisible(true);
+    setAppCat(cat)
+  };
   const handleModalOk = async (values: any) => {
     console.log(values);
     try {
       // Call API using Axios
       const response = await axios.post(
         `${baseUrl}user/change-application-status-By-applicationId/${appId}`,
-        {...values,userId:id?.toString()}
+        {
+          ...values,
+          userId: id?.toString(),
+          validFrom: new Date(),
+          validTo: new Date("6/21/2025"),
+          status: rejectClicked ? "REJECTED" : "APPROVED",
+        }
       );
       console.log(response.data);
       setIsModalVisible(false);
+      message.success("Approved successfully");
     } catch (error) {
       console.log(error);
+      message.error("error");
     }
   };
 
@@ -60,24 +73,26 @@ console.log("session",session)
   return (
     <>
       <div className="w-full flex">
-        <div className="w-3/4">
+        <div className="w-1/2">
           <Card
             title={<Text strong>Application Information</Text>}
             className="w-full"
+            loading={isLoading}
           >
             <Collapse>
               {data?.map((application: any) => (
                 <Panel
                   header={
-                    <Text strong>{`Application ${application.status}`}</Text>
+                    <Text strong>{`Application ${application?.status}`}</Text>
                   }
                   key={application.id}
                 >
                   <p>
-                    <Text strong>Type:</Text> {application.type}
+                    <Text strong>Type:</Text> {application.applierType}
                   </p>
                   <p>
-                    <Text strong>Category:</Text> {application.category}
+                    <Text strong>Category:</Text>{" "}
+                    {application.applicationCategory}
                   </p>
                   <p>
                     <Text strong>Applier Type:</Text> {application.applierType}
@@ -89,32 +104,50 @@ console.log("session",session)
                     <Text strong>Comment:</Text> {application?.comment}
                   </p>
                   <p>
-                    <Text strong>Education:</Text> {application?.education?.name}{" "}
-                    <a>Attachment 1</a>
+                    <Text strong>Education:</Text>{" "}
+                    {application?.education?.name} <a>Attachment 1</a>
                   </p>
                   <p>
-                    <Text strong>Experience:</Text> {application?.experience?.name}{" "}
-                    <a>Attachemnt2</a>
+                    <Text strong>Experience:</Text>{" "}
+                    {application?.experience?.name} <a>Attachemnt2</a>
                   </p>
                   <p>
-                    <Text strong>Certificates:</Text> {application?.certificate?.certificateTitle}
+                    <Text strong>Certificates:</Text>{" "}
+                    {application?.certificate?.certificateTitle}
                     <a>Attachment3</a>
                   </p>
 
                   <div className="flex space-x-2">
-                    <Button
-                      className="bg-primary text-white"
-                      onClick={()=>handleApproveClick(application.id)}
-                    >
-                      Approve
-                    </Button>
-                    <Button className="bg-red-500">Reject</Button>
+                    {application.status !== "APPROVED" ? (
+                      <>
+                        <Button
+                          className="bg-primary text-white"
+                          onClick={() => handleApproveClick(application.id)}
+                        >
+                          Approve
+                        </Button>
 
-                    {application.status === "APPROVE" ? (
+                    
+                      </>
+                    ) : null}
+
+
+{
+   application.status!=='APPROVED'?(<>
+       <Button
+                          className="bg-red-500 text-white"
+                          onClick={() => handleRejectClick(application.id)}
+                        >
+                          Reject
+                        </Button>
+   </>):null
+}
+                   
+                    {application.status === "APPROVED" ? (
                       <>
                         <Button
                           className="text-primary flex items-center"
-                          onClick={handleViewCertificate}
+                          onClick={()=>handleViewCertificate(application?.applicationCategory)}
                         >
                           <DownloadOutlined className="mr-1" />
                           Download License
@@ -127,7 +160,7 @@ console.log("session",session)
             </Collapse>
           </Card>
         </div>
-        <div className="w-1/4">
+        <div className="w-1/2">
           <Card title={<Text strong>Personal Information</Text>}>
             {data && data.length > 0 ? (
               <>
@@ -175,25 +208,17 @@ console.log("session",session)
             )}
           </Card>
           <Modal
-            title="Add Comment and Dates"
+            title="Add Comment"
             visible={isModalVisible}
             onOk={handleModalOk}
             onCancel={handleModalCancel}
             footer={null} // Remove the footer
           >
             <Form onFinish={handleModalOk}>
-              <Form.Item label="Status" name="status">
-                <Input />
-              </Form.Item>
               <Form.Item label="Comment" name="comment">
-                <Input />
+                <Input.TextArea cols={5} rows={5} />
               </Form.Item>
-              <Form.Item label="Start Date" name="validFrom">
-                <DatePicker />
-              </Form.Item>
-              <Form.Item label="End Date" name="validTo">
-                <DatePicker />
-              </Form.Item>
+
               <Form.Item>
                 <Button
                   type="primary"
@@ -209,6 +234,7 @@ console.log("session",session)
       </div>
       <Certificate
         licenseInfo={data}
+        appCat={appCat}
         handleModalClose={() => setModalVisible(false)}
         modalVisible={modalVisible}
       />

@@ -29,26 +29,22 @@ export default function ProgressChartCard({approvedLicense,draftLicese,submitted
   ];
 
   const data = {
-    labels: ['Rejected', 'Accepted', 'Submitted', 'Approved', 'Suspended', 'Draft'],
+    labels: ['Rejected', 'Submitted', 'Approved', 'Suspended'],
     datasets: [
       {
         label: '# of Licenses',
-        data: [REJECTEDLicese?.length,ISSUEANCELicese?.length, approvedLicense?.length, submittedLicese?.length, SUSPENDEDLicese?.length, draftLicese?.length], // Add corresponding data values for all enum values
+        data: [REJECTEDLicese?.length, submittedLicese?.length,approvedLicense?.length, SUSPENDEDLicese?.length], // Add corresponding data values for all enum values
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)', // Rejected - Red
-          'rgba(54, 162, 235, 0.2)', // Accepted - Blue
           'rgba(255, 206, 86, 0.2)', // Submitted - Yellow
           'rgba(75, 192, 192, 0.2)', // Approved - Green
           'rgba(153, 102, 255, 0.2)', // Suspended - Purple
-          'rgba(255, 159, 64, 0.2)', // Draft - Orange
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)', // Rejected - Red
-          'rgba(54, 162, 235, 1)', // Accepted - Blue
           'rgba(255, 206, 86, 1)', // Submitted - Yellow
           'rgba(75, 192, 192, 1)', // Approved - Green
           'rgba(153, 102, 255, 1)', // Suspended - Purple
-          'rgba(255, 159, 64, 1)', // Draft - Orange
         ],
         borderWidth: 1,
       },
@@ -57,29 +53,8 @@ export default function ProgressChartCard({approvedLicense,draftLicese,submitted
   
   return (
     <div>
-    {/*   <div className="bg-white p-4 rounded-2xl shadow-lg">
-      <div className=" font-bold gap-2 text-blue-400 text-2xl">Licenses Progress</div>
-        <Divider className='m-2'/> */}
-{/*       { ProgressBar.map((progress, p) =>(
-        <div>
-        <div className="gap-3">
-          
-        <div className="flex flex-row ">
-           <div className= "font-bold text-xl  ">
-             {progress.key}
-           </div>
-             <div className='m-1'>
-               {progress.text}
-             </div>
-             </div>
-             <span className='ml-4'>
-              <Progress percent={progress.percent}  className='w-4/5 '/>
-             </span>
-         </div>
-         </div>
-      ))} */}
-{/*       </div>
- */}      <div className="bg-white p-4  rounded-2xl shadow-lg">
+ 
+     <div className="bg-white p-4  rounded-2xl shadow-lg">
         <div>
         <div className=" font-bold gap-2 text-blue-400 text-2xl">Status Progress</div>
         <Divider className='m-2'/>

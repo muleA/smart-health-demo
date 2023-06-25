@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Steps, Form, Input, Button, Radio, Card, Alert } from "antd";
+import { Modal, Steps, Form, Input, Button, Radio, Card, Alert, message } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -45,6 +45,8 @@ const RegistrationForm = () => {
     },
   ];
 
+  const { submitLoginRequest } = useAuth();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -79,14 +81,14 @@ const RegistrationForm = () => {
           console.log("====response", response.data);
           setAccountInfo(response?.data)
           // Handle the response data
-          Notify(
-            "success",
+          message.success(
             "User Account Created Successfully please move next steps to complete registrations"
           );
+          submitLoginRequest({username:values?.email,password:values?.password})
         })
         .catch((error) => {
           console.error(error);
-          Notify("error", "error happened");
+          message.error("error happened");
 
           // Handle the error
         });

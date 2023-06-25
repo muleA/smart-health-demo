@@ -30,35 +30,13 @@ export function ArchivedUsers() {
         accessorKey: 'lastName',
         header: 'Last Name',
       },
-      {
-        accessorKey: 'gender',
-        header: 'Gender',
-      },
-      {
-        accessorKey: 'wereda',
-        header: 'Wereda',
-      },
-      {
-        accessorKey: 'kebele',
-        header: 'Kebele',
-      },
-      {
-        accessorKey: 'city',
-        header: 'City',
-      },
+    
       {
         accessorKey: 'phone',
         header: 'Phone',
       },
-      {
-        accessorKey: 'subCity',
-        header: 'Sub City',
-      },
-      {
-        accessorKey: 'houseNumber',
-        header: 'House Number',
-      },
-      {
+     
+       {
         accessorKey: 'email',
         header: 'Email',
       },
@@ -105,7 +83,6 @@ export function ArchivedUsers() {
         }}
         enableGrouping
         enablePagination
-        manualPagination
         state={{
           isLoading: isLoading,
           showAlertBanner: isError,

@@ -2,18 +2,18 @@ import { Card, Form, Input, Button, message, Spin, Upload } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  useGetUsersQuery,
+  useGetUserByIdQuery,
+  useLazyGetUserByIdQuery,
   useUpdatedUserMutation,
 } from "../../../back-office.query";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { SaveFilled } from "@ant-design/icons";
-import { Edit } from "@mui/icons-material";
+
 
 const ArchivedUserForm = (props: { id?: string; mode: "new" | "update" }) => {
   const [createUser, { isLoading: isCreating }] = useUpdatedUserMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdatedUserMutation();
-  const { data: user, isLoading: isDetailsLoading } = useGetUsersQuery();
+  const [trigger,{ data: user, isLoading: isDetailsLoading }] = useLazyGetUserByIdQuery();
 
   // Define the form validation schema using Yup
   const validationSchema = Yup.object({
@@ -66,20 +66,20 @@ const ArchivedUserForm = (props: { id?: string; mode: "new" | "update" }) => {
   });
 
   // Fetch user details when in "update" mode
-  /*  useEffect(() => {
+    useEffect(() => {
     if (props.mode === 'update' && props.id) {
       trigger(props.id);
     }
-  }, [props.mode, props.id, trigger]); */
+  }, [props.mode, props.id, trigger]); 
 
   // Update form data when user details are fetched
   console.log("user", user);
-  /*   useEffect(() => {
+     useEffect(() => {
     if (props.mode === 'update' && user) {
       const { firstName, lastName, email, phoneNumber, profilePicture ,password} = user?.data?.users;
       formik.setValues({ firstName, lastName, email, phoneNumber, profilePicture,password });
     }
-  }, [props.mode, user]); */
+  }, [props.mode, user]); 
 
   return (
     <div>
@@ -173,18 +173,12 @@ const ArchivedUserForm = (props: { id?: string; mode: "new" | "update" }) => {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="bg-primary"
+              
+                className="bg-primary text-red-500"
               >
                Restore
               </Button>
-                <>
-                  <Button
-                    htmlType="button"
-                    className="hover:bg-red-400 hover:text-white text-white bg-red-600"
-                  >
-                    Delete
-                  </Button>
-                </>
+               
             </div>
           </Form.Item>
         </Form>

@@ -2,6 +2,7 @@ import { Email, Phone } from '@mui/icons-material'
 import './certificate2.css'
 
 export default function Certificate3({licenseInfo}:any) {
+  console.log("license inf at 3",licenseInfo?.qualificationLevel)
 return (
     <div className="container">
     <div className="header">
@@ -24,7 +25,7 @@ return (
               </div>
               <div className="right-header border">
                 <p> ቁጥር ጤ/ተ/ባ </p>
-                <p>ቅን 16/05/2015 ዓ.ም</p>
+                <p>ቅን {new Date().toDateString()}</p>
               </div>
             
           </div>
@@ -41,59 +42,62 @@ return (
             <p>የድርጅቱ አድራሻ፤ መስተዳድር </p>
             <p className='user-response'>አ/አ</p>
             <p>ክ/ከተማ</p>
-            <p className='user-response'>ን/ስ/ሳ</p>
+            <p className='user-response'>{licenseInfo?.subCity}</p>
             <p> ወረዳ</p>
-            <p className='user-response'>06</p>
+            <p className='user-response'>{licenseInfo?.woreda}</p>
             <p>የቤት ቁጥር</p>
-            <p className='user-response'>3495</p>
+            <p className='user-response'>{licenseInfo?.houseNumber}</p>
             <p>የስልክ ቁጥር </p>
-            <p className='user-response'>090930097848</p>
+            <p className='user-response'>{licenseInfo?.phone}</p>
         </div>  
         <div className="content">
             <p>Address</p>
             <p className='user-response'> Adiss Ababa</p>
             <p>City</p>
-            <p className='user-response'>N/S/L</p>
+            <p className='user-response'>{licenseInfo?.subCity}</p>
             <p> Subcity</p>
-            <p className='user-response'>06</p>
+            <p className='user-response'>{licenseInfo?.woreda}</p>
             <p>Woreda</p>
-            <p className='user-response'>06</p>
+            <p className='user-response'>{licenseInfo?.woreda}</p>
             <p>House No</p>
-            <p className='user-response'>3495</p>
+            <p className='user-response'>{licenseInfo?.houseNumber}</p>
             <p>Tel .No </p>
-            <p className='user-response'>090930097848</p>
+            <p className='user-response'>{licenseInfo?.phone}</p>
          </div>  
         <div className="content">
             <p>የድርጅቱ ባለንብረት ስም</p>
-            <p className='user-response'>አቶ ሳምሶን አሰፋ</p>
+            <p className='user-response'>{licenseInfo?.ownerName}</p>
         </div>  <div className="content">
             <p>የየድርጅቱ ባለሙያ ስም</p>
-            <p className='user-response'>ወ/ሪች ህይወት ምትኩ</p>
+            <p className='user-response'>{licenseInfo?.professionalLastName}</p>
             <p>የአያት ስም</p>
-            <p className='user-response'>አኑሎ </p>
+            <p className='user-response'>{licenseInfo?.lastName} </p>
             <p>የስልክ ቁጥር</p>
-            <p className='user-response'>093767306/0930097848</p>
+            <p className='user-response'>{licenseInfo?.phone}</p>
         </div>  <div className="content">
             <p>የሙያ ደረጃ </p>
-            <p className='user-response'>ጁኒየር ፋርማሲስት</p>
+            <p className='user-response'>{licenseInfo?.qualificationLevel}</p>
         </div>  <div className="content">
             <p>የመያ ምዝገባ ቁጥር </p>
-            <p className='user-response'>JP=1906/2011</p>
+            <p className='user-response'>{licenseInfo?.professionalLicenseNumber}</p>
         </div>  <div className="content">
             <p>Facility Owner Name</p>
-            <p className='user-response'>Ato Samson Asefa</p>
+            <p className='user-response'>{licenseInfo?.facilityOwnerName}</p>
         </div>  <div className="content">
             <p>Technical Leader full Name</p>
-            <p className='user-response'>W/ro Hiwot Mitiku Anulo</p>
+            <p className='user-response'>{licenseInfo?.technicalLeaderFullName}</p>
         </div>  <div className="content">
             <p>Qualification</p>
-            <p className='user-response'>Junior Pharmacist</p>
+            <p className='user-response'>{licenseInfo?.qualificationLevel}</p>
             <p>Reg.no.</p>
             <p className='user-response'>JP=1906/2011</p>
         </div> 
             <p>ድርጅቱ ተፈላጊውን ሙያዊ፤ ድርጅታዊና ሌሎች መስፈርቶችን ማሟላቱ ይህ የብቃት ማረጋገጫ ምስክር ወረቀት የምግብ፣የመድኃኒትና የጤና ክብካቤ አስተዳደርና ቁጥጥር አዋጅ 64/2011 ቁጥር ፤44መሠረት በባለሙያው/ዋ <b> ወ/ሪት ህይወት ምትኩ </b> ሰም ተሰጥቷል፡፡</p>
             <p>This Certificate is issued to the Health Facility in accordance with AAFMHACA Proclamation No. 64/2011
-                article 44 after assuring the fulfillment of the required National Health Facility standard.</p>
+                article 44 after assuring the fulfillment of the required National Health Facility standard.
+                {licenseInfo?.comment}
+                
+                </p>
                
                 <div >
                     <div className="column" >

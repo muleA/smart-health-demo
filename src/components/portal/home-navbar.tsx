@@ -52,8 +52,6 @@ const PortalNavigation = () => {
         return <MyApplications />;
       case "3":
         return <MyLicenses />;
-      /* case '4':
-        return <Notification />; */
       case "5":
         return <Notification />;
       default:
@@ -98,7 +96,7 @@ const PortalNavigation = () => {
           <Menu.Item key="6" icon={<BellOutlined />}>
             <Link to="/settings">Notifications</Link>
           </Menu.Item>
-          <Menu.Item key="7" icon={<LogoutOutlined />}>
+          <Menu.Item key="7" onClick={logOut} icon={<LogoutOutlined />}>
             <Link to="/logout">Logout</Link>
           </Menu.Item>
         </Menu>
@@ -132,7 +130,9 @@ const PortalNavigation = () => {
       </a>
     </Dropdown>
     <CaretDownOutlined className="hover:cursor-pointer text-primary ml-1" />
-    <div className="text-primary">{session?.userInfo?.userName}</div>
+    <div className="text-primary">{session?.userInfo?.firstName}</div>
+    <div className="text-primary">{session?.userInfo?.middleName}</div>
+
   </div>
 </Header>
 

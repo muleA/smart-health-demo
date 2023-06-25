@@ -1,6 +1,6 @@
 import './certficate.css';
 
-const Certificate =() => {
+const Certificate1 =({licenseInfo,userInfo}:any) => {
 
 return (
   <div className="container">
@@ -23,9 +23,9 @@ return (
               <p>FOOD MEDICINE AND HEALTH CARE ADMINSTRATION AND CONTROL AUTHORITY</p>
             </div>
             </div>
-            <div className="right-header">
+            <div className="right-header mr-0">
               <p>የምዝገባ ቁጥር SEPHO=297/2015</p>
-              <p>File Number 34088</p>
+              <p>IDNo:34088</p>
               <p>RPL=01</p>
             </div>
           
@@ -37,13 +37,13 @@ return (
       <h3>የአዲስ አበባ ከተማ አስተዳድር አስፈፃሚ ኦካላትን ለመወሰን ባወጣው አዋጅ ቁጥር 30/2004 እንቀፅ 8 ንዑስ አንቀፅ 12 ለአዲስ አበባ የምግብ የመድኃኒትና  የጤና ክብካቤ አስተዳዴርና ቁጥጥር ባለስልጣን በተሰጠ ሥልጣን መሠረት።</h3>
       <br />
       <br />
-      <h2>አለነ ጌታሁን አዳም</h2>
-      <h3>ተገቢውን መስፈርት አሟልተው ስለተፕ</h3>
+      <h1>{`${userInfo?.firstName} ${userInfo?.middleName} ${userInfo?.lastName}`}</h1>    
+        <h3>ተገቢውን መስፈርት አሟልተው ስለተፕ</h3>
       <h2>በ ሲኒየር ኢንቫይሮንሜንታል ሄልዝ ፕሮፌሽናል</h2>
       <h3>ሙያ መዝግቦ ይህንን ሥራ ፈቃድ የምስክር ወረቀት ሰጥትል </h3>
       <br />
       <div className="center">
-        <img src={require("../assets/images/signature1.png" )} alt="Signature" width="150" style={{mixBlendMode: "multiply"}}/>
+        <img src={require("../assets/images/signature1.png" )} alt="Signature" width="150"/>
       </div>
       <div className="alignLeft">
 
@@ -57,12 +57,12 @@ return (
     <div className="right-content">
       <h2>HEALTH PROFESSIONALS LICENSING CERTIFICATE</h2>
       <h3>Food, Medicine & Health Care Administration, and Control Authority of Addi Ababa by Virtue of the power Vested on it by the Definitions of powers and Duties of Executive Organs of Addis Ababa city Administration Proclamation Number 30/2012 Article 8/12/</h3>
-      <h2>ALENE GETAHUN ADAM</h2>
+      <h1 className=''>{`${userInfo?.firstName} ${userInfo?.middleName} ${userInfo?.lastName}`}</h1>    
       <h3>Having duty satisfied the requirements of the Authority here by Registered and licensed as,</h3>
     
       <h2>SENIOR ENVIRONMENTAL HEALTH PROFESSIONAL</h2>
       <div className="center">
-        <img src={require("../assets/images/signature1.png" )} alt="Signature" width="150" style={{mixBlendMode: "multiply"}}/>
+        <img src={require("../assets/images/signature1.png" )} alt="Signature" width="150"/>
       </div>
     <div className="alignLeft">
       <p>This License is valid only from Jun 6, 2023 to Saturday, June 6, 2026 GC</p>
@@ -71,7 +71,8 @@ return (
       <p>The holder is required to notify as soon as the certificate is lost or missed</p>
       <p>This Certificate shall Be renewed every three year</p>
       <p className='user-response'>Emaill proflisence@gmail.com</p>
-      <p>ISSUED BY: Melkie Mare</p>
+      <p>ISSUED BY:       {`${userInfo?.firstName} ${userInfo?.middleName}`}    
+</p>
       <div className="imagePosition2">
         <img src={require("../assets/images/stamp.png" )} alt="stamp" width="170" />
        </div>
@@ -82,4 +83,4 @@ return (
 </div>
 );
 };
-export default  Certificate;
+export default  Certificate1;

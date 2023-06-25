@@ -1,14 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Drawer, List } from "antd";
-import { menus } from "./menu-list";
 import { filterMenusByPermissions, Menu } from "../../models/menu";
 import { useAuth } from "../auth/use-auth";
 import SidebarItem from "./sidebar-item";
-import Search from "antd/es/transfer/search";
 
 export const drawerWidth = 300;
 
-const Sidebar = (): JSX.Element => {
+const Sidebar = (props:{menus:Menu[]}): JSX.Element => {
   const { session } = useAuth();
 
   const [visibleMenu, setVisibleMenu] = useState<Menu[]>([]);
@@ -19,7 +17,7 @@ const Sidebar = (): JSX.Element => {
         (permission: { PermissionKey: any; }) => permission.PermissionKey,
       ) ?? [];
 
-    return filterMenusByPermissions(menus, userPermissions);
+    return filterMenusByPermissions(props?.menus, userPermissions);
   }, [session?.userInfo?.Roles]);
 
   useEffect(() => {

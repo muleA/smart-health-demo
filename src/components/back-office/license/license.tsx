@@ -3,8 +3,9 @@ import React, { useMemo } from "react";
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_ColumnDef } from 'material-react-table';
 import { DefaultPage } from "../../../shared/default-page";
-import { Role } from "../../../models/role";
 import { useGetLicenseQuery } from "./license.query";
+import Typography from "antd/es/typography/Typography";
+import { Badge } from "antd";
 
 export function License() {
   const navigate = useNavigate();
@@ -25,15 +26,37 @@ export function License() {
       {
         accessorKey: 'validFrom',
         header: ' validFrom',
+        accessorFn: (originalRow) => (
+          <Typography>
+            {(originalRow?.validFrom?.slice(0, 10))}
+          </Typography>
+        ),
       },
       {
         accessorKey: 'validTo',
         header: ' validTo',
+        accessorFn: (originalRow) => (
+          <Typography>
+            {(originalRow?.validTo?.slice(0, 10))}
+          </Typography>
+        ),
       },
       {
         accessorKey: 'status',
-        header: ' status',
-        Cell: (status) => (status ? 'True' : 'False'),
+        header: 'Status',
+        Cell: (status) => (status ? 'Active' : 'Inactive'),
+        accessorFn: (originalRow) => (
+          <Typography>
+            {originalRow?.status==="Active" ? (
+              <Badge color="green" status="success" text="Active" />
+            ) :originalRow?.status==="SUSPENDED"? (
+              <Badge color="red" text="S" />
+            ):(
+              <Badge color="yellow" text="Expired" />
+
+            )}
+          </Typography>
+        ),
       },
      
     ],

@@ -1,67 +1,81 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Divider, Select, Space, Table, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useGetLicensesQuery } from "../home-query";
-import timeSince from "../../../../shared/utilities/time-since";
+import { useGetLicensesQuery, useLazyGetLicenseByApplicationIdQuery } from "../home-query";
+import { useLazyGetUserByIdQuery } from "../../../back-office.query";
 
 function TableCard() {
   const navigate = useNavigate();
   const { data: licenses, isLoading } = useGetLicensesQuery();
+const[trigger,{data:appInfo,isLoading:appInfoLoading}]=useLazyGetLicenseByApplicationIdQuery()
+const[triggerUserInfo,{data:userInfo,isLoading:userInfoLoading}]=useLazyGetUserByIdQuery()
 
-  const columns = [
-    {
-      title: "Comment",
-      dataIndex: "comment",
-      key: "comment",
-      render: (text: any) => <a className="text-blue-500">{text}</a>,
-    },
-    {
-      title: "Entry In",
-      dataIndex: "validFrom",
-      key: "validFrom",
-      render: (validFrom: any) => timeSince(validFrom),
-    },
+console.log("appInfo",appInfo)
+useEffect(()=>{
+  if(licenses){
+    trigger(licenses?.map((item: { applicationId: any; })=>item?.applicationId))
+  }
+},[licenses, trigger])
+useEffect(()=>{
+  if(licenses){
+    triggerUserInfo(licenses?.map((item: { userId: any; })=>item?.userId))
+  }
+},[licenses, triggerUserInfo])
+const columns = [
+  {
+    title: "LicenseType",
+    dataIndex: "applicationType",
+    key: "ApplicationType",
+    render: (text: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined) => <a className="text-blue-500">{text}</a>,
+  },
+  {
+    title: "License Category",
+    dataIndex: "applicationCategory",
+    key: "ApplicationCategory",
+    render: (text: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined) => <a className="text-blue-500">{text}</a>,
+  },
 
-    {
-      title: "Expire Out",
-      dataIndex: "validTo",
-      key: "validTo",
-      render: (validTo: any) => timeSince(validTo, false, true),
-    },
-    {
-      title: "status ",
-      dataIndex: "status",
-      key: "status",
-      render: (status: any) => (
-        <Tag
-          color={
-            status === "SUBMITED"
-              ? "geekblue"
-              : status === "SUSPENDED"
-              ? "red"
-              : "green"
-          }
-        >
-          {status}
-        </Tag>
-      ),
-    },
+  {
+    title: "Comment",
+    dataIndex: "comment",
+    key: "comment",
+    render: (text: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined) => <a className="text-blue-500">{text}</a>,
+  },
+  {
+    title: "Entry In",
+    dataIndex: ["license", "validFrom"],
+    key: "validFrom",
+    render: (validFrom: string | number | Date) => {
+      const formattedDate = new Date(validFrom).toLocaleDateString("en-US");
+      return <span>{formattedDate}</span>;
+    }
+  },
+  {
+    title: "Expire Out",
+    dataIndex: ["license", "validTo"],
+    key: "validTo",
+    render: (validTo: string | number | Date) => {
+      const formattedDate = new Date(validTo).toLocaleDateString("en-US");
+      return <span>{formattedDate}</span>;
+    }
+  },
+  {
+    title: "Status",
+    dataIndex: ["license", "status"],
+    key: "status",
+    render: (status: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined) => (
+      <Tag
+        color={
+          status === "ACTIVE" ? "green" : status === "SUSPENDED" ? "red" : "yellow"
+        }
+      >
+        {status}
+      </Tag>
+    ),
+  },
+ 
+];
 
-    {
-      title: "Action",
-      dataIndex: "status",
-      key: "status",
-      render: () => {
-        return (
-          <>
-            <Space size="middle">
-              <a className="text-blue-500">See More</a>
-            </Space>
-          </>
-        );
-      },
-    },
-  ];
 
   return (
     <div className="">
@@ -70,13 +84,11 @@ function TableCard() {
           <div className=" font-bold gap-2 text-blue-400 text-2xl ">
             Licenses{" "}
           </div>
-          <Button className="bg-blue-500 ">
-            <div className="text-white" onClick={()=>navigate("/new-application")}> Add new </div>
-          </Button>
+        
         </div>
 
         <Divider className="m-2" />
-        <Table dataSource={licenses} columns={columns} loading={isLoading} />
+        <Table dataSource={[appInfo]} columns={columns} loading={isLoading||appInfoLoading} />
       </div>
     </div>
   );

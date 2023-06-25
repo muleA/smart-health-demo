@@ -5,7 +5,7 @@ const portalApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<any, void>({
       query: () => ({
-        url: portalEndPoints.getUsers,
+        url: portalEndPoints.getUser,
         method: "GET",
       }),
       providesTags: ["user"],
@@ -23,6 +23,13 @@ const portalApi = apiSlice.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["Education"],
+    }),  
+    getLicenseById: builder.query<any, string>({
+      query: (userId) => ({
+        url: `${portalEndPoints.getLicenseById}/${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["license"],
     }),  
     getExperienceByUserId: builder.query<any, string>({
       query: (userId) => ({
@@ -68,6 +75,13 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    getApplicationUserId: builder.query<any, any>({
+      query: (id:any) => ({
+        url: `${portalEndPoints.getApplicationByUserId}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
     
     getUserById: builder.query<any, any>({
       query: (id:any) => ({
@@ -78,8 +92,8 @@ const portalApi = apiSlice.injectEndpoints({
     }),
 
     getArchivedApplications: builder.query<any, any>({
-      query: () => ({
-        url: `${portalEndPoints.getArchivedApplications}`,
+      query: (id:string) => ({
+        url: `${portalEndPoints.getArchivedApplicationsByUserId}/${id}`,
         method: "GET",
       }),
       providesTags: ["user"],
@@ -219,5 +233,7 @@ export const {
    useGetLicenseByStatusQuery,
    useUpdateProfileMutation,
    useGetUserByIdQuery,
-   useGetEducationByIdQuery
+   useGetEducationByIdQuery,
+   useGetApplicationUserIdQuery,
+   useLazyGetLicenseByIdQuery
 } = portalApi;

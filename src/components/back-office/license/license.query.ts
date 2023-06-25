@@ -8,7 +8,7 @@ const roleApi = apiSlice.injectEndpoints({
         url: licenseEndPoints.getLicenses,
         method: "GET",
       }),
-      providesTags: ["Role"],
+      providesTags: ["license"],
     }),
     getApplications: builder.query<any, void>({
       query: () => ({
@@ -25,7 +25,30 @@ const roleApi = apiSlice.injectEndpoints({
       providesTags: ["Role"],
     }),  
     
-    
+    archiveLicense: builder.mutation<any, any>({
+      query: (newRole) => ({
+        url: licenseEndPoints.archiveLicense,
+        method: "POST",
+        data: newRole,
+      }),
+      invalidatesTags: ["license"],
+    }),
+    changeStatus: builder.mutation<any, any>({
+      query: (newRole) => ({
+        url: `${licenseEndPoints.changeLicenseStatus}/${newRole.userId}`,
+        method: "POST",
+        data: newRole,
+      }),
+      invalidatesTags: ["license"],
+    }),
+    restoreLicense: builder.mutation<any, any>({
+      query: (newRole) => ({
+        url: licenseEndPoints.restoreLicense,
+        method: "POST",
+        data: newRole,
+      }),
+      invalidatesTags: ["license"],
+    }),
     createRole: builder.mutation<any, any>({
       query: (newRole) => ({
         url: licenseEndPoints.createLicense,
@@ -34,7 +57,14 @@ const roleApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Role"],
     }),
- 
+    getLicenseById: builder.query<any, string>({
+      query: (roleId) => ({
+        url: `${licenseEndPoints.getLicenseById}/${roleId}`,
+        method: "GET",
+      }),
+      providesTags: ["license"],
+    }),  
+    
    
    
   }),
@@ -43,6 +73,10 @@ const roleApi = apiSlice.injectEndpoints({
 export const {
 useGetLicenseQuery,
 useGetRoleByRoleIdQuery,
-useGetApplicationsQuery
+useGetApplicationsQuery,
+useGetLicenseByIdQuery,
+useArchiveLicenseMutation,
+useRestoreLicenseMutation,
+useChangeStatusMutation
 
 } = roleApi;

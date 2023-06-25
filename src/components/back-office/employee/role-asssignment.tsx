@@ -26,7 +26,7 @@ export const RoleAssignment = (props: {
   /* Variables */
   const config: CollectionSelectorConfig = {
     visibleColumn: [{ key: 'name', name: 'Name' }, { key: 'description', name: 'Description' }],
-    title: 'Permissions',
+    title: 'Roles',
     size: 'md',
   };
 
@@ -41,7 +41,7 @@ export const RoleAssignment = (props: {
         roleName: item.name,
         roleId: item.id.toString(),
       }));
-      await assignTags(payload).unwrap();
+      await assignTags({payload:payload,empId:id?.toString()}).unwrap();
       message.success("Permission has been assigned to Roles successfully.");
     } catch (err) {
       message.error("Sorry, an error encountered while assigning Permissions.");
@@ -76,16 +76,7 @@ export const RoleAssignment = (props: {
   />
   
   <Table className="my-4" dataSource={currentAssignedTags}>
-  <Table.Column title="Name" dataIndex="name" />
-  <Table.Column
-  title="Action"
-  dataIndex="id"
-  render={(id: string) => (
-  <Button color={'red'} className="bg-danger p-1" onClick={() => removeService(id)}>Delete
-  {<DeleteFilled className="flex text-red-500" size={16} />}
-  </Button>
-  )}
-  />
+  <Table.Column title="Name" dataIndex="roleName"  />
   </Table>
   <Button onClick={onSave} loading={isAssigningTags}>Save</Button>
   </>

@@ -3,17 +3,14 @@ import React, { useMemo } from "react";
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_ColumnDef } from 'material-react-table';
 import { DefaultPage } from "../../../shared/default-page";
-import { useGetApplicationsQuery } from "../license/license.query";
+import {useGetApplicationsQuery } from "./application.query";
+import { Typography } from "antd";
+import timeSince from "../../../shared/utilities/time-since";
 
-export function ApplicationListComponent() {
-  const navigate = useNavigate();
-  const { data: applications, isLoading, isSuccess, isError, isFetching } = useGetApplicationsQuery();
-  console.log("applications",applications)
-  const handleRowClick = (row: any) => {
-    console.log("row",row)
-    navigate(`/application/detail/${row?.original.id}`);
-  };
-
+export function BackOfficeApplications() {
+  const { data: applications, isLoading, isError, isFetching } = 
+  useGetApplicationsQuery();
+ 
  
 
   const columns = useMemo<MRT_ColumnDef<any>[]>(
@@ -36,7 +33,13 @@ export function ApplicationListComponent() {
       }, {
         accessorKey: 'createdAt',
         header: ' createdAt',
+        accessorFn: (originalRow) => (
+          <Typography>
+            {timeSince(originalRow?.createdAt)}
+          </Typography>
+        ),
       },
+      
       {
         accessorKey: 'status',
         header: ' status',
@@ -53,18 +56,12 @@ export function ApplicationListComponent() {
   <MaterialReactTable
         columns={columns}
         data={applications ?? []}
-        muiTableBodyRowProps={({ row }) => ({
-          onClick: () => handleRowClick(row),
-          sx: {
-            cursor: "pointer",
-          },
-        })}
+        
         muiTablePaginationProps={{
           rowsPerPageOptions: [5, 10, 15, 25, 50, 100, 1000],
         }}
         enableGrouping
         enablePagination
-        manualPagination
         state={{
           isLoading: isLoading,
           showAlertBanner: isError,

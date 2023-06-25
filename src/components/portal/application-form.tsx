@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Steps, Button, message, Collapse, Card, Alert, Input, Upload } from "antd";
+import { Steps, Button, message, Collapse, Card, Alert, Upload } from "antd";
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
 import * as Yup from "yup";
 import classNames from "classnames";
@@ -9,7 +9,6 @@ import { useApplyToLicenseMutation } from "../portal.query";
 import { baseUrl } from "../../configs/config";
 import { useAuth } from "../../shared/auth/use-auth";
 import { UploadOutlined } from "@ant-design/icons";
-import RequestForm from "./upload-progress";
 
 const { Step } = Steps;
 
@@ -27,11 +26,14 @@ const StepperComponent = () => {
   const [certificates, setCertificates] = useState<any>([]);
 
  const StepTwoSchema = Yup.object().shape({
-  userId: Yup.string(),
   applicationType: Yup.string(),
   applicationCategory: Yup.string(),
   applierType: Yup.string(),
-  delegationFile: Yup.string(),
+/*   delegationFile: Yup.mixed().when('applierType', {
+    is: 'owner',
+    then: Yup.mixed().notRequired(),
+    otherwise: Yup.string(),
+  }), */
   applierProfilePicture: Yup.string(),
   educationId: Yup.array().of(Yup.string()),
   experienceIdId: Yup.array().of(Yup.string()),
@@ -48,7 +50,6 @@ const StepperComponent = () => {
   professionalLastName: Yup.string(),
   qualificationLevel: Yup.string(),
   professionalLicenseNumber: Yup.string(),
-  createdAt: Yup.date().default(() => new Date()),
 });
   
 
@@ -103,10 +104,10 @@ const StepperComponent = () => {
       title: "Step 1",
       content: (
         <Card>
-          <h1 className="text-xl font-bold mb-2">Step 1: Agree and Continue</h1>
+          <h1 className="text-sm font-bold mb-2">Step 1: Agree and Continue</h1>
           <hr className="mt-4 mb-4" />
           <div>
-            <h1 className="text-xl font-bold mb-2">Application Description</h1>
+            <h1 className="text-sm font-bold mb-2">Application Description</h1>
             <p>
               Applicants who want to get the service of New Registration of
               Professionals license by the Ethiopian Medical Authority: Submit
@@ -114,7 +115,7 @@ const StepperComponent = () => {
             </p>
           </div>
           <div>
-            <h1 className="text-xl font-bold mt-8 mb-2">Who Can Apply</h1>
+            <h1 className="text-sm font-bold mt-8 mb-2">Who Can Apply</h1>
             <p>
               Any construction Industry professional that works in the
               construction sector and professionals that fulfill the
@@ -184,6 +185,7 @@ const StepperComponent = () => {
             nameOfHealthFacility: "",
             facilityOwnerName: "",
             technicalLeaderFullName: "",
+            state:"",
             address: "",
             city: "",
             subCity: "",
@@ -194,7 +196,7 @@ const StepperComponent = () => {
             oldProfessionalLicenseNumber: "",
           }}
           validationSchema={StepTwoSchema}
-          onSubmit={async (values) => {
+          onSubmit={async (values: any) => {
             
             // Perform API call for Step 2
             // Replace the API call with your own implementation
@@ -208,7 +210,7 @@ const StepperComponent = () => {
             }
           }}
         >
-          {({ values, errors, touched }) => (
+          {({ values, errors, touched }:any) => (
 
             <><>
 
@@ -323,15 +325,8 @@ const StepperComponent = () => {
                                   <label htmlFor="file" className="block mb-2 text-sm font-medium text-gray-700">
                                     Upload File
                                   </label>
-                                  <input type="file" name="delegationFile" className="block mb-2 text-sm font-medium text-gray-700"/>
-                                 {/*  <Upload
-                                    accept=".jpg, .jpeg, .png, .gif, .pdf"
-                                    beforeUpload={() => false}
-                                    showUploadList={false}
-                                    onChange={handleFileChange}
-                                  >
-                                    <Button icon={<UploadOutlined />}>Choose File</Button>
-                                  </Upload> */}
+                                  <Field type="file" name="delegationFile" className="block mb-2 text-sm font-medium text-gray-700"/>
+                                   
                                   <span className="ml-2 text-gray-600" id="file-name">
                                     {fileName}
                                   </span>
@@ -447,10 +442,12 @@ const StepperComponent = () => {
                                     Name of Health Facility and Type of Service
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input
+                                  <Field
                                     type="text"
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
                                     name="nameOfHealthFacility"
-                                  ></Input>
+                                  />
                                   <ErrorMessage
                                     name="nameOfHealthFacility"
                                     component="div"
@@ -462,10 +459,12 @@ const StepperComponent = () => {
                                       Facility Owner Name
                                       <span className="text-red-400">*</span>
                                     </label>
-                                    <Input
+                                    <Field
                                       type="text"
                                       name="facilityOwnerName"
-                                    ></Input>
+                                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                    ></Field>
                                     <ErrorMessage
                                       name="facilityOwnerName"
                                       component="div"
@@ -477,13 +476,16 @@ const StepperComponent = () => {
                                     Technical Leader full Name
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input
+                                  <Field
                                     type="text"
                                     name="technicalLeaderFullName"
-                                  ></Input>
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                  ></Field>
                                   <ErrorMessage
                                     name="technicalLeaderFullName"
                                     component="div"
+
                                     className="text-red-500" />
                                 </div>
                                 <div className="mb-4">
@@ -491,10 +493,12 @@ const StepperComponent = () => {
                                     Qualification
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input
+                                  <Field
                                     type="text"
                                     name="qualificationLevel"
-                                  ></Input>
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                  ></Field>
                                   <ErrorMessage
                                     name="qualificationLevel"
                                     component="div"
@@ -507,7 +511,8 @@ const StepperComponent = () => {
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <div>
-                                    <Input type="text" name="address"></Input>
+                                    <Field type="text" name="address"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+></Field>
                                   </div>
                                   <ErrorMessage
                                     name="address"
@@ -519,7 +524,8 @@ const StepperComponent = () => {
                                     City
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input type="text" name="city"></Input>
+                                  <Field type="text" name="city"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+></Field>
                                   <ErrorMessage
                                     name="city"
                                     component="div"
@@ -527,10 +533,11 @@ const StepperComponent = () => {
                                 </div>
                                 <div className="mb-4">
                                   <label htmlFor="subCity">
-                                    SubCity
+                                    subCity
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input type="text" name="subCity"></Input>
+                                  <Field type="text"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+ name="subCity"></Field>
                                   <ErrorMessage
                                     name="subCity"
                                     component="div"
@@ -541,7 +548,8 @@ const StepperComponent = () => {
                                     Woreda
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input type="text" name="woreda"></Input>
+                                  <Field type="text"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+ name="woreda"></Field>
                                   <ErrorMessage
                                     name="woreda"
                                     component="div"
@@ -552,7 +560,8 @@ const StepperComponent = () => {
                                     House No.
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input type="text" name="houseNumber"></Input>
+                                  <Field type="text" name="houseNumber"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+></Field>
                                   <ErrorMessage
                                     name="houseNumber"
                                     component="div"
@@ -563,7 +572,8 @@ const StepperComponent = () => {
                                     Telephone No.
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input type="text" name="phone"></Input>
+                                  <Field type="text" name="phone"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+></Field>
                                   <ErrorMessage
                                     name="phone"
                                     component="div"
@@ -574,10 +584,12 @@ const StepperComponent = () => {
                                     Professional License Number
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input
+                                  <Field
                                     type="text"
                                     name="professionalLicenseNumber"
-                                  ></Input>
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                  ></Field>
                                   <ErrorMessage
                                     name="professionalLicenseNumber"
                                     component="div"
@@ -589,10 +601,12 @@ const StepperComponent = () => {
                                       Old  License Number
                                       <span className="text-red-400">*</span>
                                     </label>
-                                    <Input
+                                    <Field
                                       type="text"
                                       name="oldProfessionalLicenseNumber"
-                                    ></Input>
+                                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                    ></Field>
                                     <ErrorMessage
                                       name="oldProfessionalLicenseNumber"
                                       component="div"
@@ -617,10 +631,12 @@ const StepperComponent = () => {
                                    Owner Full Name
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input
+                                  <Field
                                     type="text"
                                     name="professionalName"
-                                  ></Input>
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                  ></Field>
                                   <ErrorMessage
                                     name="professionalName"
                                     component="div"
@@ -631,10 +647,12 @@ const StepperComponent = () => {
                                     Last Name
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Input
+                                  <Field
                                     type="text"
                                     name="professionalNameLastName"
-                                  ></Input>
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                  ></Field>
                                   <ErrorMessage
                                     name="professionalNameLastName"
                                     component="div"
@@ -666,7 +684,7 @@ const StepperComponent = () => {
         </Formik>
       ),
     },
-    {
+  /*   {
       title: "Step 3",
       content: (
         <Card>
@@ -678,7 +696,7 @@ const StepperComponent = () => {
 
         </Card>
       ),
-    },
+    }, */
   ];
 
   const handleNext = () => {
@@ -692,8 +710,7 @@ const StepperComponent = () => {
   return (
     <div>
       <Alert
-        className="m-2"
-        message="Note"
+        className="mb-2"
         description="The name you use on the application is going to be used on the license."
         type="warning"
         showIcon

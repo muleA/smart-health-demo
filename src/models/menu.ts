@@ -4,7 +4,7 @@ export type Menu = {
   name: string;
   icon?: any;
   path: string;
-  permissions?: string[];
+  permissions?: any[];
   child?: Menu[];
 };
 

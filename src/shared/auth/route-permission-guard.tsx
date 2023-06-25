@@ -9,12 +9,14 @@ interface ProtectedRouteProps {
 
 const RoutePermissionGuard = (props: ProtectedRouteProps): JSX.Element => {
   const { session } = useAuth();
+  console.log("session", session);
 
   // Get the user's permissions from the authentication session
   const userPermissions =
-    session?.userInfo?.Roles?.flatMap((role: { Permissions: any; }) => role?.Permissions ?? []).map(
-      (permission: { PermissionKey: any; }) => permission.PermissionKey,
+    session?.userInfo?.EmployeeRoles?.flatMap((role: any) =>
+      role?.role?.rolePermission?.map((permission: any) => permission.permissionName)
     ) ?? [];
+  console.log("auth perms", userPermissions);
 
   // Check if the user has the root permission, if so allow access
   if (userPermissions.includes(SYSTEM_ROOT_PERMISSION)) {
@@ -26,7 +28,7 @@ const RoutePermissionGuard = (props: ProtectedRouteProps): JSX.Element => {
     return <Navigate to="/*" replace />;
   }
 
-  // Allow access if the user has all the required permissions specified in the prop
+  // Allow access if the user has at least one of the required permissions specified in the prop
   return props.children;
 };
 

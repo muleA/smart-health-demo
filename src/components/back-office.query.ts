@@ -26,7 +26,7 @@ const backOfficeApi = apiSlice.injectEndpoints({
     }),
     getApplications: builder.query<any, void>({
       query: () => ({
-        url: backOfficeEndPoints.getLicenses,
+        url: backOfficeEndPoints.getApplications,
         method: "GET",
       }),
       providesTags: ["user"],

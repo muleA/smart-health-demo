@@ -1,15 +1,13 @@
 import * as Icon from "@ant-design/icons";
 import { Menu } from "../../models/menu";
+import { ApproveApplication, RejectApplication } from "./permissions-list";
 export const menus: Menu[] = [
-    {
-        name: "Home",
-        path: "/home",
-        icon: Icon.HomeOutlined,
-    },
+ 
     {
         name: "Dashboard",
         path: "/dashboard",
         icon: Icon.DashboardOutlined,
+        permissions:RejectApplication
     },
     {
         name: "Roles",

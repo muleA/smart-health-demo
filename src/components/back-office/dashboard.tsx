@@ -1,6 +1,9 @@
 import { Card, Spin } from "antd";
 import Chart from "./chart";
 import SimplePieChart from "./pie-chart";
+import {  useGetUsersQuery } from "../back-office.query";
+import { useGetLicenseByStatusQuery } from "../portal.query";
+import { useGetEmployeesQuery } from "./employee/employee.query";
 export function Dashboard() {
   const data = [
     { name: "Data 1", value: 10 },
@@ -9,19 +12,22 @@ export function Dashboard() {
     { name: "Data 4", value: 15 },
     { name: "Data 5", value: 25 },
   ];
-
-
+  const { data: users, isLoading } = useGetUsersQuery();
+  const {data:approvedLicense,isLoading:approvedLicenseLoading}=useGetLicenseByStatusQuery("APPROVED")
+ const {data:submittedLicese,isLoading:submittedLicenseLoading}=useGetLicenseByStatusQuery("SUBMITED")
+ const {data:REJECTEDLicese,isLoading:REJECTEDLicenseLoading}=useGetLicenseByStatusQuery("REJECTED")
+const {data:employees,isLoading:employeeLoading}=useGetEmployeesQuery()
 
   return (
     <>
-     {/*  {isLoad ? (
+     {isLoading||approvedLicenseLoading|| submittedLicenseLoading||REJECTEDLicenseLoading||employeeLoading? (
         <>
                 <div className="text-center h-24 mx-auto">
 
           <Spin size="large" />
           </div>
         </>
-      ) : ( */}
+      ) : (
         <>
           <Card className="text-center mx-auto">
             <div className="grid grid-cols-1 gap-4 px-4  sm:grid-cols-4 sm:px-8">
@@ -44,9 +50,9 @@ export function Dashboard() {
                 </div>
                 <div className="px-4 text-gray-700">
                   <h3 className="text-sm tracking-wider">
-                    Total Registered Users
+                    Total Users
                   </h3>
-                  <p className="text-3xl">{12}</p>
+                  <p className="text-3xl">{users?.length}</p>
                 </div>
               </div>
               <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
@@ -58,7 +64,7 @@ export function Dashboard() {
                 <div className="px-4 text-gray-700">
                   <h3 className="text-sm tracking-wider">Approved Applications</h3>
                   <p className="text-3xl">
-                    {123}
+                    {approvedLicense?.length}
                   </p>
                 </div>
               </div>
@@ -69,8 +75,8 @@ export function Dashboard() {
                   </div>
                 </div>
                 <div className="px-4 text-gray-700">
-                  <h3 className="text-sm tracking-wider">Pending Applications</h3>
-                  <p className="text-3xl">{12344}</p>
+                  <h3 className="text-sm tracking-wider">Submitted Applications</h3>
+                  <p className="text-3xl">{submittedLicese?.length}</p>
                 </div>
               </div>
               <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
@@ -92,19 +98,20 @@ export function Dashboard() {
                 </div>
                 <div className="px-4 text-gray-700">
                   <h3 className="text-sm tracking-wider">Rejected Applications</h3>
-                  <p className="text-3xl">{1234}</p>
+                  <p className="text-3xl">{REJECTEDLicese?.length}</p>
                 </div>
               </div>
             </div>
+            <div className=" mt-2 flex mx-auto p-4 bg-gay-50">
+            <Chart data={data} />
+            <SimplePieChart totalRestaurant={approvedLicense?.length} 
+            totalUser={users?.length} totalDriver={employees?.length} totalOrder={submittedLicese?.length} />
+          </div>
           </Card>
 
-          <div className="container mt-2 flex mx-auto p-4 bg-gay-50">
-            <Chart data={data} />
-            <SimplePieChart totalRestaurant={34} 
-            totalUser={12} totalDriver={15} totalOrder={17} />
-          </div>
+     
         </>
-      
+      )}
     </>
   );
 }
