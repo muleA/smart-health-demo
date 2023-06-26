@@ -48,7 +48,7 @@ export const UserApplicationsDetail = ({ id }: any) => {
     setAppCat(cat)
   };
   const handleModalOk = async (values: any) => {
-    console.log(values);
+    console.log('values when the ok modal to approve or reject is clicked ',values);
     try {
       // Call API using Axios
       const response = await axios.post(
