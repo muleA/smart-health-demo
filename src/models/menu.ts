@@ -1,4 +1,4 @@
-import { SYSTEM_ROOT_PERMISSION } from "./permission";
+import { Permission, SYSTEM_ROOT_PERMISSION } from "./permission";
 
 export type Menu = {
   name: string;
@@ -9,6 +9,9 @@ export type Menu = {
 };
 
 export function filterMenusByPermissions(menus: Menu[], permissionKeys: string[]): Menu[] {
+  console.log("menus",menus)
+  console.log("permissions",permissionKeys)
+
   return menus
     .filter((menu) => {
       // If the user has SYSTEM_ROOT permission, include the menu
@@ -17,7 +20,7 @@ export function filterMenusByPermissions(menus: Menu[], permissionKeys: string[]
       }
       // If the menu has permissions, check if the user has at least one of them
       if (menu.permissions) {
-        return menu.permissions.some((permission) => permissionKeys.includes(permission));
+        return menu.permissions.every((permission) => permissionKeys.includes(permission));
       }
       // If the menu doesn't have any permissions, include it
       return true;

@@ -12,13 +12,17 @@ const Sidebar = (props:{menus:Menu[]}): JSX.Element => {
   const [visibleMenu, setVisibleMenu] = useState<Menu[]>([]);
 
   const permittedMenu = useMemo(() => {
-    const userPermissions =
-      session?.userInfo?.Roles?.flatMap((role: { Permissions: any; }) => role?.Permissions ?? []).map(
-        (permission: { PermissionKey: any; }) => permission.PermissionKey,
-      ) ?? [];
 
+const userPermissions =
+    session?.userInfo?.EmployeeRoles?.flatMap((role: { role: { rolePermission: any; }; }) => role?.role?.rolePermission ?? []).flat().map(
+        (permission: { permissionName: any; }) => permission.permissionName,
+    ) ?? [];
+
+console.log(userPermissions);
+
+    console.log("userPermissions",userPermissions)
     return filterMenusByPermissions(props?.menus, userPermissions);
-  }, [session?.userInfo?.Roles]);
+  }, [props?.menus, session?.userInfo?.EmployeeRoles]);
 
   useEffect(() => {
     setVisibleMenu(permittedMenu);

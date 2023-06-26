@@ -1,9 +1,26 @@
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 
 const Chart = ({ data }:any) => {
-  const chartData = [{name:12,value:34},{name:1,value:4},{name:13,value:24},{name:12,value:54},{name:2,value:24},]
-  
+  const processDataForBarChart = (inputData: Array<any>) => {
+
+  let processedData: {[key: string]: number} = {};
+
+  data?.forEach((item: { status: string | number; }) => {
+    if (processedData[item.status]) {
+      processedData[item.status]++;
+    } else {
+      processedData[item.status] = 1;
+    }
+  });
+
+  return Object.entries(processedData)?.map(([statusName, count]) => ({
+    name: statusName,
+    value: count
+  }));
+};
+
+const chartData = processDataForBarChart(data);  
 
     return (
       <div className="w-full">
@@ -16,16 +33,7 @@ const Chart = ({ data }:any) => {
           <Legend />
           <Bar dataKey="value" fill="#8884d8" />
         </BarChart>
-  
-        <h2 className="text-xl  font-bold mt-8 mb-4">Line Chart</h2>
-   {/*      <LineChart width={500} height={300} data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        </LineChart>  */}
+ 
 
       </div>
     );

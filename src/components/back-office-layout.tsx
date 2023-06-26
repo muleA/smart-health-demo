@@ -1,20 +1,15 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import {
-  CarOutlined,
   CaretDownOutlined,
-  DashboardOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  SettingOutlined,
-  ShopOutlined,
-  SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Dropdown, Layout, Menu } from "antd";
 import React, { useState } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "../shared/auth/use-auth";
-import HomePage from "../pages/home";
 import { User } from "../pages/back-office/user";
 import { UserDetail } from "./back-office/user/detail";
 import Sidebar from "../shared/shell/sidebar";
@@ -34,17 +29,25 @@ import { ArchivedUsers } from "./back-office/archives/user/archived-user";
 import { ArchivedUserDetail } from "./back-office/archives/user/archived-user-detail";
 import { ArchivedEmployees } from "./back-office/archives/employee/archived-employees";
 import { ArchivedEmployeeDetails } from "./back-office/archives/employee/archived-employee-detail";
-import { ArchivedLicense } from "./back-office/archives/license/archived-license";
-import ArchivedLicenseDetail from "./back-office/archives/license/archived-license-detail.";
 import { ArchivedApplication } from "./back-office/archives/application/archived-application";
 import ArchivedApplicationDetail from "./back-office/archives/application/archived-application-detail";
 import { BackOfficeApplications } from "./back-office/application/application";
 import SideBarLogo from "../shared/sidebar-logo";
-import * as Icon from '@ant-design/icons'
+import * as Icon from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import {
+  ViewApplications,
+  ViewArchives,
+  ViewDashboard,
+  ViewEmployee,
+  ViewLicense,
+  ViewRole,
+  ViewUser,
+  viewPermission,
+} from "../shared/shell/permissions-list";
+import RoutePermissionGuard from "../shared/auth/route-permission-guard";
 
 const { Sider, Content, Header, Footer } = Layout;
-const { SubMenu } = Menu;
 
 const BackOfficeLayoutWrapper = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -52,7 +55,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
   const { t } = useTranslation();
 
   const handleLogOut = (): void => {
-    logOut(); 
+    logOut();
   };
   const toggle = () => {
     setCollapsed((prev) => !prev);
@@ -85,48 +88,54 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
     month: "short",
   })} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
   const { session } = useAuth();
-  console.log("session", session?.userInfo?.userName);
-   const menus= [
-    
-      {
-          name: t("dashboard"),
-          path: "/dashboard",
-          icon: Icon.DashboardOutlined,
-      },
-      {
-          name: t("role"),
-          path: "/roles",
-          icon: Icon.UsergroupAddOutlined,
-      },
-      {
-        name: t("permission"),
-        path: "/permissions",
-        icon: Icon.KeyOutlined,
+  const menus = [
+    {
+      name: t("Dashboard"),
+      path: "/dashboard",
+      icon: Icon.DashboardOutlined,
+      permissions: ViewDashboard,
     },
-      {
-          name: t("users"),
-          path: "/users",
-          icon: Icon.UserOutlined,
-      },
-      {
-          name: t("employee"),
-          path: "/employees",
-          icon: Icon.TeamOutlined,
-      },
-      {
-          name: t("application"),
-          path: "/applications",
-          icon: Icon.AppstoreOutlined,
-      },
-      {
-          name: "License",
-          path: "/licenses",
-          icon: Icon.BookOutlined,
-      },
+    {
+      name: t("Role"),
+      path: "/roles",
+      icon: Icon.UsergroupAddOutlined,
+      permissions: ViewRole,
+    },
+    {
+      name: t("Permission"),
+      path: "/permissions",
+      icon: Icon.KeyOutlined,
+      permissions: viewPermission,
+    },
+    {
+      name: t("Users"),
+      path: "/users",
+      icon: Icon.UserOutlined,
+      permissions: ViewUser,
+    },
+    {
+      name: t("Employee"),
+      path: "/employees",
+      icon: Icon.TeamOutlined,
+      permissions: ViewEmployee,
+    },
+    {
+      name: t("Application"),
+      path: "/applications",
+      icon: Icon.AppstoreOutlined,
+      permissions: ViewApplications,
+    },
+    {
+      name: "License",
+      path: "/licenses",
+      icon: Icon.BookOutlined,
+      permissions: ViewLicense,
+    },
     {
       name: "Archives",
       path: "/archives",
       icon: Icon.CiOutlined,
+      permissions: ViewArchives,
       child: [
         {
           name: "Users",
@@ -143,18 +152,10 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           path: "/archived-applications",
           icon: Icon.AppstoreOutlined,
         },
-        {
-          name: "license",
-          path: "/archived-license",
-          icon: Icon.BookOutlined,
-        },
-  
       ],
-    
     },
-  
   ];
-  
+
   return (
     <div className="flex bg-gray-200 text-sm">
       <Sider
@@ -166,12 +167,15 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
         theme="light"
       >
         <div className="flex flex-col  justify-center items-center py-4">
-       <SideBarLogo/>
+          <SideBarLogo />
         </div>
         <Sidebar menus={menus} />
       </Sider>
 
-      <div className="flex-1 bg-white bg-gray-100" style={{ minHeight: "100vh" }}>
+      <div
+        className="flex-1 bg-white bg-gray-100"
+        style={{ minHeight: "100vh" }}
+      >
         {/*  */}
         <Header className="bg-gray-200  top-0 z-10 flex justify-between items-center">
           <div className="flex items-center">
@@ -184,7 +188,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
               }
             )}
           </div>
-          <div className="flex">
+          <div className="flex space-x-2">
             <Dropdown overlay={accountMenu} trigger={["click"]}>
               <a
                 className="ant-dropdown-link text-primary"
@@ -196,19 +200,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </Dropdown>
             <div className="text-primary"> {session?.userInfo?.firstName}</div>
             <div className="text-primary"> {session?.userInfo?.middleName}</div>
-
           </div>
-
-          {/*  <div className="flex items-center">
-            <Dropdown menu={accountMenu}>
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  <Avatar />
-                </Space>
-              </a>
-            </Dropdown>
-            {session?.userInfo?.data?.data?.user?.lastName}
-          </div> */}
         </Header>
         {/*  */} {/* Body */}
         <Content className="py-2 px-4">
@@ -228,43 +220,175 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           <div className="py-2 min-h-screen">
             {children}
             <Routes>
-              <Route path="/employees" element={<EmployeesPage />} />
+              <Route
+                path="/employees"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewEmployee}>
+                    <EmployeesPage />
+                  </RoutePermissionGuard>
+                }
+              />
               <Route
                 path="employees/detail/:id"
-                element={<EmployeeDetailsPage />}
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewEmployee}>
+                    <EmployeeDetailsPage />
+                  </RoutePermissionGuard>
+                }
               />
-              <Route path="employees/new" element={<NewEmployee />} />
-              <Route path="/roles" element={<Roles />} />
-              <Route path="roles/detail/:id" element={<DetailRole />} />
-              <Route path="roles/new" element={<NewRole />} />
-              <Route path="/licenses" element={<License />} />
-              <Route path="license/detail/:id" element={<DetailLicensePage />} />
-              <Route path="/applications" element={<BackOfficeApplications />} />
-              <Route path="application/detail/:id" element={<ApplicationDetailPage />} />
               <Route
-                path="permissions/detail/:id"
-                element={<DetailPermissions />}
+                path="/employees/new"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewEmployee}>
+                    <NewEmployee />
+                  </RoutePermissionGuard>
+                }
               />
-              <Route path="permissions/new" element={<NewPermission />} />
-              <Route path="/permissions" element={<PermissionLists />} />
-              <Route path="/users" element={
+              <Route
+                path="/roles"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewRole}>
+                    <Roles />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/roles/detail/:id"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewRole}>
+                    <DetailRole />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/roles/new"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewRole}>
+                    <NewRole />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/licenses"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewLicense}>
+                    <License />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/licenses/detail/:id"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewLicense}>
+                    <DetailLicensePage />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/applications"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewApplications}>
+                    <BackOfficeApplications />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/applications/detail/:id"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewApplications}>
+                    <ApplicationDetailPage />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/permissions/detail/:id"
+                element={
+                  <RoutePermissionGuard requiredPermissions={viewPermission}>
+                    <DetailPermissions />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/permissions/new"
+                element={
+                  <RoutePermissionGuard requiredPermissions={viewPermission}>
+                    <NewPermission />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/permissions"
+                element={
+                  <RoutePermissionGuard requiredPermissions={viewPermission}>
+                    <PermissionLists />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/users"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewUser}>
+                    <User />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/users/detail/:id"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewUser}>
+                    <UserDetail />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/archives/archived-users"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewUser}>
+                    <ArchivedUsers />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="archived-users/detail/:id"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewUser}>
+                    <ArchivedUserDetail />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/archives/archived-employees"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewEmployee}>
+                    <ArchivedEmployees />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="archived-employees/detail/:id"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewEmployee}>
+                    <ArchivedEmployeeDetails />
+                  </RoutePermissionGuard>
+                }
+              />
 
-              <User />
-              
-              } />
-              <Route path="users/detail/:id" element={<UserDetail />} />
-              <Route path="/archives/archived-users" element={<ArchivedUsers />} />
-            <Route path="archived-users/detail/:id" element={<ArchivedUserDetail />} />
-            <Route path="/archives/archived-employees" element={<ArchivedEmployees />} />
-            <Route path="archived-employees/detail/:id" element={<ArchivedEmployeeDetails />} />
-            
-            <Route path="/archives/archived-license" element={<ArchivedLicense />} />
-            <Route path="archived-license/detail/:id" element={<ArchivedLicenseDetail />} />
-            <Route path="/archives/archived-applications" element={<ArchivedApplication />} />
-            <Route path="archived-applications/detail/:id" element={<ArchivedApplicationDetail />} />
-
-
-
+              <Route
+                path="/archives/archived-applications"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewApplications}>
+                    <ArchivedApplication />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="archived-applications/detail/:id"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewApplications}>
+                    <ArchivedApplicationDetail />
+                  </RoutePermissionGuard>
+                }
+              />
               {/* Add more routes here */}
             </Routes>
           </div>

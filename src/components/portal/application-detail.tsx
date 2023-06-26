@@ -81,7 +81,7 @@ const{data:educations,isLoading:educationLaoding}=useGetEducationByIdQuery(sessi
 
               <div className="flex justify-between">
 
-{ApplicationDetail?.status==='APPROVE'?(
+{ApplicationDetail?.status==='APPROVED'?(
 <>
 <Button className="text-primary flex items-center" onClick={handleViewCertificate}>
 

@@ -5,6 +5,8 @@ import CollapsibleCard from "../../../shared/card";
 import { RoleAssignment } from "./role-asssignment";
 import { Button } from "antd";
 import { PlusCircleFilled } from "@ant-design/icons";
+import IsPermitted from "../../../shared/auth/is-permitted";
+import { AssignRole } from "../../../shared/shell/permissions-list";
 export  function EmployeeDetails(){
 const navigate=useNavigate();
 const {id}=useParams()
@@ -17,6 +19,7 @@ return(<>
 <UserForm mode={"update"} id={id} />
 
 </CollapsibleCard>
+<IsPermitted requiredPermissions={AssignRole}>
 <CollapsibleCard title={"Role Assignment"} 
     subTitle="Assign Role to this role"
     customAction={
@@ -31,6 +34,10 @@ return(<>
     }
     >
 <RoleAssignment tagAssignmentModalOpened={open} setTagAssignmentModalOpened={setOpen} tid={undefined}/>
-      </CollapsibleCard></>
+      </CollapsibleCard>
+      </IsPermitted>
+
+      </>
+
     
 )}

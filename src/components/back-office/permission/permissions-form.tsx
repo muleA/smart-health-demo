@@ -7,6 +7,8 @@ import { DeleteFilled, SaveFilled } from '@ant-design/icons';
 import { Permission } from '../../../models/permission';
 import { Edit } from '@mui/icons-material';
 import { useCreatePermissionMutation, useDeletePermissionMutation, useUpdatePermissionMutation } from './permission.query';
+import IsPermitted from '../../../shared/auth/is-permitted';
+import { CreatePermission } from '../../../shared/shell/permissions-list';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -91,7 +93,7 @@ const {id}=useParams()
 
           <div className='mb-2'>
             <label htmlFor="key">Key</label>
-            <Field type="text" id="key" name="key" as={Input} />
+            <Field type="text" id="key" disabled={props?.mode==='update'} name="key" as={Input} />
             <ErrorMessage name="key" component="div" className="error" />
           </div>
 
@@ -127,9 +129,12 @@ const {id}=useParams()
             )}
 
             {props.mode === "update" && (
-              <Button type="primary" icon={<DeleteFilled/>} loading={deleteLoading} onClick={handleDelete} danger className='bg-danger text-white' htmlType="button" disabled={isSubmitting}>
+              <IsPermitted requiredPermissions={CreatePermission}>
+    <Button type="primary" icon={<DeleteFilled/>} loading={deleteLoading} onClick={handleDelete} danger className='bg-danger text-white' htmlType="button" disabled={isSubmitting}>
                 Delete 
               </Button>
+              </IsPermitted>
+          
             )}
           </div>
         </Form>

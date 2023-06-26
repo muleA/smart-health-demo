@@ -5,8 +5,8 @@ export default function SideBarLogo(){
             data-name="Group 77298"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
-            width="78.783"
-            height="18"
+            width="408.783"
+            height="30"
             viewBox="0 0 78.783 70"
           >
             <defs>

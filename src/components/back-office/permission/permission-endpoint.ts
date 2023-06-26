@@ -9,5 +9,5 @@ export const permissionEndPoints = {
   archivePermission: `${baseUrl}permission/archive-permission`,
   restorePermission: `${baseUrl}permission/restore-permission`,
   deletePermission: `${baseUrl}permission/delete-permission`,
-  updatePermission: `${baseUrl}permission/update-role`,  
+  updatePermission: `${baseUrl}permission/update-permission`,  
 };

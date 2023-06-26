@@ -2,16 +2,16 @@ import { useNavigate } from "react-router-dom";
 import React, { useMemo } from "react";
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_ColumnDef } from 'material-react-table';
-import { Button, IconButton, Toolbar, Typography } from '@mui/material';
-import { AddCircleOutlineOutlined, ArrowRightAlt } from '@mui/icons-material';
+import { IconButton, Typography } from '@mui/material';
+import { ArrowRightAlt } from '@mui/icons-material';
 import timeSince from "../../../../shared/utilities/time-since";
 import { User } from "../../../../models/user";
-import { useGetUsersQuery } from "../../../back-office.query";
+import { useGetArchivedUserQuery } from "../../../back-office.query";
 import { DefaultPage } from "../../../../shared/default-page";
 
 export function ArchivedUsers() {
   const navigate = useNavigate();
-  const { data: users, isLoading, isSuccess, isError, isFetching } = useGetUsersQuery();
+  const { data: users, isLoading, isSuccess, isError, isFetching } = useGetArchivedUserQuery();
 
 
   const handleRowClick = (row: any) => {

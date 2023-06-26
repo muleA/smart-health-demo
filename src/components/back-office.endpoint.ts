@@ -11,5 +11,7 @@ export const backOfficeEndPoints = {
   getLicenses: `${baseUrl}user/get-licenses`,
   archiveUser: `${baseUrl}user/create-user`,
   getApplicationDetailByUserId: `${baseUrl}user/get-application-by-userId`,
-
+getArchivedUser:`${baseUrl}user/get-archived-users`,
+getArchivedApplication:`${baseUrl}user/get-archived-application`,
+getArchivedEmployees:`${baseUrl}employees/get-archived-employees`
 };

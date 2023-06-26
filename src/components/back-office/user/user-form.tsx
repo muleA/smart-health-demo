@@ -86,11 +86,11 @@ const navigate=useNavigate()
 
   console.log("useriNfo",userInfo)
   // Fetch user details when in "update" mode
-  /*  useEffect(() => {
+   useEffect(() => {
     if (props.mode === 'update' && props.id) {
       trigger(props.id);
     }
-  }, [props.mode, props.id, trigger]); */
+  }, [props.mode, props.id, trigger]); 
 
   // Update form data when user details are fetched
    useEffect(() => {

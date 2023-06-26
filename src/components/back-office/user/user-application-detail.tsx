@@ -16,6 +16,8 @@ import axios from "axios";
 import { baseUrl } from "../../../configs/config";
 import { DownloadOutlined } from "@ant-design/icons";
 import Certificate from "../certificate2";
+import IsPermitted from "../../../shared/auth/is-permitted";
+import { ApproveApplication } from "../../../shared/shell/permissions-list";
 
 export const UserApplicationsDetail = ({ id }: any) => {
   const { data, isLoading } = useGetApplicationDetailByUserIdQuery(id);
@@ -131,9 +133,11 @@ export const UserApplicationsDetail = ({ id }: any) => {
                       </>
                     ) : null}
 
+<IsPermitted requiredPermissions={ApproveApplication}>
 
 {
    application.status!=='APPROVED'?(<>
+  
        <Button
                           className="bg-red-500 text-white"
                           onClick={() => handleRejectClick(application.id)}
@@ -154,6 +158,8 @@ export const UserApplicationsDetail = ({ id }: any) => {
                         </Button>
                       </>
                     ) : null}
+</IsPermitted>
+
                   </div>
                 </Panel>
               ))}

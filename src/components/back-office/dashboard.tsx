@@ -1,22 +1,17 @@
 import { Card, Spin } from "antd";
 import Chart from "./chart";
 import SimplePieChart from "./pie-chart";
-import {  useGetUsersQuery } from "../back-office.query";
+import {  useGetApplicationsQuery, useGetUsersQuery } from "../back-office.query";
 import { useGetLicenseByStatusQuery } from "../portal.query";
 import { useGetEmployeesQuery } from "./employee/employee.query";
 export function Dashboard() {
-  const data = [
-    { name: "Data 1", value: 10 },
-    { name: "Data 2", value: 20 },
-    { name: "Data 3", value: 30 },
-    { name: "Data 4", value: 15 },
-    { name: "Data 5", value: 25 },
-  ];
+ 
   const { data: users, isLoading } = useGetUsersQuery();
   const {data:approvedLicense,isLoading:approvedLicenseLoading}=useGetLicenseByStatusQuery("APPROVED")
  const {data:submittedLicese,isLoading:submittedLicenseLoading}=useGetLicenseByStatusQuery("SUBMITED")
  const {data:REJECTEDLicese,isLoading:REJECTEDLicenseLoading}=useGetLicenseByStatusQuery("REJECTED")
 const {data:employees,isLoading:employeeLoading}=useGetEmployeesQuery()
+const {data:applications,isLoading:applicationsLoading}=useGetApplicationsQuery()
 
   return (
     <>
@@ -103,7 +98,7 @@ const {data:employees,isLoading:employeeLoading}=useGetEmployeesQuery()
               </div>
             </div>
             <div className=" mt-2 flex mx-auto p-4 bg-gay-50">
-            <Chart data={data} />
+            <Chart data={applications} />
             <SimplePieChart totalRestaurant={approvedLicense?.length} 
             totalUser={users?.length} totalDriver={employees?.length} totalOrder={submittedLicese?.length} />
           </div>

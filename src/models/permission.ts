@@ -1,5 +1,5 @@
 
-export const SYSTEM_ROOT_PERMISSION = "yayasoles@gmail.com";
+export const SYSTEM_ROOT_PERMISSION = "SYSTEM_ROOT";
 
 interface PermissionProps {
    Id: string;

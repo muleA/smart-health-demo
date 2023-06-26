@@ -35,7 +35,7 @@ const roleApi = apiSlice.injectEndpoints({
     }),
     changeStatus: builder.mutation<any, any>({
       query: (newRole) => ({
-        url: `${licenseEndPoints.changeLicenseStatus}/${newRole.userId}`,
+        url: `${licenseEndPoints.changeLicenseStatus}/${newRole.userId}/${newRole.status}`,
         method: "POST",
         data: newRole,
       }),
