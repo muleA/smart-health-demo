@@ -19,13 +19,14 @@ import Certificate from "../certificate2";
 import IsPermitted from "../../../shared/auth/is-permitted";
 import { ApproveApplication } from "../../../shared/shell/permissions-list";
 import { Session } from "inspector";
+import { useAuth } from "../../../shared/auth/use-auth";
 
 export const UserApplicationsDetail = ({ id }: any) => {
   // console.log('the Id sent as props is ',Session)
   const { data, isLoading } = useGetApplicationDetailByUserIdQuery(id);
   const { Panel } = Collapse;
   const { Text } = Typography;
-
+const {session}=useAuth()
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [appCat, setAppCat] = useState("");
 
@@ -58,6 +59,7 @@ export const UserApplicationsDetail = ({ id }: any) => {
           userId: id?.toString(),
           validFrom: new Date(),
           validTo: new Date("6/21/2025"),
+          issuedBy:session?.userInfo?.userId,
           status: rejectClicked ? "REJECTED" : "APPROVED",
         }
       );
@@ -135,10 +137,10 @@ export const UserApplicationsDetail = ({ id }: any) => {
                       </>
                     ) : null}
 
-<IsPermitted requiredPermissions={ApproveApplication}>
-
+{/* <IsPermitted requiredPermissions={ChangeLicenseStatus}>
+ */}
 {
-   application.status!=='APPROVED'?(<>
+   application.status==='APPROVED'?(<>
   
        <Button
                           className="bg-red-500 text-white"
@@ -160,8 +162,8 @@ export const UserApplicationsDetail = ({ id }: any) => {
                         </Button>
                       </>
                     ) : null}
-</IsPermitted>
-
+{/* </IsPermitted>
+ */}
                   </div>
                 </Panel>
               ))}

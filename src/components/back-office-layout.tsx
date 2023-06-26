@@ -46,6 +46,7 @@ import {
   viewPermission,
 } from "../shared/shell/permissions-list";
 import RoutePermissionGuard from "../shared/auth/route-permission-guard";
+import LicenseDetail from "./back-office/license/detail.";
 
 const { Sider, Content, Header, Footer } = Layout;
 
@@ -280,7 +281,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 path="/licenses/detail/:id"
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewLicense}>
-                    <DetailLicensePage />
+                    <LicenseDetail />
                   </RoutePermissionGuard>
                 }
               />

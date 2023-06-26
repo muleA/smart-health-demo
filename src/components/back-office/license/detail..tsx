@@ -7,7 +7,7 @@ import { useLazyGetLicenseByApplicationIdQuery } from '../../portal/Home/home-qu
 import { useLazyGetUserByIdQuery } from '../../back-office.query';
 import { ChangeLicenseStatus } from '../../../shared/shell/permissions-list';
 import IsPermitted from '../../../shared/auth/is-permitted';
-function DetailLicense() {
+function LicenseDetail() {
   const {id}= useParams();
   const { Option } = Select;
 
@@ -102,12 +102,12 @@ console.log(err)
       </table>
     </div>
   </div>
-  <IsPermitted requiredPermissions={ChangeLicenseStatus}>
-
+{/*   <IsPermitted requiredPermissions={ChangeLicenseStatus}>
+ */}
        <Button className='bg-primary text-white' onClick={handleApproveClick} >Change Status</Button>
        <Button type='primary' loading={archiving} onClick={handleArchive} className='bg-red-400 ml-10  text-white'>Archive</Button>
-       </IsPermitted>
-
+{/*        </IsPermitted>
+ */}
       
       </Card>
     </CollapsibleCard>
@@ -144,4 +144,4 @@ console.log(err)
   );
 }
 
-export default DetailLicense;
+export default LicenseDetail;
