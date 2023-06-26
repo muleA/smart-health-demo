@@ -120,6 +120,8 @@ const{data:educations,isLoading:educationLaoding}=useGetEducationByIdQuery(sessi
             <td className="px-4 py-2 font-bold">Applier Type</td>
             <td className="px-8 py-2">{ApplicationDetail?.applierType}</td>
           </tr>
+          {ApplicationDetail.applicationCategory!=="HealthProfessional"?
+          (<>
           <tr className="border-b border-gray-200">
             <td className="px-4 py-2 font-bold">ProfessionalName</td>
             <td className="px-8 py-2">{ApplicationDetail?.professionalName} {ApplicationDetail?.professionalNameLastName}</td>
@@ -158,7 +160,7 @@ const{data:educations,isLoading:educationLaoding}=useGetEducationByIdQuery(sessi
           <tr className="border-b border-gray-200">
             <td className="px-4 py-2 font-bold">House Number</td>
             <td className="px-8 py-2">{ApplicationDetail?.houseNumber}</td>
-          </tr>
+          </tr></>):null}
         </tbody>
       </table>
     </div>

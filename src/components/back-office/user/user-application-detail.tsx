@@ -18,8 +18,10 @@ import { DownloadOutlined } from "@ant-design/icons";
 import Certificate from "../certificate2";
 import IsPermitted from "../../../shared/auth/is-permitted";
 import { ApproveApplication } from "../../../shared/shell/permissions-list";
+import { Session } from "inspector";
 
 export const UserApplicationsDetail = ({ id }: any) => {
+  // console.log('the Id sent as props is ',Session)
   const { data, isLoading } = useGetApplicationDetailByUserIdQuery(id);
   const { Panel } = Collapse;
   const { Text } = Typography;

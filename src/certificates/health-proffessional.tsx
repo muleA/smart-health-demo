@@ -24,7 +24,7 @@ return (
             </div>
             </div>
             <div className="right-header mr-0">
-              <p>የምዝገባ ቁጥር SEPHO=297/2015</p>
+              <p>የምዝገባ ቁጥር SEPHO={licenseInfo.id}/2015</p>
               <p>IDNo:34088</p>
               <p>RPL=01</p>
             </div>
