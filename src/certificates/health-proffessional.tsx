@@ -77,7 +77,7 @@ const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) =>
               <p>The holder is required to notify as soon as the certificate is lost or missed</p>
               <p>This Certificate shall Be renewed every three year</p>
               <p className='user-response'>Emaill proflisence@gmail.com</p>
-              <p>ISSUED BY:       {`${userInfo?.firstName} ${userInfo?.middleName}`}
+              <p>ISSUED BY:       {`${issuedByInfo?.firstName} ${userInfo?.middleName}`}
               </p>
               <div className="imagePosition2">
                 <img src={require("../assets/images/stamp.png")} alt="stamp" width="170" />

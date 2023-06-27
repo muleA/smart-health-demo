@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
 import { Button, Modal } from "antd";
 import { exportComponentAsPNG } from "react-component-export-image";
-import Certificate1 from "../../certificates/health-proffessional";
+// import Certificate1 from "../../certificates/health-proffessional";
 import GenerateCertificate3 from "../../shared/generate-certificate3";
 import GenerateCertificate4 from "../../shared/generate-certificate4";
 import GenerateCertificate5 from "../../shared/generate-certificate5";
 import { useGetUserByIdQuery } from "../portal.query";
+import Certificate1 from "../../certificates/health-proffessional";
 
 const CertificateLicense = (props: { licenseInfo: any, ApplicationlicenseInfo: any, handleModalClose: ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined, modalVisible: boolean | undefined }) => {
   //  console.log("license info test",props?.licenseInfo)
