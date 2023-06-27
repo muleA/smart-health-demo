@@ -25,7 +25,7 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
               </div>
               </div>
               <div className="right-header border">
-                <p> ቁጥር ጤ/ተ/ባ </p>
+                <p> ቁጥር ={ApplicationlicenseInfo?.license?.licenseNumber} </p>
                 <p>ቅን {new Date().toDateString()}</p>
               </div>
             

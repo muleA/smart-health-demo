@@ -21,7 +21,7 @@ import { useAuth } from "../../shared/auth/use-auth";
 const ApplicationDetail = () => {
   const { id } = useParams();
   const { data: ApplicationDetail, isLoading } = useGetApplicationDetailsQuery(id ?? "");
-  const { data: LicenseDetail,isLoading:gettingLicenseisLoading } = useGetLicenseByApplicationIdQuery(id ?? "");
+  const { data: LicenseDetail, isLoading: gettingLicenseisLoading } = useGetLicenseByApplicationIdQuery(id ?? "");
   const [archiveApp, { isLoading: applicationArchiving }] = useArchiveApplicationMutation()
   console.log("LicenseDetail", LicenseDetail);
   const [modalVisible, setModalVisible] = useState(false);
@@ -121,45 +121,47 @@ const ApplicationDetail = () => {
                         <td className="px-4 py-2 font-bold">Applier Type</td>
                         <td className="px-8 py-2">{ApplicationDetail?.applierType}</td>
                       </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="px-4 py-2 font-bold">ProfessionalName</td>
-                        <td className="px-8 py-2">{ApplicationDetail?.professionalName} {ApplicationDetail?.professionalNameLastName}</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="px-4 py-2 font-bold">Phone Number</td>
-                        <td className="px-8 py-2">{ApplicationDetail?.phone}</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="px-4 py-2 font-bold">QualificationLevel</td>
-                        <td className="px-8 py-2">{ApplicationDetail?.qualificationLevel}</td>
-                      </tr>
-                      {ApplicationDetail?.status === 'APPROVED' ? (<>
+                      {ApplicationDetail.applicationCategory !== "HealthProfessional" ? (<>
                         <tr className="border-b border-gray-200">
-                          <td className="px-4 py-2 font-bold">professionalLicenseNumber</td>
-                          <td className="px-8 py-2">{ApplicationDetail?.professionalLicenseNumber}</td>
+                          <td className="px-4 py-2 font-bold">ProfessionalName</td>
+                          <td className="px-8 py-2">{ApplicationDetail?.professionalName} {ApplicationDetail?.professionalNameLastName}</td>
+                        </tr>
+                        <tr className="border-b border-gray-200">
+                          <td className="px-4 py-2 font-bold">Phone Number</td>
+                          <td className="px-8 py-2">{ApplicationDetail?.phone}</td>
+                        </tr>
+                        <tr className="border-b border-gray-200">
+                          <td className="px-4 py-2 font-bold">QualificationLevel</td>
+                          <td className="px-8 py-2">{ApplicationDetail?.qualificationLevel}</td>
+                        </tr>
+                        {ApplicationDetail?.status === 'APPROVED' ? (<>
+                          <tr className="border-b border-gray-200">
+                            <td className="px-4 py-2 font-bold">professionalLicenseNumber</td>
+                            <td className="px-8 py-2">{ApplicationDetail?.professionalLicenseNumber}</td>
+                          </tr>
+                        </>) : null}
+
+                        <tr className="border-b border-gray-200">
+                          <td className="px-4 py-2 font-bold">state</td>
+                          <td className="px-8 py-2">{ApplicationDetail?.state}</td>
+                        </tr>
+                        <tr className="border-b border-gray-200">
+                          <td className="px-4 py-2 font-bold">Sub City</td>
+                          <td className="px-8 py-2">{ApplicationDetail?.subCity}</td>
+                        </tr>
+                        <tr className="border-b border-gray-200">
+                          <td className="px-4 py-2 font-bold">Woreda</td>
+                          <td className="px-8 py-2">{ApplicationDetail?.woreda}</td>
+                        </tr>
+                        <tr className="border-b border-gray-200">
+                          <td className="px-4 py-2 font-bold">Kebele</td>
+                          <td className="px-8 py-2">{ApplicationDetail?.kebele}</td>
+                        </tr>
+                        <tr className="border-b border-gray-200">
+                          <td className="px-4 py-2 font-bold">House Number</td>
+                          <td className="px-8 py-2">{ApplicationDetail?.houseNumber}</td>
                         </tr>
                       </>) : null}
-
-                      <tr className="border-b border-gray-200">
-                        <td className="px-4 py-2 font-bold">state</td>
-                        <td className="px-8 py-2">{ApplicationDetail?.state}</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="px-4 py-2 font-bold">Sub City</td>
-                        <td className="px-8 py-2">{ApplicationDetail?.subCity}</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="px-4 py-2 font-bold">Woreda</td>
-                        <td className="px-8 py-2">{ApplicationDetail?.woreda}</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="px-4 py-2 font-bold">Kebele</td>
-                        <td className="px-8 py-2">{ApplicationDetail?.kebele}</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="px-4 py-2 font-bold">House Number</td>
-                        <td className="px-8 py-2">{ApplicationDetail?.houseNumber}</td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>

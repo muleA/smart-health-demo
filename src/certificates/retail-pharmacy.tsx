@@ -1,9 +1,24 @@
 import { Email, Phone } from '@mui/icons-material'
 import './certificate2.css'
+import { useGetUserByIdQuery } from '../components/portal.query';
 
 export default function Certificate3({licenseInfo,ApplicationlicenseInfo}:any) {
-  console.log("license inf at 3",licenseInfo?.qualificationLevel)
-  console.log("ApplicationlicenseInfo inf at 3",ApplicationlicenseInfo)
+  const { data: issuedByInfo } = useGetUserByIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
+  // console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', licenseInfo)
+  // console.log('ApplicationlicenseInfo of certifate 111111111111111111', ApplicationlicenseInfo.license)
+  // console.log('Issued By Info of certifate 1', issuedByInfo)
+  const ValidFrom = new Date(ApplicationlicenseInfo?.license?.validFrom).toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+  const ValidTo = new Date(ApplicationlicenseInfo?.license?.validTo).toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
 return (
     <div className="container">
     <div className="header">
@@ -25,7 +40,7 @@ return (
               </div>
               </div>
               <div className="right-header border">
-                <p> ቁጥር ጤ/ተ/ባ </p>
+                <p> ቁጥር={ ApplicationlicenseInfo?.license?.licenseNumber}</p>
                 <p>ቅን {new Date().toDateString()}</p>
               </div>
             

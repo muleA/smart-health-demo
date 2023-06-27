@@ -288,8 +288,8 @@ const StepperComponent = () => {
                         component="div"
                         className="text-red-500" />
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
+                    <div className="grid grid-cols-5 gap-1">
+                      <div style={{ gridColumn: "1 / span 2" }}>
                         {values?.applicationType &&
                           values?.applicationCategory && (
                             <>
@@ -427,14 +427,14 @@ const StepperComponent = () => {
                             </>
                           )}
                       </div>
-                      <div>
+                      <div style={{ gridColumn: "3 / span 5" }}>
                         {values?.applicationType &&
                           values?.applicationCategory &&
                           values?.applicationCategory !== "HealthProfessional" && (
                             <>
                               <div className="font-bold text-md mb-2">
                                 {" "}
-                                Personal Information
+                                Facility  Information
                               </div>
                               <div className="grid grid-cols-2 gap-2">
                                 <div className="mb-4">
@@ -456,7 +456,7 @@ const StepperComponent = () => {
                                 {values?.applierType === "delegation" && (
                                   <div className="mb-4">
                                     <label htmlFor="facilityOwnerName">
-                                      Facility Owner Name
+                                      Facility Owner Full Name
                                       <span className="text-red-400">*</span>
                                     </label>
                                     <Field

@@ -5,17 +5,15 @@ const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) =>
   // const { data: userInfo, isLoading } = useGetUserByIdQuery(props?.licenseInfo?.userId)
 
   const { data: issuedByInfo } = useGetUserByIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
-  console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', licenseInfo)
-  console.log('ApplicationlicenseInfo of certifate 111111111111111111', ApplicationlicenseInfo.license)
-  console.log('Issued By Info of certifate 1', issuedByInfo)
-  const date = new Date(ApplicationlicenseInfo?.license?.validFrom);
-  const ValidFrom = date.toLocaleDateString('en-US', {
+  // console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', licenseInfo)
+  // console.log('ApplicationlicenseInfo of certifate 111111111111111111', ApplicationlicenseInfo.license)
+  // console.log('Issued By Info of certifate 1', issuedByInfo)
+  const ValidFrom = new Date(ApplicationlicenseInfo?.license?.validFrom).toLocaleDateString('en-US', {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
     year: 'numeric',
   });
-  // const  = new Date()
   const ValidTo = new Date(ApplicationlicenseInfo?.license?.validTo).toLocaleDateString('en-US', {
     weekday: 'short',
     month: 'short',
@@ -66,8 +64,8 @@ const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) =>
               <img src={require("../assets/images/signature1.png")} alt="Signature" width="150" />
             </div>
             <div className="alignLeft">
-
-              <p>ይህ የሙያ ስራ ፈቃድ የሚያገለግለዉ ከ 29/16/2015 እስከ 29/16/2018 ዓ.ም ብቻ ነዉ</p>
+              <p>{`ይህ የሙያ ስራ ፈቃድ የሚያገለግለዉ ከ `} <u>{`${ValidFrom}`} </u> እስከ <u> {`${ValidTo}`} GC  </u> ነዉ</p>
+              {/* <p> 29/16/2015  29/16/2018 ዓ.ም ብቻ</p> */}
               <p className='user-response'>ማሳሰቢያ</p>
               <p>ስምና ፎቶ ግራፍ ከተገለጸዉ ሰዉ በስተቀር ሴላ አካል ሲገለገልበት ኢይገባም በማንኛዉም ምከንያት ቢጠፋ ወዲያዉኑ የማሳወቅ ግዴታ አለብዎት በየሶስት ዓመቱ መታደስ አለበት።</p>
               {/* <p>1251115586465/4251118333562  15286</p> */}
@@ -85,7 +83,7 @@ const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) =>
               <img src={require("../assets/images/signature1.png")} alt="Signature" width="150" />
             </div>
             <div className="alignLeft">
-              <p>{`This License is valid only from`} <u>{`${ValidFrom}` } </u> To <u> {`${ValidTo}`} GC </u></p>
+              <p>{`This License is valid only from`} <u>{`${ValidFrom}`} </u> To <u> {`${ValidTo}`} GC </u></p>
               <p className='user-response'>N.B</p>
               <p>Unlawful if it is found being used by another person</p>
               <p>The holder is required to notify as soon as the certificate is lost or missed</p>
