@@ -12,7 +12,7 @@ export function License() {
   const { data: license, isLoading, isSuccess, isError, isFetching } = useGetLicenseQuery();
   const handleRowClick = (row: any) => {
     console.log("row",row)
-    navigate(`/license/detail/${row?.original.id}`);
+    navigate(`/licenses/detail/${row?.original.id}`);
   };
 
  
@@ -81,7 +81,6 @@ export function License() {
         }}
         enableGrouping
         enablePagination
-        manualPagination
         state={{
           isLoading: isLoading,
           showAlertBanner: isError,

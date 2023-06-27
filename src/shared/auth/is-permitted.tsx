@@ -7,23 +7,30 @@ type isPermittedProps = {
 };
 
 const IsPermitted = ({ requiredPermissions, children }: isPermittedProps): JSX.Element => {
+    
   const [authorized, setAuthorized] = useState<boolean>(false);
-  const session = useAuth();
+  const {session} = useAuth();
   console.log("session obj",session)
+  console.log("requiredPermissions",requiredPermissions)
 
   useEffect(() => {
-    const userPermissions =
-    session?.userInfo?.EmployeeRoles?.flatMap(
-      (role: { role: { rolePermission: any; }; }) =>
-        role?.role?.rolePermission ?? []
-    ).map((permission: { permissionName: any; }) => permission.permissionName) ?? [];
+  /*   const userPermissions = session?.userInfo?.EmployeeRoles?.flatMap(
+      (role: { role: { rolePermission: any; }; }) => role?.role?.rolePermission ?? []
+    ).map((permission: { permissionName: any; }) => permission.permissionName) ?? []; */
 
+/*     console.log("userPermissions at permitted",userPermissions)
+ */    const employeeRoles = session?.userInfo?.EmployeeRoles;
+  console.log('employeeRoles:', employeeRoles);
 
-    console.log("userPermissions at permitted",userPermissions)
+  const flattenedRoles = employeeRoles?.flatMap((role: { role: { rolePermission: any; }; }) => role?.role?.rolePermission ?? []).flat();
+  console.log('flattenedRoles:', flattenedRoles);
+
+  const userPermission = flattenedRoles?.map((permission: { permissionName: any; }) => permission?.permissionName) ?? [];
+  console.log('userPermissions:', userPermission);
 
     const isAuthorized =
-      userPermissions?.includes("SYSTEM_ROOT") ||
-      requiredPermissions.every((permission) => userPermissions?.includes(permission));
+      userPermission?.includes("SYSTEM_ROOT") ||
+      requiredPermissions.every((permission) => userPermission?.includes(permission));
 
     setAuthorized(isAuthorized);
   }, [requiredPermissions, session?.userInfo?.EmployeeRoles]);

@@ -88,7 +88,7 @@ const columns = [
         </div>
 
         <Divider className="m-2" />
-        <Table dataSource={[appInfo]} columns={columns} loading={isLoading||appInfoLoading} />
+        <Table dataSource={[licenses]} columns={columns} loading={isLoading||appInfoLoading} />
       </div>
     </div>
   );

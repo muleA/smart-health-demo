@@ -8,7 +8,7 @@ import { Permission } from '../../../models/permission';
 import { Edit } from '@mui/icons-material';
 import { useCreatePermissionMutation, useDeletePermissionMutation, useUpdatePermissionMutation } from './permission.query';
 import IsPermitted from '../../../shared/auth/is-permitted';
-import { CreatePermission } from '../../../shared/shell/permissions-list';
+import { CreatePermission, UpdateUserPermission } from '../../../shared/shell/permissions-list';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -122,11 +122,14 @@ const {id}=useParams()
               </Button>
             )}
 
-            {props.mode === "update" && (
+<IsPermitted requiredPermissions={UpdateUserPermission}>
+{props.mode === "update" && (
               <Button type="primary" icon={<Edit/>} loading={updateLoading} className='bg-primary text-white' htmlType="submit" disabled={isSubmitting}>
                 Update
               </Button>
             )}
+</IsPermitted>
+           
 
             {props.mode === "update" && (
               <IsPermitted requiredPermissions={CreatePermission}>

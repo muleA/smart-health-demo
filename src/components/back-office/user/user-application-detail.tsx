@@ -135,10 +135,10 @@ const {session}=useAuth()
                       </>
                     ) : null}
 
-{/* <IsPermitted requiredPermissions={ChangeLicenseStatus}>
- */}
+ <IsPermitted requiredPermissions={ChangeLicenseStatus}>
+ 
 {
-   application.status==='APPROVED'?(<>
+   application.status!=='APPROVED'?(<>
   
        <Button
                           className="bg-red-500 text-white"
@@ -160,8 +160,8 @@ const {session}=useAuth()
                         </Button>
                       </>
                     ) : null}
-{/* </IsPermitted>
- */}
+ </IsPermitted>
+ 
                   </div>
                 </Panel>
               ))}

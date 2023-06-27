@@ -14,9 +14,12 @@ export const permissionGroups = {
   view_license: "view_license",
   change_license_status: "change_license_status",
   view_archives: "view_archives",
+  update_permission:"update_permission"
 };
 
 export const CreateUserPermission: string[] = [permissionGroups.create_user];
+export const UpdateUserPermission: string[] = [permissionGroups.update_permission];
+
 
 export const ApproveApplication: string[] = [
   permissionGroups.approve_application,
@@ -37,6 +40,6 @@ export const ViewEmployee: string[] = [permissionGroups.view_employee];
 export const ViewRole: string[] = [permissionGroups.view_role];
 export const ViewUser: string[] = [permissionGroups.view_user];
 export const ViewApplications: string[] = [permissionGroups.view_applications];
-export const ViewArchives: string[] = [permissionGroups.view_role];
+export const ViewArchives: string[] = [permissionGroups.view_archives];
 export const ViewLicense: string[] = [permissionGroups.view_license];
 export const viewPermission: string[] = [permissionGroups.view_permission];
