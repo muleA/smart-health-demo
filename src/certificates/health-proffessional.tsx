@@ -6,8 +6,22 @@ const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) =>
 
   const { data: issuedByInfo } = useGetUserByIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
   console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', licenseInfo)
-  console.log('ApplicationlicenseInfo of certifate 1', ApplicationlicenseInfo)
+  console.log('ApplicationlicenseInfo of certifate 111111111111111111', ApplicationlicenseInfo.license)
   console.log('Issued By Info of certifate 1', issuedByInfo)
+  const date = new Date(ApplicationlicenseInfo?.license?.validFrom);
+  const ValidFrom = date.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+  // const  = new Date()
+  const ValidTo = new Date(ApplicationlicenseInfo?.license?.validTo).toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
   return (
     <div className="container">
       <div className="header">
@@ -71,7 +85,7 @@ const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) =>
               <img src={require("../assets/images/signature1.png")} alt="Signature" width="150" />
             </div>
             <div className="alignLeft">
-              <p>{`This License is valid only from${licenseInfo?.validFrom} To ${licenseInfo?.validTo} `} GC</p>
+              <p>{`This License is valid only from`} <u>{`${ValidFrom}` } </u> To <u> {`${ValidTo}`} GC </u></p>
               <p className='user-response'>N.B</p>
               <p>Unlawful if it is found being used by another person</p>
               <p>The holder is required to notify as soon as the certificate is lost or missed</p>
