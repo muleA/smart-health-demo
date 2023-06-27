@@ -24,7 +24,7 @@ const {data:applications,isLoading:applicationsLoading}=useGetApplicationsQuery(
         </>
       ) : (
         <>
-          <Card className="text-center mx-auto">
+           <Card className="text-center mx-auto">
             <div className="grid grid-cols-1 gap-4 px-4  sm:grid-cols-4 sm:px-8">
               <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
                 <div className="p-4 bg-green-400">

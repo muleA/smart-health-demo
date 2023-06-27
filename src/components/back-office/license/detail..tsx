@@ -17,6 +17,8 @@ function LicenseDetail() {
      const handleArchive=async ()=>{
       try{
       await archive(id?.toString())
+      message.success("Archived successfully")
+      
       }catch(err){
 console.log(err)
       }
@@ -102,12 +104,12 @@ console.log(err)
       </table>
     </div>
   </div>
-{/*   <IsPermitted requiredPermissions={ChangeLicenseStatus}>
- */}
+   <IsPermitted requiredPermissions={ChangeLicenseStatus}>
+ 
        <Button className='bg-primary text-white' onClick={handleApproveClick} >Change Status</Button>
        <Button type='primary' loading={archiving} onClick={handleArchive} className='bg-red-400 ml-10  text-white'>Archive</Button>
-{/*        </IsPermitted>
- */}
+       </IsPermitted>
+ 
       
       </Card>
     </CollapsibleCard>

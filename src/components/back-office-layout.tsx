@@ -136,22 +136,27 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
       name: "Archives",
       path: "/archives",
       icon: Icon.CiOutlined,
-      permissions: ViewArchives,
       child: [
         {
           name: "Users",
           path: "/archived-users",
           icon: Icon.UserOutlined,
+          permissions: ViewArchives,
+
         },
         {
           name: "employees",
           path: "/archived-employees",
           icon: Icon.TeamOutlined,
+          permissions: ViewArchives,
+
         },
         {
           name: "applications",
           path: "/archived-applications",
           icon: Icon.AppstoreOutlined,
+          permissions: ViewArchives,
+
         },
       ],
     },
@@ -280,9 +285,9 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
               <Route
                 path="/licenses/detail/:id"
                 element={
-                  <RoutePermissionGuard requiredPermissions={ViewLicense}>
-                    <LicenseDetail />
-                  </RoutePermissionGuard>
+                <RoutePermissionGuard requiredPermissions={ViewLicense}>
+                    <LicenseDetail />             
+                         </RoutePermissionGuard>
                 }
               />
               <Route

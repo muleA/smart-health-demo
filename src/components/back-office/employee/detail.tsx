@@ -19,8 +19,8 @@ return(<>
 <UserForm mode={"update"} id={id} />
 
 </CollapsibleCard>
-<IsPermitted requiredPermissions={AssignRole}>
-<CollapsibleCard title={"Role Assignment"} 
+{/* <IsPermitted requiredPermissions={AssignRole}>
+ */}<CollapsibleCard title={"Role Assignment"} 
     subTitle="Assign Role to this role"
     customAction={
       <Button
@@ -35,8 +35,8 @@ return(<>
     >
 <RoleAssignment tagAssignmentModalOpened={open} setTagAssignmentModalOpened={setOpen} tid={undefined}/>
       </CollapsibleCard>
-      </IsPermitted>
-
+{/*       </IsPermitted>
+ */}
       </>
 
     

@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { DeleteFilled, SaveFilled } from '@ant-design/icons';
 import { Role } from '../../../models/role';
 import { Edit } from '@mui/icons-material';
+import IsPermitted from '../../../shared/auth/is-permitted';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),

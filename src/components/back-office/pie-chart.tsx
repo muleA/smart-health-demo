@@ -14,13 +14,15 @@ const SimplePieChart = (props: { totalRestaurant: any; totalDriver: any; totalUs
   ];
 
   return (
-    <PieChart width={400} height={400}>
+    <div className="bg-white p-5 rounded-2xl shadow-lg mr-4">
+    <h2 className="text-xl mb-4">Pie Chart</h2>
+    <PieChart width={450} height={450}>
       <Pie
         data={data}
         cx={200}
         cy={200}
         labelLine={true}
-        outerRadius={80}
+        outerRadius={150}
         fill="#8884d8"
         dataKey="value"
       >
@@ -31,6 +33,7 @@ const SimplePieChart = (props: { totalRestaurant: any; totalDriver: any; totalUs
       <Tooltip />
       <Legend />
     </PieChart>
+    </div>
   );
 };
 
