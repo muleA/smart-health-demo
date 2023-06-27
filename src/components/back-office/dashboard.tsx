@@ -1,13 +1,9 @@
 import { Card, Spin } from "antd";
 import Chart from "./chart";
 import SimplePieChart from "./pie-chart";
-<<<<<<< HEAD
-import BackOfficeCounterCard from "./backoffice-counter-card";
-=======
 import {  useGetApplicationsQuery, useGetUsersQuery } from "../back-office.query";
 import { useGetLicenseByStatusQuery } from "../portal.query";
 import { useGetEmployeesQuery } from "./employee/employee.query";
->>>>>>> yaregal
 export function Dashboard() {
  
   const { data: users, isLoading } = useGetUsersQuery();
@@ -28,7 +24,7 @@ const {data:applications,isLoading:applicationsLoading}=useGetApplicationsQuery(
         </>
       ) : (
         <>
-          {/* <Card className="text-center mx-auto">
+           <Card className="text-center mx-auto">
             <div className="grid grid-cols-1 gap-4 px-4  sm:grid-cols-4 sm:px-8">
               <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
                 <div className="p-4 bg-green-400">
@@ -101,19 +97,6 @@ const {data:applications,isLoading:applicationsLoading}=useGetApplicationsQuery(
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
-          </Card> */}
-          <BackOfficeCounterCard/>
-          <div className="flex ">
-            <div className="w-2/3">
-            <Chart data={data} />
-            </div>
-            <div>
-            <SimplePieChart totalRestaurant={34} 
-            totalUser={12} totalDriver={15} totalOrder={17} />
-            </div>
-          </div>
-=======
             <div className=" mt-2 flex mx-auto p-4 bg-gay-50">
             <Chart data={applications} />
             <SimplePieChart totalRestaurant={approvedLicense?.length} 
@@ -122,7 +105,6 @@ const {data:applications,isLoading:applicationsLoading}=useGetApplicationsQuery(
           </Card>
 
      
->>>>>>> yaregal
         </>
       )}
     </>

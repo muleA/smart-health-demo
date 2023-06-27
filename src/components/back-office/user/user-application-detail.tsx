@@ -17,7 +17,7 @@ import { baseUrl } from "../../../configs/config";
 import { DownloadOutlined } from "@ant-design/icons";
 import Certificate from "../certificate2";
 import IsPermitted from "../../../shared/auth/is-permitted";
-import { ApproveApplication } from "../../../shared/shell/permissions-list";
+import { ApproveApplication, ChangeLicenseStatus } from "../../../shared/shell/permissions-list";
 import { Session } from "inspector";
 import { useAuth } from "../../../shared/auth/use-auth";
  
@@ -59,7 +59,7 @@ const {session}=useAuth()
           userId: id?.toString(),
           validFrom: new Date(),
           validTo: new Date("6/21/2025"),
-          issuedBy:session?.userInfo?.userId,
+          issuedBy:session?.userInfo?.employeeId,
           status: rejectClicked ? "REJECTED" : "APPROVED",
         }
       );
