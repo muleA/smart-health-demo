@@ -25,34 +25,34 @@ const StepperComponent = () => {
   const [experiences, setExperiences] = useState<any>([]);
   const [certificates, setCertificates] = useState<any>([]);
 
- const StepTwoSchema = Yup.object().shape({
-  applicationType: Yup.string(),
-  applicationCategory: Yup.string(),
-  applierType: Yup.string(),
-/*   delegationFile: Yup.mixed().when('applierType', {
-    is: 'owner',
-    then: Yup.mixed().notRequired(),
-    otherwise: Yup.string(),
-  }), */
-  applierProfilePicture: Yup.string(),
-  educationId: Yup.array().of(Yup.string()),
-  experienceIdId: Yup.array().of(Yup.string()),
-  certificateId: Yup.array().of(Yup.string()),
-  state: Yup.string(),
-  subCity: Yup.string(),
-  woreda: Yup.string(),
-  kebele: Yup.string(),
-  houseNumber: Yup.string(),
-  phone: Yup.string(),
-  ownerName: Yup.string(),
-  lastName: Yup.string(),
-  facilityName:Yup.string(),
-  professionalName: Yup.string(),
-  professionalLastName: Yup.string(),
-  qualificationLevel: Yup.string(),
-  professionalLicenseNumber: Yup.string(),
-});
-  
+  const StepTwoSchema = Yup.object().shape({
+    applicationType: Yup.string(),
+    applicationCategory: Yup.string(),
+    applierType: Yup.string(),
+    /*   delegationFile: Yup.mixed().when('applierType', {
+        is: 'owner',
+        then: Yup.mixed().notRequired(),
+        otherwise: Yup.string(),
+      }), */
+    applierProfilePicture: Yup.string(),
+    educationId: Yup.array().of(Yup.string()),
+    experienceIdId: Yup.array().of(Yup.string()),
+    certificateId: Yup.array().of(Yup.string()),
+    state: Yup.string(),
+    subCity: Yup.string(),
+    woreda: Yup.string(),
+    kebele: Yup.string(),
+    houseNumber: Yup.string(),
+    phone: Yup.string(),
+    ownerName: Yup.string(),
+    lastName: Yup.string(),
+    facilityName: Yup.string(),
+    professionalName: Yup.string(),
+    professionalLastName: Yup.string(),
+    qualificationLevel: Yup.string(),
+    professionalLicenseNumber: Yup.string(),
+  });
+
 
   useEffect(() => {
     fetchEducations();
@@ -169,7 +169,7 @@ const StepperComponent = () => {
     {
       title: "Step 2",
       content: (
-        
+
         <Formik
           initialValues={{
             applicationType: "",
@@ -177,18 +177,19 @@ const StepperComponent = () => {
             applierType: "",
             educationId: [],
             certificateId: [],
-            delegationFile:"",
+            delegationFile: "",
             experienceId: [],
-            facilityName:"",
+            facilityName: "",
             ownerName: "",
-            professionalName: "",
+            lastName: "",
+            proffessionalName: "",
             professionalLastName: "",
+
             qualificationLevel: "",
-            facilityOwnerName: "",
-            state:"",
+            state: "",
             city: "",
             subCity: "",
-            kebela:"",
+            kebela: "",
             woreda: "",
             houseNumber: "",
             phone: "",
@@ -202,14 +203,14 @@ const StepperComponent = () => {
             // Here, we're just logging the form values
             console.log("Step 2 form values:", values);
             try {
-              await apply({...values,userId:session?.userInfo?.userId}).unwrap;
-               message.success("application submitted successfully");
+              await apply({ ...values, userId: session?.userInfo?.userId }).unwrap;
+              message.success("application submitted successfully");
             } catch (err) {
               message.error("error happened in applying");
             }
           }}
         >
-          {({ values, errors, touched }:any) => (
+          {({ values, errors, touched }: any) => (
             <><>
             </><Card className="shadow-sm">
                 <Form className="rounded">
@@ -321,8 +322,8 @@ const StepperComponent = () => {
                                   <label htmlFor="file" className="block mb-2 text-sm font-medium text-gray-700">
                                     Upload File
                                   </label>
-                                  <Field type="file" name="delegationFile" className="block mb-2 text-sm font-medium text-gray-700"/>
-                                   
+                                  <Field type="file" name="delegationFile" className="block mb-2 text-sm font-medium text-gray-700" />
+
                                   <span className="ml-2 text-gray-600" id="file-name">
                                     {fileName}
                                   </span>
@@ -435,7 +436,7 @@ const StepperComponent = () => {
                               <div className="grid grid-cols-2 gap-2">
                                 <div className="mb-4">
                                   <label htmlFor="facilityName">
-                                  Facility Name
+                                    Facility Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
@@ -450,45 +451,64 @@ const StepperComponent = () => {
                                     className="text-red-500" />
                                 </div>
                                 {values?.applierType === "delegation" && (
-                                  <div className="mb-4">
-                                    <label htmlFor="facilityOwnerName">
-                                      Facility Owner Full Name
-                                      <span className="text-red-400">*</span>
-                                    </label>
-                                    <Field
-                                      type="text"
-                                      name="facilityOwnerName"
-                                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                  <>
+                                    <div className="mb-4">
+                                      <label htmlFor="ownerName">
+                                        Facility Owner Full Name
+                                        <span className="text-red-400">*</span>
+                                      </label>
+                                      <Field
+                                        type="text"
+                                        name="ownerName"
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
-                                    ></Field>
-                                    <ErrorMessage
-                                      name="facilityOwnerName"
-                                      component="div"
-                                      className="text-red-500" />
-                                  </div>
+                                      ></Field>
+                                      <ErrorMessage
+                                        name="ownerName"
+                                        component="div"
+                                        className="text-red-500" />
+                                    </div>
+                                    <div className="mb-4">
+                                      <label htmlFor="lastName">
+                                        Facility Owner Last Name
+                                        <span className="text-red-400">*</span>
+                                      </label>
+                                      <Field
+                                        type="text"
+                                        name="lastName"
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                      ></Field>
+                                      <ErrorMessage
+                                        name="lastName"
+                                        component="div"
+                                        className="text-red-500" />
+                                    </div>
+                                  </>
+
                                 )}
-                                
-                          
+
+
                                 <div className="mb-4">
-                                  <label htmlFor="proffessionalFullName">
-                                  Professional full Name
+                                  <label htmlFor="proffessionalName">
+                                    Professional full Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
                                     type="text"
-                                    name="proffessionalFullName"
+                                    name="proffessionalName"
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
                                   ></Field>
                                   <ErrorMessage
-                                    name="proffessionalFullName"
+                                    name="proffessionalName"
                                     component="div"
 
                                     className="text-red-500" />
                                 </div>
-                                <div className="mb-4">
-                                  <label htmlFor="professionalName">
-                                   Owner Full Name
+                                {/* <div className="mb-4">
+                                  <label htmlFor="ApplierFullName">
+                                    Your Full Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
@@ -501,20 +521,20 @@ const StepperComponent = () => {
                                     name="professionalName"
                                     component="div"
                                     className="text-red-500" />
-                                </div>
+                                </div> */}
                                 <div className="mb-4">
-                                  <label htmlFor="professionalNameLastName">
-                                    Last Name
+                                  <label htmlFor="professionalLastName">
+                                    Professional Last Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
                                     type="text"
-                                    name="professionalNameLastName"
+                                    name="professionalLastName"
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
                                   ></Field>
                                   <ErrorMessage
-                                    name="professionalNameLastName"
+                                    name="professionalLastName"
                                     component="div"
                                     className="text-red-500" />
                                 </div>
@@ -541,8 +561,8 @@ const StepperComponent = () => {
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <div>
-                                    <Field type="text" name="state"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-></Field>
+                                    <Field type="text" name="state" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    ></Field>
                                   </div>
                                   <ErrorMessage
                                     name="state"
@@ -554,8 +574,8 @@ const StepperComponent = () => {
                                     City
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Field type="text" name="city"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-></Field>
+                                  <Field type="text" name="city" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                  ></Field>
                                   <ErrorMessage
                                     name="city"
                                     component="div"
@@ -566,8 +586,8 @@ const StepperComponent = () => {
                                     subCity
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Field type="text"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
- name="subCity"></Field>
+                                  <Field type="text" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="subCity"></Field>
                                   <ErrorMessage
                                     name="subCity"
                                     component="div"
@@ -578,8 +598,8 @@ const StepperComponent = () => {
                                     Woreda
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Field type="text"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
- name="woreda"></Field>
+                                  <Field type="text" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="woreda"></Field>
                                   <ErrorMessage
                                     name="woreda"
                                     component="div"
@@ -590,9 +610,9 @@ const StepperComponent = () => {
                                     kebele
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Field type="text"         
-                                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
- name="kebele"></Field>
+                                  <Field type="text"
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="kebele"></Field>
                                   <ErrorMessage
                                     name="kebele"
                                     component="div"
@@ -603,8 +623,8 @@ const StepperComponent = () => {
                                     House No.
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Field type="text" name="houseNumber"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-></Field>
+                                  <Field type="text" name="houseNumber" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                  ></Field>
                                   <ErrorMessage
                                     name="houseNumber"
                                     component="div"
@@ -615,8 +635,8 @@ const StepperComponent = () => {
                                     Telephone No.
                                     <span className="text-red-400">*</span>
                                   </label>
-                                  <Field type="text" name="phone"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-></Field>
+                                  <Field type="text" name="phone" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                  ></Field>
                                   <ErrorMessage
                                     name="phone"
                                     component="div"
@@ -670,40 +690,40 @@ const StepperComponent = () => {
                               </div>
                               <div className="grid grid-cols-2 gap-2">
                                 <div className="mb-4">
-                                  <label htmlFor="professionalName">
-                                   Owner Full Name
+                                  <label htmlFor="ownerFullName">
+                                    Owner Full Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
                                     type="text"
-                                    name="professionalName"
+                                    name="ownerFullName"
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
                                   ></Field>
                                   <ErrorMessage
-                                    name="professionalName"
+                                    name="ownerFullName"
                                     component="div"
                                     className="text-red-500" />
                                 </div>
                                 <div className="mb-4">
-                                  <label htmlFor="professionalNameLastName">
-                                    Last Name
+                                  <label htmlFor="ownerLastName">
+                                    Owner Last Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
                                     type="text"
-                                    name="professionalNameLastName"
+                                    name="ownerlLastName"
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
                                   ></Field>
                                   <ErrorMessage
-                                    name="professionalNameLastName"
+                                    name="professionalLastName"
                                     component="div"
                                     className="text-red-500" />
                                 </div>
                               </div>
 
-                     
+
                             </>
                           )}
 
@@ -727,19 +747,19 @@ const StepperComponent = () => {
         </Formik>
       ),
     },
-  /*   {
-      title: "Step 3",
-      content: (
-        <Card>
-          <h1 className="text-xl font-bold mb-2">
-            Step 3: Success Information
-          </h1>
-          <hr className="mt-4 mb-4" />
-          <p>Form submitted successfully!</p>
-
-        </Card>
-      ),
-    }, */
+    /*   {
+        title: "Step 3",
+        content: (
+          <Card>
+            <h1 className="text-xl font-bold mb-2">
+              Step 3: Success Information
+            </h1>
+            <hr className="mt-4 mb-4" />
+            <p>Form submitted successfully!</p>
+  
+          </Card>
+        ),
+      }, */
   ];
 
   const handleNext = () => {
@@ -775,7 +795,7 @@ const StepperComponent = () => {
             Previous
           </Button>
         )}
-        {currentStep < steps.length - 1 && currentStep !== 0 &&(
+        {currentStep < steps.length - 1 && currentStep !== 0 && (
           <Button
             type="primary"
             htmlType="submit"
