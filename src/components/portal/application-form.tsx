@@ -586,6 +586,19 @@ const StepperComponent = () => {
                                     className="text-red-500" />
                                 </div>
                                 <div className="mb-4">
+                                  <label htmlFor="Kebele">
+                                    kebele
+                                    <span className="text-red-400">*</span>
+                                  </label>
+                                  <Field type="text"         
+                                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+ name="kebele"></Field>
+                                  <ErrorMessage
+                                    name="kebele"
+                                    component="div"
+                                    className="text-red-500" />
+                                </div>
+                                <div className="mb-4">
                                   <label htmlFor="houseNumber">
                                     House No.
                                     <span className="text-red-400">*</span>
