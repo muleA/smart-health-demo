@@ -38,7 +38,13 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Education"],
     }),  
-
+    getLicenseByApplicationId: builder.query<any, string>({
+      query: (applicationId) => ({
+        url: `${portalEndPoints.getLicenseByApplicationId}/${applicationId}`,
+        method: "GET",
+      }),
+      providesTags: ["license"],
+    }), 
     getLicenseByStatus: builder.query<any, string>({
       query: (status) => ({
         url: `${portalEndPoints.getApplicationByStatus}/${status}`,
@@ -224,6 +230,7 @@ export const {
    useRestoreExperianceMutation,
    useLazyGetApplicationDetailsQuery,
    useGetApplicationDetailsQuery,
+   useGetLicenseByApplicationIdQuery,
    useArchiveApplicationMutation,
    useRestoreApplicationMutation,
    useGetArchivedApplicationsQuery,

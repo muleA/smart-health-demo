@@ -27,6 +27,7 @@ archiveExperience:`${baseUrl}user/soft-delete-experience/`,
 getApplicationByStatus:`${baseUrl}user/get-application-by-status`,
 getApplicationByUserId:`${baseUrl}user/get-application-by-userId`,
 getLicenseById:`${baseUrl}user/get-license-by-licenseId`,
+getLicenseByApplicationId:`${baseUrl}user/get-license-by-applicationId`,
 
   
 };
