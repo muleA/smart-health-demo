@@ -64,7 +64,6 @@ export default function PermissionsList() {
         }}
         enableGrouping
         enablePagination
-        manualPagination
         state={{
           isLoading: isLoading,
           showAlertBanner: isError,

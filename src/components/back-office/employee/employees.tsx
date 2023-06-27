@@ -111,7 +111,6 @@ export function Employees() {
         }}
         enableGrouping
         enablePagination
-        manualPagination
         state={{
           isLoading: isLoading,
           showAlertBanner: isError,

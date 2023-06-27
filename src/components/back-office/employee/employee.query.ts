@@ -78,14 +78,18 @@ const employeeId = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
-    addRoleToEmployee: builder.mutation<any,any>({
-      query: (employeeId:any) => ({
-        url: `${employeeEndPoints.addRoleToEmployee}/${employeeId[0]?.roleId}`,
-        method: "POST",
-        data: employeeId,
-      }),
+    addRoleToEmployee: builder.mutation<any, any>({
+      query: (employeeId: any) => {
+          console.log("employeeId",employeeId)
+        return {
+          url: `${employeeEndPoints.addRoleToEmployee}/${employeeId?.empId}`,
+          method: "POST",
+          data: employeeId.payload,
+        };
+      },
       invalidatesTags: ["user"],
     }),
+    
   }),
 });
 

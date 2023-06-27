@@ -8,10 +8,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/use-auth";
 
-const { SubMenu } = Menu;
 
 const AccountMenu = () => {
-  const [visible, setVisible] = useState(false);
   const { session, logOut } = useAuth();
   const navigate = useNavigate();
 
@@ -27,9 +25,7 @@ const AccountMenu = () => {
     }
   };
 
-  const handleVisibleChange = (visible: boolean | ((prevState: boolean) => boolean)) => {
-    setVisible(visible);
-  };
+ 
 
   return (
     <span style={{ marginLeft: "13px" }}>
@@ -59,7 +55,7 @@ const AccountMenu = () => {
         <Menu.Item key="settings" icon={<SettingOutlined />} onClick={handleProfile}>
           Settings
         </Menu.Item>
-        <Menu.Item key="logout" icon={<LogoutOutlined />}>
+        <Menu.Item  onClick={()=>logOut()} key="logout" icon={<LogoutOutlined />}>
           Log Out
         </Menu.Item>
       </Menu>

@@ -3,11 +3,11 @@ import React, { useMemo } from "react";
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_ColumnDef } from 'material-react-table';
 import { DefaultPage } from "../../../../shared/default-page";
-import { useGetApplicationsQuery } from "../../license/license.query";
+import { useGetArchivedAppsQuery } from "../../../back-office.query";
 
 export function ArchivedApplication() {
   const navigate = useNavigate();
-  const { data: applications, isLoading, isSuccess, isError, isFetching } = useGetApplicationsQuery();
+  const { data: applications, isLoading, isSuccess, isError, isFetching } = useGetArchivedAppsQuery();
   console.log("applications",applications)
   const handleRowClick = (row: any) => {
     console.log("row",row)

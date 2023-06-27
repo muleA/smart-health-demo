@@ -7,12 +7,12 @@ import { AddCircleOutlineOutlined, ArrowRightAlt } from '@mui/icons-material';
 import timeSince from "../../../../shared/utilities/time-since";
 import { User } from "../../../../models/user";
 import { DefaultPage } from "../../../../shared/default-page";
-import { useGetEmployeesQuery } from "../../employee/employee.query";
+import { useGetArchivedEmpoyeeQuery } from "../../../back-office.query";
 
 
 export function ArchivedEmployees() {
   const navigate = useNavigate();
-  const { data: Employees, isLoading, isSuccess, isError, isFetching } = useGetEmployeesQuery();
+  const { data: Employees, isLoading, isSuccess, isError, isFetching } = useGetArchivedEmpoyeeQuery();
 
  
   const handleRowClick = (row: any) => {

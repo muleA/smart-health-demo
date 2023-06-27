@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../../configs/config';
 import { useAuth } from '../../shared/auth/use-auth';
+import { useGetApplicationUserIdQuery } from '../portal.query';
 
 interface User {
   id: string;
@@ -15,24 +16,10 @@ interface User {
 }
 
 export const ApplicationList = (): JSX.Element => {
-  const [data, setData] = useState(null);
   const { session } = useAuth();
   const router = useNavigate();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${baseUrl}user/get-application-by-userId/${session?.userInfo?.userId}`
-        );
-        const responseData = response.data;
-        setData(responseData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const {data:applications,isLoading}=useGetApplicationUserIdQuery(session?.userInfo?.userId)
+ 
   const [selectedRow, setSelectedRow] = useState<string | null>(null);
 
   const handleRowClick = (record: User) => {
@@ -61,7 +48,7 @@ export const ApplicationList = (): JSX.Element => {
       key: "applierType",
     },
     {
-      title: "application Category",
+      title: "Application Category",
       dataIndex: "applicationCategory",
       key: "applicationCategory",
     },
@@ -69,16 +56,6 @@ export const ApplicationList = (): JSX.Element => {
       title: "Comment",
       dataIndex: "comment",
       key: "comment",
-    },
-    {
-      title: "Licence",
-      dataIndex: "license",
-      key: "license",
-    },
-    {
-      title: "Appointment Date",
-      dataIndex: "appointmentDate",
-      key: "appointmentDate",
     },
     {
       title: "Status",
@@ -125,8 +102,9 @@ export const ApplicationList = (): JSX.Element => {
 
   return (
     <Table<User>
-      dataSource={data ?? []}
+      dataSource={applications ?? []}
       columns={columns}
+      loading={isLoading}
       onRow={rowProps}
       rowKey="id"
     />

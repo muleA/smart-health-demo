@@ -4,6 +4,7 @@ import { LoginRequest } from "../../models/login-request";
 import { logIn, logOut, selectSession, selectIsLoading } from "../../store/auth-slice";
 
 export const useAuth = (): {
+  userInfo?: any;
   session: Session;
   submitLoginRequest: (request: LoginRequest) => any;
   logOut: () => void;

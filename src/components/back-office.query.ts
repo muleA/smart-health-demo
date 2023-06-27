@@ -24,9 +24,30 @@ const backOfficeApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Role"],
     }),
+    getArchivedUser: builder.query<any, void>({
+      query: () => ({
+        url: backOfficeEndPoints.getArchivedUser,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+    getArchivedApps: builder.query<any, void>({
+      query: () => ({
+        url: backOfficeEndPoints.getArchivedApplication,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+    getArchivedEmpoyee: builder.query<any, void>({
+      query: () => ({
+        url: backOfficeEndPoints.getArchivedEmployees,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
     getApplications: builder.query<any, void>({
       query: () => ({
-        url: backOfficeEndPoints.getLicenses,
+        url: backOfficeEndPoints.getApplications,
         method: "GET",
       }),
       providesTags: ["user"],
@@ -85,5 +106,7 @@ export const {
    useGetApplicationsQuery,
    useArchiveUserMutation,
    useGetApplicationDetailByUserIdQuery,
-   useGetUserByIdQuery,useLazyGetUserByIdQuery
+   useGetUserByIdQuery,useLazyGetUserByIdQuery,
+   useGetArchivedAppsQuery,
+   useGetArchivedEmpoyeeQuery,useGetArchivedUserQuery
 } = backOfficeApi;

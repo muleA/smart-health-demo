@@ -8,12 +8,20 @@ const HomeApi = apiSlice.injectEndpoints({
         url: HomeEndPoints.getLicenses,
         method: "GET",
       }),
-      providesTags: ["user"],
+      providesTags: ["license"],
     }),
- 
+    getLicenseByApplicationId: builder.query<any, void>({
+      query: (id) => ({
+        url: `${HomeEndPoints.getLicenseByApplicationId}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["license"],
+    }),
    
   }),
 });
 export const {
-useGetLicensesQuery
+useGetLicensesQuery,
+useGetLicenseByApplicationIdQuery,
+useLazyGetLicenseByApplicationIdQuery
 } = HomeApi;

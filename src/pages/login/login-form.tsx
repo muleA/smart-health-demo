@@ -4,11 +4,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../shared/auth/use-auth';
 import { useNavigate } from 'react-router-dom';
-import { UserAddOutlined } from '@ant-design/icons';
+import checkTokenExpiration from '../../shared/auth/check-expiration';
 
 const LoginForm = () => {
   const { submitLoginRequest, session } = useAuth();
-  const router = useNavigate();
 
   const initialValues = {
     username: '',
@@ -28,6 +27,7 @@ const LoginForm = () => {
        submitLoginRequest(values);
     },
   });
+  checkTokenExpiration()
 
   return (
     <Card className='text-center mx-auto mx-72 w-50 mt-10'>

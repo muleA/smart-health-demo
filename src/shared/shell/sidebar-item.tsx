@@ -30,7 +30,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         key={`${index}-${ch.name}`}
         menu={ch}
         mergedPath={`${mergedPath}${menu.path}`}
-        padding={padding ? padding + 4 : 4}
+        padding={4}
       />
     ));
   };
@@ -38,6 +38,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   return (
     <AntdMenu
       mode="inline"
+      className="bg-gray-100"
       defaultOpenKeys={open ? [menu.path] : []}
       onOpenChange={handleOpenChange}
       selectedKeys={[location.pathname]}
@@ -46,9 +47,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         <SubMenu
           key={menu.path}
           title={
-            <span>
-              <Icon style={{ marginRight: "5px",marginTop:"0px" }} />
-              {menu.name}
+            <span className="flex text-center items-center text-black">
+              <Icon style={{ marginRight: "5px"}} />
+              {<span>{menu.name} </span>}
             </span>
           }
         >
@@ -57,7 +58,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       )}
       {!menu.child && (
         <AntdMenu.Item key={`${mergedPath}${menu.path}`} className={`${location.pathname.startsWith(`${mergedPath}${menu.path}`) && `${mergedPath}${menu.path}` !== "/" ? "active-menu" : ""}`}>
-          <Link to={`${mergedPath}${menu.path}`}>
+          <Link to={`${mergedPath}${menu.path}`} className="flex items-center text-black ">
             <Icon style={{ marginRight: "5px" }} />
             {menu.name}
           </Link>

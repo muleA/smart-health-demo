@@ -12,22 +12,22 @@ const RoutePermissionGuard = (props: ProtectedRouteProps): JSX.Element => {
 
   // Get the user's permissions from the authentication session
   const userPermissions =
-    session?.userInfo?.Roles?.flatMap((role: { Permissions: any; }) => role?.Permissions ?? []).map(
-      (permission: { PermissionKey: any; }) => permission.PermissionKey,
+    session?.userInfo?.EmployeeRoles?.flatMap((role: { role: { rolePermission: any; }; }) => role?.role?.rolePermission ?? []).flat().map(
+      (permission: { permissionName: any; }) => permission.permissionName,
     ) ?? [];
 
   // Check if the user has the root permission, if so allow access
   if (userPermissions.includes(SYSTEM_ROOT_PERMISSION)) {
     return props.children;
   }
-
-  // Check if the user has any of the required permissions, if not redirect to 404 route
-  if (!props.requiredPermissions.some((permission) => userPermissions.includes(permission))) {
+  
+  // Check if the user has ALL of the required permissions, if not redirect to a custom route such as an error page or home page
+  if (!props.requiredPermissions.every((permission) => userPermissions.includes(permission))) {
     return <Navigate to="/*" replace />;
-  }
+   }
 
-  // Allow access if the user has all the required permissions specified in the prop
-  return props.children;
+   // Allow access if the user has all required permissions specified in prop
+   return props.children; 
 };
 
 export default RoutePermissionGuard;

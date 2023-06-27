@@ -12,7 +12,7 @@ const Archives = () => {
   const { data: educations, isLoading: educationLoading } = useGetArchivedEducationsQuery(session?.userInfo?.userId);
   const { data: certificates, isLoading: certificateLoading } = useGetArchivedCertificatesQuery(session?.userInfo?.userId);
   const { data: experiences, isLoading: experienceLoading } = useGetArchivedExperiencesQuery(session?.userInfo?.userId);
-const {data:applications,isLoading:applicationLoading}=useGetArchivedApplicationsQuery(0)
+const {data:applications,isLoading:applicationLoading}=useGetArchivedApplicationsQuery(session?.userInfo?.userId)
   const [restoreEducation, { isLoading: isRestoringEducation }] = useRestoreEducationMutation();
   const [restoreExperience, { isLoading: isRestoringExperience }] = useRestoreExperianceMutation();
   const [restoreCertificate, { isLoading: isRestoringCertificate }] = useRestoreCertificateMutation();
@@ -95,7 +95,7 @@ const {data:applications,isLoading:applicationLoading}=useGetArchivedApplication
             onRow={applicationTableRowProps}
       rowKey="id"
             columns={[
-              { title: "", dataIndex: "experience" },
+              { title: "", dataIndex: "applicationCategory" },
               {
                 title: "",
                 dataIndex: "restore",

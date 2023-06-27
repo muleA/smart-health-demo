@@ -1,9 +1,6 @@
 import React from 'react';
 import { BookTwoTone,  CheckCircleTwoTone,  CloseCircleTwoTone, InfoCircleTwoTone} from '@ant-design/icons';
-import  { useEffect, useState } from "react";
-import axios from "axios";
 import { useGetLicensesQuery } from '../home-query';
-import { useGetLicenseByStatusQuery } from '../../../portal.query';
 import { Spin } from 'antd';
 export interface CounterCardHeaderProps {
   header: any;
@@ -15,8 +12,6 @@ function CounterCard({approvedLicense,draftLicese,submittedLicese,REJECTEDLicese
   draftLicenseLoading,submittedLicenseLoading,REJECTEDLicenseLoading,SUSPENDEDLicenseLoading,ISSUEANCELicenseLoading}:any) {
  const{data:licenses,isLoading}=useGetLicensesQuery()
 
-     console.log("licenses",licenses)
-     console.log("approved license",approvedLicense)
      const Headers = [
       {
         text: 'Total License',
@@ -25,13 +20,7 @@ function CounterCard({approvedLicense,draftLicese,submittedLicese,REJECTEDLicese
         icon: <BookTwoTone  twoToneColor="#0066FF"style={{fontSize: '25px',}} />,
         count: licenses?.length
       },
-      {
-        text: 'Drafted Licenses',
-        bg: 'bg-yellow-100',
-        color: '#F8B219',
-        icon: <InfoCircleTwoTone twoToneColor="#F8B219"  style={{fontSize: '25px',}}/>,
-        count: draftLicese?.length,
-      },
+    
       {
         text: 'Submitted Licenses',
         bg: 'bg-yellow-100',
@@ -46,33 +35,22 @@ function CounterCard({approvedLicense,draftLicese,submittedLicese,REJECTEDLicese
         icon: <CheckCircleTwoTone twoToneColor="#52c41a" style={{fontSize: '25px',}} />,
         count: approvedLicense?.length,
       },
-      {
-        text: 'Issuance Licenses',
-        bg: 'bg-green-100',
-        color: '#52c41a',
-        icon: <CheckCircleTwoTone twoToneColor="#52c41a" style={{fontSize: '25px',}} />,
-        count: ISSUEANCELicese?.length,
-      },
-      {
-        text: 'Rejected Licenses',
-        bg: 'bg-red-100',
-        color: '#FF0000',
-        icon: <CloseCircleTwoTone twoToneColor="#FF0000" style={{fontSize: '25px',}}/>,
-        count: REJECTEDLicese?.length,
-      },
+  
       {
         text: 'Suspended Licenses',
         bg: 'bg-red-100',
         color: '#FF0000',
         icon: <CloseCircleTwoTone twoToneColor="#FF0000" style={{fontSize: '25px',}}/>,
-        count: SUSPENDEDLicese?.length,
+        count: SUSPENDEDLicese?.length??0,
       },
     ];
   return (
   
     <>
     {approvedLicenseLoading || REJECTEDLicenseLoading || submittedLicenseLoading || draftLicenseLoading || SUSPENDEDLicenseLoading || ISSUEANCELicenseLoading ? (
-  <Spin />
+    <div className="flex justify-center items-center" style={{ minHeight: "200px" }}>
+    <Spin />
+  </div>
 ) : (
   <div className="flex flex-wrap">
     {Headers.map((header:any,index:number) => (

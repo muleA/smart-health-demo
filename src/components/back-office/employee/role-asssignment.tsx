@@ -26,7 +26,7 @@ export const RoleAssignment = (props: {
   /* Variables */
   const config: CollectionSelectorConfig = {
     visibleColumn: [{ key: 'name', name: 'Name' }, { key: 'description', name: 'Description' }],
-    title: 'Permissions',
+    title: 'Roles',
     size: 'md',
   };
 
