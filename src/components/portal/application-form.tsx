@@ -46,6 +46,7 @@ const StepperComponent = () => {
   phone: Yup.string(),
   ownerName: Yup.string(),
   lastName: Yup.string(),
+  facilityName:Yup.string(),
   professionalName: Yup.string(),
   professionalLastName: Yup.string(),
   qualificationLevel: Yup.string(),
@@ -178,15 +179,13 @@ const StepperComponent = () => {
             certificateId: [],
             delegationFile:"",
             experienceId: [],
+            facilityName:"",
             ownerName: "",
             professionalName: "",
             professionalNameLastName: "",
             qualificationLevel: "",
-            nameOfHealthFacility: "",
             facilityOwnerName: "",
-            technicalLeaderFullName: "",
             state:"",
-            address: "",
             city: "",
             subCity: "",
             woreda: "",
@@ -438,18 +437,18 @@ const StepperComponent = () => {
                               </div>
                               <div className="grid grid-cols-2 gap-2">
                                 <div className="mb-4">
-                                  <label htmlFor="nameOfHealthFacility">
-                                    Name of Health Facility and Type of Service
+                                  <label htmlFor="facilityName">
+                                  Facility Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
                                     type="text"
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
-                                    name="nameOfHealthFacility"
+                                    name="facilityName"
                                   />
                                   <ErrorMessage
-                                    name="nameOfHealthFacility"
+                                    name="facilityName"
                                     component="div"
                                     className="text-red-500" />
                                 </div>
@@ -471,21 +470,55 @@ const StepperComponent = () => {
                                       className="text-red-500" />
                                   </div>
                                 )}
+                                
+                          
                                 <div className="mb-4">
-                                  <label htmlFor="technicalLeaderFullName">
-                                    Technical Leader full Name
+                                  <label htmlFor="proffessionalFullName">
+                                  Professional full Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
                                     type="text"
-                                    name="technicalLeaderFullName"
+                                    name="proffessionalFullName"
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
                                   ></Field>
                                   <ErrorMessage
-                                    name="technicalLeaderFullName"
+                                    name="proffessionalFullName"
                                     component="div"
 
+                                    className="text-red-500" />
+                                </div>
+                                <div className="mb-4">
+                                  <label htmlFor="professionalName">
+                                   Owner Full Name
+                                    <span className="text-red-400">*</span>
+                                  </label>
+                                  <Field
+                                    type="text"
+                                    name="professionalName"
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                  ></Field>
+                                  <ErrorMessage
+                                    name="professionalName"
+                                    component="div"
+                                    className="text-red-500" />
+                                </div>
+                                <div className="mb-4">
+                                  <label htmlFor="professionalNameLastName">
+                                    Last Name
+                                    <span className="text-red-400">*</span>
+                                  </label>
+                                  <Field
+                                    type="text"
+                                    name="professionalNameLastName"
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                  ></Field>
+                                  <ErrorMessage
+                                    name="professionalNameLastName"
+                                    component="div"
                                     className="text-red-500" />
                                 </div>
                                 <div className="mb-4">
@@ -506,16 +539,16 @@ const StepperComponent = () => {
                                 </div>
 
                                 <div className="mb-4">
-                                  <label htmlFor="address">
-                                    Address
+                                  <label htmlFor="state">
+                                    State
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <div>
-                                    <Field type="text" name="address"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    <Field type="text" name="state"         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 ></Field>
                                   </div>
                                   <ErrorMessage
-                                    name="address"
+                                    name="state"
                                     component="div"
                                     className="text-red-500" />
                                 </div>
