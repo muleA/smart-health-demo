@@ -21,5 +21,7 @@ const HomeApi = apiSlice.injectEndpoints({
   }),
 });
 export const {
-useGetLicensesQuery,useGetLicenseByApplicationIdQuery,useLazyGetLicenseByApplicationIdQuery
+useGetLicensesQuery,
+useGetLicenseByApplicationIdQuery,
+useLazyGetLicenseByApplicationIdQuery
 } = HomeApi;

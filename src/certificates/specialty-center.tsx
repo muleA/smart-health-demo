@@ -2,8 +2,8 @@ import { Email, Phone } from '@mui/icons-material'
 import './certificate2.css'
 
 
-export default function Certificate4({licenseInfo}:any) {
-
+export default function Certificate4({licenseInfo,ApplicationlicenseInfo}:any) {
+console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
   return(
     <div className="container">
     <div className="header">

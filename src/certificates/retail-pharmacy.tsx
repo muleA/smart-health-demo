@@ -1,8 +1,9 @@
 import { Email, Phone } from '@mui/icons-material'
 import './certificate2.css'
 
-export default function Certificate3({licenseInfo}:any) {
+export default function Certificate3({licenseInfo,ApplicationlicenseInfo}:any) {
   console.log("license inf at 3",licenseInfo?.qualificationLevel)
+  console.log("ApplicationlicenseInfo inf at 3",ApplicationlicenseInfo)
 return (
     <div className="container">
     <div className="header">
