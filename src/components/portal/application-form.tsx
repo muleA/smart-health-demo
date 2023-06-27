@@ -182,12 +182,13 @@ const StepperComponent = () => {
             facilityName:"",
             ownerName: "",
             professionalName: "",
-            professionalNameLastName: "",
+            professionalLastName: "",
             qualificationLevel: "",
             facilityOwnerName: "",
             state:"",
             city: "",
             subCity: "",
+            kebela:"",
             woreda: "",
             houseNumber: "",
             phone: "",
@@ -196,7 +197,6 @@ const StepperComponent = () => {
           }}
           validationSchema={StepTwoSchema}
           onSubmit={async (values: any) => {
-            
             // Perform API call for Step 2
             // Replace the API call with your own implementation
             // Here, we're just logging the form values
@@ -210,9 +210,7 @@ const StepperComponent = () => {
           }}
         >
           {({ values, errors, touched }:any) => (
-
             <><>
-
             </><Card className="shadow-sm">
                 <Form className="rounded">
                   <h1 className="text-xl font-bold mb-2">
@@ -231,7 +229,6 @@ const StepperComponent = () => {
                         ></Alert>
                       </>
                     ) : null}
-
                     <div className="mb-4">
                       <label htmlFor="applicationType" className="font-bold">
                         Application Type <span className="text-red-400">*</span>
@@ -760,6 +757,7 @@ const StepperComponent = () => {
           <Button
             className="mr-4  mt-4 ml-6 bg-primary text-white"
             onClick={handlePrev}
+            disabled
           >
             Previous
           </Button>
