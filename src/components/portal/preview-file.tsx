@@ -1,10 +1,11 @@
-import {  Modal, Box } from '@mui/material';
+import {  Modal, Box, Dialog, DialogTitle, DialogContentText, DialogContent } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../shared/auth/use-auth';
 import { baseUrl } from '../../configs/config';
 import { useLazyGetCertificateFileNameQuery, useLazyGetEducationFileNameQuery, useLazyGetExperienceFileNameQuery } from '../portal.query';
 import { Button } from 'antd';
+import { DefaultDialog } from '../../shared/default-dialogue';
 const PreviewFile = ({entityId,entityType }:any) => {
     console.log("entity type",entityType)
     console.log("entity Id",entityId)
@@ -20,8 +21,9 @@ trigger({userId:session?.userInfo?.userId,educationId:entityId})
   const [triggerExperience,{data:experienceFileName}]=useLazyGetExperienceFileNameQuery()
   console.log("exper file name",experienceFileName)
   useEffect(()=>{
+   if(entityId && entityType==='experience'){
 triggerExperience({userId:session?.userInfo?.userId,experienceId:entityId})
-
+}
   },[entityId, entityType, session?.userInfo?.userId, triggerExperience])
 
   const [triggerCertificate,{data:certificateFileName}]=useLazyGetCertificateFileNameQuery()
@@ -57,18 +59,28 @@ triggerExperience({userId:session?.userInfo?.userId,experienceId:entityId})
   const handleCloseModal = () => {
     setFileUrl('');
   };
+  const styles = {
+    dialog: {
+      minHeight: '200px', // Set the desired minimum height here
+    },
+  };
+  
 
   return (
     
-    <div>
-      <Button onClick={handleDownloadClick}>Preview Attached File</Button>
-      <Modal open={!!fileUrl} onClose={handleCloseModal}>
-        <Box sx={{ position: 'absolute', top: '50%', left: '50%', 
-        transform: 'translate(-50%, -50%)', width: '50vw', height: '90vh' }}>
-          <embed src={fileUrl} type="application/pdf" width="100%" height="100%" />
-        </Box>
-      </Modal>
-    </div>
+      <><Button onClick={handleDownloadClick}>Preview  File</Button>
+
+
+
+<DefaultDialog onClose={handleCloseModal}   minHeight={"90%"}  minWidth={"70%"}     
+ open={!!fileUrl} title='Preview File'
+>
+<embed src={fileUrl} type="application/pdf" width="100%" height="100%" />
+
+</DefaultDialog>
+
+
+      </>
   );
 };
 

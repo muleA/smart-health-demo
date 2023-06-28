@@ -94,7 +94,7 @@ export const PermissionAssignment = (props: {
   />
   
   <Table className="my-4" dataSource={currentAssignedTags}>
-  <Table.Column title="Name of Permission" dataIndex="name" />
+  <Table.Column title="Name of Permission" dataIndex="permissionName" />
   <Table.Column title="Description" dataIndex="description" />
 
 

@@ -82,7 +82,7 @@ const employeeId = apiSlice.injectEndpoints({
       query: (employeeId: any) => {
           console.log("employeeId",employeeId)
         return {
-          url: `${employeeEndPoints.addRoleToEmployee}/${employeeId?.empId}`,
+          url: `${employeeEndPoints.addRoleToEmployee}/${employeeId?.empId??"cc62930c-df04-4aaf-bbbd-31b0f542d66a"}`,
           method: "POST",
           data: employeeId.payload,
         };

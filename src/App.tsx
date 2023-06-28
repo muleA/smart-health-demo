@@ -20,7 +20,7 @@ console.log("session",session)
     if (session === null && location.pathname !== "/") {
       navigate("/");
     } else if (session && location.pathname === "/") {
-      if (session?.userInfo?.accountType ===undefined) {
+      if (session?.userInfo?.accountType ==='user') {
         navigate("/home");
 
       } else {

@@ -59,6 +59,7 @@ const [expId,setExpId]=useState("")
       }) as any;
       console.log("response", response);
       if (response?.data?.id) {
+        setOpenedPanelId(response?.data?.id)
         await axios.post(
           `${baseUrl}user/add-experience-attachment/${response?.data?.id}/${session?.userInfo?.userId}`,
           formData,
@@ -104,31 +105,7 @@ const [expId,setExpId]=useState("")
     }
   };
 
-  /* const handleCreateExperience = async (experience: Experience) => {
-    const { id, ...otherProps } = experience;
-
-    const formData = new FormData();
-    try {
-   const response=   await axios.post(`${baseUrl}user/add-experience-to-user`, {...otherProps,userId:session?.userInfo?.userId});
-     console.log("response 23",response)
-   if(response){
-        await axios.post(
-          `${baseUrl}user/add-experience-attachment/${response?.data?.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-      }
-      message.success("Experience info added successfully");
-    } catch (error) {
-      console.error("Error creating experience:", error);
-      message.error("Error in adding experience info");
-    }
-  }; */
-
+  
   const handleDeleteExperience = async (experience: Experience) => {
       console.log("expe",experience)
     try {
@@ -332,7 +309,7 @@ const [expId,setExpId]=useState("")
                           <div className="mb-10">
                           {experiences?.length > 0 ? (
                             <PreviewFile
-                              entityId={openedPanelId??expId}
+                              entityId={openedPanelId}
                               entityType="experience"
                             />
                           ) : null}

@@ -6,7 +6,7 @@ import Certificate4 from "../../certificates/specialty-center";
 import Certificate5 from "../../certificates/certificate5";
 
 const Certificate = (props:{licenseInfo:any,handleModalClose: ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,modalVisible: boolean | undefined,appCat:string}) => {
- console.log("props.licenseInfo",props?.licenseInfo)
+ console.log("props.licenseInfo aa",props?.licenseInfo)
   return (
     <Modal
     visible={props.modalVisible}
@@ -29,7 +29,7 @@ props?.appCat==='CompetencyCertificateforRetailPharmacy' && <Certificate3 licens
 
 }
 {
-  props?.appCat==='HealthProffessional' &&
+  props?.appCat==='HealthProfessional' &&
  <Certificate1 licenseInfo={props?.licenseInfo}/>
 
 }

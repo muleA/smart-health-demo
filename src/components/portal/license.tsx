@@ -50,7 +50,7 @@ const CertificateLicense = (props: { licenseInfo: any, ApplicationlicenseInfo: a
             Download
           </Button>
           <div>
-            <Button id="exportButton" className="text-blue-500 rounded border border-blue-500 ">Export to PDF</Button>
+            <Button id="exportButton" className="text-blue-500 rounded border border-blue-500 " onClick={()=>window.print()}>Print</Button>
 
           </div>
         </div>

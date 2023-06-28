@@ -16,6 +16,7 @@ import {
 import timeSince from "../../shared/utilities/time-since";
 import GenerateCertificate from "../../shared/generate-certificate1";
 import { useAuth } from "../../shared/auth/use-auth";
+import PreviewFile from "./preview-file";
 
 
 const ApplicationDetail = () => {
@@ -171,7 +172,8 @@ const ApplicationDetail = () => {
           </div>
           <div>
             <Card title="Educations" className="h-full">
-              <Table
+{/*               <PreviewFile entityId={ApplicationDetail?.educationId} entityType="education"/>
+ */}              <Table
                 dataSource={ApplicationDetail?.educationId}
                 columns={[
                   { title: "Education", dataIndex: "education" },

@@ -24,13 +24,16 @@ import PreviewFile from "../../portal/preview-file";
  
 export const UserApplicationsDetail = ({ id }: any) => {
   // console.log('the Id sent as props is ',Session)
+
   const { data, isLoading } = useGetApplicationDetailByUserIdQuery(id);
+
+  console.log("data",data?.map((item:any)=>item?.applicationCategory))
   const { Panel } = Collapse;
   const { Text } = Typography;
 const {session}=useAuth()
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [appCat, setAppCat] = useState("");
-
+console.log("appCat",appCat)
   const [modalVisible, setModalVisible] = useState(false);
   const [rejectClicked, setRejectClicked] = useState(false);
 
@@ -46,8 +49,9 @@ const {session}=useAuth()
   };
 
   const handleViewCertificate = (cat:string) => {
+    console.log("ca",cat)
     setModalVisible(true);
-    setAppCat(cat)
+    setAppCat(cat??"HealthProfessional")
   };
   const handleModalOk = async (values: any) => {
     console.log('values when the ok modal to approve or reject is clicked ',values);
@@ -112,8 +116,9 @@ const {session}=useAuth()
                   </p>
                   <p>
                     <Text strong>Education:</Text>{" "}
-                    {application?.education?.name} <PreviewFile entityId={application?.education[0].id} entityType='education'/>
-                  </p>
+                    {application?.education?.name} 
+{/*                     <PreviewFile entityId={application?.educationId[0]} entityType='education'/>
+ */}                  </p>
                   <p>
                     <Text strong>Experience:</Text>{" "}
                     {application?.experience?.name} <a>Attachemnt2</a>
@@ -245,7 +250,7 @@ const {session}=useAuth()
       </div>
       <Certificate
         licenseInfo={data}
-        appCat={appCat}
+        appCat={appCat??"HealthProfessional"}
         handleModalClose={() => setModalVisible(false)}
         modalVisible={modalVisible}
       />

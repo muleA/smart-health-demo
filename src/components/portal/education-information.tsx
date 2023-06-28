@@ -99,6 +99,8 @@ c        education
       })) as any;
       console.log("response", response);
       if (response?.data?.id) {
+        setOpenedPanelId(response?.data?.id)
+
         const fileUrl = (await axios.post(
           `${baseUrl}user/add-education-attachment/${response?.data?.id}/${session?.userInfo?.userId}`,
           formData,
@@ -361,7 +363,7 @@ c        education
                          
                           </Form.Item>
                           <div className="mb-10">
-                          {educations?.length > 0 ? (
+                          {openedPanelId ? (
                             <PreviewFile
                               entityId={openedPanelId}
                               entityType="education"

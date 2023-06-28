@@ -65,6 +65,7 @@ const CertificateInformation: React.FC = () => {
         userId: session?.userInfo?.userId,
       });
       if(response?.data?.id){
+        setOpenedPanelId(response?.data?.id)
         await axios.post(
           `${baseUrl}user/add-certificate-attachment/${response?.data?.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
           formData,

@@ -22,7 +22,7 @@ console.log(userPermissions);
 
     console.log("userPermissions",userPermissions)
     return filterMenusByPermissions(props?.menus, userPermissions);
-  }, [props?.menus, session?.userInfo?.EmployeeRoles]);
+  }, [props?.menus, session]);
 
   useEffect(() => {
     setVisibleMenu(permittedMenu);
