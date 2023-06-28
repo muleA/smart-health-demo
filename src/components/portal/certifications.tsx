@@ -8,6 +8,7 @@ import { useAuth } from "../../shared/auth/use-auth";
 import { Notify } from "../../shared/notification/notify";
 import { baseUrl } from "../../configs/config";
 import Empty from "../../shared/empty-state";
+import PreviewFile from "./preview-file";
 
 const { Panel } = Collapse;
 
@@ -25,41 +26,9 @@ const CertificateInformation: React.FC = () => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const { session } = useAuth();
   const[archiveCertificate,{isLoading}]=useArchiveCertificateMutation()
-  const [selectedImage, setSelectedImage] = useState<any>(null);
-  const handleImageUpload = async (
-    file: string | Blob,
-    certificateId: string | undefined
-  ) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
+  const [openedPanelId, setOpenedPanelId] = useState<string | null>(null);
+  console.log("openedPanelId at certificate",openedPanelId)
 
-      const response = await axios.post(
-        `${baseUrl}user/add-certificate-attachment/${certificateId}/${session?.userInfo?.userId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      setSelectedImage(response.data);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
-  const handleImageRemove = () => {
-    setSelectedImage(null);
-  };
-
-  const handleUploadClick = () => {
-    // Trigger the image upload manually
-    const uploadInput = document.getElementById("image-upload-input");
-    if (uploadInput) {
-      uploadInput.click();
-    }
-  };
   useEffect(() => {
     fetchCertificates();
   }, []);
@@ -95,9 +64,9 @@ const CertificateInformation: React.FC = () => {
         receivedDate: certificate.receivedDate,
         userId: session?.userInfo?.userId,
       });
-      if(response){
+      if(response?.data?.id){
         await axios.post(
-          `${baseUrl}user/add-certificate-attachment/${response??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+          `${baseUrl}user/add-certificate-attachment/${response?.data?.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
           formData,
           {
             headers: {
@@ -145,23 +114,7 @@ const CertificateInformation: React.FC = () => {
     }
   };
 
-  const handleImageChange = (info: any, educationId: any) => {
-    if (info.file.status === "done") {
-      setSelectedImage(info.file.originFileObj);
-    }
-  };
-  const handleImagePreview = async (file: File | null) => {
-    if (file && file.type.startsWith("image/")) {
-      const imageUrl = await new Promise<string | ArrayBuffer | null>(
-        (resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.readAsDataURL(file);
-        }
-      );
-      setSelectedImage(imageUrl);
-    }
-  };
+ 
   const handleAddCertificate = () => {
     if (certificates.length > 0) {
       const firstInstitution = certificates[0];
@@ -250,7 +203,9 @@ const CertificateInformation: React.FC = () => {
             ):(
             <>
           {certificates.map((certificate: Certificate, index: number) => (
-            <Collapse key={index} defaultActiveKey={0}>
+            <Collapse key={index} defaultActiveKey={0}                 
+              onChange={() => setOpenedPanelId(certificate.id)}
+            >
               <Panel
                 className="mb-2"
                 header={`Certificate ${index + 1}`}
@@ -366,7 +321,9 @@ const CertificateInformation: React.FC = () => {
           <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>
       </Form.Item>
-
+<div className="mt-2 mb-10">
+  <PreviewFile entityType="certificate" entityId={openedPanelId }/>
+</div>
                   <div className="flex space-x-4">
                     <Button
                       type="primary"
@@ -375,13 +332,13 @@ const CertificateInformation: React.FC = () => {
                    >
                       Save
                     </Button>
-                    <Button
+                   {/*  <Button
                       type="primary"
                       danger
                       onClick={() => handleDeleteCertificate(certificate)}
                     >
                       Delete
-                    </Button>
+                    </Button> */}
                   </div>
                 </Form>
                 </div>

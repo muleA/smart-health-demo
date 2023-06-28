@@ -6,6 +6,7 @@ import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import Empty from "../../shared/empty-state";
 import { useArchiveExperienceMutation } from "../portal.query";
 import { baseUrl } from "../../configs/config";
+import PreviewFile from "./preview-file";
 
 const { Panel } = Collapse;
 
@@ -21,52 +22,18 @@ interface Experience {
 
 const ExperinceInformations: React.FC = () => {
   const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [selectedImage, setSelectedImage] = useState<any>(null);
   const [archiveExperience,{isLoading}]=useArchiveExperienceMutation()
+  const [file, setFile] = useState<any>();
+  const [openedPanelId, setOpenedPanelId] = useState<string | null>(null);
+  console.log("openedPanelId", openedPanelId);
+
+  const handleFileChange = (file: any) => {
+    setFile(file);
+  };
   const { session } = useAuth();
-  const handleImageUpload = async (
-    file: string | Blob,
-    experienceID: string | undefined
-  ) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
-
-      const response = await axios.post(
-        `${baseUrl}user/add-experience-attachment/${experienceID}/${session?.userInfo?.userId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      setSelectedImage(response.data);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
-  const handleImageRemove = () => {
-    setSelectedImage(null);
-  };
-
-  const handleUploadClick = () => {
-    // Trigger the image upload manually
-    const uploadInput = document.getElementById("image-upload-input");
-    if (uploadInput) {
-      uploadInput.click();
-    }
-  };
   useEffect(() => {
     fetchExperiences();
   }, []);
-
-  const [file, setFile] = useState<any>();
-
-  const handleFileChange = (file:any) => {
-    setFile(file);
-  };
   const fetchExperiences = async () => {
     try {
       const response = await axios.get(
@@ -78,31 +45,39 @@ const ExperinceInformations: React.FC = () => {
       console.error("Error fetching experiences:", error);
     }
   };
-  const handleCreateExperiences = async (Experience: Experience) => {
+const [expId,setExpId]=useState("")
+  const handleCreateExperience = async (experience: Experience) => {
+    const { id, ...otherProps } = experience;
+    const formData = new FormData();
+    formData.append("attachmentUrl", file);
+    console.log("formData",formData)
+    setExpId(id)
     try {
-      await axios.post(`${baseUrl}user/add-Experience`, Experience);
+   const response= await axios.post(`${baseUrl}user/add-Experience-to-user`, {
+        ...otherProps,
+        userId: session?.userInfo?.userId,
+      }) as any;
+      console.log("response", response);
+      if (response?.data?.id) {
+        await axios.post(
+          `${baseUrl}user/add-experience-attachment/${response?.data?.id}/${session?.userInfo?.userId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        ) as any;
+      }
+
+      message.success("experience Info updated successfully");
     } catch (error) {
-      console.error("Error updating Experience:", error);
-      message.error("error occurred in adding experience  information's");
+      console.error("Error updating experience:", error);
+      message.error("error happened in experience Info updated successfully");
     }
   };
-  const handleImageChange = (info: any, experienceID: any) => {
-    if (info.file.status === "done") {
-      setSelectedImage(info.file.originFileObj);
-    }
-  };
-  const handleImagePreview = async (file: File | null) => {
-    if (file && file.type.startsWith("image/")) {
-      const imageUrl = await new Promise<string | ArrayBuffer | null>(
-        (resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.readAsDataURL(file);
-        }
-      );
-      setSelectedImage(imageUrl);
-    }
-  };
+ 
+ 
   const handleExperienceChange = (
     index: number,
     field: string,
@@ -129,17 +104,16 @@ const ExperinceInformations: React.FC = () => {
     }
   };
 
-  const handleCreateExperience = async (experience: Experience) => {
+  /* const handleCreateExperience = async (experience: Experience) => {
     const { id, ...otherProps } = experience;
 
     const formData = new FormData();
-    formData.append("attachmentUrl",file)
     try {
    const response=   await axios.post(`${baseUrl}user/add-experience-to-user`, {...otherProps,userId:session?.userInfo?.userId});
      console.log("response 23",response)
    if(response){
         await axios.post(
-          `${baseUrl}user/add-experience-attachment/${response??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
+          `${baseUrl}user/add-experience-attachment/${response?.data?.id??"fbf99cfa-a2c1-45fe-a8f3-fed50db7e735"}/${session?.userInfo?.userId}`,
           formData,
           {
             headers: {
@@ -153,7 +127,7 @@ const ExperinceInformations: React.FC = () => {
       console.error("Error creating experience:", error);
       message.error("Error in adding experience info");
     }
-  };
+  }; */
 
   const handleDeleteExperience = async (experience: Experience) => {
       console.log("expe",experience)
@@ -198,7 +172,7 @@ const ExperinceInformations: React.FC = () => {
         message.error(
           "Please fill in the experience  information before adding another ."
         );
-        return; // Exit the function early if the first education is empty
+        return; // Exit the function early if the first experience is empty
       }
     }
 
@@ -254,7 +228,10 @@ const ExperinceInformations: React.FC = () => {
           ):(
           <>
             {experiences.map((experience: Experience, index: number) => (
-            <Collapse key={index} defaultActiveKey={0}>
+            <Collapse key={index} defaultActiveKey={0}
+            onChange={() => setOpenedPanelId(experience.id)}
+
+            >
               <Panel
                 className="mb-2"
                 header={`Experience ${index + 1}`}
@@ -328,27 +305,40 @@ const ExperinceInformations: React.FC = () => {
                   </Form.Item>
 
                   <Form.Item
-        name="attachment"
-        label="Attachment"
-        rules={[{ required: true, message: "Please upload a file" }]}
-      >
-        <Upload
-          name="attachment"
-          listType="picture"
-          beforeUpload={(file) => {
-            handleFileChange(file);
-            return false;
-          }}
-        >
-          <Button icon={<UploadOutlined />}>Click to upload</Button>
-        </Upload>
-      </Form.Item>
-        
-                  <div className="flex space-x-4">
-                    {/*    <Button htmlType="submit" className="bg-primary" type="primary" onClick={handleCreateExperiences}>
-                  Save
-                </Button> */}
+                            name="attachment"
+                            label="Attachment"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please upload a file",
+                              },
+                            ]}
+                          >
+                            <Upload
+                              name="attachment"
+                              listType="picture"
+                              beforeUpload={(file) => {
+                                handleFileChange(file);
+                                return false;
+                              }}
+                            >
+                              <Button icon={<UploadOutlined />}>
+                                Click to upload
+                              </Button>
+                            </Upload>
+                         
+                          </Form.Item>
 
+                          <div className="mb-10">
+                          {experiences?.length > 0 ? (
+                            <PreviewFile
+                              entityId={openedPanelId??expId}
+                              entityType="experience"
+                            />
+                          ) : null}
+
+                          </div>
+                  <div className="flex space-x-4">
                     <Button
                       type="primary"
                       className="bg-primary"

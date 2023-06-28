@@ -10,7 +10,6 @@ export const axiosBaseQuery =
       url: string;
       method: AxiosRequestConfig['method'];
       data?: AxiosRequestConfig['data'];
-      id?:any;
       headers?: AxiosRequestConfig['headers'];
       params?: AxiosRequestConfig['params'];
     },

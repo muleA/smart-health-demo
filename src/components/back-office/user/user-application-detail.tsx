@@ -20,6 +20,7 @@ import IsPermitted from "../../../shared/auth/is-permitted";
 import { ApproveApplication, ChangeLicenseStatus } from "../../../shared/shell/permissions-list";
 import { Session } from "inspector";
 import { useAuth } from "../../../shared/auth/use-auth";
+import PreviewFile from "../../portal/preview-file";
  
 export const UserApplicationsDetail = ({ id }: any) => {
   // console.log('the Id sent as props is ',Session)
@@ -111,7 +112,7 @@ const {session}=useAuth()
                   </p>
                   <p>
                     <Text strong>Education:</Text>{" "}
-                    {application?.education?.name} <a>Attachment 1</a>
+                    {application?.education?.name} <PreviewFile entityId={application?.education[0].id} entityType='education'/>
                   </p>
                   <p>
                     <Text strong>Experience:</Text>{" "}

@@ -13,12 +13,12 @@ const[triggerUserInfo,{data:userInfo,isLoading:userInfoLoading}]=useLazyGetUserB
 console.log("appInfo",appInfo)
 useEffect(()=>{
   if(licenses){
-    trigger(licenses?.map((item: { applicationId: any; })=>item?.applicationId))
+    trigger(licenses[0]?.applicationId)
   }
 },[licenses, trigger])
 useEffect(()=>{
   if(licenses){
-    triggerUserInfo(licenses?.map((item: { userId: any; })=>item?.userId))
+    triggerUserInfo(licenses[0]?.userId)
   }
 },[licenses, triggerUserInfo])
 const columns = [
@@ -43,21 +43,13 @@ const columns = [
   },
   {
     title: "Entry In",
-    dataIndex: ["license", "validFrom"],
+    dataIndex: "validFrom",
     key: "validFrom",
-    render: (validFrom: string | number | Date) => {
-      const formattedDate = new Date(validFrom).toLocaleDateString("en-US");
-      return <span>{formattedDate}</span>;
-    }
   },
   {
     title: "Expire Out",
-    dataIndex: ["license", "validTo"],
+    dataIndex:  "validTo",
     key: "validTo",
-    render: (validTo: string | number | Date) => {
-      const formattedDate = new Date(validTo).toLocaleDateString("en-US");
-      return <span>{formattedDate}</span>;
-    }
   },
   {
     title: "Status",
@@ -88,7 +80,7 @@ const columns = [
         </div>
 
         <Divider className="m-2" />
-        <Table dataSource={[licenses]} columns={columns} loading={isLoading||appInfoLoading} />
+        <Table dataSource={[appInfo]} columns={columns} loading={isLoading||appInfoLoading} />
       </div>
     </div>
   );

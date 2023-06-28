@@ -78,6 +78,9 @@ const {session}=useAuth()
           >
             <Option value="en">English</Option>
             <Option value="am">አማርኛ</Option>
+           
+
+
             {/* Add more language options as needed */}
           </Select>
           {!session?(<>

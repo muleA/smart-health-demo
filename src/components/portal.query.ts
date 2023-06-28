@@ -1,6 +1,6 @@
+import { useAuth } from "../shared/auth/use-auth";
 import { apiSlice } from "../store/app.api";
 import { portalEndPoints } from "./portal-endpoint";
-
 const portalApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<any, void>({
@@ -86,6 +86,30 @@ const portalApi = apiSlice.injectEndpoints({
         url: `${portalEndPoints.getApplicationByUserId}/${id}`,
         method: "GET",
       }),
+      providesTags: ["user"],
+    }),
+    getEducationFileName: builder.query<any, any>({
+      query: (option:any) => ({
+        url: `${portalEndPoints.getEducationFileName}/${option.userId}/${option.educationId}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+    getExperienceFileName: builder.query<any, any>({
+      query: (option:any) => ({
+        url: `${portalEndPoints.getExperienceFileName}/${option.userId}/${option.experienceId}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),  
+    getCertificateFileName: builder.query<any, { userId: string, certificateId: string }>({
+      query: (option: { userId: string, certificateId: string }) => {
+        console.log("Options:", option); // Added console.log statement
+        return {
+          url: `${portalEndPoints.getCertificateFileName}/${option.userId}/${option.certificateId}`,
+          method: "GET",
+        };
+      },
       providesTags: ["user"],
     }),
     
@@ -185,7 +209,7 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
-    addEducation: builder.mutation<string, any>({
+    addEducation: builder.mutation<any, any>({
       query: (newUser) => ({
         url: portalEndPoints.addEducation,
         method: "POST",
@@ -242,5 +266,9 @@ export const {
    useGetUserByIdQuery,
    useGetEducationByIdQuery,
    useGetApplicationUserIdQuery,
-   useLazyGetLicenseByIdQuery
+   useLazyGetLicenseByIdQuery,
+   useGetEducationFileNameQuery,
+   useLazyGetEducationFileNameQuery,
+   useLazyGetExperienceFileNameQuery,
+   useLazyGetCertificateFileNameQuery
 } = portalApi;

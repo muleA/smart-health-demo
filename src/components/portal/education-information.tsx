@@ -21,7 +21,7 @@ import {
 import { baseUrl } from "../../configs/config";
 import { useAuth } from "../../shared/auth/use-auth";
 import { Notify } from "../../shared/notification/notify";
-import FileViewer from "../../shared/file-viwer";
+import PreviewFile from "./preview-file";
 
 const { Panel } = Collapse;
 
@@ -39,15 +39,14 @@ interface Education {
 const EducationForm: React.FC = () => {
   const [educations, setEducations] = useState<Education[]>([]);
   const [file, setFile] = useState<any>();
+  const [openedPanelId, setOpenedPanelId] = useState<string | null>(null);
+  console.log("openedPanelId", openedPanelId);
 
-  const handleFileChange = (file:any) => {
+  const handleFileChange = (file: any) => {
     setFile(file);
   };
   const [archive, { isLoading: archiving }] = useArchiveEducationMutation();
   const { session } = useAuth();
-  
-
- 
 
   useEffect(() => {
     fetchEducations();
@@ -92,31 +91,32 @@ c        education
   const handleCreateEducations = async (education: Education) => {
     const { id, ...otherProps } = education;
     const formData = new FormData();
-formData.append("attachmentUrl",file)
+    formData.append("attachmentUrl", file);
     try {
-    const response=  await addEducation({ ...otherProps, userId: session?.userInfo?.userId });
-    if(response){
-      await axios.post(
-        `${baseUrl}user/add-education-attachment/${response??""}/${session?.userInfo?.userId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    }
- 
+      const response = (await addEducation({
+        ...otherProps,
+        userId: session?.userInfo?.userId,
+      })) as any;
+      console.log("response", response);
+      if (response?.data?.id) {
+        const fileUrl = (await axios.post(
+          `${baseUrl}user/add-education-attachment/${response?.data?.id}/${session?.userInfo?.userId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )) as any;
+      }
+
       message.success("Education Info updated successfully");
     } catch (error) {
       console.error("Error updating education:", error);
       message.error("error happened in Education Info updated successfully");
     }
-
-  
   };
 
- 
   const handleDeleteEducation = async (education: Education) => {
     try {
       await axios.post(`${baseUrl}user/delete-education/${education.id}`);
@@ -166,7 +166,7 @@ formData.append("attachmentUrl",file)
       professionalTitle: "",
       studentIdNumber: "",
       fieldOfStudy: "",
-      attachment:"",
+      attachment: "",
       receivedDate: "",
     };
 
@@ -213,7 +213,12 @@ formData.append("attachmentUrl",file)
           ) : (
             <>
               {educations.map((education: Education, index: number) => (
-                <Collapse key={index} defaultActiveKey={0}>
+                <Collapse
+                  key={index}
+                  expandIconPosition="right"
+                  defaultActiveKey={0}
+                  onChange={() => setOpenedPanelId(education.id)}
+                >
                   <Panel
                     className="mb-2"
                     header={`Education ${index + 1}`}
@@ -330,25 +335,40 @@ formData.append("attachmentUrl",file)
                               }
                             />
                           </Form.Item>
-        <Form.Item
-        name="attachment"
-        label="Attachment"
-        rules={[{ required: true, message: "Please upload a file" }]}
-      >
-        <Upload
-          name="attachment"
-          listType="picture"
-          beforeUpload={(file) => {
-            handleFileChange(file);
-            return false;
-          }}
-        >
-          <Button icon={<UploadOutlined />}>Click to upload</Button>
-        </Upload>
-      </Form.Item>
+                          <Form.Item
+                            name="attachment"
+                            label="Attachment"
+                            className="flex space-x-10"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please upload a file",
+                              },
+                            ]}
+                          >
+                            <Upload
+                              name="attachment"
+                              listType="picture"
+                              beforeUpload={(file) => {
+                                handleFileChange(file);
+                                return false;
+                              }}
+                            >
+                              <Button icon={<UploadOutlined />}>
+                                Click to upload
+                              </Button>
+                            </Upload>
+                         
+                          </Form.Item>
+                          <div className="mb-10">
+                          {educations?.length > 0 ? (
+                            <PreviewFile
+                              entityId={openedPanelId}
+                              entityType="education"
+                            />
+                          ) : null}
 
-      <FileViewer fileNameEndpoint={`${baseUrl}user/get-education-file-name-by-userId/${session?.userInfo.userId}/${education.id}
-      `}/>
+                          </div>
                           <div className="flex justify-between">
                             <Button
                               htmlType="submit"
