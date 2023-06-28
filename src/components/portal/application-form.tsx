@@ -182,7 +182,7 @@ const StepperComponent = () => {
             facilityName: "",
             ownerName: "",
             lastName: "",
-            proffessionalName: "",
+            professionalName: "",
             professionalLastName: "",
 
             qualificationLevel: "",
@@ -490,18 +490,18 @@ const StepperComponent = () => {
 
 
                                 <div className="mb-4">
-                                  <label htmlFor="proffessionalName">
+                                  <label htmlFor="professionalName">
                                     Professional full Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
                                     type="text"
-                                    name="proffessionalName"
+                                    name="professionalName"
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
                                   ></Field>
                                   <ErrorMessage
-                                    name="proffessionalName"
+                                    name="professionalName"
                                     component="div"
 
                                     className="text-red-500" />
@@ -717,7 +717,7 @@ const StepperComponent = () => {
 
                                   ></Field>
                                   <ErrorMessage
-                                    name="professionalLastName"
+                                    name="ownerLastName"
                                     component="div"
                                     className="text-red-500" />
                                 </div>
