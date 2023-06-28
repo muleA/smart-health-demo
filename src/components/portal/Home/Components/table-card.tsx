@@ -43,13 +43,14 @@ const columns = [
   },
   {
     title: "Entry In",
-    dataIndex: "validFrom",
+    dataIndex:['license', "validFrom"],
     key: "validFrom",
   },
   {
     title: "Expire Out",
-    dataIndex:  "validTo",
+    dataIndex:[ 'license', "validTo"],
     key: "validTo",
+
   },
   {
     title: "Status",

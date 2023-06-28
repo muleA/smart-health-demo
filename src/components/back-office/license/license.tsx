@@ -44,15 +44,14 @@ export function License() {
       {
         accessorKey: 'status',
         header: 'Status',
-        Cell: (status) => (status ? 'Active' : 'Inactive'),
         accessorFn: (originalRow) => (
           <Typography>
-            {originalRow?.status==="Active" ? (
+            {originalRow?.status==="ACTIVE" ? (
               <Badge color="green" status="success" text="Active" />
             ) :originalRow?.status==="SUSPENDED"? (
-              <Badge color="red" text="S" />
+              <Badge color="red" text="SUSPENDED" />
             ):(
-              <Badge color="yellow" text="Expired" />
+              <Badge color="yellow" text="EXPIRED" />
 
             )}
           </Typography>

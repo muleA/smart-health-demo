@@ -97,7 +97,7 @@ const {data:applications,isLoading:applicationsLoading}=useGetApplicationsQuery(
                 </div>
               </div>
             </div>
-            <div className=" mt-2 flex mx-auto p-4 bg-gay-50">
+            <div className=" mt-2 flex mx-auto  p-4 bg-gay-50">
             <Chart data={applications} />
             <SimplePieChart totalRestaurant={approvedLicense?.length} 
             totalUser={users?.length} totalDriver={employees?.length} totalOrder={submittedLicese?.length} />

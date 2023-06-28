@@ -12,7 +12,7 @@ export default function HomePage(){
     <div className="p-4 gap-4 flex flex-col gap-4">
         <div >
             <CounterCard approvedLicense={approvedLicense} approvedLicenseLoading={approvedLicenseLoading} 
-            submittedLicenseLoading={submittedLicenseLoading} REJECTEDLicenseLoading={REJECTEDLicenseLoading}
+            submittedLicenseLoading={submittedLicenseLoading} submittedLicese={submittedLicese} REJECTEDLicenseLoading={REJECTEDLicenseLoading}
              REJECTEDLicese={REJECTEDLicese} SUSPENDEDLicese={SUSPENDEDLicese} SUSPENDEDLicenseLoading={SUSPENDEDLicenseLoading}
               />
         </div>

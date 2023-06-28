@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CollapsibleCard from '../../../shared/card';
-import { Button, Card, Form, Modal, Select, message } from 'antd';
+import { Badge, Button, Card, Form, Modal, Select, Typography, message } from 'antd';
 import { useArchiveLicenseMutation, useChangeStatusMutation, useGetLicenseByIdQuery } from './license.query';
 import { useLazyGetLicenseByApplicationIdQuery } from '../../portal/Home/home-query';
 import { useLazyGetUserByIdQuery } from '../../back-office.query';
@@ -87,6 +87,22 @@ console.log(err)
           <tr className="border-b border-gray-200">
             <td className="px-4 py-2 font-bold">License Category</td>
             <td className="px-8 py-2">{appInfo?.applicationCategory}</td>
+          </tr>
+          <tr className="border-b border-gray-200">
+            <td className="px-4 py-2 font-bold">Status</td>
+            <td className="px-8 py-2">
+
+            <Typography>
+            {appInfo?.status==="ACTIVE" ? (
+              <Badge color="green" status="success" text="Active" />
+            ) :appInfo?.status==="SUSPENDED"? (
+              <Badge color="red" text="SUSPENDED" />
+            ):(
+              <Badge color="yellow" text="EXPIRED" />
+
+            )}
+          </Typography>
+            </td>
           </tr>
         <tr className="border-b border-gray-200">
             <td className="px-4 py-2 font-bold">Expired  At</td>
