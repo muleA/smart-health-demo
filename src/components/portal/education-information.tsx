@@ -364,7 +364,6 @@ c        education
                                 Click to upload
                               </Button>
                             </Upload>
-                         
                           </Form.Item>
                           <div className="mb-10">
                           {openedPanelId ? (

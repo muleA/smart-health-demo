@@ -42,6 +42,7 @@ export const RoleAssignment = (props: {
         roleDescription:item.description,
         roleId: item.id.toString(),
       }));
+      console.log("we are going to assign the following roles : ",payload)
       await assignTags(payload).unwrap();
       message.success("Role has been assigned to Employee successfully.");
     } catch (err) {
