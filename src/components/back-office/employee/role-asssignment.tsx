@@ -29,13 +29,15 @@ console.log("currentAssignedTags",currentAssignedTags)
     title: 'Roles',
     size: 'md',
   };
-
+const[onDoneClicked,setOnDoneClicked]=useState(false)
   const onDone = async (data: SetStateAction<any[]>) => {
     console.log('data on done', data);
     setCurrentAssignedTags(data);
+    setOnDoneClicked(true)
   };
 
   const onSave = async () => {
+    setOnDoneClicked(false)
     try {
       const payload = currentAssignedTags?.map((item) => ({
         roleName: item.name,
@@ -79,8 +81,7 @@ console.log("currentAssignedTags",currentAssignedTags)
   />
   
   <Table className="my-4" dataSource={currentAssignedTags}>
-  <Table.Column title="Name of Roles" dataIndex="name" />
-  <Table.Column title="Description" dataIndex="description" />
+  <Table.Column title="Name of Roles" dataIndex={`${onDoneClicked?"name":"roleName"}`} />
   <Table.Column
   title="Action"
   dataIndex="id"
