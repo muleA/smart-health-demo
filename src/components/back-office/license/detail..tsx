@@ -94,12 +94,14 @@ console.log(err)
 
             <Typography>
             {appInfo?.status==="ACTIVE" ? (
-              <Badge color="green" status="success" text="Active" />
+              <Badge color="green" status="success" text="ACTIVE" />
             ) :appInfo?.status==="SUSPENDED"? (
               <Badge color="red" text="SUSPENDED" />
-            ):(
+            ):appInfo?.status==='EXPIRED'?(
               <Badge color="yellow" text="EXPIRED" />
 
+            ):(             
+               <Badge color="green" text={appInfo?.status} />
             )}
           </Typography>
             </td>
