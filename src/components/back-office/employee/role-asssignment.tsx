@@ -13,7 +13,7 @@ export const RoleAssignment = (props: {
   tid: unknown;
 }) => {
   const [currentAssignedTags, setCurrentAssignedTags] = useState<any[]>([]);
-
+console.log("currentAssignedTags",currentAssignedTags)
   /* Hooks */
   const router = useParams();
   const { id } = router;
@@ -31,7 +31,7 @@ export const RoleAssignment = (props: {
   };
 
   const onDone = async (data: SetStateAction<any[]>) => {
-    console.log('data', data);
+    console.log('data on done', data);
     setCurrentAssignedTags(data);
   };
 
@@ -42,8 +42,9 @@ export const RoleAssignment = (props: {
         roleDescription:item.description,
         roleId: item.id.toString(),
       }));
-      console.log("we are going to assign the following roles : ",payload)
-      await assignTags(payload).unwrap();
+      
+      console.log("payload",payload)
+      await assignTags({payload:payload,empId:id?.toString()}).unwrap();
       message.success("Role has been assigned to Employee successfully.");
     } catch (err) {
       message.error("Sorry, an error encountered while assigning Roles.");
