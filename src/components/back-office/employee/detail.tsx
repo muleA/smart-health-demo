@@ -15,7 +15,7 @@ const [
     setOpen,
   ] = useState<boolean>(false);
 return(<>
-<CollapsibleCard title={"User Information's"}>
+<CollapsibleCard title={"Employee Information's"}>
 <UserForm mode={"update"} id={id} />
 
 </CollapsibleCard>

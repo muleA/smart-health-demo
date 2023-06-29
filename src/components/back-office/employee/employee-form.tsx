@@ -48,6 +48,16 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
     },
   ];
 
+  const handleArchive=async()=>{
+    try {
+        axios
+        .post(`${baseUrl}employees/archive-employee/${props?.id}`)
+          message.success("employee archived successfully");
+    navigate("/employees")
+    } catch (error) {
+      message.error("Error occurred while archiving user");
+    }
+  }
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -339,7 +349,7 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
               Previous
             </Button>
           )}
-               <div >
+               <div className="flex space-x-4" >
 
 <Button
   type="primary"
@@ -349,6 +359,10 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
   
 >
   {currentStep === steps.length - 1 ? "Create" : "Next"}
+</Button>
+
+<Button onClick={handleArchive} className="bg-primary bg-red-500" type="primary">
+  Archive
 </Button>
                </div>
               
