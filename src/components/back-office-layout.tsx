@@ -32,11 +32,13 @@ import { ArchivedEmployeeDetails } from "./back-office/archives/employee/archive
 import { ArchivedApplication } from "./back-office/archives/application/archived-application";
 import ArchivedApplicationDetail from "./back-office/archives/application/archived-application-detail";
 import { BackOfficeApplications } from "./back-office/application/application";
+import { _BackOfficeApplications } from "./back-office/application/_application";
 import SideBarLogo from "../shared/sidebar-logo";
 import * as Icon from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import {
   ViewApplications,
+  _ViewApplications,
   ViewArchives,
   ViewDashboard,
   ViewEmployee,
@@ -125,6 +127,12 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
       path: "/applications",
       icon: Icon.AppstoreOutlined,
       permissions: ViewApplications,
+    },
+    {
+      name: t("_Application"),
+      path: "/_applications",
+      icon: Icon.AppstoreOutlined,
+      permissions: _ViewApplications,
     },
     {
       name: "License",
@@ -295,6 +303,14 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewApplications}>
                     <BackOfficeApplications />
+                  </RoutePermissionGuard>
+                }
+              />
+              <Route
+                path="/_applications"
+                element={
+                  <RoutePermissionGuard requiredPermissions={_ViewApplications}>
+                    <_BackOfficeApplications />
                   </RoutePermissionGuard>
                 }
               />

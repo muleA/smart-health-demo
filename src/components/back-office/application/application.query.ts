@@ -9,10 +9,18 @@ const applicationApi = apiSlice.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["user"],
+    }),
+    getSubmittedApplications:builder.query<any,void>({
+      query: () => ({
+        url: applicationEndpoint.getSubmitedApplications,
+        method: "GET",
+      }),
+      providesTags: ["user"],
     })
   }),
 });
 
 export const {
-useGetApplicationsQuery
+useGetApplicationsQuery,
+useGetSubmittedApplicationsQuery
 } = applicationApi;
