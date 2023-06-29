@@ -107,7 +107,7 @@ const backOfficeApi = apiSlice.injectEndpoints({
     }),
     archiveUser: builder.mutation<any, any>({
       query: (newUser) => ({
-        url: `${backOfficeEndPoints.archiveUser}${newUser}`,
+        url: `${backOfficeEndPoints.archiveUser}/${newUser}`,
         method: "POST",
         data: newUser,
       }),

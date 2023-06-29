@@ -92,41 +92,43 @@ function LicenseDetail() {
                   <td className="px-4 py-2 font-bold">Status</td>
                   <td className="px-8 py-2">
 
-                    <Typography>
-                      {appInfo?.status === "ACTIVE" ? (
-                        <Badge color="green" status="success" text="Active" />
-                      ) : appInfo?.status === "SUSPENDED" ? (
-                        <Badge color="red" text="SUSPENDED" />
-                      ) : (
-                        <Badge color="yellow" text="EXPIRED" />
+            <Typography>
+            {appInfo?.status==="ACTIVE" ? (
+              <Badge color="green" status="success" text="Active" />
+            ) :appInfo?.status==="SUSPENDED"? (
+              <Badge color="red" text="SUSPENDED" />
+            ):(
+              <Badge color="yellow" text="EXPIRED" />
 
-                      )}
-                    </Typography>
-                  </td>
-                </tr>
-                <tr className="border-b border-gray-200">
-                  <td className="px-4 py-2 font-bold">Expired  At</td>
-                  <td className="px-8 py-2">{licenseInfo?.validTo}</td>
-                </tr>
-                <tr className="border-b border-gray-200">
-                  <td className="px-4 py-2 font-bold">Issued At</td>
-                  <td className="px-8 py-2">{licenseInfo?.validFrom}</td>
-                </tr>
-
-
-
-
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <IsPermitted requiredPermissions={ChangeLicenseStatus}>
-
-          <Button className='bg-primary text-white' onClick={handleApproveClick} >Change Status</Button>
-          <Button type='primary' loading={archiving} onClick={handleArchive} className='bg-red-400 ml-10  text-white'>Archive</Button>
-        </IsPermitted>
-
-
+            ):(             
+               <Badge color="green" text={appInfo?.status} />
+            )}
+          </Typography>
+            </td>
+          </tr>
+        <tr className="border-b border-gray-200">
+            <td className="px-4 py-2 font-bold">Expired  At</td>
+            <td className="px-8 py-2">{licenseInfo?.validTo}</td>
+          </tr>
+          <tr className="border-b border-gray-200">
+            <td className="px-4 py-2 font-bold">Issued At</td>
+            <td className="px-8 py-2">{licenseInfo?.validFrom}</td>
+          </tr>
+         
+    
+        
+    
+        </tbody>
+      </table>
+    </div>
+  </div>
+   <IsPermitted requiredPermissions={ChangeLicenseStatus}>
+ 
+       <Button className='bg-primary text-white' onClick={handleApproveClick} >Change Status</Button>
+       <Button type='primary' loading={archiving} onClick={handleArchive} className='bg-red-400 ml-10  text-white'>Archive</Button>
+       </IsPermitted>
+ 
+      
       </Card>
     </CollapsibleCard>
       <Modal

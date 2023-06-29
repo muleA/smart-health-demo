@@ -15,6 +15,7 @@ const UserForm = (props: { id?: string; mode: "new" | "update" }) => {
   const [createUser, { isLoading: isCreating }] = useUpdatedUserMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdatedUserMutation();
   const { data: user, isLoading: isDetailsLoading } = useGetUsersQuery();
+  console.log("props.userid",props?.id)
 const navigate=useNavigate()
   // Define the form validation schema using Yup
   const validationSchema = Yup.object({
@@ -58,7 +59,7 @@ const navigate=useNavigate()
   };
   const handleArchive=async()=>{
     try {
-        await archiveUser(props?.id);
+        await archiveUser(id);
         message.success("User archived successfully");
     navigate("/users")
     } catch (error) {
