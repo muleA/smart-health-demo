@@ -93,15 +93,15 @@ console.log(err)
             <td className="px-8 py-2">
 
             <Typography>
-            {appInfo?.status==="ACTIVE" ? (
+            {licenseInfo?.status==="ACTIVE" ? (
               <Badge color="green" status="success" text="ACTIVE" />
-            ) :appInfo?.status==="SUSPENDED"? (
+            ) :licenseInfo?.status==="SUSPENDED"? (
               <Badge color="red" text="SUSPENDED" />
-            ):appInfo?.status==='EXPIRED'?(
+            ):licenseInfo?.status==='EXPIRED'?(
               <Badge color="yellow" text="EXPIRED" />
 
             ):(             
-               <Badge color="green" text={appInfo?.status} />
+               <Badge color="green" text={licenseInfo?.status} />
             )}
           </Typography>
             </td>
