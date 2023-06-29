@@ -49,6 +49,7 @@ import {
 } from "../shared/shell/permissions-list";
 import RoutePermissionGuard from "../shared/auth/route-permission-guard";
 import LicenseDetail from "./back-office/license/detail.";
+import {SubmittedApplicationDetail} from "./back-office/application/_application-detail";
 
 const { Sider, Content, Header, Footer } = Layout;
 
@@ -311,6 +312,14 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 element={
                   <RoutePermissionGuard requiredPermissions={_ViewApplications}>
                     <_BackOfficeApplications />
+                  </RoutePermissionGuard>
+                }
+              />
+               <Route
+                path="/_applications/detail/:id"
+                element={
+                  <RoutePermissionGuard requiredPermissions={ViewApplications}>
+                    <SubmittedApplicationDetail />
                   </RoutePermissionGuard>
                 }
               />

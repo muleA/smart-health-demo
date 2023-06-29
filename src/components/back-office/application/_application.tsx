@@ -10,8 +10,11 @@ import timeSince from "../../../shared/utilities/time-since";
 export function _BackOfficeApplications() {
   const { data: applications, isLoading, isError, isFetching } = 
   useGetSubmittedApplicationsQuery();
- 
- 
+ const navigate=useNavigate()
+  const handleRowClick = (row: any) => {
+    console.log("row",row)
+    navigate(`/_applications/detail/${row?.original.id}`);
+  };
 
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
@@ -56,7 +59,12 @@ export function _BackOfficeApplications() {
   <MaterialReactTable
         columns={columns}
         data={applications ?? []}
-        
+        muiTableBodyRowProps={({ row }) => ({
+          onClick: () => handleRowClick(row),
+          sx: {
+            cursor: "pointer",
+          },
+        })}
         muiTablePaginationProps={{
           rowsPerPageOptions: [5, 10, 15, 25, 50, 100, 1000],
         }}
