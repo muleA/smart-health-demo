@@ -51,18 +51,6 @@ export function License() {
       {
         accessorKey: 'status',
         header: 'Status',
-        accessorFn: (originalRow) => (
-          <Typography>
-            {originalRow?.status==="ACTIVE" ? (
-              <Badge color="green" status="success" text="Active" />
-            ) :originalRow?.status==="SUSPENDED"? (
-              <Badge color="red" text="SUSPENDED" />
-            ):(
-              <Badge color="yellow" text={originalRow?.status} />
-
-            )}
-          </Typography>
-        ),
       },
       {
         accessorKey: 'comment',
