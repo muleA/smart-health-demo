@@ -51,7 +51,7 @@ export function License() {
             ) :originalRow?.status==="SUSPENDED"? (
               <Badge color="red" text="SUSPENDED" />
             ):(
-              <Badge color="yellow" text="EXPIRED" />
+              <Badge color="yellow" text={originalRow?.status} />
 
             )}
           </Typography>
