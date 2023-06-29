@@ -64,7 +64,7 @@ const ApplicationDetail = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
+        <div className=" gap-4">
           <div>
 
             <Card
@@ -171,9 +171,9 @@ const ApplicationDetail = () => {
 
           </div>
           <div>
-            <Card title="Educations" className="h-full">
+{/*             <Card title="Educations" className="h-full">
 {/*               <PreviewFile entityId={ApplicationDetail?.educationId} entityType="education"/>
- */}              <Table
+             <Table
                 dataSource={ApplicationDetail?.educationId}
                 columns={[
                   { title: "Education", dataIndex: "education" },
@@ -185,7 +185,7 @@ const ApplicationDetail = () => {
                           <EyeOutlined className="mr-1" />
                           Preview Attachment
                         </Button>
-                      ), */
+                      ), 
                   },
                 ]}
                 pagination={false}
@@ -203,7 +203,7 @@ const ApplicationDetail = () => {
                             <EyeOutlined className="mr-1" />
                             Preview Attachment
                           </Button>
-                        ), */
+                        ), 
                     },
                   ]}
                   pagination={false}
@@ -217,19 +217,19 @@ const ApplicationDetail = () => {
                     {
                       title: "",
                       dataIndex: "attachment",
-                      /*   render: (attachment) => (
+                         render: (attachment) => (
                           <Button type="link" className="flex items-center">
                             <EyeOutlined className="mr-1" />
                             Preview Attachment
                           </Button>
-                        ), */
+                        ), 
                     },
                   ]}
                   pagination={false}
                 />
               </Card>
             </Card>
-
+ */}
           </div>
           <Certificate licenseInfo={ApplicationDetail} ApplicationlicenseInfo={LicenseDetail} handleModalClose={handleModalClose} modalVisible={modalVisible} />
           <Modal

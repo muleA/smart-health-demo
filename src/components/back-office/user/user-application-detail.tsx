@@ -9,9 +9,9 @@ import {
   Typography,
   message,
 } from "antd";
-import { useGetApplicationDetailByUserIdQuery } from "../../back-office.query";
+import { useChangeLicenseStatusMutation, useGetApplicationDetailByUserIdQuery, useLazyGetApplicationDetailByUserIdQuery } from "../../back-office.query";
 import timeSince from "../../../shared/utilities/time-since";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../configs/config";
 import { DownloadOutlined } from "@ant-design/icons";
@@ -25,7 +25,7 @@ import PreviewFile from "../../portal/preview-file";
 export const UserApplicationsDetail = ({ id }: any) => {
   // console.log('the Id sent as props is ',Session)
 
-  const { data, isLoading } = useGetApplicationDetailByUserIdQuery(id);
+  const [trigger,{ data, isLoading }] = useLazyGetApplicationDetailByUserIdQuery();
 
   console.log("data",data?.map((item:any)=>item?.applicationCategory))
   const { Panel } = Collapse;
@@ -48,6 +48,12 @@ console.log("appCat",appCat)
     setRejectClicked(true);
   };
 
+  useEffect(()=>{
+  if(id){
+    trigger(id)
+  }
+  },[id, trigger])
+
   const handleViewCertificate = (cat:string) => {
     console.log("ca",cat)
     setModalVisible(true);
@@ -68,6 +74,7 @@ console.log("appCat",appCat)
           status: rejectClicked ? "REJECTED" : "APPROVED",
         }
       );
+      
       console.log(response.data);
       setIsModalVisible(false);
       message.success("Approved successfully");
@@ -115,21 +122,27 @@ console.log("appCat",appCat)
                     <Text strong>Comment:</Text> <Text strong>{application?.comment}</Text>
                   </p>
                   <p>
-                    <Text strong>Education:</Text>{" "}
-                    {application?.education?.name} 
-{/*                     <PreviewFile entityId={application?.educationId[0]} entityType='education'/>
- */}                  </p>
+      <Text strong>Education:</Text>{' '}
+      {application?.educationId?.map((item: any) => (
+        <PreviewFile entityId={item} userId={id} entityType="education" />
+      ))}
+    </p>
                   <p>
                     <Text strong>Experience:</Text>{" "}
-                    {application?.experience?.name} <a>Attachemnt2</a>
-                  </p>
+                    {application?.experienceId?.map((item: any) => (
+        <PreviewFile entityId={item} userId={id} entityType="experience" />
+      ))}                  </p>                     
+
                   <p>
                     <Text strong>Certificates:</Text>{" "}
-                    {application?.certificate?.certificateTitle}
-                    <a>Attachment3</a>
+                    {application?.certificateId?.map((item: any) => (
+        <PreviewFile entityId={item} userId={id} entityType="certificate" />
+      ))}
                   </p>
 
                   <div className="flex space-x-2">
+                  <IsPermitted requiredPermissions={ChangeLicenseStatus}>
+
                     {application.status !== "APPROVED" ? (
                       <>
                         <Button
@@ -143,7 +156,6 @@ console.log("appCat",appCat)
                       </>
                     ) : null}
 
- <IsPermitted requiredPermissions={ChangeLicenseStatus}>
  
 {
    application.status!=='APPROVED'?(<>

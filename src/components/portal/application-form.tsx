@@ -303,14 +303,14 @@ const StepperComponent = () => {
                                       value="owner" />
                                     <span className="ml-2">Owner</span>
                                   </label>
-                                  <label>
+                               {/*    <label>
                                     <Field
                                       type="radio"
                                       name="applierType"
                                       className="ml-6"
                                       value="delegation" />
                                     <span className="ml-2"></span>Delegation
-                                  </label>
+                                  </label> */}
                                 </div>
                                 <ErrorMessage
                                   name="applierType"
@@ -450,7 +450,7 @@ const StepperComponent = () => {
                                     component="div"
                                     className="text-red-500" />
                                 </div>
-                                {values?.applierType === "delegation" && (
+                    {/*             {values?.applierType === "delegation" && (
                                   <>
                                     <div className="mb-4">
                                       <label htmlFor="ownerName">
@@ -487,7 +487,7 @@ const StepperComponent = () => {
                                   </>
 
                                 )}
-
+ */}
 
                                 <div className="mb-4">
                                   <label htmlFor="professionalName">
@@ -680,7 +680,7 @@ const StepperComponent = () => {
 
                             </>
                           )}
-                        {values?.applicationType &&
+                     {/*    {values?.applicationType &&
                           values?.applicationCategory === "HealthProfessional" &&
                           values?.applierType === "delegation" && (
                             <>
@@ -725,7 +725,7 @@ const StepperComponent = () => {
 
 
                             </>
-                          )}
+                          )} */}
 
                       </div>
                     </div>

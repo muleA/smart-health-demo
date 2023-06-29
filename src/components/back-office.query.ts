@@ -59,6 +59,27 @@ const backOfficeApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    changeLicenseStatus: builder.mutation<any, any>({
+      query:(newUser) => {
+        const url = `${backOfficeEndPoints.ChangeLicenseStatus}/${newUser.appId}`;
+        const method = "POST";
+        const data = newUser;
+        console.log("URL:", url);
+        console.log("Method:", method);
+        console.log("Data:", data);
+        return {
+          url: `${backOfficeEndPoints.ChangeLicenseStatus}/${newUser.appId}`,
+          method: "POST",
+          data: newUser,        };
+      }/* ,
+      query: (newUser) => ({
+        url: `${backOfficeEndPoints.ChangeLicenseStatus}/${newUser.appId}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+      */
+    }), 
   
     restoreEducation: builder.mutation<any, any>({
       query: (newUser) => ({
@@ -108,5 +129,7 @@ export const {
    useGetApplicationDetailByUserIdQuery,
    useGetUserByIdQuery,useLazyGetUserByIdQuery,
    useGetArchivedAppsQuery,
-   useGetArchivedEmpoyeeQuery,useGetArchivedUserQuery
+   useGetArchivedEmpoyeeQuery,useGetArchivedUserQuery,
+   useLazyGetApplicationDetailByUserIdQuery,
+   useChangeLicenseStatusMutation
 } = backOfficeApi;

@@ -40,6 +40,8 @@ const EducationForm: React.FC = () => {
   const [educations, setEducations] = useState<Education[]>([]);
   const [file, setFile] = useState<any>();
   const [openedPanelId, setOpenedPanelId] = useState<string | null>(null);
+  const [currentFileName, setCurrentFileName] = useState<string | null>(null);
+
   console.log("openedPanelId", openedPanelId);
 
   const handleFileChange = (file: any) => {
@@ -110,6 +112,8 @@ c        education
             },
           }
         )) as any;
+        setCurrentFileName(fileUrl?.file)
+
       }
 
       message.success("Education Info updated successfully");
@@ -365,7 +369,7 @@ c        education
                           <div className="mb-10">
                           {openedPanelId ? (
                             <PreviewFile
-                              entityId={openedPanelId}
+                              entityId={openedPanelId??currentFileName}
                               entityType="education"
                             />
                           ) : null}

@@ -1,12 +1,12 @@
-import {  Modal, Box, Dialog, DialogTitle, DialogContentText, DialogContent } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../shared/auth/use-auth';
 import { baseUrl } from '../../configs/config';
 import { useLazyGetCertificateFileNameQuery, useLazyGetEducationFileNameQuery, useLazyGetExperienceFileNameQuery } from '../portal.query';
-import { Button } from 'antd';
+import {  Button, Spin, message } from 'antd';
 import { DefaultDialog } from '../../shared/default-dialogue';
-const PreviewFile = ({entityId,entityType }:any) => {
+import { response } from 'express';
+const PreviewFile = ({entityId,entityType,userId }:any) => {
     console.log("entity type",entityType)
     console.log("entity Id",entityId)
 
@@ -15,30 +15,30 @@ const PreviewFile = ({entityId,entityType }:any) => {
   const [trigger,{data:educationFileName,isLoading}]=useLazyGetEducationFileNameQuery()
   useEffect(()=>{
    if(entityId && entityType==='education'){
-trigger({userId:session?.userInfo?.userId,educationId:entityId})
+trigger({userId:session?.userInfo?.userId??userId,educationId:entityId})
 }
-  },[entityId, entityType, session?.userInfo?.userId, trigger])
+  },[entityId, entityType, session?.userInfo?.userId, trigger, userId])
   const [triggerExperience,{data:experienceFileName}]=useLazyGetExperienceFileNameQuery()
   console.log("exper file name",experienceFileName)
   useEffect(()=>{
    if(entityId && entityType==='experience'){
-triggerExperience({userId:session?.userInfo?.userId,experienceId:entityId})
+triggerExperience({userId:session?.userInfo?.userId??userId,experienceId:entityId})
 }
-  },[entityId, entityType, session?.userInfo?.userId, triggerExperience])
+  },[entityId, entityType, session?.userInfo?.userId, triggerExperience, userId])
 
   const [triggerCertificate,{data:certificateFileName}]=useLazyGetCertificateFileNameQuery()
   useEffect(()=>{
    if(entityId && entityType==='certificate'){
-    triggerCertificate({userId:session?.userInfo?.userId,certificateId:entityId})
+    triggerCertificate({userId:session?.userInfo?.userId??userId,certificateId:entityId})
 }
-  },[entityId, entityType, session?.userInfo?.userId, triggerCertificate])
+  },[entityId, entityType, session?.userInfo?.userId, triggerCertificate, userId])
 
-
+const [loading,setLoading]=useState(false)
   const handleDownloadClick = async () => {
     const educationFileData = `${baseUrl}user/get-education-file-by-name/${educationFileName}`;
    const experienceFileData = `${baseUrl}user/get-experience-file-by-name/${experienceFileName}`;
     const certificateFileData = `${baseUrl}user/get-certificate-file-by-name/${certificateFileName}`; 
-
+    setLoading(true)
     try {
       const response = await axios.get(entityType==='education'?educationFileData:entityType==='experience'?experienceFileData:certificateFileData, {
         responseType: 'blob',
@@ -49,11 +49,11 @@ triggerExperience({userId:session?.userInfo?.userId,experienceId:entityId})
 
       const fileBlob = response.data;
       const fileUrl = URL.createObjectURL(fileBlob);
-
       setFileUrl(fileUrl);
-    } catch (error) {
-      console.error('Error downloading file:', error);
+    } catch (error:any) {
+      message.error("ENOENT: no such file or directory, stat 'C:\\Users\\muluhabt\\Desktop\\BackEnd\\IFHCRS\\license-management\\dist\\uploads\\certificate\\1687974470537-231328922-scan0421.pdf")
     }
+    setLoading(false)
   };
 
   const handleCloseModal = () => {
@@ -69,9 +69,7 @@ triggerExperience({userId:session?.userInfo?.userId,experienceId:entityId})
   return (
     
       <><Button onClick={handleDownloadClick}>Preview  File</Button>
-
-
-
+{loading &&<Spin/>}
 <DefaultDialog onClose={handleCloseModal}   minHeight={"90%"}  minWidth={"70%"}     
  open={!!fileUrl} title='Preview File'
 >
