@@ -19,9 +19,15 @@ export function License() {
 
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
+      
       {
-        accessorKey: 'comment',
-        header: ' comment',
+        accessorKey: 'licenseNumber',
+        header: ' License Number',
+        accessorFn: (originalRow) => (
+          <Typography>
+            {(originalRow?.licenseNumber?.slice(0, 10))}
+          </Typography>
+        ),
       },
       {
         accessorKey: 'validFrom',
@@ -41,6 +47,7 @@ export function License() {
           </Typography>
         ),
       },
+     
       {
         accessorKey: 'status',
         header: 'Status',
@@ -54,6 +61,15 @@ export function License() {
               <Badge color="yellow" text="EXPIRED" />
 
             )}
+          </Typography>
+        ),
+      },
+      {
+        accessorKey: 'comment',
+        header: 'comment',
+        accessorFn: (originalRow) => (
+          <Typography>
+            {(originalRow?.comment?.slice(0, 10))}
           </Typography>
         ),
       },
