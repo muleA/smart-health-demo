@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Steps, Form, Input, Button, Radio, Card, Alert } from "antd";
+import { Modal, Steps, Form, Input, Button, Radio, Card, Alert, message } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { useAuth } from "../../../shared/auth/use-auth";
 import { baseUrl } from "../../../configs/config";
 import { Notify } from "../../../shared/notification/notify";
 import { SaveFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const { Step } = Steps;
 
@@ -14,6 +15,7 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [accountInfo,setAccountInfo]=useState<any>(null)
   console.log("accountInfo",accountInfo)
+  const navigate=useNavigate()
   const {session}=useAuth()
     console.log("session",session)
   const steps = [
@@ -115,14 +117,14 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
           .then((response) => {
             setAccountInfo(response?.data)
             // Handle the response data
-            Notify(
-              "success",
-              "User Account Created Successfully please move next steps to complete registrations"
+            message.success(
+              "employee Created Successfully"
             );
+            navigate("/employees")
           })
           .catch((error) => {
             console.error(error);
-            Notify("error", "error happened");
+            message.error("error happened");
             // Handle the error
           });
   
