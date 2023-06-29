@@ -79,7 +79,6 @@ console.log("currentAssignedTags",currentAssignedTags)
   
   <Table className="my-4" dataSource={currentAssignedTags}>
   <Table.Column title="Name of Roles" dataIndex="name" />
-  <Table.Column title="Description" dataIndex="description" />
   <Table.Column
   title="Action"
   dataIndex="id"
