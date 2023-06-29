@@ -11,7 +11,7 @@ export const permissionGroups = {
   view_user: "view_user",
   assign_role_to_employee: "assign_role_to_employee",
   view_applications: "view_applications",
-  _view_applications: "_view_applications",
+  _view_applications: "committe_review",
   view_license: "view_license",
   change_license_status: "change_license_status",
   view_archives: "view_archives",

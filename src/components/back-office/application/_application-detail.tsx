@@ -17,7 +17,7 @@ import {
   import { DownloadOutlined } from "@ant-design/icons";
   import Certificate from "../certificate2";
   import IsPermitted from "../../../shared/auth/is-permitted";
-  import { ApproveApplication, ChangeLicenseStatus } from "../../../shared/shell/permissions-list";
+  import { ApproveApplication, ChangeLicenseStatus, _ViewApplications } from "../../../shared/shell/permissions-list";
   import { Session } from "inspector";
   import { useAuth } from "../../../shared/auth/use-auth";
   import PreviewFile from "../../portal/preview-file";
@@ -141,7 +141,7 @@ import {
                     </p>
   
                     <div className="flex space-x-2">
-                    <IsPermitted requiredPermissions={ApproveApplication}>
+                    <IsPermitted requiredPermissions={_ViewApplications}>
   
                       {application.status !== "APPROVED" ? (
                         <>
