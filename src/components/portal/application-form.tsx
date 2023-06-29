@@ -9,6 +9,7 @@ import { useApplyToLicenseMutation } from "../portal.query";
 import { baseUrl } from "../../configs/config";
 import { useAuth } from "../../shared/auth/use-auth";
 import { UploadOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const { Step } = Steps;
 
@@ -53,7 +54,7 @@ const StepperComponent = () => {
     professionalLicenseNumber: Yup.string(),
   });
 
-
+const navigate=useNavigate()
   useEffect(() => {
     fetchEducations();
     fetchExperiences();
@@ -205,6 +206,7 @@ const StepperComponent = () => {
             try {
               await apply({ ...values, userId: session?.userInfo?.userId }).unwrap;
               message.success("application submitted successfully");
+              navigate("/my-applications")
             } catch (err) {
               message.error("error happened in applying");
             }

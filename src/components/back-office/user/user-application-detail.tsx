@@ -141,7 +141,7 @@ console.log("appCat",appCat)
                   </p>
 
                   <div className="flex space-x-2">
-                  <IsPermitted requiredPermissions={ChangeLicenseStatus}>
+                  <IsPermitted requiredPermissions={ApproveApplication}>
 
                     {application.status !== "APPROVED" ? (
                       <>
