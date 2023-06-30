@@ -10,7 +10,7 @@ import Certificate1 from "../../certificates/health-proffessional";
 
 const CertificateLicense = (props: { licenseInfo: any, ApplicationlicenseInfo: any, handleModalClose: ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined, modalVisible: boolean | undefined }) => {
   //  console.log("license info test",props?.licenseInfo)
-  console.log("ApplicationlicenseInfo info test", props?.ApplicationlicenseInfo)
+  console.log("ApplicationlicenseInfo info testwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", props?.ApplicationlicenseInfo)
 
   const { data: userInfo, isLoading } = useGetUserByIdQuery(props?.licenseInfo?.userId)
   

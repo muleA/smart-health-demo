@@ -7,7 +7,7 @@ function ApplicationDetail() {
   const {id}= useParams();
   return (
     <><CollapsibleCard title={"Application Information's"}>
-                    Application Information
+                    Application Informationeeeeeeeeeeeeeee
 
       <Card className='flex space-x-16'>
        <Button className='bg-primary text-white'>Approve</Button>

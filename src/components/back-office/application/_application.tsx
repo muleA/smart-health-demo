@@ -15,7 +15,6 @@ export function _BackOfficeApplications() {
     console.log("row",row)
     navigate(`/_applications/detail/${row?.original.id}`);
   };
-
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {

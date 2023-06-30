@@ -25,7 +25,7 @@ export default function Certificate5({licenseInfo,ApplicationlicenseInfo}:any) {
               </div>
               </div>
               <div className="right-header border">
-                <p> ቁጥር ጤ/ተ/ባ </p>
+                <p> ቁጥር { ApplicationlicenseInfo?.license?.licenseNumber} </p>
                 <p>ቀን {new Date().toDateString()}</p>
               </div>
             
