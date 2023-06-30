@@ -2,10 +2,10 @@ import { Email, Phone } from '@mui/icons-material'
 import './certificate2.css'
 import { useGetUserByIdQuery } from '../components/portal.query';
 
-export default function Certificate3({licenseInfo,ApplicationlicenseInfo}:any) {
+export default function Certificate3({licenseInfo,ApplicationlicenseInfo,userInfo}:any) {
   const { data: issuedByInfo } = useGetUserByIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
   // console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', licenseInfo)
-  // console.log('ApplicationlicenseInfo of certifate 111111111111111111', ApplicationlicenseInfo.license)
+  console.log('ApplicationlicenseInfo of certifate 111111111111111111wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', ApplicationlicenseInfo.license)
   // console.log('Issued By Info of certifate 1', issuedByInfo)
   const ValidFrom = new Date(ApplicationlicenseInfo?.license?.validFrom).toLocaleDateString('en-US', {
     weekday: 'short',
@@ -41,7 +41,7 @@ return (
               </div>
               <div className="right-header border">
                 <p> ቁጥር={ ApplicationlicenseInfo?.license?.licenseNumber}</p>
-                <p>ቅን {new Date().toDateString()}</p>
+                <p>ቅን  {new Date(ApplicationlicenseInfo.license.updatedAt).toLocaleDateString('en-GB')}</p>
               </div>
             
           </div>
@@ -49,14 +49,14 @@ return (
     <div >
         <div className="content">
             <p>የድርጅቱ ስምና ደረጃ</p>
-            <p className='user-response'>አቢሲኒያ መድኃኒት ቤት ቁጥር.5</p>
+            <p className='user-response'>{ ApplicationlicenseInfo?.facilityName}</p>
         </div>
         <div className="content">
             <p>Name of Health Facility and Type of Service </p>
-            <p className='user-response'>Abyssinia Pharmacy No. 5</p>
+            <p className='user-response'>{ ApplicationlicenseInfo?.facilityName}</p>
         </div>  <div className="content">
             <p>የድርጅቱ አድራሻ፤ መስተዳድር </p>
-            <p className='user-response'>አ/አ</p>
+            <p className='user-response'>{licenseInfo?.state}</p>
             <p>ክ/ከተማ</p>
             <p className='user-response'>{licenseInfo?.subCity}</p>
             <p> ወረዳ</p>
@@ -67,8 +67,8 @@ return (
             <p className='user-response'>{licenseInfo?.phone}</p>
         </div>  
         <div className="content">
-            <p>Address</p>
-            <p className='user-response'> Adiss Ababa</p>
+            <p>Region</p>
+            <p className='user-response'> {licenseInfo?.state}</p>
             <p>City</p>
             <p className='user-response'>{licenseInfo?.subCity}</p>
             <p> Subcity</p>
@@ -82,12 +82,12 @@ return (
          </div>  
         <div className="content">
             <p>የድርጅቱ ባለንብረት ስም</p>
-            <p className='user-response'>{licenseInfo?.ownerName}</p>
+            <p className='user-response'>{ApplicationlicenseInfo?.applierType =='owner'?userInfo?.firstName+' '+userInfo?.middleName+' ' +userInfo?.lastName:ApplicationlicenseInfo?.ownerName+' '+ApplicationlicenseInfo?.lastName}</p>
         </div>  <div className="content">
-            <p>የየድርጅቱ ባለሙያ ስም</p>
-            <p className='user-response'>{licenseInfo?.professionalLastName}</p>
+            <p>የድርጅቱ ባለሙያ ስም</p>
+            <p className='user-response'>{ApplicationlicenseInfo?.professionalName }</p>
             <p>የአያት ስም</p>
-            <p className='user-response'>{licenseInfo?.lastName} </p>
+            <p className='user-response'>{ApplicationlicenseInfo?.professionalLastName} </p>
             <p>የስልክ ቁጥር</p>
             <p className='user-response'>{licenseInfo?.phone}</p>
         </div>  <div className="content">
@@ -98,15 +98,17 @@ return (
             <p className='user-response'>{licenseInfo?.professionalLicenseNumber}</p>
         </div>  <div className="content">
             <p>Facility Owner Name</p>
-            <p className='user-response'>{licenseInfo?.facilityOwnerName}</p>
-        </div>  <div className="content">
+            <p className='user-response'>{ApplicationlicenseInfo?.applierType =='owner'?userInfo?.firstName+' '+userInfo?.middleName+' ' +userInfo?.lastName:ApplicationlicenseInfo?.ownerName+' '+ApplicationlicenseInfo?.lastName}</p>
+        </div> 
+         <div className="content">
             <p>Technical Leader full Name</p>
-            <p className='user-response'>{licenseInfo?.technicalLeaderFullName}</p>
-        </div>  <div className="content">
+            <p className='user-response'>{ ApplicationlicenseInfo?.professionalName}</p>
+        </div>  
+        <div className="content">
             <p>Qualification</p>
-            <p className='user-response'>{licenseInfo?.qualificationLevel}</p>
+            <p className='user-response'>{ ApplicationlicenseInfo?.qualificationLevel}</p>
             <p>Reg.no.</p>
-            <p className='user-response'>JP=1906/2011</p>
+            <p className='user-response'>JP={ ApplicationlicenseInfo?.professionalLicenseNumber}</p>
         </div> 
             <p>ድርጅቱ ተፈላጊውን ሙያዊ፤ ድርጅታዊና ሌሎች መስፈርቶችን ማሟላቱ ይህ የብቃት ማረጋገጫ ምስክር ወረቀት የምግብ፣የመድኃኒትና የጤና ክብካቤ አስተዳደርና ቁጥጥር አዋጅ 64/2011 ቁጥር ፤44መሠረት በባለሙያው/ዋ <b> ወ/ሪት ህይወት ምትኩ </b> ሰም ተሰጥቷል፡፡</p>
             <p>This Certificate is issued to the Health Facility in accordance with AAFMHACA Proclamation No. 64/2011
@@ -117,19 +119,19 @@ return (
                
                 <div >
                     <div className="column" >
-                      <h2>ለ 2015 ዓ.ም </h2>
+                      <h2>ለ  {parseInt(new Date(ApplicationlicenseInfo.license.updatedAt).toLocaleDateString('en-GB').split('/')[2])+1} ዓ.ም </h2>
                       <p> በደረሰኝ ቁጥር-----------------</p>
                       <p>የአገልግሎት ክፍያ ተከፍሎ ታድሷል፡፡</p>
                       <p>ፊርማና ቀን--------------</p>
                     </div>
                     <div className="column" >
-                      <h2>ለ 2016 ዓ.ም</h2>
+                      <h2>ለ  {parseInt(new Date(ApplicationlicenseInfo.license.updatedAt).toLocaleDateString('en-GB').split('/')[2])+2} ዓ.ም</h2>
                       <p> በደረሰኝ ቁጥር-----------------</p>
                       <p>የአገልግሎት ክፍያ ተከፍሎ ታድሷል፡፡</p>
                       <p>ፊርማና ቀን--------------</p>
                     </div>
                     <div className="column">
-                      <h2>ለ 2017 ዓ.ም</h2>
+                      <h2>ለ  {parseInt(new Date(ApplicationlicenseInfo.license.updatedAt).toLocaleDateString('en-GB').split('/')[2])+3} ዓ.ም</h2>
                       <p> በደረሰኝ ቁጥር-----------------</p>
                       <p>የአገልግሎት ክፍያ ተከፍሎ ታድሷል፡፡</p>
                       <p> ፊርማና ቀን--------------</p>

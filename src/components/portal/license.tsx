@@ -61,15 +61,15 @@ const CertificateLicense = (props: { licenseInfo: any, ApplicationlicenseInfo: a
 
 
           {
-            props?.licenseInfo?.applicationCategory === 'CompetencyCertificateforGeneralHospital' && <GenerateCertificate5 licenseInfo={props?.licenseInfo} ApplicationlicenseInfo={props?.ApplicationlicenseInfo} />
+            props?.licenseInfo?.applicationCategory === 'CompetencyCertificateforGeneralHospital' && <GenerateCertificate5 licenseInfo={props?.licenseInfo} ApplicationlicenseInfo={props?.ApplicationlicenseInfo} userInfo={userInfo} />
 
           }
           {
-            props?.licenseInfo?.applicationCategory === 'CompetencyCertificateforSpecialtyCenter' && <GenerateCertificate4 licenseInfo={props?.licenseInfo} ApplicationlicenseInfo={props?.ApplicationlicenseInfo} />
+            props?.licenseInfo?.applicationCategory === 'CompetencyCertificateforSpecialtyCenter' && <GenerateCertificate4 licenseInfo={props?.licenseInfo} ApplicationlicenseInfo={props?.ApplicationlicenseInfo} userInfo={userInfo}/>
 
           }
           {
-            props?.licenseInfo?.applicationCategory === 'CompetencyCertificateforRetailPharmacy' && <GenerateCertificate3 licenseInfo={props?.licenseInfo} ApplicationlicenseInfo={props?.ApplicationlicenseInfo} />
+            props?.licenseInfo?.applicationCategory === 'CompetencyCertificateforRetailPharmacy' && <GenerateCertificate3 licenseInfo={props?.licenseInfo} ApplicationlicenseInfo={props?.ApplicationlicenseInfo} userInfo={userInfo}/>
 
           }
           {

@@ -2,7 +2,7 @@ import { Email, Phone } from '@mui/icons-material'
 import './certificate2.css'
 
 
-export default function Certificate4({licenseInfo,ApplicationlicenseInfo}:any) {
+export default function Certificate4({licenseInfo,ApplicationlicenseInfo,userInfo}:any) {
 console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
   return(
     <div className="container">
@@ -21,12 +21,11 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
                 <p>Addis Ababa Food Medicine and Health Care Administration Authority </p>
                 <p>የመድኃኒት ችርቻሮ ንግድ ድርጅት የብቃት ማረጋገጫ</p>
                 <p>Competency Certificate for SPecialty center</p>
-   
               </div>
               </div>
               <div className="right-header border">
                 <p> ቁጥር ={ApplicationlicenseInfo?.license?.licenseNumber} </p>
-                <p>ቅን {new Date().toDateString()}</p>
+                <p>ቅን {new Date(ApplicationlicenseInfo.license.updatedAt).toLocaleDateString('en-GB')}</p>
               </div>
             
           </div>
@@ -34,11 +33,11 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
     <div >
         <div className="content">
             <p>የድርጅቱ ስምና ደረጃ</p>
-            <p className='user-response'>አቢሲኒያ መድኃኒት ቤት ቁጥር.5</p>
+            <p className='user-response'>{ ApplicationlicenseInfo?.facilityName}</p>
         </div>
         <div className="content">
             <p>Name of Health Facility and Type of Service </p>
-            <p className='user-response'>Abyssinia Pharmacy No. 5</p>
+            <p className='user-response'>{ ApplicationlicenseInfo?.facilityName}</p>
         </div>  <div className="content">
             <p>የድርጅቱ አድራሻ፤ መስተዳድር </p>
             <p className='user-response'>አ/አ</p>
