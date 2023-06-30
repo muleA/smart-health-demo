@@ -20,7 +20,6 @@ const userPermissions =
 
 console.log(userPermissions);
 
-    console.log("userPermissions",userPermissions)
     return filterMenusByPermissions(props?.menus, userPermissions);
   }, [props?.menus, session]);
 

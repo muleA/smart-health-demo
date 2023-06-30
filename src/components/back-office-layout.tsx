@@ -72,7 +72,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
     const isLast = index === pathSnippets.length - 1;
     return (
       <Breadcrumb.Item key={url}>
-        {isLast ? <span>{snippet}</span> : <Link to={url}>{snippet}</Link>}
+        {isLast ? <span>{snippet}</span> : <Link className="text-transform:capitalize" to={url}>{snippet}</Link>}
       </Breadcrumb.Item>
     );
   });
@@ -174,14 +174,14 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
   return (
     <div className="flex bg-gray-200 text-sm">
       <Sider
-        width={250}
+        width={200}
         className=" bg-gray-50"
         trigger={null}
         collapsible
         collapsed={collapsed}
         theme="light"
       >
-        <div className="flex flex-col  justify-center items-center py-4">
+        <div className="flex flex-col  justify-center items-center bg-gray-50 py-2">
           <SideBarLogo />
         </div>
         <Sidebar menus={menus} />
@@ -193,7 +193,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
       >
         {/*  */}
         <Header className="bg-gray-200  top-0 z-10 flex justify-between items-center">
-          <div className="flex items-center">
+          <div className="flex items-start">
             {React.createElement(
               collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
               {
@@ -222,13 +222,15 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           {/*  Page Title and Breadcrumb */}
           <div className="flex">
             <div className="flex-1">
-              <Breadcrumb style={{ margin: "16px 0" }}>
+              <Breadcrumb style={{ margin: "16px 0" }} className="font-bold text-2xl text-capitalize">
                 {breadcrumbItems}
               </Breadcrumb>
             </div>
             <div className="flex flex-auto justify-end">
               {/* Current time */}
-              <span className="mr-2">Today is {formattedDate}</span>
+              <span className="text-lg font-bold text-center text-blue-500">Today is</span>
+
+              <span className="ml-2 text-lg font-extrabold text-center text-purple-600 "> {formattedDate}</span>
             </div>
             {/* Content */}
           </div>
@@ -426,7 +428,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
         </Content>
         <Footer className="mx-auto text-center ">
           {" "}
-          &copy; {new Date().getFullYear()} {""}All Rights Reserved Technologies{" "}
+          &copy; {new Date().getFullYear()} {""}All Rights Reserved Tria PLc{" "}
         </Footer>
       </div>
     </div>
