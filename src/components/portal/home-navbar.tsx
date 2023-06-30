@@ -141,8 +141,8 @@ const PortalNavigation = () => {
             <Route path="/home" element={<HomePage />} />
             <Route path="/banner" element={<Banner />}></Route>
             <Route path="/my-profile" element={<ProfileWrapper />} />
-            <Route path="/my-applications" element={<MyApplications />} />
             <Route path="/new-application" element={<StepperComponent />} />
+            <Route path="/my-applications" element={<MyApplications />} />
             <Route path="/my-archives" element={<Archives />} />
             <Route path="my-applications/:id" element={<ApplicationDetail />} />
             {/* Add more routes here */}

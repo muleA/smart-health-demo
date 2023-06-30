@@ -2,7 +2,6 @@ import { Button, Card, Spin, Table, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLazyGetLicenseByIdQuery } from "../components/portal.query";
 import useDebounce from "../shared/utilities/use-debounce";
-import Empty from "../shared/empty-state";
 import moment from "moment";
 
 function SearchLicensee() {
@@ -31,14 +30,14 @@ function SearchLicensee() {
       key: "comment",
     },
     {
-      title: "ValidTo",
+      title: "valid From",
       dataIndex: "validFrom",
       key: "validFrom",
       render: (text: moment.MomentInput) => moment(text).format("YYYY-MM-DD"),
 
     },
     {
-      title: "ValidTo",
+      title: "Valid To",
       dataIndex: "validTo",
       key: "validTo",
       render: (text: moment.MomentInput) => moment(text).format("YYYY-MM-DD"),

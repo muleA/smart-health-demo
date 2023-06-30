@@ -24,7 +24,7 @@ console.log("session",session)
         navigate("/home");
 
       } else {
-        navigate("/home");
+        navigate("/dashboard");
       }
     }
   }, [session, location.pathname, navigate]);

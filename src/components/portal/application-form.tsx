@@ -559,7 +559,7 @@ const navigate=useNavigate()
 
                                 <div className="mb-4">
                                   <label htmlFor="state">
-                                    State
+                                    Region
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <div>

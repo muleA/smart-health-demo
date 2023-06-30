@@ -86,7 +86,7 @@ const CertificateInformation: React.FC = () => {
   const handleDeleteCertificate = async (certificate: Certificate) => {
     console.log("certificate", certificate);
     try {
-      await axios.post(`${baseUrl}user/delete-certificate/${certificate.id}`);
+      await axios.post(`${baseUrl}user/delete-certificate/${certificate.id??openedPanelId}`);
       const updatedCertificates = certificates.filter(
         (cert) => cert.id !== certificate.id
       );
