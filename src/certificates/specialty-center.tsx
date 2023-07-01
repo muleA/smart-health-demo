@@ -40,25 +40,29 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
             <p className='user-response'>{ ApplicationlicenseInfo?.facilityName}</p>
         </div>  <div className="content">
             <p>የድርጅቱ አድራሻ፤ መስተዳድር </p>
-            <p className='user-response'>አ/አ</p>
+            <p className='user-response'>{licenseInfo?.state}</p>
             <p>ክ/ከተማ</p>
             <p className='user-response'>{licenseInfo?.subCity}</p>
             <p> ወረዳ</p>
             <p className='user-response'>{licenseInfo?.woreda}</p>
+            <p> kebele</p>
+            <p className='user-response'>{licenseInfo?.kebele}</p>
             <p>የቤት ቁጥር</p>
             <p className='user-response'>{licenseInfo?.houseNumber}</p>
             <p>የስልክ ቁጥር </p>
             <p className='user-response'>{licenseInfo?.phone}</p>
         </div>  
         <div className="content">
-            <p>Address</p>
-            <p className='user-response'> Adiss Ababa</p>
+            <p>State</p>
+            <p className='user-response'> {licenseInfo?.state}</p>
             <p>City</p>
-            <p className='user-response'>{licenseInfo?.subCity}</p>
+            <p className='user-response'>{licenseInfo?.city}</p>
             <p> Subcity</p>
-            <p className='user-response'>{licenseInfo?.woreda}</p>
+            <p className='user-response'>{licenseInfo?.subCity}</p>
             <p>Woreda</p>
             <p className='user-response'>{licenseInfo?.woreda}</p>
+            <p>Kebele</p>
+            <p className='user-response'>{licenseInfo?.kebele}</p>
             <p>House No</p>
             <p className='user-response'>{licenseInfo?.houseNumber}</p>
             <p>Tel .No </p>
@@ -66,12 +70,12 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
          </div>  
         <div className="content">
             <p>የድርጅቱ ባለንብረት ስም</p>
-            <p className='user-response'>{licenseInfo?.ownerName}</p>
+            <p className='user-response'>{ApplicationlicenseInfo?.applierType =='owner'?userInfo?.firstName+' '+userInfo?.middleName+' ' +userInfo?.lastName:ApplicationlicenseInfo?.ownerName+' '+ApplicationlicenseInfo?.lastName}</p>
         </div>  <div className="content">
             <p>የየድርጅቱ ባለሙያ ስም</p>
-            <p className='user-response'>{licenseInfo?.professionalLastName}</p>
+            <p className='user-response'>{ApplicationlicenseInfo?.professionaName}</p>
             <p>የአያት ስም</p>
-            <p className='user-response'>{licenseInfo?.lastName} </p>
+            <p className='user-response'>{ApplicationlicenseInfo?.professionaLastName} </p>
             <p>የስልክ ቁጥር</p>
             <p className='user-response'>{licenseInfo?.phone}</p>
         </div>  <div className="content">
@@ -82,7 +86,7 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
             <p className='user-response'>{licenseInfo?.professionalLicenseNumber}</p>
         </div>  <div className="content">
             <p>Facility Owner Name</p>
-            <p className='user-response'>{licenseInfo?.facilityOwnerName}</p>
+            <p className='user-response'>{ApplicationlicenseInfo?.applierType =='owner'?userInfo?.firstName+' '+userInfo?.middleName+' ' +userInfo?.lastName:ApplicationlicenseInfo?.ownerName+' '+ApplicationlicenseInfo?.lastName}</p>
         </div>  <div className="content">
             <p>Technical Leader full Name</p>
             <p className='user-response'>{licenseInfo?.technicalLeaderFullName}</p>

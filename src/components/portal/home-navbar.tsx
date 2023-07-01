@@ -82,12 +82,13 @@ const PortalNavigation = () => {
           <Menu.Item key="2" icon={<UserOutlined />}>
             <Link to="/my-profile">My Profile</Link>
           </Menu.Item>
-          <Menu.Item key="3" icon={<UnorderedListOutlined />}>
-            <Link to="/my-applications">My Applications</Link>
-          </Menu.Item>
           <Menu.Item key="8" icon={<FileAddOutlined />}>
             <Link to="/new-application">New Applications</Link>
           </Menu.Item>
+          <Menu.Item key="3" icon={<UnorderedListOutlined />}>
+            <Link to="/my-applications">My Applications</Link>
+          </Menu.Item>
+          
 
           <Menu.Item key="5" icon={<FolderOutlined />}>
             <Link to="/my-archives">My Archives</Link>

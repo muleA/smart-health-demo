@@ -24,13 +24,21 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Education"],
     }),  
+    getLicenseByLicenseNumber: builder.query<any, string>({
+      query: (userId) => ({
+        url: `${portalEndPoints.getLicenseByLicenseNumber}/${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["license"],
+    }),  
+    
     getLicenseById: builder.query<any, string>({
       query: (userId) => ({
         url: `${portalEndPoints.getLicenseById}/${userId}`,
         method: "GET",
       }),
       providesTags: ["license"],
-    }),  
+    }),
     getExperienceByUserId: builder.query<any, string>({
       query: (userId) => ({
         url: `${portalEndPoints.getEducationByUserId}/${userId}`,
@@ -267,6 +275,7 @@ export const {
    useGetEducationByIdQuery,
    useGetApplicationUserIdQuery,
    useLazyGetLicenseByIdQuery,
+   useLazyGetLicenseByLicenseNumberQuery,
    useGetEducationFileNameQuery,
    useLazyGetEducationFileNameQuery,
    useLazyGetExperienceFileNameQuery,
