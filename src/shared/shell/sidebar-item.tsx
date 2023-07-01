@@ -37,8 +37,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 
   return (
     <AntdMenu
+    className="mt-4 border-b-0"
       mode="inline"
-      className="bg-gray-100"
       defaultOpenKeys={open ? [menu.path] : []}
       onOpenChange={handleOpenChange}
       selectedKeys={[location.pathname]}

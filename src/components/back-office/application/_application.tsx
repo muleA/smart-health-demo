@@ -19,22 +19,26 @@ export function _BackOfficeApplications() {
     () => [
       {
         accessorKey: 'applicationType',
-        header: ' applicationType',
+        header: 'Application Type',
       },
       {
         accessorKey: 'applicationCategory',
-        header: ' applicationCategory',
+        header: ' Application Category',
       },
       {
         accessorKey: 'applierType',
-        header: ' applierType',
+        header: ' Applier Type',
       },
       {
         accessorKey: 'comment',
-        header: ' comment',
+        header: ' Comment',
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
       }, {
         accessorKey: 'createdAt',
-        header: ' createdAt',
+        header: ' Applied At',
         accessorFn: (originalRow) => (
           <Typography>
             {timeSince(originalRow?.createdAt)}
@@ -42,10 +46,7 @@ export function _BackOfficeApplications() {
         ),
       },
       
-      {
-        accessorKey: 'status',
-        header: ' status',
-      },
+     
      
     ],
     []

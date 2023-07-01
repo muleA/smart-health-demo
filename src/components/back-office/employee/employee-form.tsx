@@ -93,14 +93,13 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
           console.log("====response", response.data);
           setAccountInfo(response?.data)
           // Handle the response data
-          Notify(
-            "success",
+          message.success(
             "User Account Created Successfully please move next steps to complete registrations"
           );
         })
         .catch((error) => {
           console.error(error);
-          Notify("error", "error happened");
+          message.error( "error happened");
 
           // Handle the error
         });
@@ -171,6 +170,7 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
         {currentStep === 0 && (
           <>
             <Form.Item
+             className="mt-4"
               label="UserName"
               name="username"
               validateStatus={formik.errors.username ? "error" : ""}
@@ -351,19 +351,25 @@ const EmployeeForm = (props:{mode:"new"|"update",id?:string}) => {
           )}
                <div className="flex space-x-4" >
 
-<Button
+{
+  !props?.id?(<>
+  <Button
   type="primary"
-  className="bg-primary"
+  className="bg-primary flex items-center justify-center"
   htmlType="submit"
-  icon={<SaveFilled />}
-  
+  icon={<SaveFilled className="mx-auto" />}
 >
   {currentStep === steps.length - 1 ? "Create" : "Next"}
 </Button>
-
-<Button onClick={handleArchive} className="bg-primary bg-red-500" type="primary">
+  </>):null
+}
+ 
+{props?.id?(<>
+  <Button onClick={handleArchive} className="bg-primary bg-red-500 items-center justify-center" type="primary">
   Archive
 </Button>
+</>):null}
+
                </div>
               
         </div>

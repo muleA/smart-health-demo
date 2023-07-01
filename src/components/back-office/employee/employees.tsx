@@ -2,38 +2,23 @@ import { useNavigate } from "react-router-dom";
 import React, { useMemo } from "react";
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_ColumnDef } from 'material-react-table';
-import { Button, IconButton, Toolbar, Typography } from '@mui/material';
-import { AddCircleOutlineOutlined, ArrowRightAlt } from '@mui/icons-material';
+import {  IconButton, Typography } from '@mui/material';
+import {  ArrowRightAlt } from '@mui/icons-material';
 import timeSince from "../../../shared/utilities/time-since";
 import { User } from "../../../models/user";
 import { DefaultPage } from "../../../shared/default-page";
 import { useGetEmployeesQuery } from "./employee.query";
+import { routingBaseUrl } from "../../../configs/config";
 
 export function Employees() {
   const navigate = useNavigate();
   const { data: Employees, isLoading, isSuccess, isError, isFetching } = useGetEmployeesQuery();
-
-  const handleAddClick = () => {
-    navigate('/add-employee');
-  };
 
   const handleRowClick = (row: any) => {
     console.log("row",row)
     navigate(`/Employees/detail/${row?.original.id}`);
   };
 
-  const CustomHeader = () => {
-    return (
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Employees
-        </Typography>
-        <Button color="primary" onClick={handleAddClick}>
-          <AddCircleOutlineOutlined />
-        </Button>
-      </Toolbar>
-    );
-  };
 
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [
@@ -61,39 +46,25 @@ export function Employees() {
       },
       {
         accessorKey: 'createdAt',
-        header: 'Created At',
+        header: 'Registered',
         accessorFn: (originalRow) => (
           <Typography variant="body2" sx={{ textTransform: "none" }}>
             {timeSince(originalRow?.createdAt)}
           </Typography>
         ),
       },
-      {
-        accessorKey: 'id',
-        header: '',
-        Cell: () => (
-          <IconButton>
-            <ArrowRightAlt />
-          </IconButton>
-        ),
-       
-      },
+   
     ],
     []
   );
 
   return (
     <>
-{/*       <CustomHeader />
-
-
- */}      
- 
  <DefaultPage title={"Employees"} backButtonLink="/Employees" 
  primaryButtonProps={{
       children: "New",
       onClick: () => {
-        navigate("/employees/new")
+        navigate(`/employees/new`)
       },
     }}  >
   <div>

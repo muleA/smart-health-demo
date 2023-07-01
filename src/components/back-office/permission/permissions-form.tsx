@@ -9,6 +9,7 @@ import { Edit } from '@mui/icons-material';
 import { useCreatePermissionMutation, useDeletePermissionMutation, useUpdatePermissionMutation } from './permission.query';
 import IsPermitted from '../../../shared/auth/is-permitted';
 import { CreatePermission, UpdateUserPermission } from '../../../shared/shell/permissions-list';
+import { routingBaseUrl } from '../../../configs/config';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -17,9 +18,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const PermissionForm = (props: { mode: "new" | 'update', id?: string,data?:Permission }) => {
-  const [createPermission, { isLoading }] = useCreatePermissionMutation();
+  const [createPermission, { isLoading,isSuccess,isError }] = useCreatePermissionMutation();
   const [updatePermission, { isLoading:updateLoading }] = useUpdatePermissionMutation();
   const [deletePermission, { isLoading:deleteLoading }] = useDeletePermissionMutation();
+  if(isError){
+    console.log("error",isError)
+  }
 const {id}=useParams()
   const navigate = useNavigate();
   const handleDelete=async ()=>{
@@ -29,7 +33,7 @@ const {id}=useParams()
 
       // Display success message
       message.success('Permission deleted successfully');
-      navigate("/Permissions");
+      navigate(`${routingBaseUrl}/Permissions`);
     } catch (error) {
       // Display error message
       message.error('Failed to delete Permission');
@@ -44,7 +48,7 @@ const {id}=useParams()
   
         // Display success message
         message.success('Permission created successfully');
-        navigate("/Permissions");
+        navigate(`${routingBaseUrl}/Permissions`);
       } catch (error) {
         // Display error message
         message.error('Failed to create Permission');

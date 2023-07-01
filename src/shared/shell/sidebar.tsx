@@ -28,14 +28,11 @@ console.log(userPermissions);
   }, [permittedMenu]);
 
   return (
-    <List dataSource={visibleMenu} bordered={true}    
-     className="mt-4"
-    >
-        {visibleMenu.map((menuItem, index) => (
-          <SidebarItem  key={`${index}-${menuItem.name}`} menu={menuItem} mergedPath={""} />
-        ))}
-      </List>
- 
+    <List dataSource={visibleMenu}  >
+    {visibleMenu.map((menuItem, index) => (
+      <SidebarItem key={`${index}-${menuItem.name}`} menu={menuItem} mergedPath={""} />
+    ))}
+  </List>
   );
 };
 

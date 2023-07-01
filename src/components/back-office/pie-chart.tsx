@@ -15,7 +15,7 @@ const SimplePieChart = (props: { totalRestaurant: any; totalDriver: any; totalUs
 
   return (
     <div className="bg-white p-5 rounded-2xl shadow-lg mr-4">
-    <h2 className="text-xl mb-4">Pie Chart</h2>
+    <h2 className="text-xl mb-4">Pie Chart that shows users,employees and Application distributions</h2>
     <PieChart width={400} height={400}>
       <Pie
         data={data}

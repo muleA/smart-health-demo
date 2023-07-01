@@ -13,27 +13,13 @@ export function Users() {
   const navigate = useNavigate();
   const { data: users, isLoading, isSuccess, isError, isFetching } = useGetUsersQuery();
 
-  const handleAddClick = () => {
-    navigate('/add-user');
-  };
+
 
   const handleRowClick = (row: any) => {
     console.log("row",row)
     navigate(`/users/detail/${row?.original.id}`);
   };
 
-  const CustomHeader = () => {
-    return (
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Users
-        </Typography>
-        <Button color="primary" onClick={handleAddClick}>
-          <AddCircleOutlineOutlined />
-        </Button>
-      </Toolbar>
-    );
-  };
 
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [
@@ -68,16 +54,7 @@ export function Users() {
           </Typography>
         ),
       },
-      {
-        accessorKey: 'id',
-        header: '',
-        Cell: () => (
-          <IconButton>
-            <ArrowRightAlt />
-          </IconButton>
-        ),
-       
-      },
+      
     ],
     []
   );

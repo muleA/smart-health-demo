@@ -11,10 +11,15 @@ import { Dashboard } from "./components/back-office/dashboard";
 import PortalNavigation from "./components/portal/home-navbar";
 import { I18nextProvider } from 'react-i18next';
 import i18n from './shared/locals/i18n';
+import { routingBaseUrl } from "./configs/config";
+import { useAppSelector } from "./store/app-store-hook";
+import AlertDialogSlide from "./shared/utilities/error-dialogue/error-dialogue";
 const App = () => {
   const { session } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const { error } = useAppSelector((state: any) => state.globalError);
+console.log("erorr",error)
 console.log("session",session)
   useEffect(() => {
     if (session === null && location.pathname !== "/") {
@@ -24,7 +29,7 @@ console.log("session",session)
         navigate("/home");
 
       } else {
-        navigate("/dashboard");
+        navigate(`${routingBaseUrl}/dashboard`);
       }
     }
   }, [session, location.pathname, navigate]);
@@ -33,6 +38,7 @@ console.log("session",session)
 
     <ErrorBoundary>
       <Provider store={store}>
+      {error && <AlertDialogSlide error={error} />}
 
         <Routes>
           <Route path="/" element={<HomePage />} />

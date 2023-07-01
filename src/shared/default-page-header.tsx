@@ -2,6 +2,7 @@ import { Button, Select, Typography, Row, Col, ButtonProps } from "antd";
 import { RollbackOutlined } from "@ant-design/icons";
 import { PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
+import { SizeType } from "antd/es/config-provider/SizeContext";
 
 export type DefaultPageHeaderProps = {
   title: string;
@@ -40,7 +41,7 @@ export const DefaultPageHeader = (props: DefaultPageHeaderProps): JSX.Element =>
       <Row justify="space-between" align="middle" gutter={16}>
         <Col>
           <Typography.Title level={4} style={{ fontWeight: 500, fontSize: "35px" }}>
-            {props.title}
+            {}
           </Typography.Title>
           {typeof props?.subTitle === "string" ? (
             <Typography.Text>{props?.subTitle}</Typography.Text>
@@ -53,7 +54,7 @@ export const DefaultPageHeader = (props: DefaultPageHeaderProps): JSX.Element =>
           {props.primaryButtonProps && (
             <Button
               style={{ textTransform: "none" }}
-              size="large"
+              size={"medium" as SizeType} 
               type="primary"
               className="bg-primary text-white"
               {...props.primaryButtonProps}
@@ -64,7 +65,7 @@ export const DefaultPageHeader = (props: DefaultPageHeaderProps): JSX.Element =>
           {props.outlinedButtonProps && (
             <Button
               style={{ textTransform: "none" }}
-              size="large"
+              size={"medium" as SizeType} 
               type="default"
               {...props.outlinedButtonProps}
             >
@@ -78,7 +79,7 @@ export const DefaultPageHeader = (props: DefaultPageHeaderProps): JSX.Element =>
           {props.secondaryButtonProps && (
             <Button
               style={{ textTransform: "none" }}
-              size="large"
+              size={"medium" as SizeType} 
               type={props.showWarningColor ? "ghost" : "default"}
               {...props.secondaryButtonProps}
             >

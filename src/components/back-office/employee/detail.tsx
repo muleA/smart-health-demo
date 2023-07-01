@@ -21,14 +21,14 @@ return(<>
 </CollapsibleCard>
  <IsPermitted requiredPermissions={AssignRole}>
  <CollapsibleCard title={"Role Assignment"} 
-    subTitle="Assign Role to this role"
+    subTitle="Assign Role"
     customAction={
       <Button
         type="primary"
-        className="ml-2 bg-primary"
+        className="ml-2 bg-primary items-center flex justify-center"
         onClick={() => setOpen(true)}
       >
-        <PlusCircleFilled />
+        <PlusCircleFilled className="mx-auto mt-0"/>
         Assign
       </Button>
     }

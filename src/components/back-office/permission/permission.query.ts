@@ -81,6 +81,8 @@ const permissionApi = apiSlice.injectEndpoints({
   }),
 });
 
+
+
 export const {
   useGetPermissionsQuery,useLazyGetPermissionByRoleIdQuery,
   useGetPermissionByIdQuery,useCreatePermissionMutation,useUpdatePermissionMutation,

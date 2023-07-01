@@ -20,11 +20,11 @@ function DetailRole() {
 
     </CollapsibleCard>
     <CollapsibleCard title={"Permission Assignment"} 
-    subTitle="Assign permission to this role"
+    subTitle="Assign permissions"
     customAction={
       <Button
         type="primary"
-        className="ml-2 bg-primary"
+        className="ml-2 text-center mx-auto bg-primary"
         onClick={() => setOpen(true)}
       >
         <PlusCircleFilled />

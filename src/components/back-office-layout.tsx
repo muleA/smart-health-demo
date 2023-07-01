@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   CaretDownOutlined,
+  DoubleLeftOutlined,
+  DoubleRightOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -49,7 +51,8 @@ import {
 } from "../shared/shell/permissions-list";
 import RoutePermissionGuard from "../shared/auth/route-permission-guard";
 import LicenseDetail from "./back-office/license/detail.";
-import {SubmittedApplicationDetail} from "./back-office/application/_application-detail";
+import { SubmittedApplicationDetail } from "./back-office/application/_application-detail";
+import { routingBaseUrl } from "../configs/config";
 
 const { Sider, Content, Header, Footer } = Layout;
 
@@ -67,18 +70,32 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
   const location = useLocation();
   const pathSnippets = location.pathname.split("/").filter((i) => i);
 
-  const breadcrumbItems = pathSnippets.map((snippet, index) => {
+  const breadcrumbItems = pathSnippets
+  .filter((_, index) => index < 2) // Limit to the first two paths
+  .map((snippet, index) => {
+    // Skip the breadcrumb item if the snippet is in UUID format
+    const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+    if (uuidRegex.test(snippet)) {
+      return null;
+    }
+
     const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
     const isLast = index === pathSnippets.length - 1;
     return (
-      <Breadcrumb.Item key={url}>
-        {isLast ? <span>{snippet}</span> : <Link className="text-transform:capitalize" to={url}>{snippet}</Link>}
+      <Breadcrumb.Item className="" key={url}>
+        {isLast ? (
+          <span className="capitalize xl font-semibold">{snippet}</span>
+        ) : (
+          <Link className="capitalize font-semibold" to={url}>
+            <span className="capitalize xl font-semibold">{snippet}</span>
+          </Link>
+        )}
       </Breadcrumb.Item>
     );
   });
 
   const accountMenu = (
-    <Menu className="text-primary">
+    <Menu className="">
       <Menu.Item key="1" onClick={handleLogOut} icon={<LogoutOutlined />}>
         Logout
       </Menu.Item>
@@ -95,55 +112,55 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
   const menus = [
     {
       name: t("Dashboard"),
-      path: "/dashboard",
+      path: `/dashboard`,
       icon: Icon.DashboardOutlined,
       permissions: ViewDashboard,
     },
     {
       name: t("Role"),
-      path: "/roles",
+      path: `/roles`,
       icon: Icon.UsergroupAddOutlined,
       permissions: ViewRole,
     },
     {
       name: t("Permission"),
-      path: "/permissions",
+      path: `/permissions`,
       icon: Icon.KeyOutlined,
       permissions: viewPermission,
     },
     {
       name: t("Users"),
-      path: "/users",
+      path: `/users`,
       icon: Icon.UserOutlined,
       permissions: ViewUser,
     },
     {
       name: t("Employee"),
-      path: "/employees",
+      path: `/employees`,
       icon: Icon.TeamOutlined,
       permissions: ViewEmployee,
     },
     {
       name: t("Application"),
-      path: "/applications",
+      path: `/applications`,
       icon: Icon.AppstoreOutlined,
       permissions: ViewApplications,
     },
     {
       name: t("_Application"),
-      path: "/_applications",
+      path: `/_applications`,
       icon: Icon.AppstoreOutlined,
       permissions: _ViewApplications,
     },
     {
       name: "License",
-      path: "/licenses",
+      path: `/licenses`,
       icon: Icon.BookOutlined,
       permissions: ViewLicense,
     },
     {
       name: "Archives",
-      path: "/archives",
+      path: `/archives`,
       icon: Icon.CiOutlined,
       child: [
         {
@@ -151,86 +168,92 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           path: "/archived-users",
           icon: Icon.UserOutlined,
           permissions: ViewArchives,
-
         },
         {
           name: "employees",
           path: "/archived-employees",
           icon: Icon.TeamOutlined,
           permissions: ViewArchives,
-
         },
         {
           name: "applications",
           path: "/archived-applications",
           icon: Icon.AppstoreOutlined,
           permissions: ViewArchives,
-
         },
       ],
     },
   ];
 
   return (
-    <div className="flex bg-gray-200 text-sm">
+    <div className="flex  text-sm">
       <Sider
         width={200}
-        className=" bg-gray-50"
         trigger={null}
         collapsible
         collapsed={collapsed}
         theme="light"
+        className="border-r"
       >
-        <div className="flex flex-col  justify-center items-center bg-gray-50 py-2">
+        <div className="flex text-600 flex-col shadow-sm border-b justify-center items-center py-4">
           <SideBarLogo />
         </div>
         <Sidebar menus={menus} />
       </Sider>
-
+      <div className="border-b border-gray-300 shadow-sm w-full">
+    
+<div className="flex items-center justify-between border-b h-16 border-gray-300 shadow-sm">
+  <div className="bg-primary text-xs text-white rounded-full p-1">
+    {React.createElement(
+      collapsed ? DoubleRightOutlined : DoubleLeftOutlined,
+      {
+        className:
+          "p-0 text-lg leading-none cursor-pointer transition-colors",
+        onClick: toggle,
+      }
+    )}
+  </div>
+  
+  <a
+    className="ant-dropdown-link mr-5 flex items-center"
+    onClick={(e) => e.preventDefault()}
+  >
+    <Dropdown overlay={accountMenu} trigger={["click"]}>
+      <div className="flex items-center">
+        <UserOutlined className="text-lg text-primary"/>
+        <div className=" text-lg ml-2 mt-1 text-primary"> {session?.userInfo?.firstName}</div>
+        <div className=" text-lg ml-2 mt-1 text-primary"> {session?.userInfo?.middleName}</div>
+        <CaretDownOutlined className="hover:cursor-pointer text-primary mt-1" />
+      </div>
+    </Dropdown>
+  </a>
+</div>  
       <div
-        className="flex-1 bg-white bg-gray-100"
-        style={{ minHeight: "100vh" }}
+  className="flex-1 bg-white "
       >
-        {/*  */}
-        <Header className="bg-gray-200  top-0 z-10 flex justify-between items-center">
-          <div className="flex items-start">
-            {React.createElement(
-              collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-              {
-                className:
-                  "p-0 text-2xl leading-none cursor-pointer transition-colors",
-                onClick: toggle,
-              }
-            )}
-          </div>
-          <div className="flex space-x-2">
-            <Dropdown overlay={accountMenu} trigger={["click"]}>
-              <a
-                className="ant-dropdown-link text-primary"
-                onClick={(e) => e.preventDefault()}
-              >
-                <UserOutlined style={{ fontSize: "20px" }} />
-                <CaretDownOutlined className="hover:cursor-pointer text-primary" />
-              </a>
-            </Dropdown>
-            <div className="text-primary"> {session?.userInfo?.firstName}</div>
-            <div className="text-primary"> {session?.userInfo?.middleName}</div>
-          </div>
-        </Header>
+    
         {/*  */} {/* Body */}
         <Content className="py-2 px-4">
           {/*  Page Title and Breadcrumb */}
           <div className="flex">
             <div className="flex-1">
-              <Breadcrumb style={{ margin: "16px 0" }} className="font-bold text-2xl text-capitalize">
+              <Breadcrumb
+                style={{ margin: "16px 0" }}
+                className=" text-xl text-capitalize"
+              >
                 {breadcrumbItems}
               </Breadcrumb>
             </div>
-            <div className="flex flex-auto justify-end">
+            <div className="flex flex-auto justify-end mr-4">
               {/* Current time */}
-              <span className="text-lg font-bold text-center text-blue-500">Today is</span>
+              <span className="text-md  text-center ">
+                Today is
+              </span>
 
-              <span className="ml-2 text-lg font-extrabold text-center text-purple-600 "> {formattedDate}</span>
+              <span className="ml-2 text-md  text-center ">
+                {" "}
+                {formattedDate}
+              </span>
             </div>
             {/* Content */}
           </div>
@@ -238,7 +261,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             {children}
             <Routes>
               <Route
-                path="/employees"
+                path={`/employees`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewEmployee}>
                     <EmployeesPage />
@@ -246,7 +269,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="employees/detail/:id"
+                path={`employees/detail/:id`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewEmployee}>
                     <EmployeeDetailsPage />
@@ -254,7 +277,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/employees/new"
+                path={`/employees/new`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewEmployee}>
                     <NewEmployee />
@@ -262,7 +285,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/roles"
+                path={`/roles`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewRole}>
                     <Roles />
@@ -270,7 +293,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/roles/detail/:id"
+                path={`/roles/detail/:id`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewRole}>
                     <DetailRole />
@@ -278,7 +301,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/roles/new"
+                path={`/roles/new`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewRole}>
                     <NewRole />
@@ -286,7 +309,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/licenses"
+                path={`/licenses`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewLicense}>
                     <License />
@@ -294,15 +317,15 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/licenses/detail/:id"
+                path={`/licenses/detail/:id`}
                 element={
-                <RoutePermissionGuard requiredPermissions={ViewLicense}>
-                    <LicenseDetail />             
-                         </RoutePermissionGuard>
+                  <RoutePermissionGuard requiredPermissions={ViewLicense}>
+                    <LicenseDetail />
+                  </RoutePermissionGuard>
                 }
               />
               <Route
-                path="/applications"
+                path={`/applications`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewApplications}>
                     <BackOfficeApplications />
@@ -310,15 +333,15 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/_applications"
+                path={`/_applications`}
                 element={
                   <RoutePermissionGuard requiredPermissions={_ViewApplications}>
                     <_BackOfficeApplications />
                   </RoutePermissionGuard>
                 }
               />
-               <Route
-                path="/_applications/detail/:id"
+              <Route
+                path={`/_applications/detail/:id`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewApplications}>
                     <SubmittedApplicationDetail />
@@ -326,7 +349,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/applications/detail/:id"
+                path={`/applications/detail/:id`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewApplications}>
                     <ApplicationDetailPage />
@@ -334,7 +357,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/permissions/detail/:id"
+                path={`/permissions/detail/:id`}
                 element={
                   <RoutePermissionGuard requiredPermissions={viewPermission}>
                     <DetailPermissions />
@@ -342,7 +365,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/permissions/new"
+                path={`/permissions/new`}
                 element={
                   <RoutePermissionGuard requiredPermissions={viewPermission}>
                     <NewPermission />
@@ -350,7 +373,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/permissions"
+                path={`/permissions`}
                 element={
                   <RoutePermissionGuard requiredPermissions={viewPermission}>
                     <PermissionLists />
@@ -358,7 +381,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/users"
+                path={`/users`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewUser}>
                     <User />
@@ -366,7 +389,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/users/detail/:id"
+                path={`/users/detail/:id`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewUser}>
                     <UserDetail />
@@ -374,7 +397,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/archives/archived-users"
+                path={`/archives/archived-users`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewUser}>
                     <ArchivedUsers />
@@ -382,7 +405,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="archived-users/detail/:id"
+                path={`archived-users/detail/:id`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewUser}>
                     <ArchivedUserDetail />
@@ -390,7 +413,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="/archives/archived-employees"
+                path={`/archives/archived-employees`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewEmployee}>
                     <ArchivedEmployees />
@@ -398,7 +421,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="archived-employees/detail/:id"
+                path={`archived-employees/detail/:id`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewEmployee}>
                     <ArchivedEmployeeDetails />
@@ -407,7 +430,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
               />
 
               <Route
-                path="/archives/archived-applications"
+                path={`/archives/archived-applications`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewApplications}>
                     <ArchivedApplication />
@@ -415,7 +438,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 }
               />
               <Route
-                path="archived-applications/detail/:id"
+                path={`archived-applications/detail/:id`}
                 element={
                   <RoutePermissionGuard requiredPermissions={ViewApplications}>
                     <ArchivedApplicationDetail />
@@ -431,7 +454,10 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           &copy; {new Date().getFullYear()} {""}All Rights Reserved Tria PLc{" "}
         </Footer>
       </div>
+
     </div>
+    </div>
+
   );
 };
 

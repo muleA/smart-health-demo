@@ -17,8 +17,7 @@ import { baseUrl } from "../../../configs/config";
 import { DownloadOutlined } from "@ant-design/icons";
 import Certificate from "../certificate2";
 import IsPermitted from "../../../shared/auth/is-permitted";
-import { ApproveApplication, ChangeLicenseStatus } from "../../../shared/shell/permissions-list";
-import { Session } from "inspector";
+import { ApproveApplication } from "../../../shared/shell/permissions-list";
 import { useAuth } from "../../../shared/auth/use-auth";
 import PreviewFile from "../../portal/preview-file";
  
@@ -98,7 +97,7 @@ console.log("appCat",appCat)
             loading={isLoading}
           >
             <Collapse>
-              {data?.map((application: any) => (
+              {data?data?.map((application: any) => (
                 <Panel
                   header={
                     <Text strong>{`Application ${application?.status}`}</Text>
@@ -184,7 +183,9 @@ console.log("appCat",appCat)
  
                   </div>
                 </Panel>
-              ))}
+              )):              <Empty description="No  information found" />
+            }
+             
             </Collapse>
           </Card>
         </div>

@@ -4,10 +4,9 @@ import { Checkbox, Button, Input, message } from 'antd';
 import * as Yup from 'yup';
 import { useCreateRoleMutation, useDeleteRoleMutation, useUpdateRoleMutation } from './role.query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DeleteFilled, SaveFilled } from '@ant-design/icons';
+import { DeleteFilled } from '@ant-design/icons';
 import { Role } from '../../../models/role';
-import { Edit } from '@mui/icons-material';
-import IsPermitted from '../../../shared/auth/is-permitted';
+import { Edit, Save } from '@mui/icons-material';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -16,9 +15,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const RoleForm = (props: { mode: "new" | 'update', id?: string,data?:Role }) => {
-  const [createRole, { isLoading }] = useCreateRoleMutation();
-  const [updateRole, { isLoading:updateLoading }] = useUpdateRoleMutation();
-  const [deleteRole, { isLoading:deleteLoading }] = useDeleteRoleMutation();
+  const [createRole, { isLoading,isError:createError }] = useCreateRoleMutation();
+  const [updateRole, { isLoading:updateLoading,isError:updateError }] = useUpdateRoleMutation();
+  const [deleteRole, { isLoading:deleteLoading,isError:deleteError }] = useDeleteRoleMutation();
 const {id}=useParams()
   const navigate = useNavigate();
   const handleDelete=async ()=>{
@@ -53,10 +52,10 @@ const {id}=useParams()
         // Call the createRole API with the form values
         await updateRole({...values,id:id});
         // Display success message
-        message.success('Role Updated successfully');
+      updateError? message.success('Role Updated successfully'):        message.error('Failed to create role');
+
       } catch (error) {
         // Display error message
-        message.error('Failed to create role');
       }
     }
    
@@ -112,12 +111,12 @@ const {id}=useParams()
               <Button
                 type="primary"
                 loading={isLoading}
-                className='bg-primary text-white mt-4'
+                className='bg-primary mx-auto text-center text-white mt-2'
                 htmlType="submit"
                 disabled={isSubmitting}
-                icon={<SaveFilled />}
+                icon={<Save className='mt-0' />}
               >
-                Create
+                Save
               </Button>
             )}
 

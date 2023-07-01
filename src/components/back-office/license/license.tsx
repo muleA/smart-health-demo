@@ -6,6 +6,7 @@ import { DefaultPage } from "../../../shared/default-page";
 import { useGetLicenseQuery } from "./license.query";
 import Typography from "antd/es/typography/Typography";
 import { Badge } from "antd";
+import StatusIndicator from "../../../shared/status-indicator";
 
 export function License() {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export function License() {
       },
       {
         accessorKey: 'validFrom',
-        header: ' validFrom',
+        header: 'Valid From',
         accessorFn: (originalRow) => (
           <Typography>
             {(originalRow?.validFrom?.slice(0, 10))}
@@ -40,17 +41,31 @@ export function License() {
       },
       {
         accessorKey: 'validTo',
-        header: ' validTo',
+        header: ' Valid To',
         accessorFn: (originalRow) => (
           <Typography>
             {(originalRow?.validTo?.slice(0, 10))}
           </Typography>
         ),
       },
-     
       {
-        accessorKey: 'status',
-        header: 'Status',
+        accessorKey: "status",
+        header: "Status",
+        render: (originalRow: { PostedStatus: string; }) => (
+          <span
+            style={{
+              display: "flex",
+              justifyContent: "start",
+              alignItems: "center",
+            }}
+          >
+            <StatusIndicator
+              text={originalRow?.PostedStatus}
+              color={originalRow?.PostedStatus === "Active" ? "success.main" : "warning.main"}
+            />
+            {!originalRow.PostedStatus && <>-</>}
+          </span>
+        ),
       },
       {
         accessorKey: 'comment',
