@@ -88,6 +88,20 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    getLicenseByUserId: builder.query<any, any>({
+      query: (id:any) => ({
+        url: `${portalEndPoints.getLicenseByuserId}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+    getLicenseByUserIdAndStatus: builder.query<any, any>({
+      query: (id:any) => ({
+        url: `${portalEndPoints.getLicenseByuserIdAndStatus}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
     getEducationFileName: builder.query<any, any>({
       query: (option:any) => ({
         url: `${portalEndPoints.getEducationFileName}/${option.userId}/${option.educationId}`,

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../../configs/config';
 import { useAuth } from '../../shared/auth/use-auth';
 import { useGetApplicationUserIdQuery } from '../portal.query';
+import StatusIndicator from '../../shared/status-indicator';
 
 interface User {
   id: string;
@@ -63,16 +64,27 @@ export const ApplicationList = (): JSX.Element => {
       key: "status",
 
       render: (status: any) => (
-        <Badge
+        <span
+        style={{
+          display: "flex",
+          justifyContent: "start",
+          alignItems: "center",
+        }}
+      >
+        <StatusIndicator
+          text={status}
           color={
             status === "SUBMITED"
-              ? "blue"
-              : status === "Rejected"
-              ? "red"
-              : "green"
+              ? "warning.main"
+              : status === "REJECTED"
+              ? "error.main"
+              : "success.main"
           }
-          text={status}
         />
+        {!status && <>-</>}
+      </span>
+
+      
       ),
     },
     {

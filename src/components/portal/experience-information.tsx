@@ -272,7 +272,7 @@ const [expId,setExpId]=useState("")
                       }
                     />
                   </Form.Item>
-                  <Form.Item label="Kebela">
+                  <Form.Item label="Kebele">
                     <Input
                       value={experience.kebela}
                       onChange={(e) =>

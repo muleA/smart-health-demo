@@ -10,6 +10,7 @@ import { baseUrl } from "../../configs/config";
 import { useAuth } from "../../shared/auth/use-auth";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { DefaultDialog } from "../../shared/default-dialogue";
 
 const { Step } = Steps;
 
@@ -21,6 +22,13 @@ const StepperComponent = () => {
 
   const { Panel } = Collapse;
   const { session } = useAuth();
+  const[openModal,setOpenModal]=useState(false)
+  const handleOpenModal=()=>{
+    setOpenModal(true)
+  }
+  const handleCloseModal=()=>{
+    setOpenModal(false)
+  }
   const [apply, { isLoading }] = useApplyToLicenseMutation();
   const [educations, setEducations] = useState<any>([]);
   const [experiences, setExperiences] = useState<any>([]);
@@ -119,11 +127,13 @@ const navigate=useNavigate()
           <div>
             <h1 className="text-sm font-bold mt-8 mb-2">Who Can Apply</h1>
             <p>
-              Any construction Industry professional that works in the
-              construction sector and professionals that fulfill the
-              requirements of the services can apply for this service. If you
-              have work experience in the construction industry, you can apply
-              for upgrading professional license service.
+            <ul className="list-disc pl-5 space-y-2">
+  <li className="">Education: Complete the required education and training from a recognized institution in the specific health profession.</li>
+  <li className="">Registration: Register with the relevant professional regulatory body in Ethiopia.</li>
+  <li className="">Good Standing and Ethics: Maintain a positive professional standing and adhere to ethical standards.</li>
+  <li className="">Language Proficiency: Demonstrate proficiency in the official language(s) of Ethiopia.</li>
+</ul>
+
             </p>
           </div>
           <div>
@@ -145,17 +155,7 @@ const navigate=useNavigate()
             <h1 className="text-xl font-bold mt-8 mb-2">
               List Of Attached Instruction Documents
             </h1>
-            <Collapse ghost>
-              <Panel header="View PDF" key={""}>
-                <div className="flex justify-center items-center">
-                  <iframe
-                    src="https://example.com/path/to/your/pdf.pdf"
-                    title="PDF Viewer"
-                    className="w-full h-3/2"
-                  />
-                </div>
-              </Panel>
-            </Collapse>
+            <Button onClick={handleOpenModal} className="primary">View Document</Button>
           </div>
           <Button
             type="primary"
@@ -808,6 +808,12 @@ const navigate=useNavigate()
           </Button>
         )}
       </div>
+      <DefaultDialog onClose={handleCloseModal} minHeight={"90%"} minWidth={"70%"}
+        open={openModal} title='Instruction Documents'
+      >
+<iframe title="Documents" src="./Health_Center.pdf"  width="100%" height="100%"  />
+
+      </DefaultDialog>
     </div>
   );
 };

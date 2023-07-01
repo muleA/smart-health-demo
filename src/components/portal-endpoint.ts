@@ -30,6 +30,9 @@ getLicenseById:`${baseUrl}user/get-license-by-licenseId`,
 getLicenseByApplicationId:`${baseUrl}user/get-license-by-applicationId`,
 getEducationFileName:`${baseUrl}user/get-education-file-name-by-userId`,
 getExperienceFileName:`${baseUrl}user/get-experience-file-name-by-userId`,
-getCertificateFileName:`${baseUrl}user/get-certificate-file-name-by-userId`
+getCertificateFileName:`${baseUrl}user/get-certificate-file-name-by-userId`,
+getLicenseByuserIdAndStatus:`${baseUrl}user/get-license-by-userId-status`,
+getLicenseByuserId:`${baseUrl}user/get-license-by-userId`,
+
 
 };

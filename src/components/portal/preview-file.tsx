@@ -5,7 +5,6 @@ import { baseUrl } from '../../configs/config';
 import { useLazyGetCertificateFileNameQuery, useLazyGetEducationFileNameQuery, useLazyGetExperienceFileNameQuery } from '../portal.query';
 import { Button, Spin, message } from 'antd';
 import { DefaultDialog } from '../../shared/default-dialogue';
-import { response } from 'express';
 const PreviewFile = ({ entityId, entityType, userId }: any) => {
   console.log("entity type", entityType)
   console.log("entity Id", entityId)
