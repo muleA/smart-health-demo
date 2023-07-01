@@ -426,6 +426,43 @@ const StepperComponent = () => {
                             </>
                           )}
                       </div>
+                      {values?.applierType === "delegation" && (
+                                  <>
+                                    <div className="mb-4">
+                                      <label htmlFor="ownerName">
+                                        Facility Owner Full Name
+                                        <span className="text-red-400">*</span>
+                                      </label>
+                                      <Field
+                                        type="text"
+                                        name="ownerName"
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                      ></Field>
+                                      <ErrorMessage
+                                        name="ownerName"
+                                        component="div"
+                                        className="text-red-500" />
+                                    </div>
+                                    <div className="mb-4">
+                                      <label htmlFor="lastName">
+                                        Facility Owner Last Name
+                                        <span className="text-red-400">*</span>
+                                      </label>
+                                      <Field
+                                        type="text"
+                                        name="lastName"
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                      ></Field>
+                                      <ErrorMessage
+                                        name="lastName"
+                                        component="div"
+                                        className="text-red-500" />
+                                    </div>
+                                  </>
+
+                                )}
                       <div style={{ gridColumn: "3 / span 5" }}>
                         {values?.applicationType &&
                           values?.applicationCategory &&
@@ -738,6 +775,7 @@ const StepperComponent = () => {
                           )} */}
 
                       </div>
+                      
                     </div>
                     <div className="flex justify-end mt-8">
                       <Button
