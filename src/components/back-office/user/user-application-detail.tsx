@@ -100,7 +100,10 @@ console.log("appCat",appCat)
               {data?data?.map((application: any) => (
                 <Panel
                   header={
-                    <Text strong>{`Application ${application?.status}`}</Text>
+                    <Text strong>{` ${application?.applicationCategory=="CompetencyCertificateforGeneralHospital"?'Competency Certificate For General Hospital':
+                    application?.applicationCategory=="HealthProfessional"?'Health Professional':
+                    application?.applicationCategory=="CompetencyCertificateforSpecialtyCenter"?'Competency Certificate For Specialty Center':
+                    application?.applicationCategory=="CompetencyCertificateforRetailPharmacy"?'Competency Certificate For Retail Pharmacy':''} Application   ${application?.status} `}</Text>
                   }
                   key={application.id}
                 >

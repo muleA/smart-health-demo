@@ -82,20 +82,21 @@ const PortalNavigation = () => {
           <Menu.Item key="2" icon={<UserOutlined />}>
             <Link to="/my-profile">My Profile</Link>
           </Menu.Item>
-          <Menu.Item key="3" icon={<UnorderedListOutlined />}>
-            <Link to="/my-applications">My Applications</Link>
-          </Menu.Item>
           <Menu.Item key="8" icon={<FileAddOutlined />}>
             <Link to="/new-application">New Applications</Link>
           </Menu.Item>
+          <Menu.Item key="3" icon={<UnorderedListOutlined />}>
+            <Link to="/my-applications">My Applications</Link>
+          </Menu.Item>
+          
 
           <Menu.Item key="5" icon={<FolderOutlined />}>
             <Link to="/my-archives">My Archives</Link>
           </Menu.Item>
 
-          <Menu.Item key="6" icon={<BellOutlined />}>
+          {/* <Menu.Item key="6" icon={<BellOutlined />}>
             <Link to="/settings">Notifications</Link>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item key="7" onClick={logOut} icon={<LogoutOutlined />}>
             <Link to="/logout">Logout</Link>
           </Menu.Item>
