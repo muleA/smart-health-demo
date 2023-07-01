@@ -101,7 +101,7 @@ console.log("appCat",appCat)
               {data?.map((application: any) => (
                 <Panel
                   header={
-                    <Text strong>{`Application ${application?.status}`}</Text>
+                    <Text strong>{` ${application?.applicationCategory} Application   ${application?.status} `}</Text>
                   }
                   key={application.id}
                 >
