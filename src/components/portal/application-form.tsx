@@ -22,11 +22,11 @@ const StepperComponent = () => {
 
   const { Panel } = Collapse;
   const { session } = useAuth();
-  const[openModal,setOpenModal]=useState(false)
-  const handleOpenModal=()=>{
+  const [openModal, setOpenModal] = useState(false)
+  const handleOpenModal = () => {
     setOpenModal(true)
   }
-  const handleCloseModal=()=>{
+  const handleCloseModal = () => {
     setOpenModal(false)
   }
   const [apply, { isLoading }] = useApplyToLicenseMutation();
@@ -62,7 +62,7 @@ const StepperComponent = () => {
     professionalLicenseNumber: Yup.string(),
   });
 
-const navigate=useNavigate()
+  const navigate = useNavigate()
   useEffect(() => {
     fetchEducations();
     fetchExperiences();
@@ -127,12 +127,12 @@ const navigate=useNavigate()
           <div>
             <h1 className="text-sm font-bold mt-8 mb-2">Who Can Apply</h1>
             <p>
-            <ul className="list-disc pl-5 space-y-2">
-  <li className="">Education: Complete the required education and training from a recognized institution in the specific health profession.</li>
-  <li className="">Registration: Register with the relevant professional regulatory body in Ethiopia.</li>
-  <li className="">Good Standing and Ethics: Maintain a positive professional standing and adhere to ethical standards.</li>
-  <li className="">Language Proficiency: Demonstrate proficiency in the official language(s) of Ethiopia.</li>
-</ul>
+              <ul className="list-disc pl-5 space-y-2">
+                <li className="">Education: Complete the required education and training from a recognized institution in the specific health profession.</li>
+                <li className="">Registration: Register with the relevant professional regulatory body in Ethiopia.</li>
+                <li className="">Good Standing and Ethics: Maintain a positive professional standing and adhere to ethical standards.</li>
+                <li className="">Language Proficiency: Demonstrate proficiency in the official language(s) of Ethiopia.</li>
+              </ul>
 
             </p>
           </div>
@@ -305,14 +305,14 @@ const navigate=useNavigate()
                                       value="owner" />
                                     <span className="ml-2">Owner</span>
                                   </label>
-                               {/*    <label>
+                                  <label>
                                     <Field
                                       type="radio"
                                       name="applierType"
                                       className="ml-6"
                                       value="delegation" />
                                     <span className="ml-2"></span>Delegation
-                                  </label> */}
+                                  </label>
                                 </div>
                                 <ErrorMessage
                                   name="applierType"
@@ -426,33 +426,7 @@ const navigate=useNavigate()
                             </>
                           )}
                       </div>
-                      <div style={{ gridColumn: "3 / span 5" }}>
-                        {values?.applicationType &&
-                          values?.applicationCategory &&
-                          values?.applicationCategory !== "HealthProfessional" && (
-                            <>
-                              <div className="font-bold text-md mb-2">
-                                {" "}
-                                Facility  Information
-                              </div>
-                              <div className="grid grid-cols-2 gap-2">
-                                <div className="mb-4">
-                                  <label htmlFor="facilityName">
-                                    Facility Name
-                                    <span className="text-red-400">*</span>
-                                  </label>
-                                  <Field
-                                    type="text"
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-
-                                    name="facilityName"
-                                  />
-                                  <ErrorMessage
-                                    name="facilityName"
-                                    component="div"
-                                    className="text-red-500" />
-                                </div>
-                    {/*             {values?.applierType === "delegation" && (
+                      {values?.applierType === "delegation" && (
                                   <>
                                     <div className="mb-4">
                                       <label htmlFor="ownerName">
@@ -489,7 +463,70 @@ const navigate=useNavigate()
                                   </>
 
                                 )}
- */}
+                      <div style={{ gridColumn: "3 / span 5" }}>
+                        {values?.applicationType &&
+                          values?.applicationCategory &&
+                          values?.applicationCategory !== "HealthProfessional" && (
+                            <>
+                              <div className="font-bold text-md mb-2">
+                                {" "}
+                                Facility  Information
+                              </div>
+                              <div className="grid grid-cols-2 gap-2">
+                                <div className="mb-4">
+                                  <label htmlFor="facilityName">
+                                    Facility Name
+                                    <span className="text-red-400">*</span>
+                                  </label>
+                                  <Field
+                                    type="text"
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                    name="facilityName"
+                                  />
+                                  <ErrorMessage
+                                    name="facilityName"
+                                    component="div"
+                                    className="text-red-500" />
+                                </div>
+                                {values?.applierType === "delegation" && (
+                                  <>
+                                    <div className="mb-4">
+                                      <label htmlFor="ownerName">
+                                        Facility Owner Full Name
+                                        <span className="text-red-400">*</span>
+                                      </label>
+                                      <Field
+                                        type="text"
+                                        name="ownerName"
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                      ></Field>
+                                      <ErrorMessage
+                                        name="ownerName"
+                                        component="div"
+                                        className="text-red-500" />
+                                    </div>
+                                    <div className="mb-4">
+                                      <label htmlFor="lastName">
+                                        Facility Owner Last Name
+                                        <span className="text-red-400">*</span>
+                                      </label>
+                                      <Field
+                                        type="text"
+                                        name="lastName"
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                                      ></Field>
+                                      <ErrorMessage
+                                        name="lastName"
+                                        component="div"
+                                        className="text-red-500" />
+                                    </div>
+                                  </>
+
+                                )}
+
 
                                 <div className="mb-4">
                                   <label htmlFor="professionalName">
@@ -556,7 +593,30 @@ const navigate=useNavigate()
                                     component="div"
                                     className="text-red-500" />
                                 </div>
+                                <div className="mb-4">
+                                  <label htmlFor="professionalLicenseNumber">
+                                    Professional License Number
+                                    <span className="text-red-400">*</span>
+                                  </label>
+                                  <Field
+                                    type="text"
+                                    name="professionalLicenseNumber"
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
+                                  ></Field>
+                                  <ErrorMessage
+                                    name="professionalLicenseNumber"
+                                    component="div"
+                                    className="text-red-500" />
+                                </div>
+                                <div></div>
+                                <>
+                                <div className="mb-8"><hr></hr></div>
+                                <div className="mb-8"><hr></hr></div></>
+                                <div className="font-bold text-md mb-2">
+                                {" "}
+                                Address  Information
+                              </div><div></div>
                                 <div className="mb-4">
                                   <label htmlFor="state">
                                     Region
@@ -644,22 +704,7 @@ const navigate=useNavigate()
                                     component="div"
                                     className="text-red-500" />
                                 </div>
-                                <div className="mb-4">
-                                  <label htmlFor="professionalLicenseNumber">
-                                    Professional License Number
-                                    <span className="text-red-400">*</span>
-                                  </label>
-                                  <Field
-                                    type="text"
-                                    name="professionalLicenseNumber"
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-
-                                  ></Field>
-                                  <ErrorMessage
-                                    name="professionalLicenseNumber"
-                                    component="div"
-                                    className="text-red-500" />
-                                </div>
+                                
                                 {values?.applicationType !== "issue" && (
                                   <div className="mb-4">
                                     <label htmlFor="oldProfessionalLicenseNumber">
@@ -682,7 +727,7 @@ const navigate=useNavigate()
 
                             </>
                           )}
-                     {/*    {values?.applicationType &&
+                        {/*    {values?.applicationType &&
                           values?.applicationCategory === "HealthProfessional" &&
                           values?.applierType === "delegation" && (
                             <>
@@ -730,6 +775,7 @@ const navigate=useNavigate()
                           )} */}
 
                       </div>
+                      
                     </div>
                     <div className="flex justify-end mt-8">
                       <Button
@@ -811,7 +857,7 @@ const navigate=useNavigate()
       <DefaultDialog onClose={handleCloseModal} minHeight={"90%"} minWidth={"70%"}
         open={openModal} title='Instruction Documents'
       >
-<iframe title="Documents" src="./Health_Center.pdf"  width="100%" height="100%"  />
+        <iframe title="Documents" src="./Health_Center.pdf" width="100%" height="100%" />
 
       </DefaultDialog>
     </div>

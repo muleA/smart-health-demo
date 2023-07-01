@@ -26,7 +26,7 @@ const chartData = processDataForBarChart(data);
       <div className="w-full">
             <div className="bg-white p-5 rounded-2xl shadow-lg mr-4 mb-2">
         
-        <h2 className="text-xl mb-4">Applications Bar Chart (Pending,Approved)</h2>
+        <h2 className="text-xl mb-4">Applications Bar Chart for Pendingand Approved applications </h2>
         <BarChart width={450} height={450} data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
