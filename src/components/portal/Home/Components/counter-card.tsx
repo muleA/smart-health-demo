@@ -8,28 +8,27 @@ export interface CounterCardHeaderProps {
 
 
  
-function CounterCard({approvedLicense,draftLicese,submittedLicese,REJECTEDLicese,SUSPENDEDLicese,ISSUEANCELicese,approvedLicenseLoading,
-  draftLicenseLoading,submittedLicenseLoading,REJECTEDLicenseLoading,SUSPENDEDLicenseLoading,ISSUEANCELicenseLoading}:any) {
- const{data:licenses,isLoading}=useGetLicensesQuery()
-
+function CounterCard({approvedLicense,submittedLicese,REJECTEDLicese,SUSPENDEDLicese,approvedLicenseLoading,
+  submittedLicenseLoading,REJECTEDLicenseLoading,SUSPENDEDLicenseLoading}:any) {
+console.log("approvedLicense",submittedLicese)
      const Headers = [
       {
         text: 'Total License',
         bg: 'bg-blue-100',
         color: '#0066FF',
         icon: <BookTwoTone  twoToneColor="#0066FF"style={{fontSize: '25px',}} />,
-        count: licenses?.length
+        count: submittedLicese
       },
     
       {
-        text: 'Submitted Licenses',
+        text: 'Expired Licenses',
         bg: 'bg-yellow-100',
         color: '#F8B219',
         icon: <InfoCircleTwoTone twoToneColor="#F8B219"  style={{fontSize: '25px',}}/>,
-        count: submittedLicese?.length,
+        count: REJECTEDLicese?.length,
       },
       {
-        text: 'Approved Licenses',
+        text: 'Active Licenses',
         bg: 'bg-green-100',
         color: '#52c41a',
         icon: <CheckCircleTwoTone twoToneColor="#52c41a" style={{fontSize: '25px',}} />,
@@ -47,7 +46,7 @@ function CounterCard({approvedLicense,draftLicese,submittedLicese,REJECTEDLicese
   return (
   
     <>
-    {approvedLicenseLoading || REJECTEDLicenseLoading || submittedLicenseLoading || draftLicenseLoading || SUSPENDEDLicenseLoading || ISSUEANCELicenseLoading ? (
+    {approvedLicenseLoading || REJECTEDLicenseLoading || submittedLicenseLoading || SUSPENDEDLicenseLoading  ? (
     <div className="flex justify-center items-center" style={{ minHeight: "200px" }}>
     <Spin />
   </div>

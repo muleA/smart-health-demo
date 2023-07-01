@@ -105,7 +105,7 @@ const portalApi = apiSlice.injectEndpoints({
     }),
     getLicenseByUserIdAndStatus: builder.query<any, any>({
       query: (id:any) => ({
-        url: `${portalEndPoints.getLicenseByuserIdAndStatus}/${id}`,
+        url: `${portalEndPoints.getLicenseByuserIdAndStatus}/${id.userId}/${id?.status}`,
         method: "GET",
       }),
       providesTags: ["user"],
@@ -293,5 +293,7 @@ export const {
    useGetEducationFileNameQuery,
    useLazyGetEducationFileNameQuery,
    useLazyGetExperienceFileNameQuery,
-   useLazyGetCertificateFileNameQuery
+   useLazyGetCertificateFileNameQuery,
+   useGetLicenseByUserIdAndStatusQuery,
+   useGetLicenseByUserIdQuery
 } = portalApi;

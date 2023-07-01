@@ -1,18 +1,21 @@
 import CounterCard from "./Components/counter-card";
 import TableCard from './Components/table-card';
 import ProgressChartCard from './Components/progress-chart-card';
-import { useGetLicenseByStatusQuery } from "../../portal.query";
+import { useGetLicenseByUserIdAndStatusQuery, useGetLicenseByUserIdQuery } from "../../portal.query";
+import { useAuth } from "../../../shared/auth/use-auth";
 export default function HomePage(){
-  const {data:approvedLicense,isLoading:approvedLicenseLoading}=useGetLicenseByStatusQuery("APPROVED")
- const {data:submittedLicese,isLoading:submittedLicenseLoading}=useGetLicenseByStatusQuery("SUBMITED")
- const {data:REJECTEDLicese,isLoading:REJECTEDLicenseLoading}=useGetLicenseByStatusQuery("REJECTED")
- const {data:SUSPENDEDLicese,isLoading:SUSPENDEDLicenseLoading}=useGetLicenseByStatusQuery("SUSPENDED")
+  const {session}=useAuth()
+  const {data:totalLicense,isLoading:totalLicenseLoading}=useGetLicenseByUserIdQuery(session?.userInfo?.userId)
+
+  const {data:approvedLicense,isLoading:approvedLicenseLoading}=useGetLicenseByUserIdAndStatusQuery({userId:session?.userInfo?.userId,status:"ACTIVE"})
+ const {data:REJECTEDLicese,isLoading:REJECTEDLicenseLoading}=useGetLicenseByUserIdAndStatusQuery({userId:session?.userInfo?.userId,status:"EXPIRED"})
+ const {data:SUSPENDEDLicese,isLoading:SUSPENDEDLicenseLoading}=useGetLicenseByUserIdAndStatusQuery({userId:session?.userInfo?.userId,status:"SUSPENDED"})
   return(
     <>
     <div className="p-4 gap-4 flex flex-col gap-4">
         <div >
             <CounterCard approvedLicense={approvedLicense} approvedLicenseLoading={approvedLicenseLoading} 
-            submittedLicenseLoading={submittedLicenseLoading} submittedLicese={submittedLicese} REJECTEDLicenseLoading={REJECTEDLicenseLoading}
+            submittedLicenseLoading={totalLicenseLoading} submittedLicese={totalLicense?.length} REJECTEDLicenseLoading={REJECTEDLicenseLoading}
              REJECTEDLicese={REJECTEDLicese} SUSPENDEDLicese={SUSPENDEDLicese} SUSPENDEDLicenseLoading={SUSPENDEDLicenseLoading}
               />
         </div>
@@ -22,8 +25,8 @@ export default function HomePage(){
           </div>
           <div style={{ flex: '2' }}>
             <ProgressChartCard approvedLicense={approvedLicense} approvedLicenseLoading={approvedLicenseLoading} 
-           submittedLicese={submittedLicese} 
-            submittedLicenseLoading={submittedLicenseLoading} REJECTEDLicenseLoading={REJECTEDLicenseLoading}
+           submittedLicese={totalLicense?.length} 
+            submittedLicenseLoading={totalLicenseLoading} REJECTEDLicenseLoading={REJECTEDLicenseLoading}
              REJECTEDLicese={REJECTEDLicese} SUSPENDEDLicese={SUSPENDEDLicese} SUSPENDEDLicenseLoading={SUSPENDEDLicenseLoading}
             />
           </div>
