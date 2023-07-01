@@ -94,9 +94,9 @@ const PortalNavigation = () => {
             <Link to="/my-archives">My Archives</Link>
           </Menu.Item>
 
-          <Menu.Item key="6" icon={<BellOutlined />}>
+          {/* <Menu.Item key="6" icon={<BellOutlined />}>
             <Link to="/settings">Notifications</Link>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item key="7" onClick={logOut} icon={<LogoutOutlined />}>
             <Link to="/logout">Logout</Link>
           </Menu.Item>
