@@ -11,7 +11,6 @@ import { Dashboard } from "./components/back-office/dashboard";
 import PortalNavigation from "./components/portal/home-navbar";
 import { I18nextProvider } from 'react-i18next';
 import i18n from './shared/locals/i18n';
-import { routingBaseUrl } from "./configs/config";
 import { useAppSelector } from "./store/app-store-hook";
 import AlertDialogSlide from "./shared/utilities/error-dialogue/error-dialogue";
 const App = () => {
@@ -29,7 +28,7 @@ console.log("session",session)
         navigate("/home");
 
       } else {
-        navigate(`${routingBaseUrl}/dashboard`);
+        navigate(`/dashboard`);
       }
     }
   }, [session, location.pathname, navigate]);

@@ -28,8 +28,8 @@ console.log(userPermissions);
   }, [permittedMenu]);
 
   return (
-    <List dataSource={visibleMenu}  >
-    {visibleMenu.map((menuItem, index) => (
+    <List dataSource={visibleMenu}   >
+    {visibleMenu?.map((menuItem, index) => (
       <SidebarItem key={`${index}-${menuItem.name}`} menu={menuItem} mergedPath={""} />
     ))}
   </List>

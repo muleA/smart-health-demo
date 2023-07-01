@@ -1,21 +1,26 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = [
+  '#0088FE',      // Total Applications
+  '#00C49F',      // Approved Applications
+  '#FF8042',      // Rejected Applications
+  '#FFBB28',      // Submitted Applications
+];
 
-const SimplePieChart = (props: { totalRestaurant: any; totalDriver: any; totalUser: any; totalOrder: any; }) => {
-  const { totalRestaurant, totalDriver, totalUser, totalOrder } = props;
+const SimplePieChart = (props: { submitted: any; approved: any; rejected: any; total: any; }) => {
+  const { submitted, approved, rejected, total } = props;
 
   const data = [
-    { name: 'Pending ', value: totalRestaurant },
-    { name: 'Users', value: totalUser },
-    { name: 'Employees', value: totalDriver },
-    { name: 'Approved ', value: totalOrder },
+    { name: 'submitted ', value: submitted },
+    { name: 'approved', value: approved },
+    { name: 'rejected', value: rejected },
+    { name: 'total ', value: total ??0},
   ];
 
   return (
     <div className="bg-white p-5 rounded-2xl shadow-lg mr-4">
-    <h2 className="text-xl mb-4">Pie Chart that shows users,employees and Application distributions</h2>
+    <h2 className="text-xl mb-4">Applications Pie Chart</h2>
     <PieChart width={400} height={400}>
       <Pie
         data={data}

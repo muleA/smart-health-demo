@@ -39,8 +39,7 @@ const CollapsibleCard = (props: CollapsibleCardProps) => {
                   <div className="mr-2">{props.customAction}</div>
                
                 <Button
-                  className="px-2 bg-primary text-white"
-                  type="primary"
+                  className="px-2 text-primary border-primary "
                   onClick={() => setIsDropped(!isDropped)}
                 >
                   {isDropped ? "Collapse" : "Expand"}

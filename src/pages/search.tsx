@@ -115,7 +115,7 @@ function SearchLicensee() {
         </div>
       </div>
 
-      <Card>
+      <Card className="text-center mx-auto">
         {searchResult?.length !== 0 ? (<>
           <Table dataSource={searchResult ? [searchResult] : []} columns={columns} loading={isLoading} />
         </>) : (<p>No result Found!!!</p>)}

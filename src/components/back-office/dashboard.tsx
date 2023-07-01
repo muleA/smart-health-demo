@@ -1,110 +1,133 @@
 import { Card, Spin } from "antd";
 import Chart from "./chart";
 import SimplePieChart from "./pie-chart";
-import {  useGetApplicationsQuery, useGetUsersQuery } from "../back-office.query";
+import {
+  useGetApplicationsQuery,
+  useGetUsersQuery,
+} from "../back-office.query";
 import { useGetLicenseByStatusQuery } from "../portal.query";
 import { useGetEmployeesQuery } from "./employee/employee.query";
+import {
+  UserOutlined,
+  SafetyCertificateOutlined,
+  AppstoreOutlined,
+  CheckOutlined,
+  CloseOutlined,
+  FileDoneOutlined,
+} from "@ant-design/icons";
+import React from "react";
+import { useGetLicenseQuery } from "./license/license.query";
+import { Diversity3, Person3Outlined } from "@mui/icons-material";
 export function Dashboard() {
- 
   const { data: users, isLoading } = useGetUsersQuery();
-  const {data:approvedLicense,isLoading:approvedLicenseLoading}=useGetLicenseByStatusQuery("APPROVED")
- const {data:submittedLicese,isLoading:submittedLicenseLoading}=useGetLicenseByStatusQuery("SUBMITED")
- const {data:REJECTEDLicese,isLoading:REJECTEDLicenseLoading}=useGetLicenseByStatusQuery("REJECTED")
-const {data:employees,isLoading:employeeLoading}=useGetEmployeesQuery()
-const {data:applications,isLoading:applicationsLoading}=useGetApplicationsQuery()
+  const { data: licenses } = useGetLicenseQuery();
+
+  const { data: approvedApplications, isLoading: approvedApplicationsLoading } =
+    useGetLicenseByStatusQuery("APPROVED");
+  const { data: submittedApplications, isLoading: submittedLicenseLoading } =
+    useGetLicenseByStatusQuery("SUBMITED");
+  const { data: rejectedAPplications, isLoading: REJECTEDLicenseLoading } =
+    useGetLicenseByStatusQuery("REJECTED");
+  const { data: employees, isLoading: employeeLoading } =
+    useGetEmployeesQuery();
+  const { data: applications, isLoading: applicationsLoading } =
+    useGetApplicationsQuery();
+  const data = [
+    {
+      icon: <Diversity3 style={{ fontSize: "36px" }} fontSize="large" />,
+      label: "Total Users",
+      value: users?.length ?? 0,
+      className: "bg-blue-500 text-white",
+    },
+    {
+      icon: <Diversity3 fontSize="large" style={{ fontSize: "36px" }} />,
+      label: "Total Employees",
+      value: employees?.length ?? 0,
+      className: "bg-red-500 text-white",
+    },
+    {
+      icon: <SafetyCertificateOutlined style={{ fontSize: "36px" }} />,
+      label: "Total Licenses",
+      value: licenses?.length ?? 0,
+      className: "bg-yellow-500 text-white",
+    },
+    {
+      icon: <AppstoreOutlined style={{ fontSize: "36px" }} />,
+      label: "Total Applications",
+      value: applications?.length ?? 0,
+      className: "bg-purple-500 text-white",
+    },
+    {
+      icon: <CheckOutlined style={{ fontSize: "36px" }} />,
+      label: "Approved Applications",
+      value: approvedApplications?.length ?? 0,
+      className: "bg-green-500 text-white",
+    },
+    {
+      icon: <CloseOutlined style={{ fontSize: "36px" }} />,
+      label: "Rejected Applications",
+      value: rejectedAPplications?.length ?? 0,
+      className: "bg-red-500 text-white",
+    },
+    {
+      icon: <FileDoneOutlined style={{ fontSize: "36px" }} />,
+      label: "Submitted Applications",
+      value: submittedApplications?.length ?? 0,
+      className: "bg-blue-500 text-white",
+    },
+  ];
+  const data2= [
+    { status: 'Applications', value: applications?.length },
+    { status: 'Users', value: users?.length },
+    { status: 'Employees', value: employees?.length },
+    { status: 'Licenses', value: licenses?.length },
+  ];
 
   return (
     <>
-     {isLoading||approvedLicenseLoading|| submittedLicenseLoading||REJECTEDLicenseLoading||employeeLoading? (
+      {isLoading ||
+      approvedApplicationsLoading ||
+      submittedLicenseLoading ||
+      REJECTEDLicenseLoading ||
+      employeeLoading ? (
         <>
-                <div className="text-center h-24 mx-auto">
-
-          <Spin size="large" />
+          <div className="text-center h-24 mx-auto">
+            <Spin size="large" />
           </div>
         </>
       ) : (
         <>
-           <Card className="text-center mx-auto">
-            <div className="grid grid-cols-1 gap-4 px-4  sm:grid-cols-4 sm:px-8">
-              <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-                <div className="p-4 bg-green-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-12 w-12 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="px-4 text-gray-700">
-                  <h3 className="text-sm tracking-wider">
-                    Total Users
-                  </h3>
-                  <p className="text-3xl">{users?.length}</p>
-                </div>
-              </div>
-              <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-                <div className="p-4 bg-orange-400">
-                  <div className="h-12 w-12 text-white">
-                    <img src={""} alt="" />
+          <Card className="text-center  shadow-lg">
+            <div className="grid grid-cols-1 gap-2  sm:grid-cols-7 sm:px-2">
+              {data.map((item, index) => (
+                <div
+                  key={index}
+                  className={`flex items-center ${item.className} rounded-sm overflow-hidden shadow`}
+                >
+                  <div className="flex items-center">
+                    <div className="rounded mr-4">
+                      <p className="text-md">{item.value}</p>
+                      <h3 className="text-sm">{item.label}</h3>
+                    </div>
+                    <div className="text-white">{item.icon}</div>
                   </div>
                 </div>
-                <div className="px-4 text-gray-700">
-                  <h3 className="text-sm tracking-wider">Approved Applications</h3>
-                  <p className="text-3xl">
-                    {approvedLicense?.length}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-                <div className="p-4 bg-blue-400">
-                  <div className="h-12 w-12text-white">
-                    <img src={""} alt="" />
-                  </div>
-                </div>
-                <div className="px-4 text-gray-700">
-                  <h3 className="text-sm tracking-wider">Submitted Applications</h3>
-                  <p className="text-3xl">{submittedLicese?.length}</p>
-                </div>
-              </div>
-              <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-                <div className="p-4 bg-indigo-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-12 w-12 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="px-4 text-gray-700">
-                  <h3 className="text-sm tracking-wider">Rejected Applications</h3>
-                  <p className="text-3xl">{REJECTEDLicese?.length}</p>
-                </div>
-              </div>
+              ))}
             </div>
-            <div className=" mt-2 flex mx-auto  p-4 bg-gay-50">
-            <Chart data={applications} />
-            <SimplePieChart totalRestaurant={approvedLicense?.length} 
-            totalUser={users?.length} totalDriver={employees?.length} totalOrder={submittedLicese?.length} />
-          </div>
-          </Card>
+            </Card>
 
-     
+            <div className="text-center shadow-lg">
+            <div className=" mt-2 flex mx-auto  p-4">
+              <Chart data={data2} />
+              <SimplePieChart
+                submitted={submittedApplications?.length}
+                approved={approvedApplications?.length}
+                rejected={rejectedAPplications?.length}
+                total={applications?.length}
+              />
+            </div>
+            </div>
+            
         </>
       )}
     </>

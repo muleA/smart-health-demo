@@ -1,5 +1,4 @@
 import { baseUrl } from "../configs/config";
-import { ChangeLicenseStatus } from "../shared/shell/permissions-list";
 export const backOfficeEndPoints = {
   createAccount: `${baseUrl}user/create-account`,
   getRoles:`${baseUrl}role/get-roles`,
@@ -11,10 +10,16 @@ export const backOfficeEndPoints = {
   getApplications: `${baseUrl}user/get-applications`,
   getLicenses: `${baseUrl}user/get-licenses`,
   archiveUser: `${baseUrl}user/archive-user`,
-  getApplicationDetailByUserId: `${baseUrl}user/get-application-by-userId`,
+  restoreUser: `${baseUrl}user/restore-user/`,
+deleteEmployee: `${baseUrl}user/delete-employee/`,
+  restoreEmployee: `${baseUrl}user/restore-employee/`,
+  archiveEmployee: `${baseUrl}user/archive-employee`,
+getApplicationDetailByUserId: `${baseUrl}user/get-application-by-userId`,
 getArchivedUser:`${baseUrl}user/get-archived-users`,
+getArchivedUserById:`${baseUrl}user/get-archived-users-by-Id/`,
 getArchivedApplication:`${baseUrl}user/get-archived-application`,
 getArchivedEmployees:`${baseUrl}employees/get-archived-employees`,
+getArchivedEmployeeById:`${baseUrl}employees/get-archived-employeesById`,
 ChangeLicenseStatus: `${baseUrl}user/change-application-status-By-applicationId`,
 
 };

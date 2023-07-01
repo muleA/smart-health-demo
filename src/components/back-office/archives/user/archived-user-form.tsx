@@ -1,64 +1,65 @@
-import { Card, Form, Input, Button, message, Spin, Upload } from "antd";
+import { Form, Input, Button, message, Spin } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  useGetUserByIdQuery,
-  useLazyGetUserByIdQuery,
-  useUpdatedUserMutation,
+  useLazyGetArchivedUserByUserIdQuery,
+  useRestoreUserMutation,
 } from "../../../back-office.query";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const ArchivedUserForm = (props: { id?: string; mode: "new" | "update" }) => {
-  const [createUser, { isLoading: isCreating }] = useUpdatedUserMutation();
-  const [updateUser, { isLoading: isUpdating }] = useUpdatedUserMutation();
-  const [trigger,{ data: user, isLoading: isDetailsLoading }] = useLazyGetUserByIdQuery();
+  const [RestoreUser, { isLoading: restoring,isError}] = useRestoreUserMutation();
+  const [trigger,{ data: user, isLoading: isDetailsLoading }] = useLazyGetArchivedUserByUserIdQuery();
 
   // Define the form validation schema using Yup
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First name is required"),
+    middleName: Yup.string().required("middle name is required"),
     lastName: Yup.string().required("Last name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    phoneNumber: Yup.string().required("Phone number is required"),
-    profilePicture: Yup.string().required("Profile picture is required"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters long"),
+    phone: Yup.string().required("Phone number is required"),
+    city: Yup.string().required("city is required")
+      
   });
 
   const { id } = useParams();
   console.log("id", id);
   console.log("mode", id);
-  /*   useEffect(() => {
+    useEffect(() => {
     if (id) {
-      trigger(id);
+      trigger(id as any);
     }
   }, [id, trigger]);
- */
+
   // Define the form submission function
   const handleSubmit = async (values: any) => {
     try {
-      if (props.mode === "new") {
-        await createUser(values);
-        message.success("User created successfully");
-      } else if (props.mode === "update") {
-        await updateUser({ id: props.id, ...values });
-        message.success("User updated successfully");
-      }
+      await RestoreUser(props?.id);
+      isError?      message.error("Error occurred while saving user"): message.success("User updated successfully");
     } catch (error) {
-      message.error("Error occurred while saving user");
     }
   };
+  const navigate=useNavigate()
+  const handleRestore=async ()=>{
+    try {
+      await RestoreUser(props?.id).unwrap;
+      isError?message.error("Error occurred while Restoring user"): message.success("User Restored successfully");
+      navigate("/archives/archived-users")
+    } catch (error) {
+    }
+  }
 
   // Use Formik to handle form state and submission
   const formik = useFormik({
     initialValues: {
       firstName: "",
+      middleName:"",
       lastName: "",
       email: "",
-      phoneNumber: "",
-      profilePicture: null,
+      phone: "",
+      city:"",
       password: "",
     },
     validationSchema,
@@ -68,18 +69,18 @@ const ArchivedUserForm = (props: { id?: string; mode: "new" | "update" }) => {
   // Fetch user details when in "update" mode
     useEffect(() => {
     if (props.mode === 'update' && props.id) {
-      trigger(props.id);
+      trigger(props.id as any);
     }
   }, [props.mode, props.id, trigger]); 
 
   // Update form data when user details are fetched
   console.log("user", user);
-     useEffect(() => {
+    useEffect(() => {
     if (props.mode === 'update' && user) {
-      const { firstName, lastName, email, phoneNumber, profilePicture ,password} = user?.data?.users;
-      formik.setValues({ firstName, lastName, email, phoneNumber, profilePicture,password });
+      const { firstName, middleName,lastName,city, email, phone,password} = user;
+      formik.setValues({ firstName,middleName, lastName, email, phone,city,password });
     }
-  }, [props.mode, user]); 
+  }, [ props.mode, user]);  
 
   return (
     <div>
@@ -96,27 +97,7 @@ const ArchivedUserForm = (props: { id?: string; mode: "new" | "update" }) => {
         </div>
       ) : (
         <Form layout="vertical" onFinish={formik.handleSubmit}>
-          {props.mode === "new" && (
-            <Form.Item label="Profile Picture" required>
-              <Upload
-                accept="image/*"
-                name="profilePicture"
-                listType="picture"
-                beforeUpload={(file) => {
-                  formik.setFieldValue("profilePicture", file.uid); // Convert the value to a string
-                  return false;
-                }}
-              >
-                <Button>Select Picture</Button>
-              </Upload>
-              {formik.touched.profilePicture &&
-                formik.errors.profilePicture && (
-                  <div className="text-red-500">
-                    {formik.errors.profilePicture}
-                  </div>
-                )}
-            </Form.Item>
-          )}
+     
           <Form.Item label="First Name" required>
             <Input
               name="firstName"
@@ -125,6 +106,16 @@ const ArchivedUserForm = (props: { id?: string; mode: "new" | "update" }) => {
             />
             {formik.touched.firstName && formik.errors.firstName && (
               <div className="text-red-500">{formik.errors.firstName}</div>
+            )}
+          </Form.Item>
+          <Form.Item label="Middle Name" required>
+            <Input
+              name="middleName"
+              value={formik.values.middleName}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.middleName && formik.errors.middleName && (
+              <div className="text-red-500">{formik.errors.middleName}</div>
             )}
           </Form.Item>
           <Form.Item label="Last Name" required>
@@ -137,6 +128,7 @@ const ArchivedUserForm = (props: { id?: string; mode: "new" | "update" }) => {
               <div className="text-red-500">{formik.errors.lastName}</div>
             )}
           </Form.Item>
+
           <Form.Item label="Email" required>
             <Input
               name="email"
@@ -149,32 +141,31 @@ const ArchivedUserForm = (props: { id?: string; mode: "new" | "update" }) => {
           </Form.Item>
           <Form.Item label="Phone Number" required>
             <Input
-              name="phoneNumber"
-              value={formik.values.phoneNumber}
+              name="phone"
+              value={formik.values.phone}
               onChange={formik.handleChange}
             />
-            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <div className="text-red-500">{formik.errors.phoneNumber}</div>
+            {formik.touched.phone && formik.errors.phone && (
+              <div className="text-red-500">{formik.errors.phone}</div>
             )}
           </Form.Item>
-          <Form.Item label="Password" required>
+          <Form.Item label="City" required>
             <Input
-              type="password"
-              name="password"
-              value={formik.values.password}
+              name="city"
+              value={formik.values.city}
               onChange={formik.handleChange}
             />
-            {formik.touched.password && formik.errors.password && (
-              <div className="text-red-500">{formik.errors.password}</div>
+            {formik.touched.city && formik.errors.city && (
+              <div className="text-red-500">{formik.errors.city}</div>
             )}
           </Form.Item>
           <Form.Item>
             <div className="flex space-x-4">
               <Button
                 type="primary"
-                htmlType="submit"
-              
-                className="bg-primary text-red-500"
+                onClick={handleRestore}
+               loading={restoring}
+                className="bg-red-500"
               >
                Restore
               </Button>

@@ -6,6 +6,7 @@ import {
   Form,
   Input,
   Modal,
+  Popconfirm,
   Typography,
   message,
 } from "antd";
@@ -89,8 +90,8 @@ export const UserApplicationsDetail = ({ id }: any) => {
 
   return (
     <>
-      <div className="w-full flex">
-        <div className="w-1/2">
+      <div className="flex">
+      <div className="w-2/3">
           <Card
             title={<Text strong>Application Information</Text>}
             className="w-full"
@@ -144,6 +145,24 @@ export const UserApplicationsDetail = ({ id }: any) => {
 
                   <div className="flex space-x-2">
                     <IsPermitted requiredPermissions={ApproveApplication}>
+                    {application.status !== "APPROVED" ? (
+                        <>
+                        <Popconfirm
+    title="Validate Educational Attachments"
+    description="Do you want to validate this applications educational attachment with ministry of education?"
+    okText="Yes"
+    cancelText="No"
+  >
+                          <Button
+                            className="bg-primary text-white"
+                            onClick={() => handleApproveClick(application.id)}
+                          >
+                            Validate
+                          </Button>
+                          </Popconfirm>
+
+                        </>
+                      ) : null}
 
                       {application.status !== "APPROVED" ? (
                         <>
@@ -192,7 +211,7 @@ export const UserApplicationsDetail = ({ id }: any) => {
             </Collapse>
           </Card>
         </div>
-        <div className="w-1/2">
+        <div className="w-1/3">
           <Card title={<Text strong>Personal Information</Text>}>
             {data && data.length > 0 ? (
               <>

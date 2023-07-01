@@ -2,7 +2,9 @@ import { Card, Form, Input, Button, message, Spin, Upload } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
+  useDeleteEmployeeMutation,
   useGetUsersQuery,
+  useRestoreEmployeeMutation,
   useUpdatedUserMutation,
 } from "../../../back-office.query";
 import { useEffect } from "react";
@@ -11,8 +13,8 @@ import { SaveFilled } from "@ant-design/icons";
 import { Edit } from "@mui/icons-material";
 
 const ArchivedEmployeeForm = (props: { id?: string; mode: "new" | "update" }) => {
-  const [createUser, { isLoading: isCreating }] = useUpdatedUserMutation();
-  const [updateUser, { isLoading: isUpdating }] = useUpdatedUserMutation();
+  const [deleteEmployee, { isLoading: isDeleting,isError:deleteError }] = useDeleteEmployeeMutation();
+  const [restoreEmployee, { isLoading: isRestoring ,isError}] = useRestoreEmployeeMutation();
   const { data: user, isLoading: isDetailsLoading } = useGetUsersQuery();
 
   // Define the form validation schema using Yup
@@ -40,16 +42,28 @@ const ArchivedEmployeeForm = (props: { id?: string; mode: "new" | "update" }) =>
   const handleSubmit = async (values: any) => {
     try {
       if (props.mode === "new") {
-        await createUser(values);
-        message.success("User created successfully");
+/*         await createUser(values);
+ */        message.success("User created successfully");
       } else if (props.mode === "update") {
-        await updateUser({ id: props.id, ...values });
         message.success("User updated successfully");
       }
     } catch (error) {
       message.error("Error occurred while saving user");
     }
   };
+  const handleRestore=async()=>{
+await deleteEmployee(props?.id)
+isError?      message.error("Error occurred while Restoring user"):message.success("Employee Restored successfully");
+
+
+  }
+
+  const handleDelete=async()=>{
+    await restoreEmployee(props?.id)
+
+    deleteError?message.error("Error occurred while deleting user"):message.success("Employee deleting successfully");
+
+  }
 
   // Use Formik to handle form state and submission
   const formik = useFormik({
@@ -172,14 +186,17 @@ const ArchivedEmployeeForm = (props: { id?: string; mode: "new" | "update" }) =>
             <div className="flex space-x-4">
               <Button
                 type="primary"
-                htmlType="submit"
                 className="bg-primary"
+                onClick={handleRestore}
+                loading={isRestoring}
               >
                 Restore
               </Button>
                 <>
                   <Button
                     htmlType="button"
+                    loading={isDeleting}
+                    onClick={handleDelete}
                     className="hover:bg-red-400 hover:text-white text-white bg-red-600"
                   >
                     Delete

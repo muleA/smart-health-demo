@@ -4,8 +4,6 @@ import {
   DoubleLeftOutlined,
   DoubleRightOutlined,
   LogoutOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Dropdown, Layout, Menu } from "antd";
@@ -25,7 +23,6 @@ import { EmployeeDetailsPage } from "../pages/back-office/employee/detail";
 import { EmployeesPage } from "../pages/back-office/employee/employees";
 import { NewEmployee } from "./back-office/employee/new-employee";
 import { License } from "./back-office/license/license";
-import { DetailLicensePage } from "../pages/back-office/license/detail";
 import { ApplicationDetailPage } from "../pages/back-office/application/detail";
 import { ArchivedUsers } from "./back-office/archives/user/archived-user";
 import { ArchivedUserDetail } from "./back-office/archives/user/archived-user-detail";
@@ -52,9 +49,9 @@ import {
 import RoutePermissionGuard from "../shared/auth/route-permission-guard";
 import LicenseDetail from "./back-office/license/detail.";
 import { SubmittedApplicationDetail } from "./back-office/application/_application-detail";
-import { routingBaseUrl } from "../configs/config";
+import TimeCounter from "../shared/live-timer";
 
-const { Sider, Content, Header, Footer } = Layout;
+const { Sider, Content, Footer } = Layout;
 
 const BackOfficeLayoutWrapper = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -186,7 +183,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
   ];
 
   return (
-    <div className="flex  text-sm">
+    <div className="flex  text-md shadow-lg">
       <Sider
         width={200}
         trigger={null}
@@ -195,14 +192,16 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
         theme="light"
         className="border-r"
       >
-        <div className="flex text-600 flex-col shadow-sm border-b justify-center items-center py-4">
+        <div className="flex text-600 flex-col bg-gray-200  shadow-lg border-b justify-center items-center py-4">
           <SideBarLogo />
         </div>
         <Sidebar menus={menus} />
       </Sider>
-      <div className="border-b border-gray-300 shadow-sm w-full">
+      <div className="border-b  shadow-lg w-full">
     
-<div className="flex items-center justify-between border-b h-16 border-gray-300 shadow-sm">
+      <div className="flex items-center justify-between bg-gray-200  border-b h-16 shadow-2xl
+
+">
   <div className="bg-primary text-xs text-white rounded-full p-1">
     {React.createElement(
       collapsed ? DoubleRightOutlined : DoubleLeftOutlined,
@@ -215,7 +214,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
   </div>
   
   <a
-    className="ant-dropdown-link mr-5 flex items-center"
+    className="ant-dropdown-link mr-5 flex hover:cursor-pointer items-center"
     onClick={(e) => e.preventDefault()}
   >
     <Dropdown overlay={accountMenu} trigger={["click"]}>
@@ -227,7 +226,8 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
       </div>
     </Dropdown>
   </a>
-</div>  
+</div>
+ 
       <div
   className="flex-1 bg-white "
       >
@@ -241,19 +241,20 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                 style={{ margin: "16px 0" }}
                 className=" text-xl text-capitalize"
               >
-                {breadcrumbItems}
+                {breadcrumbItems} 
               </Breadcrumb>
             </div>
             <div className="flex flex-auto justify-end mr-4">
               {/* Current time */}
-              <span className="text-md  text-center ">
+              <span className="text  text-center ">
                 Today is
               </span>
 
-              <span className="ml-2 text-md  text-center ">
+              <span className="ml-2 text  text-center ">
                 {" "}
                 {formattedDate}
               </span>
+              {<TimeCounter/>}
             </div>
             {/* Content */}
           </div>

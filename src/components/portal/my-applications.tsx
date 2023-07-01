@@ -10,7 +10,7 @@ export default function MyApplicationList() {
       <Card
         size="small"
         className="mt-4"
-        title="Users"
+        title="Applications"
         extra={
           <Button
             onClick={() => router("/new-application")}

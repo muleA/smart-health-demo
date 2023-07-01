@@ -24,10 +24,10 @@ function DetailRole() {
     customAction={
       <Button
         type="primary"
-        className="ml-2 text-center mx-auto bg-primary"
+        className="ml-2 text-center justify-center mx-auto bg-primary"
         onClick={() => setOpen(true)}
       >
-        <PlusCircleFilled />
+        <PlusCircleFilled className='text-center' />
         Assign
       </Button>
     }

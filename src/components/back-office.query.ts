@@ -31,6 +31,7 @@ const backOfficeApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    
     getArchivedApps: builder.query<any, void>({
       query: () => ({
         url: backOfficeEndPoints.getArchivedApplication,
@@ -55,6 +56,20 @@ const backOfficeApi = apiSlice.injectEndpoints({
     getApplicationDetailByUserId: builder.query<any, void>({
       query: (id) => ({
         url: `${backOfficeEndPoints.getApplicationDetailByUserId}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+    getArchivedUserByUserId: builder.query<any, void>({
+      query: (id) => ({
+        url: `${backOfficeEndPoints.getArchivedUserById}${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+    getArchivedEmployeesByEmployeeId: builder.query<any, void>({
+      query: (id) => ({
+        url: `${backOfficeEndPoints.getArchivedEmployeeById}${id}`,
         method: "GET",
       }),
       providesTags: ["user"],
@@ -89,6 +104,31 @@ const backOfficeApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Education"],
     }),
+    
+    deleteEmployee: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${backOfficeEndPoints.deleteEmployee}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    restoreUser: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${backOfficeEndPoints.restoreUser}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    restoreEmployee: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${backOfficeEndPoints.restoreEmployee}${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
     updatedUser: builder.mutation<any, any>({
       query: (newUser) => ({
         url: `${backOfficeEndPoints.createUser}`,
@@ -113,6 +153,14 @@ const backOfficeApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    archiveEmployee: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${backOfficeEndPoints.archiveEmployee}/${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
 
   })
 });
@@ -131,5 +179,12 @@ export const {
    useGetArchivedAppsQuery,
    useGetArchivedEmpoyeeQuery,useGetArchivedUserQuery,
    useLazyGetApplicationDetailByUserIdQuery,
-   useChangeLicenseStatusMutation
+   useRestoreEmployeeMutation,
+   useRestoreUserMutation,
+   useChangeLicenseStatusMutation,
+   useDeleteEmployeeMutation,
+   useGetArchivedEmployeesByEmployeeIdQuery,
+   useGetArchivedUserByUserIdQuery,
+   useLazyGetArchivedEmployeesByEmployeeIdQuery,
+   useLazyGetArchivedUserByUserIdQuery
 } = backOfficeApi;

@@ -42,23 +42,14 @@ export function ArchivedUsers() {
       },
       {
         accessorKey: 'createdAt',
-        header: 'Created At',
+        header: 'Registered',
         accessorFn: (originalRow) => (
           <Typography variant="body2" sx={{ textTransform: "none" }}>
             {timeSince(originalRow?.createdAt)}
           </Typography>
         ),
       },
-      {
-        accessorKey: 'id',
-        header: '',
-        Cell: () => (
-          <IconButton>
-            <ArrowRightAlt />
-          </IconButton>
-        ),
-       
-      },
+     
     ],
     []
   );

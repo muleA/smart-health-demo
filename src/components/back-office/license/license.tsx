@@ -5,7 +5,6 @@ import { MRT_ColumnDef } from 'material-react-table';
 import { DefaultPage } from "../../../shared/default-page";
 import { useGetLicenseQuery } from "./license.query";
 import Typography from "antd/es/typography/Typography";
-import { Badge } from "antd";
 import StatusIndicator from "../../../shared/status-indicator";
 
 export function License() {
@@ -51,7 +50,7 @@ export function License() {
       {
         accessorKey: "status",
         header: "Status",
-        render: (originalRow: { PostedStatus: string; }) => (
+        render: (originalRow:any) => (
           <span
             style={{
               display: "flex",
@@ -60,10 +59,10 @@ export function License() {
             }}
           >
             <StatusIndicator
-              text={originalRow?.PostedStatus}
-              color={originalRow?.PostedStatus === "Active" ? "success.main" : "warning.main"}
+              text={originalRow?.status}
+              color={originalRow?.status === "APPROVED" ? "success.main" : "warning.main"}
             />
-            {!originalRow.PostedStatus && <>-</>}
+            {!originalRow.status && <>-</>}
           </span>
         ),
       },
