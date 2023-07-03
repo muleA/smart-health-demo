@@ -426,7 +426,7 @@ const ApplicationForm = () => {
                             </>
                           )}
                       </div>
-                      {values?.applierType === "delegation" && (
+                      {/* {values?.applierType === "delegation" && (
                                   <>
                                     <div className="mb-4">
                                       <label htmlFor="ownerName">
@@ -462,7 +462,7 @@ const ApplicationForm = () => {
                                     </div>
                                   </>
 
-                                )}
+                                )} */}
                       <div style={{ gridColumn: "3 / span 5" }}>
                         {values?.applicationType &&
                           values?.applicationCategory &&
@@ -493,7 +493,7 @@ const ApplicationForm = () => {
                                   <>
                                     <div className="mb-4">
                                       <label htmlFor="ownerName">
-                                        Facility Owner Full Name
+                                        Facility Owner First Name
                                         <span className="text-red-400">*</span>
                                       </label>
                                       <Field
@@ -530,7 +530,7 @@ const ApplicationForm = () => {
 
                                 <div className="mb-4">
                                   <label htmlFor="professionalName">
-                                    Professional full Name
+                                    Professional First Name
                                     <span className="text-red-400">*</span>
                                   </label>
                                   <Field
