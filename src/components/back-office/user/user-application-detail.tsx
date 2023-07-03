@@ -48,6 +48,7 @@ console.log("userInfo",userInfo)
 
   const [appId, setAppId] = useState("");
   const [educationId, setEducationId] = useState("");
+  const [messageFromMinstry, setMessageFromMinistry] = useState("");
 
   const handleApproveClick = (id: string) => {
     setAppId(id);
@@ -112,7 +113,7 @@ console.log("userInfo",userInfo)
     try {
       // Call API using Axios
       const response = await axios.get(
-        `${baseUrl}Mailer/send-email/${userInfo?.email}/${values?.message}`,
+        `${baseUrl}Mailer/send-email/${userInfo?.email}//${values?.message}${values?.subject}`,
       );
 
       console.log(response.data);
@@ -138,6 +139,7 @@ console.log("userInfo",userInfo)
       console.log(response.data);
       setIsModalVisible(false);
      if(response){
+      
       message.success("The Ministry of Education has verified the authenticity of this attachment");
      } 
     
@@ -392,10 +394,12 @@ console.log("userInfo",userInfo)
         footer={null} // Remove the footer
       >
         <Form onFinish={handleEmailModalOk}>
+          <Form.Item label="Subject" name="subject">
+            <Input.TextArea cols={5} rows={5} />
+          </Form.Item>
           <Form.Item label="message" name="message">
             <Input.TextArea cols={5} rows={5} />
           </Form.Item>
-
           <Form.Item>
             <Button
               type="primary"

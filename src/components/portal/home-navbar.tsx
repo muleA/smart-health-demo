@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { Layout, Menu, Dropdown } from 'antd';
-import { UserOutlined, CaretDownOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, HomeOutlined, SettingOutlined, EditOutlined, FileAddOutlined, FolderOutlined, BellOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { UserOutlined, CaretDownOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, HomeOutlined, SettingOutlined, EditOutlined, FileAddOutlined, FolderOutlined, BellOutlined, UnorderedListOutlined, DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 import { Link, useNavigate, Routes, Route } from 'react-router-dom';
 import MyApplications from './my-applications';
 import MyLicenses from './my-archives';
@@ -12,6 +13,7 @@ import StepperComponent from './application-form';
 import ApplicationDetail  from './application-detail';
 import Archives from './my-archives';
 import Notification from './notification';
+import ApplicationForm from './application-form';
 
 const { Header, Content, Sider } = Layout;
 
@@ -44,20 +46,7 @@ const PortalNavigation = () => {
     </Menu>
   );
 
-  const renderContent = () => {
-    switch (selectedMenu) {
-      case "1":
-        return <ProfileWrapper />;
-      case "2":
-        return <MyApplications />;
-      case "3":
-        return <MyLicenses />;
-      case "5":
-        return <Notification />;
-      default:
-        return null;
-    }
-  };
+ 
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -68,7 +57,9 @@ const PortalNavigation = () => {
         collapsible
         collapsed={collapsed}
       >
-        <div className="logo text-center"></div>
+   <div className="flex text-600 flex-col  h-14 bg-white  shadow-lg  border-b justify-center items-center">
+<img src={process.env.PUBLIC_URL + '/logo.jpg'} alt="Logo"  height="100%" width={"100%"} />
+</div>
         <Menu
           mode="vertical"
           className="mt-2"
@@ -103,46 +94,42 @@ const PortalNavigation = () => {
         </Menu>
       </Sider>
       <Layout>
-      <Header
-  className="bg-gray-200"
-  style={{
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingRight: '24px'
-  }}
->
+
+   <div className="flex items-center justify-between bg-white  border-b h-14 shadow-2xl">
   <div className="flex items-center">
-    {React.createElement(
-      collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-      {
-        className:
-          "p-0 text-2xl leading-none cursor-pointer transition-colors",
-        onClick: toggle,
-      }
-    )}
+    <div className="bg-primary text-xs text-white rounded-full p-1">
+      {React.createElement(
+        collapsed ? DoubleRightOutlined : DoubleLeftOutlined,
+        {
+          className:
+            "p-0 text-lg leading-none cursor-pointer transition-colors",
+          onClick: toggle,
+        }
+      )}
+    </div>
   </div>
 
-  <div className="flex gap-2 items-center">
-    <Dropdown overlay={accountMenu} trigger={['hover']}>
-      <a className="ant-dropdown-link text-primary" onClick={(e) => e.preventDefault()}>
-        <UserOutlined style={{ fontSize: '30px' }} />
-        <span></span>
-      </a>
+  <a href=''
+    className="ant-dropdown-link mr-5 flex hover:cursor-pointer items-center"
+    onClick={(e) => e.preventDefault()}
+  >
+    <Dropdown overlay={accountMenu} trigger={["click"]}>
+      <div className="flex items-center">
+        <UserOutlined className="text-lg text-primary"/>
+        <div className=" text-lg ml-2 mt-1 text-primary"> {session?.userInfo?.firstName}</div>
+        <div className=" text-lg ml-2 mt-1 text-primary"> {session?.userInfo?.middleName}</div>
+        <CaretDownOutlined className="hover:cursor-pointer text-primary mt-1" />
+      </div>
     </Dropdown>
-    <CaretDownOutlined className="hover:cursor-pointer text-primary ml-1" />
-    <div className="text-primary">{session?.userInfo?.firstName}</div>
-    <div className="text-primary">{session?.userInfo?.middleName}</div>
-
-  </div>
-</Header>
+  </a>
+</div>
 
         <Content style={{ margin: "16px" }}>
           <Routes>
             <Route path="/home" element={<HomePage />} />
             <Route path="/banner" element={<Banner />}></Route>
             <Route path="/my-profile" element={<ProfileWrapper />} />
-            <Route path="/new-application" element={<StepperComponent />} />
+            <Route path="/new-application" element={<ApplicationForm />} />
             <Route path="/my-applications" element={<MyApplications />} />
             <Route path="/my-archives" element={<Archives />} />
             <Route path="my-applications/:id" element={<ApplicationDetail />} />
