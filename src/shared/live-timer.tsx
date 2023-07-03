@@ -16,8 +16,7 @@ const TimeCounter: React.FC = () => {
   const formattedTime = currentTime.toLocaleTimeString();
 
   return (
-      <span className='ml-2 text-primary'>{formattedTime}</span>
-  );
+<span className='ml-2 text-primary font-bold'>{formattedTime}</span>  );
 };
 
 export default TimeCounter;

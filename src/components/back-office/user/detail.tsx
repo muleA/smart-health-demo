@@ -12,7 +12,7 @@ return(<>
 
 </CollapsibleCard>
 
-<CollapsibleCard title={"Applications"}>
+<CollapsibleCard title={"Applications"} dropped>
 <UserApplicationsDetail id={id}/>
 </CollapsibleCard>
 

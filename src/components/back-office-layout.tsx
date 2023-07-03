@@ -50,6 +50,7 @@ import RoutePermissionGuard from "../shared/auth/route-permission-guard";
 import LicenseDetail from "./back-office/license/detail.";
 import { SubmittedApplicationDetail } from "./back-office/application/_application-detail";
 import TimeCounter from "../shared/live-timer";
+import DashboardGreeting from "../shared/dashboard-welcome";
 
 const { Sider, Content, Footer } = Layout;
 
@@ -143,12 +144,12 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
       icon: Icon.AppstoreOutlined,
       permissions: ViewApplications,
     },
-    {
+  /*   {
       name: t("_Application"),
       path: `/_applications`,
       icon: Icon.AppstoreOutlined,
       permissions: _ViewApplications,
-    },
+    }, */
     {
       name: "License",
       path: `/licenses`,
@@ -192,27 +193,28 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
         theme="light"
         className="border-r"
       >
-        <div className="flex text-600 flex-col bg-gray-200  shadow-lg border-b justify-center items-center py-4">
-          <SideBarLogo />
-        </div>
+<div className="flex text-600 flex-col  h-14 bg-white  shadow-lg  border-b justify-center items-center">
+<img src={process.env.PUBLIC_URL + '/logo.jpg'} alt="Logo"  height="100%" width={"100%"} />
+</div>
         <Sidebar menus={menus} />
       </Sider>
-      <div className="border-b  shadow-lg w-full">
+      <div className="border-b  sh w-full">
     
-      <div className="flex items-center justify-between bg-gray-200  border-b h-16 shadow-2xl
-
-">
-  <div className="bg-primary text-xs text-white rounded-full p-1">
-    {React.createElement(
-      collapsed ? DoubleRightOutlined : DoubleLeftOutlined,
-      {
-        className:
-          "p-0 text-lg leading-none cursor-pointer transition-colors",
-        onClick: toggle,
-      }
-    )}
+      <div className="flex items-center justify-between bg-gray-200  border-b h-14 shadow-2xl">
+  <div className="flex items-center">
+    <div className="bg-primary text-xs text-white rounded-full p-1">
+      {React.createElement(
+        collapsed ? DoubleRightOutlined : DoubleLeftOutlined,
+        {
+          className:
+            "p-0 text-lg leading-none cursor-pointer transition-colors",
+          onClick: toggle,
+        }
+      )}
+    </div>
+    <DashboardGreeting userFullName={session?.userInfo?.firstName}/>
   </div>
-  
+
   <a
     className="ant-dropdown-link mr-5 flex hover:cursor-pointer items-center"
     onClick={(e) => e.preventDefault()}
@@ -235,10 +237,10 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
         {/*  */} {/* Body */}
         <Content className="py-2 px-4">
           {/*  Page Title and Breadcrumb */}
-          <div className="flex">
+          <div className="flex mb-4 mt-4">
             <div className="flex-1">
               <Breadcrumb
-                style={{ margin: "16px 0" }}
+                style={{ margin: "" }}
                 className=" text-xl text-capitalize"
               >
                 {breadcrumbItems} 
@@ -450,9 +452,9 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
             </Routes>
           </div>
         </Content>
-        <Footer className="mx-auto text-center ">
+        <Footer className="mx-auto text-center text-primary ">
           {" "}
-          &copy; {new Date().getFullYear()} {""}All Rights Reserved Tria PLc{" "}
+          &copy; {new Date().getFullYear()} {""}All Rights Reserved HaPo Tech & Tria PLc{" "}
         </Footer>
       </div>
 

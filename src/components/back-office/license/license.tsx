@@ -6,6 +6,7 @@ import { DefaultPage } from "../../../shared/default-page";
 import { useGetLicenseQuery } from "./license.query";
 import Typography from "antd/es/typography/Typography";
 import StatusIndicator from "../../../shared/status-indicator";
+import { Box } from "@mui/material";
 
 export function License() {
   const navigate = useNavigate();
@@ -47,24 +48,28 @@ export function License() {
           </Typography>
         ),
       },
+        
       {
-        accessorKey: "status",
         header: "Status",
-        render: (originalRow:any) => (
-          <span
-            style={{
-              display: "flex",
-              justifyContent: "start",
-              alignItems: "center",
-            }}
-          >
-            <StatusIndicator
-              text={originalRow?.status}
-              color={originalRow?.status === "APPROVED" ? "success.main" : "warning.main"}
-            />
-            {!originalRow.status && <>-</>}
-          </span>
-        ),
+        accessorKey: "status",
+        key: "status",
+        accessorFn(originalRow) {
+          return (
+            <Box display="flex" gap={1} alignItems="center">
+              <StatusIndicator
+            text={originalRow?.status}
+            color={
+              originalRow.status === "EXPIRED"
+                ? "warning.main"
+                : originalRow.status === "SUSPENDED"
+                ? "error.main"
+                : "success.main"
+            }
+          />
+            </Box>
+          );
+        },
+       
       },
       {
         accessorKey: 'comment',

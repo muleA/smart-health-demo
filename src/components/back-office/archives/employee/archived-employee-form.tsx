@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import {
   useDeleteEmployeeMutation,
   useGetUsersQuery,
+  useLazyGetArchivedEmployeesByEmployeeIdQuery,
   useRestoreEmployeeMutation,
   useUpdatedUserMutation,
 } from "../../../back-office.query";
@@ -15,14 +16,14 @@ import { Edit } from "@mui/icons-material";
 const ArchivedEmployeeForm = (props: { id?: string; mode: "new" | "update" }) => {
   const [deleteEmployee, { isLoading: isDeleting,isError:deleteError }] = useDeleteEmployeeMutation();
   const [restoreEmployee, { isLoading: isRestoring ,isError}] = useRestoreEmployeeMutation();
-  const { data: user, isLoading: isDetailsLoading } = useGetUsersQuery();
+  const [trigger,{ data: employees, isLoading: isDetailsLoading }] = useLazyGetArchivedEmployeesByEmployeeIdQuery();
 
   // Define the form validation schema using Yup
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    phoneNumber: Yup.string().required("Phone number is required"),
+    phone: Yup.string().required("Phone number is required"),
     profilePicture: Yup.string().required("Profile picture is required"),
     password: Yup.string()
       .required("Password is required")
@@ -32,12 +33,7 @@ const ArchivedEmployeeForm = (props: { id?: string; mode: "new" | "update" }) =>
   const { id } = useParams();
   console.log("id", id);
   console.log("mode", id);
-  /*   useEffect(() => {
-    if (id) {
-      trigger(id);
-    }
-  }, [id, trigger]);
- */
+   
   // Define the form submission function
   const handleSubmit = async (values: any) => {
     try {
@@ -71,7 +67,7 @@ isError?      message.error("Error occurred while Restoring user"):message.succe
       firstName: "",
       lastName: "",
       email: "",
-      phoneNumber: "",
+      phone: "",
       profilePicture: null,
       password: "",
     },
@@ -80,20 +76,20 @@ isError?      message.error("Error occurred while Restoring user"):message.succe
   });
 
   // Fetch user details when in "update" mode
-  /*  useEffect(() => {
+  useEffect(() => {
     if (props.mode === 'update' && props.id) {
-      trigger(props.id);
+      trigger(id as any);
     }
-  }, [props.mode, props.id, trigger]); */
+  }, [props.mode, props.id, trigger])
 
   // Update form data when user details are fetched
-  console.log("user", user);
-  /*   useEffect(() => {
-    if (props.mode === 'update' && user) {
-      const { firstName, lastName, email, phoneNumber, profilePicture ,password} = user?.data?.users;
-      formik.setValues({ firstName, lastName, email, phoneNumber, profilePicture,password });
+  console.log("user", employees);
+     useEffect(() => {
+    if (props.mode === 'update' && employees) {
+      const { firstName, lastName, email, phone, profilePicture ,password} =employees;
+      formik.setValues({ firstName, lastName, email, phone, profilePicture,password });
     }
-  }, [props.mode, user]); */
+  }, [props.mode, employees]);
 
   return (
     <div>
@@ -163,25 +159,15 @@ isError?      message.error("Error occurred while Restoring user"):message.succe
           </Form.Item>
           <Form.Item label="Phone Number" required>
             <Input
-              name="phoneNumber"
-              value={formik.values.phoneNumber}
+              name="phone"
+              value={formik.values.phone}
               onChange={formik.handleChange}
             />
-            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <div className="text-red-500">{formik.errors.phoneNumber}</div>
+            {formik.touched.phone && formik.errors.phone && (
+              <div className="text-red-500">{formik.errors.phone}</div>
             )}
           </Form.Item>
-          <Form.Item label="Password" required>
-            <Input
-              type="password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.password && formik.errors.password && (
-              <div className="text-red-500">{formik.errors.password}</div>
-            )}
-          </Form.Item>
+         
           <Form.Item>
             <div className="flex space-x-4">
               <Button

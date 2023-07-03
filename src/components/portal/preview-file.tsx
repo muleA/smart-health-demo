@@ -67,7 +67,7 @@ const PreviewFile = ({ entityId, entityType, userId }: any) => {
 
   return (
 
-    <><Button onClick={handleDownloadClick}>Preview  File</Button>
+    <><Button className='text-primary' onClick={handleDownloadClick}>Preview  File</Button>
       {loading && <Spin />}
       <DefaultDialog onClose={handleCloseModal} minHeight={"90%"} minWidth={"70%"}
         open={!!fileUrl} title='Preview File'

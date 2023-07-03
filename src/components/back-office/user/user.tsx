@@ -2,8 +2,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useMemo } from "react";
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_ColumnDef } from 'material-react-table';
-import { Button, IconButton, Toolbar, Typography } from '@mui/material';
-import { AddCircleOutlineOutlined, ArrowRightAlt } from '@mui/icons-material';
+import { Typography } from '@mui/material';
 import timeSince from "../../../shared/utilities/time-since";
 import { User } from "../../../models/user";
 import { useGetUsersQuery } from "../../back-office.query";
@@ -47,7 +46,7 @@ export function Users() {
       },
       {
         accessorKey: 'createdAt',
-        header: 'Created At',
+        header: 'Registered',
         accessorFn: (originalRow) => (
           <Typography variant="body2" sx={{ textTransform: "none" }}>
             {timeSince(originalRow?.createdAt)}

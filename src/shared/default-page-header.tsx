@@ -1,8 +1,16 @@
-import { Button, Select, Typography, Row, Col, ButtonProps } from "antd";
-import { RollbackOutlined } from "@ant-design/icons";
 import { PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
-import { SizeType } from "antd/es/config-provider/SizeContext";
+import {
+  Box,
+  Button,
+  ButtonProps,
+  Grid,
+  Select,
+  Typography,
+} from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
+import IsPermitted from "./auth/is-permitted";
+import NumberWithCommas from "./utilities/number-commas";
 
 export type DefaultPageHeaderProps = {
   title: string;
@@ -21,73 +29,77 @@ export type DefaultPageHeaderProps = {
 
 type DefaultPageHeaderButtonProps = PropsWithChildren<ButtonProps>;
 
-export const DefaultPageHeader = (props: DefaultPageHeaderProps): JSX.Element => {
+export const DefaultPageHeader = (
+  props: DefaultPageHeaderProps
+): JSX.Element => {
   const navigate = useNavigate();
 
   return (
-    <div className="mx-1 mb-2">
+    <Box mx={1} mb={2}>
       {props.backButtonLink && props.backButtonTitle && (
         <Button
-          icon={<RollbackOutlined />}
-          type="text"
+          startIcon={<ArrowBack />}
+          color="inherit"
           onClick={() => {
-            navigate(`${props.backButtonLink}`);
+            navigate(props.backButtonLink as any);
           }}
         >
           {props.backButtonTitle}
         </Button>
       )}
 
-      <Row justify="space-between" align="middle" gutter={16}>
-        <Col>
-          <Typography.Title level={4} style={{ fontWeight: 500, fontSize: "35px" }}>
-            {}
-          </Typography.Title>
+      <Grid
+        container
+        direction="row"
+        justifyContent={"space-between"}
+        flexDirection="row"
+        alignItems="center"
+        spacing={2}
+        wrap="nowrap"
+      >
+        <Grid item>
+          <Typography variant="h4" sx={{ fontWeight: 500, fontSize: "35px" }}>
+            {props.title}
+          </Typography>
           {typeof props?.subTitle === "string" ? (
-            <Typography.Text>{props?.subTitle}</Typography.Text>
+            <Typography variant="subtitle1">{props?.subTitle}</Typography>
           ) : (
             props?.subTitle
           )}
-        </Col>
-        <Col flex="end" style={{marginRight:"40px"}}>
-          
+        </Grid>
+        <Grid item container direction="row" xs={"auto"} spacing={1}>
+          {props.dropdownSelector && <Grid item>{props.dropdownSelector}</Grid>}
+
           {props.primaryButtonProps && (
-            <Button
-              style={{ textTransform: "none" }}
-              size={"medium" as SizeType} 
-              type="primary"
-              className="bg-primary text-white"
-              {...props.primaryButtonProps}
-            >
-              {props.primaryButtonProps.children}
-            </Button>
+            <Grid item>
+              <Button
+                style={{ textTransform: "none" }}
+                size="large"
+                variant="contained"
+                {...props.primaryButtonProps}
+              >
+                {props.primaryButtonProps.children}
+              </Button>
+            </Grid>
           )}
           {props.outlinedButtonProps && (
-            <Button
-              style={{ textTransform: "none" }}
-              size={"medium" as SizeType} 
-              type="default"
-              {...props.outlinedButtonProps}
-            >
-              {props.outlinedButtonProps.children}
-            </Button>
+            <Grid item>
+              <Button
+                style={{ textTransform: "none" }}
+                size="large"
+                variant="outlined"
+                {...props.outlinedButtonProps}
+              >
+                {props.outlinedButtonProps.children}
+              </Button>
+            </Grid>
           )}
-          
 
-          {props.rightSideComponent && <div>{props.rightSideComponent}</div>}
-
-          {props.secondaryButtonProps && (
-            <Button
-              style={{ textTransform: "none" }}
-              size={"medium" as SizeType} 
-              type={props.showWarningColor ? "ghost" : "default"}
-              {...props.secondaryButtonProps}
-            >
-              {props.secondaryButtonProps.children}
-            </Button>
+          {props.rightSideComponent && (
+            <Grid item>{props.rightSideComponent}</Grid>
           )}
-        </Col>
-      </Row>
-    </div>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
