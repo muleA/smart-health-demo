@@ -1,19 +1,25 @@
 import CounterCard from "./Components/counter-card";
 import TableCard from './Components/table-card';
 import ProgressChartCard from './Components/progress-chart-card';
-import { useGetLicenseByUserIdAndStatusQuery, useGetLicenseByUserIdQuery } from "../../portal.query";
+import { useGetApplicationUserIdQuery, useGetLicenseByUserIdAndStatusQuery, useGetLicenseByUserIdQuery } from "../../portal.query";
 import { useAuth } from "../../../shared/auth/use-auth";
-import { CheckOutlined, CloseOutlined, FileDoneOutlined, SafetyCertificateOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, CheckOutlined, CloseOutlined, FileDoneOutlined, SafetyCertificateOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 export default function HomePage(){
   const {session}=useAuth()
   const {data:totalLicense,isLoading:totalLicenseLoading}=useGetLicenseByUserIdQuery(session?.userInfo?.userId)
+  const {data:applications,isLoading}=useGetApplicationUserIdQuery(session?.userInfo?.userId)
 
   const {data:approvedLicense,isLoading:approvedLicenseLoading}=useGetLicenseByUserIdAndStatusQuery({userId:session?.userInfo?.userId,status:"ACTIVE"})
  const {data:REJECTEDLicese,isLoading:REJECTEDLicenseLoading}=useGetLicenseByUserIdAndStatusQuery({userId:session?.userInfo?.userId,status:"EXPIRED"})
  const {data:SUSPENDEDLicese,isLoading:SUSPENDEDLicenseLoading}=useGetLicenseByUserIdAndStatusQuery({userId:session?.userInfo?.userId,status:"SUSPENDED"})
  const data = [
-
+  {
+    icon: <AppstoreOutlined style={{ fontSize: "36px" }} />,
+    label: "Total Applications",
+    value: applications?.length ?? 0,
+    className: "bg-purple-500 text-white",
+  },
   {
     icon: <SafetyCertificateOutlined style={{ fontSize: "36px" }} />,
     label: "Total Licenses",
@@ -51,7 +57,7 @@ export default function HomePage(){
               />
         </div> */}
          <Card className="text-center  shadow-lg">
-            <div className="grid grid-cols-1 gap-2  sm:grid-cols-4 sm:px-2">
+            <div className="grid grid-cols-1 gap-2  sm:grid-cols-5 sm:px-2">
               {data.map((item, index) => (
                 <div
                   key={index}
