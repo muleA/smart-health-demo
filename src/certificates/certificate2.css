@@ -5,7 +5,7 @@ body {
       margin: 5px;
   }
   p{
-      font-size: 20px;
+      font-size: 16px;
   }
   .container {
     width: 950px;
@@ -51,7 +51,7 @@ body {
     display: flex;
   }
   .left-header {
-    width: 10%;
+    width: 20%;
     height: 15%;
     text-align: right;
   }
@@ -88,4 +88,14 @@ width: 30.33%;
 border: 2px solid;
 padding: 5px;
 height: 180px;
-}
+}  .imagePosition {
+  Position: relative;
+  top: -43px !important;
+  }
+  .imagePosition3 {
+  Position: relative;
+  top: -400px;
+  }
+  .center{
+    display: flex;
+    justify-content: center;    }
