@@ -51,7 +51,7 @@ export default function HomePage(){
               />
         </div> */}
          <Card className="text-center  shadow-lg">
-            <div className="grid grid-cols-1 gap-2  sm:grid-cols-7 sm:px-2">
+            <div className="grid grid-cols-1 gap-2  sm:grid-cols-4 sm:px-2">
               {data.map((item, index) => (
                 <div
                   key={index}

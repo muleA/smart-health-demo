@@ -1,21 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { Layout, Menu, Dropdown } from 'antd';
-import { UserOutlined, CaretDownOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, HomeOutlined, SettingOutlined, EditOutlined, FileAddOutlined, FolderOutlined, BellOutlined, UnorderedListOutlined, DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
+import { UserOutlined, CaretDownOutlined, LogoutOutlined, HomeOutlined, FileAddOutlined, FolderOutlined, UnorderedListOutlined, DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 import { Link, useNavigate, Routes, Route } from 'react-router-dom';
 import MyApplications from './my-applications';
-import MyLicenses from './my-archives';
 import ProfileWrapper from './profile-wrapper';
 import { useAuth } from '../../shared/auth/use-auth';
 import HomePage from './Home/home-page';
 import Banner from '../../pages/banner';
-import StepperComponent from './application-form';
 import ApplicationDetail  from './application-detail';
 import Archives from './my-archives';
-import Notification from './notification';
 import ApplicationForm from './application-form';
 
-const { Header, Content, Sider } = Layout;
+const {  Content, Sider } = Layout;
 
 const PortalNavigation = () => {
   const [collapsed, setCollapsed] = useState(false);
