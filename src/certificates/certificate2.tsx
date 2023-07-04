@@ -14,7 +14,7 @@ return(
             </div></div>
             <div className="center-header">
             <div className='center'>
-              <img src={require("../assets/images/logo2.png" )} alt="logo" width="150" />
+               <img src={require("../assets/images/aah.png")} alt="logo" width="150" />
                 </div>    
                 <div className="certificate-code">
                 <p>በአዲስ አበባ ከተማ አስተዳደር የምግብ፣የመድኃኒትና</p>

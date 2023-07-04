@@ -126,9 +126,9 @@ const Archives = () => {
                   onRow={applicationTableRowProps}
                   rowKey="id"
                   columns={[
-                    { title: "", dataIndex: "applicationCategory" },
+                    { title: "Application Category", dataIndex: "applicationCategory" },
                     {
-                      title: "",
+                      title: "Action",
                       dataIndex: "restore",
                       render: (row) => (
                         <Button
@@ -164,7 +164,7 @@ const Archives = () => {
                       ),
                     },
                     {
-                      title: "",
+                      title: "Action",
                       dataIndex: "restore",
                       render: (row) => (
                         <Button
@@ -201,7 +201,7 @@ const Archives = () => {
                       ),
                     },
                     {
-                      title: "",
+                      title: "Action",
                       dataIndex: "restore",
                       render: (row) => (
                         <Button
@@ -237,7 +237,7 @@ const Archives = () => {
                       ),
                     },
                     {
-                      title: "",
+                      title: "Action",
                       dataIndex: "restore",
                       render: (row) => (
                         <Button
