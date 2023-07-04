@@ -84,7 +84,9 @@ const RegistrationForm = () => {
           message.success(
             "User Account Created Successfully please move next steps to complete registrations"
           );
-          submitLoginRequest({username:values?.email,password:values?.password})
+          // currentStep>=0?submitLoginRequest({username:values?.email,password:values?.password}):''
+          if(currentStep === 1){submitLoginRequest({username:values?.email,password:values?.password})}
+
         })
         .catch((error) => {
           console.error(error);
