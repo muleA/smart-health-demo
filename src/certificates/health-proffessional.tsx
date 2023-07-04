@@ -32,7 +32,9 @@ const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) =>
           </div>
           <div className="center-header">
             <div className='center'>
-              <img src={require("../assets/images/logo2.png")} alt="logo" width="150" style={{ mixBlendMode: "multiply" }} />
+              
+              <img src={require("../assets/images/aah.png")} alt="logo" width="150" />
+
             </div>
             <div className="certificate-code">
               <p className='font-bold'>በአዲስ አበባ ከተማ አስተዳደር</p >
