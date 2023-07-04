@@ -150,6 +150,12 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    getEmployeeById:builder.query<any,any>({
+      query:(id:string)=>({
+        url:`${portalEndPoints.getEmployeeById}/${id}`,
+        method:"GET"
+      })
+    }),
     createAccount: builder.mutation<any, any>({
       query: (newUser) => ({
         url: portalEndPoints.createAccount,
@@ -258,6 +264,7 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    
   }),
 });
 
@@ -295,5 +302,6 @@ export const {
    useLazyGetExperienceFileNameQuery,
    useLazyGetCertificateFileNameQuery,
    useGetLicenseByUserIdAndStatusQuery,
-   useGetLicenseByUserIdQuery
+   useGetLicenseByUserIdQuery,
+   useGetEmployeeByIdQuery,
 } = portalApi;
