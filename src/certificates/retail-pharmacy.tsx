@@ -1,10 +1,10 @@
 import { Email, Phone } from '@mui/icons-material'
 import './certificate2.css'
-import { useGetUserByIdQuery } from '../components/portal.query';
+import { useGetEmployeeByIdQuery, useGetUserByIdQuery } from '../components/portal.query';
 
 export default function Certificate3({licenseInfo,ApplicationlicenseInfo,userInfo}:any) {
-  const { data: issuedByInfo } = useGetUserByIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
-  // console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', licenseInfo)
+  const { data: issuedByInfo } = useGetEmployeeByIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
+  console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', licenseInfo)
   console.log('ApplicationlicenseInfo of certifate 111111111111111111wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', ApplicationlicenseInfo.license)
   // console.log('Issued By Info of certifate 1', issuedByInfo)
   const ValidFrom = new Date(ApplicationlicenseInfo?.license?.validFrom).toLocaleDateString('en-US', {

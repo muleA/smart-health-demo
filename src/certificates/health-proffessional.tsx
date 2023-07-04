@@ -1,14 +1,10 @@
 import { useGetUserByIdQuery } from '../components/back-office.query';
 import { useGetEmployeeByEmployeeIdQuery } from '../components/back-office/employee/employee.query';
+import { useGetEmployeeByIdQuery } from '../components/portal.query';
 import './certficate.css';
 
 const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) => {
-  // const { data: userInfo, isLoading } = useGetUserByIdQuery(props?.licenseInfo?.userId)
-
-  const { data: issuedByInfo } = useGetEmployeeByEmployeeIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
-  // console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', licenseInfo)
-  // console.log('ApplicationlicenseInfo of certifate 111111111111111111', ApplicationlicenseInfo.license)
-  // console.log('Issued By Info of certifate 1', issuedByInfo)
+  const { data: issuedByInfo } = useGetEmployeeByIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
   const ValidFrom = new Date(ApplicationlicenseInfo?.license?.validFrom).toLocaleDateString('en-US', {
     weekday: 'short',
     month: 'short',
@@ -92,7 +88,7 @@ const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) =>
               <p>The holder is required to notify as soon as the certificate is lost or missed</p>
               <p>This Certificate shall Be renewed every three year</p>
               <p className='user-response'>Emaill proflisence@gmail.com</p>
-              <p>ISSUED BY:       {`${issuedByInfo?.firstName} ${userInfo?.middleName}`}
+              <p>ISSUED BY:       {`${issuedByInfo?.firstName} ${issuedByInfo?.middleName}`}
               </p>
               <div className="imagePosition2">
                 <img src={require("../assets/images/stamp.png")} alt="stamp" width="170" />

@@ -2,7 +2,7 @@ import { Email, Phone } from '@mui/icons-material'
 import './certificate2.css'
 
 export default function Certificate5({ licenseInfo, ApplicationlicenseInfo, userInfo }: any) {
-  console.log("license info at 4", licenseInfo)
+  console.log("uuuusssseerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", licenseInfo)
   console.log("ApplicationlicenseInfo info at 4", ApplicationlicenseInfo)
   return (
     <div className="container">
