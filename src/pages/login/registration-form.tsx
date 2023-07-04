@@ -402,7 +402,7 @@ const RegistrationForm = () => {
               className="bg-primary"
               htmlType="submit"
             >
-              {currentStep === steps.length - 1 && updatesate == 0 ? "Save" : updatesate > 0 ? 'Update' : "Next"}
+              {currentStep === steps.length - 1 && updatesate == 0 ? "Save" : updatesate > 0 ? 'Next' : "Next"}
             </Button>
           </div>
 
