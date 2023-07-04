@@ -25,6 +25,7 @@ const RegistrationForm = () => {
           .email("Invalid email address")
           .required("Email is required"),
         phone: Yup.string().required("Phone number is required"),
+        // id: Yup.string().required("id number is required"),
         password: Yup.string().required("Password is required"),
         username: Yup.string().required("name is required"),
       }),
@@ -51,7 +52,7 @@ const RegistrationForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      id:'',
+      id: '',
       email: "",
       phone: "",
       password: "",
@@ -71,7 +72,8 @@ const RegistrationForm = () => {
     },
     validationSchema: steps[currentStep].validationSchema,
     onSubmit: async (values) => {
-      if (updatesate == 0) {
+      if (currentStep !== steps.length - 1&&updatesate == 0) {
+        console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu', values)
         axios
           .post(`${baseUrl}user/create-account`, {
             userName: values?.username,
@@ -100,10 +102,11 @@ const RegistrationForm = () => {
 
             // Handle the error
           });
-      } else if (updatesate > 0) {
+      } else if (currentStep !== steps.length - 1&&updatesate > 0) {
+        console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu', values)
         axios
           .post(`${baseUrl}user/update-account`, {
-            id: values.id,
+            id: accountInfo?.id,
             userName: values?.username,
             email: values?.email,
             phone: values?.phone,
@@ -131,7 +134,6 @@ const RegistrationForm = () => {
             // Handle the error
           });
       }
-
 
       if (currentStep === steps.length - 1) {
         try {
@@ -201,16 +203,16 @@ const RegistrationForm = () => {
           <>
             {updatesate > 0 && (
               <Form.Item
-                label="Id"
+                label="id"
                 name="id"
-                // validateStatus={formik.errors.id ? "error" : ""}
-                help={formik.errors.username}
+                validateStatus={formik.errors.id ? "error" : ""}
+                help={formik.errors.id}
               >
                 <Input
                   value={accountInfo?.id}
                   defaultValue={accountInfo?.id}
                   disabled
-                  // onChange={formik.handleChange}
+                onChange={formik.handleChange}
                 />
               </Form.Item>
             )}
