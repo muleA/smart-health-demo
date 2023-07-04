@@ -9,7 +9,9 @@ return(
         <div className="content">
             <div className="left-header ">
                <img src="https://media.licdn.com/dms/image/D4E03AQG4jgEziXXBEg/profile-displayphoto-shrink_400_400/0/1677379760383?e=1691625600&v=beta&t=6Kzp_ovzQASomlB5_6q0Y7-EYRBZ45dhtbtkHK_OtBE" alt="User" className="user-image"/>
-            </div>
+               <div className="imagePosition">
+              <img src={require("../assets/images/stamp.png")} alt="stamp" width="170" />
+            </div></div>
             <div className="center-header">
             <div className='center'>
               <img src={require("../assets/images/logo2.png" )} alt="logo" width="150" />
@@ -60,6 +62,7 @@ return(
           <p className='user-response'>JP=1906/2011</p>
       </div>   
           <p>ድርጅቱ ተፈላጊውን ሙያዊ፤ ድርጅታዊና ሌሎች መስፈርቶችን ማሟላቱ ይህ የብቃት ማረጋገጫ ምስክር ወረቀት የምግብ፣የመድኃኒትና የጤና ክብካቤ አስተዳደርና ቁጥጥር አዋጅ 64/2011 ቁጥር ፤44መሠረት በባለሙያው/ዋ <b> ወ/ሪት ህይወት ምትኩ </b> ሰም ተሰጥቷል፡፡</p>
+          <div className='grid'>
          <div >
                   <div className="column" >
                     <h2>ለ 2015 ዓ.ም </h2>
@@ -94,16 +97,17 @@ return(
                   <li><p>የብቃት ማረጋገጫ ምስክር ወረቀት ሰጪው አካል ሣይፈቅድ በድርጅቱ ማንኛውንም ዓይነት ለውጥ ማድረግ የተከለከለ ነው፡:</p></li>
                 </ol> 
               </div>
+              </div>
               <div className=" center">
                   <Email className="mt-2"/>
                   <p>15286</p>
                   <Phone className="mt-2"/>
                   <p>0118-12 75 98/0118-281013</p>
               </div>
+  </div>  
   </div>
-   
-   
-  </div>
-
+  <div className="imagePosition3 center">
+              <img src={require("../assets/images/stamp.png")} alt="stamp" width="170" />
+            </div>
 </div>
 );};

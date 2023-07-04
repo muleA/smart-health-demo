@@ -46,6 +46,22 @@ const employeeId = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    updateEmployee: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: employeeEndPoints.updateEmployee,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    createAccount: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: employeeEndPoints.createAccount,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
     archiveEmployee: builder.mutation<any, any>({
       query: (employeeId) => ({
         url: `${employeeEndPoints.archiveEmployee}/${employeeId}`,
@@ -70,14 +86,7 @@ const employeeId = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
-    updateEmployee: builder.mutation<any, any>({
-      query: (newUser) => ({
-        url: employeeEndPoints.updateEmployee,
-        method: "POST",
-        data: newUser,
-      }),
-      invalidatesTags: ["user"],
-    }),
+  
     addRoleToEmployee: builder.mutation<any, any>({
       query: (employeeId: any) => {
           console.log("employeeId",employeeId?.payload)
@@ -97,6 +106,18 @@ export const {
   useGetEmployeesQuery,
   useCreateEmployeeMutation,
   useGetRoleToEmployeeQuery,
-  useAddRoleToEmployeeMutation
+  useAddRoleToEmployeeMutation,
+  useGetEmployeeByEmployeeIdQuery,
+  useLazyGetEmployeeByEmployeeIdQuery,
+  useArchiveEmployeeMutation,
+  useRestoreEmployeeMutation,
+  useDeleteEmployeeMutation,
+  useGetArchivedEmployeeByEmployeeIdQuery,
+  useCreateAccountMutation,
+  useUpdateEmployeeMutation
+
+  
+
+
 
 } = employeeId;

@@ -10,6 +10,9 @@ export default function Certificate5({ licenseInfo, ApplicationlicenseInfo, user
         <div className="content">
           <div className="left-header ">
             <img src="https://media.licdn.com/dms/image/D4E03AQG4jgEziXXBEg/profile-displayphoto-shrink_400_400/0/1677379760383?e=1691625600&v=beta&t=6Kzp_ovzQASomlB5_6q0Y7-EYRBZ45dhtbtkHK_OtBE" alt="User" className="user-image" />
+            <div className="imagePosition">
+              <img src={require("../assets/images/stamp.png")} alt="stamp" width="170" />
+            </div>
           </div>
           <div className="center-header">
             <div className='center'>
@@ -106,7 +109,7 @@ export default function Certificate5({ licenseInfo, ApplicationlicenseInfo, user
             article 44 after assuring the fulfillment of the required National Health Facility standard.
 
           </p>
-
+<div className='grid'>
           <div >
             <div className="column" >
               <h2>ለ {parseInt(new Date(ApplicationlicenseInfo.license.updatedAt).toLocaleDateString('en-GB').split('/')[2])+1} ዓ.ም </h2>
@@ -144,6 +147,8 @@ export default function Certificate5({ licenseInfo, ApplicationlicenseInfo, user
               <li><p>የብቃት ማረጋገጫ ምስክር ወረቀት ሰጪው አካል ሣይፈቅድ በድርጅቱ ማንኛውንም ዓይነት ለውጥ ማድረግ የተከለከለ ነው፡:</p></li>
             </ol>
           </div>
+          </div>
+           
           <div className=" center">
             <Email className="mt-2" />
             <p>15286</p>
@@ -152,6 +157,9 @@ export default function Certificate5({ licenseInfo, ApplicationlicenseInfo, user
           </div>
         </div>
       </div>
+        <div className="imagePosition3 center">
+              <img src={require("../assets/images/stamp.png")} alt="stamp" width="170" />
+            </div>
     </div>
   )
 }

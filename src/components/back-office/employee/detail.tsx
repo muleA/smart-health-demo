@@ -7,6 +7,7 @@ import { Button } from "antd";
 import { PlusCircleFilled } from "@ant-design/icons";
 import IsPermitted from "../../../shared/auth/is-permitted";
 import { AssignRole } from "../../../shared/shell/permissions-list";
+import UpdateEmployeeForm from "./update-employee-form";
 export  function EmployeeDetails(){
 const navigate=useNavigate();
 const {id}=useParams()
@@ -16,7 +17,7 @@ const [
   ] = useState<boolean>(false);
 return(<>
 <CollapsibleCard title={"Employee Information's"}>
-<UserForm mode={"update"} id={id} />
+<UpdateEmployeeForm id={id}/>
 
 </CollapsibleCard>
  <IsPermitted requiredPermissions={AssignRole}>

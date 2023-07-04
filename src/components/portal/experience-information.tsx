@@ -89,21 +89,6 @@ const [expId,setExpId]=useState("")
     setExperiences(updatedExperiences);
   };
 
-  const handleUpdateExperience = async (experience: Experience) => {
-    try {
-      await axios.post(`${baseUrl}user/add-experience-to-user`, {
-        kebela: "df",
-        organizationName: "df",
-        subCity: "df",
-        tin: "fds",
-        woreda: "df",
-      });
-      message.success("Experience info updated successfully");
-    } catch (error) {
-      console.error("Error updating experience:", error);
-      message.error("Error in updating experience info");
-    }
-  };
 
   
   const handleDeleteExperience = async (experience: Experience) => {

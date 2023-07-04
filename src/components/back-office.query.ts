@@ -69,7 +69,7 @@ const backOfficeApi = apiSlice.injectEndpoints({
     }),
     getArchivedEmployeesByEmployeeId: builder.query<any, void>({
       query: (id) => ({
-        url: `${backOfficeEndPoints.getArchivedEmployeeById}${id}`,
+        url: `${backOfficeEndPoints.getArchivedEmployeeById}/${id}`,
         method: "GET",
       }),
       providesTags: ["user"],

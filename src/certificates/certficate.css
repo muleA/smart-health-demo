@@ -46,7 +46,7 @@ body {
     margin-bottom: 20px;
   }
   .left-header {
-    width: 10%;
+    width: 20%;
     text-align: right;
   }
   .center-header {
@@ -84,7 +84,7 @@ body {
   }
   .imagePosition {
   Position: relative;
-  top: -13%;
+  top: -43px !important;
   }
   .imagePosition2 {
   Position: relative;

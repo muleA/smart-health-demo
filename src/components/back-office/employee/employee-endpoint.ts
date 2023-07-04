@@ -1,5 +1,6 @@
 import { baseUrl } from "../../../configs/config";
 export const employeeEndPoints = {
+  createAccount:`${baseUrl}user/create-account`,
   getEmployee: `${baseUrl}employees/get-Employees`,
   getEmployeeById: `${baseUrl}employees/get-employee`,
   getArchivedEmployee: `${baseUrl}employees/get-archived-employees`,

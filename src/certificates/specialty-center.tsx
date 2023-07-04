@@ -10,6 +10,9 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
         <div className="content">
             <div className="left-header ">
                <img src="https://media.licdn.com/dms/image/D4E03AQG4jgEziXXBEg/profile-displayphoto-shrink_400_400/0/1677379760383?e=1691625600&v=beta&t=6Kzp_ovzQASomlB5_6q0Y7-EYRBZ45dhtbtkHK_OtBE" alt="User" className="user-image"/>
+               <div className="imagePosition">
+              <img src={require("../assets/images/stamp.png")} alt="stamp" width="170" />
+            </div>
             </div>
             <div className="center-header">
             <div className='center'>
@@ -20,7 +23,7 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
                 <p>የጤና ክብካቤ አስተዳደርና ቁጥጥር ባለስልጣን </p>
                 <p>Addis Ababa Food Medicine and Health Care Administration Authority </p>
                 <p>የመድኃኒት ችርቻሮ ንግድ ድርጅት የብቃት ማረጋገጫ</p>
-                <p>Competency Certificate for SPecialty center</p>
+                <p>Competency Certificate for Specialty center</p>
               </div>
               </div>
               <div className="right-header border">
@@ -102,6 +105,7 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
                 {licenseInfo?.comment}
                 
                 </p>
+<div className='grid'>
                
                 <div >
                     <div className="column" >
@@ -139,6 +143,7 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
                     <li><p>የብቃት ማረጋገጫ ምስክር ወረቀት ሰጪው አካል ሣይፈቅድ በድርጅቱ ማንኛውንም ዓይነት ለውጥ ማድረግ የተከለከለ ነው፡:</p></li>
                   </ol> 
                 </div>
+                </div>
                 <div className=" center">
                   <Email className="mt-2"/>
                   <p>15286</p>
@@ -147,6 +152,9 @@ console.log('ApplicationlicenseInfo at certificate 4 ',ApplicationlicenseInfo )
               </div>
              </div>
          </div>
+         <div className="imagePosition3 center">
+              <img src={require("../assets/images/stamp.png")} alt="stamp" width="170" />
+            </div>
    </div>
   )
     }

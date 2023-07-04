@@ -17,7 +17,7 @@ const PreviewFile = ({ entityId, entityType, userId }: any) => {
       trigger({ userId: session?.userInfo?.userId ?? userId, educationId: entityId })
     }
   }, [entityId, entityType, session?.userInfo?.userId, trigger, userId])
-  const [triggerExperience, { data: experienceFileName }] = useLazyGetExperienceFileNameQuery()
+  const [triggerExperience, { data: experienceFileName,isLoading:experienceLoading }] = useLazyGetExperienceFileNameQuery()
   console.log("exper file name", experienceFileName)
   useEffect(() => {
     if (entityId && entityType === 'experience') {
@@ -25,7 +25,7 @@ const PreviewFile = ({ entityId, entityType, userId }: any) => {
     }
   }, [entityId, entityType, session?.userInfo?.userId, triggerExperience, userId])
 
-  const [triggerCertificate, { data: certificateFileName }] = useLazyGetCertificateFileNameQuery()
+  const [triggerCertificate, { data: certificateFileName,isLoading:certificateLoading }] = useLazyGetCertificateFileNameQuery()
   useEffect(() => {
     if (entityId && entityType === 'certificate') {
       triggerCertificate({ userId: session?.userInfo?.userId ?? userId, certificateId: entityId })
@@ -50,7 +50,7 @@ const PreviewFile = ({ entityId, entityType, userId }: any) => {
       const fileUrl = URL.createObjectURL(fileBlob);
       setFileUrl(fileUrl);
     } catch (error: any) {
-      message.error("ENOENT: no such file or directory, stat 'C:\\Users\\muluhabt\\Desktop\\BackEnd\\IFHCRS\\license-management\\dist\\uploads\\certificate\\1687974470537-231328922-scan0421.pdf")
+      message.error(`ENOENT: no such file or directory,${error as string}`)
     }
     setLoading(false)
   };
@@ -67,7 +67,11 @@ const PreviewFile = ({ entityId, entityType, userId }: any) => {
 
   return (
 
-    <><Button onClick={handleDownloadClick}>Preview  File</Button>
+    <>
+    {isLoading||experienceLoading||certificateLoading?(<> 
+      <Spin />
+    </>):(<> 
+      <Button className='text-primary' onClick={handleDownloadClick}>Preview  File</Button>
       {loading && <Spin />}
       <DefaultDialog onClose={handleCloseModal} minHeight={"90%"} minWidth={"70%"}
         open={!!fileUrl} title='Preview File'
@@ -76,6 +80,8 @@ const PreviewFile = ({ entityId, entityType, userId }: any) => {
 
       </DefaultDialog>
 
+    </>)}
+   
 
     </>
   );

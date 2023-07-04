@@ -17,7 +17,7 @@ const { Step } = Steps;
 // Define the Yup validation schema for Step 2
 
 
-const StepperComponent = () => {
+const ApplicationForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const { Panel } = Collapse;
@@ -864,4 +864,4 @@ const StepperComponent = () => {
   );
 };
 
-export default StepperComponent;
+export default ApplicationForm;
