@@ -97,7 +97,7 @@ export function Dashboard() {
         </>
       ) : (
         <>
-          <Card className="text-center  shadow-lg">
+          <div className="text-center  shadow-lg">
             <div className="grid grid-cols-1 gap-2  sm:grid-cols-7 sm:px-2">
               {data.map((item, index) => (
                 <div
@@ -114,7 +114,7 @@ export function Dashboard() {
                 </div>
               ))}
             </div>
-            </Card>
+            </div>
 
             <div className="text-center shadow-lg">
             <div className=" mt-2 flex mx-auto  p-4">

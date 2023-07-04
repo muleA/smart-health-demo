@@ -4,20 +4,20 @@ import { store } from "../../../store/app.store";
 import { getCurrentSession } from "../../current-session";
 import { setError } from "./error-slice";
 export const axiosClient = axios.create();
-
-
 /* component props */
 type AxiosWrapperProps = {
   children: React.ReactNode;
 };
 export const AxiosWrapper = (props: AxiosWrapperProps) => {
+  const ses=getCurrentSession();
+  console.log("sess",ses)
   /* useEffect hooks */
   useEffect(() => {
     if (store) {
       axiosClient.interceptors.request.use(
         function (config:any) {
           const session: any = getCurrentSession() || null;
-          config.params.access_token = session?.accessToken;
+          config.params.accessToken = session?.accessToken;
           return config;
         },
         async function (error: any) {

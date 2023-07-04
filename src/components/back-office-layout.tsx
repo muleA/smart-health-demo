@@ -198,7 +198,7 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
 </div>
         <Sidebar menus={menus} />
       </Sider>
-      <div className="border-b  sh w-full">
+      <div className="border-b   w-full">
     
       <div className="flex items-center justify-between bg-gray-200  border-b h-14 shadow-2xl">
   <div className="flex items-center">

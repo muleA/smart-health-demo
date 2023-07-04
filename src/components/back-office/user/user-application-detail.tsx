@@ -48,7 +48,7 @@ console.log("userInfo",userInfo)
 
   const [appId, setAppId] = useState("");
   const [educationId, setEducationId] = useState("");
-  const [messageFromMinstry, setMessageFromMinistry] = useState("");
+  const [messageFromMinstry, setMessageFromMinistry] = useState(false);
 
   const handleApproveClick = (id: string) => {
     setAppId(id);
@@ -78,6 +78,7 @@ console.log("userInfo",userInfo)
     setModalVisible(true);
     setAppCat(cat ?? "HealthProfessional");
   };
+  const[dataFromMinistry,setDataFromMinstry]=useState<any>()
   const handleModalOk = async (values: any) => {
     console.log(
       "values when the ok modal to approve or reject is clicked ",
@@ -136,11 +137,13 @@ console.log("userInfo",userInfo)
         `${baseUrl}user/get-education-by-educationId/${educationId}`,
       );
 
-      console.log(response.data);
+      console.log("data from minstry",dataFromMinistry);
+
       setIsModalVisible(false);
      if(response){
-      
+      setDataFromMinstry(response?.data)
       message.success("The Ministry of Education has verified the authenticity of this attachment");
+      setMessageFromMinistry(true)
      } 
     
     } catch (error) {
@@ -184,22 +187,22 @@ console.log("userInfo",userInfo)
                       : ""
                   } Application   ${application?.status} `}</Text>
                 }
-                key={application.id}
+                key={application?.id}
               >
                 <p>
-                  <Text strong>Type:</Text> {application.applierType}
+                  <Text strong>Type:</Text> {application?.applierType}
                 </p>
                 <p>
                   <Text strong>Category:</Text>{" "}
-                  {application.applicationCategory}
+                  {application?.applicationCategory}
                 </p>
                 <p>
                   <Text strong>Applier Type:</Text>{" "}
-                  <Text strong>{application.applierType}</Text>
+                  <Text strong>{application?.applierType}</Text>
                 </p>
                 <p>
                   <Text strong>Status:</Text>{" "}
-                  <Text strong>{application.status}</Text>
+                  <Text strong>{application?.status}</Text>
                 </p>
                 <p>
                   <Text strong>Comment:</Text>{" "}
@@ -444,6 +447,51 @@ console.log("userInfo",userInfo)
           </Form.Item>
           
         </Form>
+      </Modal>
+      <Modal
+        title="Validated Data From The Ministry Of Education"
+        visible={messageFromMinstry}
+        onOk={()=>setMessageFromMinistry(false)}
+        onCancel={()=>setMessageFromMinistry(false)}
+        footer={null} // Remove the footer
+      >
+        <Card>
+         
+
+         <p>
+                  <Text strong>Institution:</Text> {dataFromMinistry?.Institution}
+                </p>
+                <p>
+                  <Text strong>FieldOf Study:</Text>{" "}
+                  {dataFromMinistry?.fieldOfStudy}
+                </p>
+                <p>
+                  <Text strong>professional Title:</Text>{" "}
+                  <Text strong>{dataFromMinistry?.professionalTitle}</Text>
+                </p>
+                <p>
+                  <Text strong>Received Date:</Text>{" "}
+                  <Text strong>{dataFromMinistry?.receivedDate}</Text>
+                </p>
+                <p>
+                  <Text strong>student IdNumber:</Text>{" "}
+                  <Text strong>{dataFromMinistry?.studentIdNumber}</Text>
+                </p>
+                
+ 
+          <div>
+            <Button
+              type="primary"
+              className="bg-primary text-white"
+              htmlType="submit"
+            >
+              Ok
+            </Button>
+           
+
+          </div>
+          
+        </Card>
       </Modal>
       <Certificate
         licenseInfo={data}

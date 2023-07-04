@@ -1,10 +1,11 @@
 import { useGetUserByIdQuery } from '../components/back-office.query';
+import { useGetEmployeeByEmployeeIdQuery } from '../components/back-office/employee/employee.query';
 import './certficate.css';
 
 const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) => {
   // const { data: userInfo, isLoading } = useGetUserByIdQuery(props?.licenseInfo?.userId)
 
-  const { data: issuedByInfo } = useGetUserByIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
+  const { data: issuedByInfo } = useGetEmployeeByEmployeeIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
   // console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', licenseInfo)
   // console.log('ApplicationlicenseInfo of certifate 111111111111111111', ApplicationlicenseInfo.license)
   // console.log('Issued By Info of certifate 1', issuedByInfo)

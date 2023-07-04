@@ -5,6 +5,7 @@ import { useGetApplicationUserIdQuery, useGetLicenseByUserIdAndStatusQuery, useG
 import { useAuth } from "../../../shared/auth/use-auth";
 import { AppstoreOutlined, CheckOutlined, CloseOutlined, FileDoneOutlined, SafetyCertificateOutlined } from "@ant-design/icons";
 import { Card } from "antd";
+import AlertDialogSlide from "../../../shared/utilities/error-dialogue/error-dialogue";
 export default function HomePage(){
   const {session}=useAuth()
   const {data:totalLicense,isLoading:totalLicenseLoading}=useGetLicenseByUserIdQuery(session?.userInfo?.userId)
