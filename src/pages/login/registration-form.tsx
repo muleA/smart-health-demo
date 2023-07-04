@@ -118,7 +118,7 @@ const RegistrationForm = () => {
             setAccountInfo(response?.data)
             // Handle the response data
             message.success(
-              "User Account Created Successfully please move next steps to complete registrations"
+              "User Account Updated Successfully please move next steps to complete registrations"
             );
             // currentStep>=0?submitLoginRequest({username:values?.email,password:values?.password}):''
             if (currentStep === 1) {
@@ -161,6 +161,8 @@ const RegistrationForm = () => {
                 "success",
                 "User Account Created Successfully please move next steps to complete registrations"
               );
+              submitLoginRequest(
+                { username: values?.email, password: values?.password })
             })
             .catch((error) => {
               console.error(error);
