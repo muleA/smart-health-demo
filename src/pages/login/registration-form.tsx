@@ -11,10 +11,12 @@ const { Step } = Steps;
 
 const RegistrationForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [accountInfo,setAccountInfo]=useState<any>(null)
-  console.log("accountInfo",accountInfo)
-  const {session}=useAuth()
-    console.log("session",session)
+  const [updatesate, setUpdateSate] = useState(0);
+  console.log('dddddddddddddddddddddddddddddddd ', updatesate)
+  const [accountInfo, setAccountInfo] = useState<any>(null)
+  console.log("accountInfo", accountInfo)
+  const { session } = useAuth()
+  console.log("session", session)
   const steps = [
     {
       title: "Step 1",
@@ -23,6 +25,7 @@ const RegistrationForm = () => {
           .email("Invalid email address")
           .required("Email is required"),
         phone: Yup.string().required("Phone number is required"),
+        // id: Yup.string().required("id number is required"),
         password: Yup.string().required("Password is required"),
         username: Yup.string().required("name is required"),
       }),
@@ -49,11 +52,12 @@ const RegistrationForm = () => {
 
   const formik = useFormik({
     initialValues: {
+      id: '',
       email: "",
       phone: "",
       password: "",
       confirmPassword: "",
-      subCity:"",
+      subCity: "",
       firstName: "",
       lastName: "",
       woreda: "",
@@ -68,64 +72,104 @@ const RegistrationForm = () => {
     },
     validationSchema: steps[currentStep].validationSchema,
     onSubmit: async (values) => {
-
-       axios
-        .post(`${baseUrl}user/create-account`, {
-          userName: values?.username,
-          email: values?.email,
-          phone: values?.phone,
-          status: "active",
-          Password: values?.password,
-        })
-        .then((response) => {
-          console.log("====response", response.data);
-          setAccountInfo(response?.data)
-          // Handle the response data
-          message.success(
-            "User Account Created Successfully please move next steps to complete registrations"
-          );
-          submitLoginRequest({username:values?.email,password:values?.password})
-        })
-        .catch((error) => {
-          console.error(error);
-          message.error("error happened");
-
-          // Handle the error
-        });
- 
-      if (currentStep === steps.length - 1) {
-        try {
-          axios
-          .post(`${baseUrl}user/create-user`, {
-            accountId:accountInfo?.id,
-            firstName: values?.firstName,
-            lastName: values?.lastName,
-            middleName:values?.middleName,
-            gender: values?.gender,
-            state: values?.state,
-            city:values?.city,
-            wereda:values?.woreda,
-            kebele:values?.kebele,
+      if (currentStep !== steps.length - 1&&updatesate == 0) {
+        console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu', values)
+        axios
+          .post(`${baseUrl}user/create-account`, {
+            userName: values?.username,
+            email: values?.email,
             phone: values?.phone,
-            houseNumber:values?.houseNumber,
-            subCity:values?.subCity,
-            email:accountInfo?.email
-
+            status: "active",
+            Password: values?.password,
           })
           .then((response) => {
+            console.log("====response", response.data);
             setAccountInfo(response?.data)
             // Handle the response data
-            Notify(
-              "success",
+            message.success(
               "User Account Created Successfully please move next steps to complete registrations"
             );
+            // currentStep>=0?submitLoginRequest({username:values?.email,password:values?.password}):''
+            if (currentStep === 1) {
+              submitLoginRequest(
+                { username: values?.email, password: values?.password })
+            }
+
           })
           .catch((error) => {
             console.error(error);
-            Notify("error", "error happened");
+            message.error("error happened");
+
             // Handle the error
           });
-  
+      } else if (currentStep !== steps.length - 1&&updatesate > 0) {
+        console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu', values)
+        axios
+          .post(`${baseUrl}user/update-account`, {
+            id: accountInfo?.id,
+            userName: values?.username,
+            email: values?.email,
+            phone: values?.phone,
+            status: "active",
+            Password: values?.password,
+          })
+          .then((response) => {
+            console.log("====response", response.data);
+            setAccountInfo(response?.data)
+            // Handle the response data
+            message.success(
+              "User Account Updated Successfully please move next steps to complete registrations"
+            );
+            // currentStep>=0?submitLoginRequest({username:values?.email,password:values?.password}):''
+            if (currentStep === 1) {
+              submitLoginRequest(
+                { username: values?.email, password: values?.password })
+            }
+
+          })
+          .catch((error) => {
+            console.error(error);
+            message.error("error happened");
+
+            // Handle the error
+          });
+      }
+
+      if (currentStep === steps.length - 1) {
+        try {
+          axios
+            .post(`${baseUrl}user/create-user`, {
+              accountId: accountInfo?.id,
+              firstName: values?.firstName,
+              lastName: values?.lastName,
+              middleName: values?.middleName,
+              gender: values?.gender,
+              state: values?.state,
+              city: values?.city,
+              wereda: values?.woreda,
+              kebele: values?.kebele,
+              phone: values?.phone,
+              houseNumber: values?.houseNumber,
+              subCity: values?.subCity,
+              email: accountInfo?.email
+
+            })
+            .then((response) => {
+              setAccountInfo(response?.data)
+              // Handle the response data
+              Notify(
+                "success",
+                "User Account Created Successfully please move next steps to complete registrations"
+              );
+              submitLoginRequest(
+                { username: values?.email, password: values?.password })
+            })
+            .catch((error) => {
+              console.error(error);
+              Notify("error", "error happened");
+              // Handle the error
+            });
+
 /*           onClose();
  */        } catch (error) {
 
@@ -133,6 +177,7 @@ const RegistrationForm = () => {
         }
       } else {
         setCurrentStep(currentStep + 1);
+        setUpdateSate(updatesate + 1);
       }
     },
   });
@@ -142,11 +187,11 @@ const RegistrationForm = () => {
   };
 
   return (
- <div>
- <Steps
+    <div>
+      <Steps
         current={currentStep}
         items={steps.map((step) => ({ title: step.title }))}
-      /> 
+      />
 
       <Form
         onFinish={formik.handleSubmit}
@@ -158,6 +203,21 @@ const RegistrationForm = () => {
       >
         {currentStep === 0 && (
           <>
+            {updatesate > 0 && (
+              <Form.Item
+                label="id"
+                name="id"
+                validateStatus={formik.errors.id ? "error" : ""}
+                help={formik.errors.id}
+              >
+                <Input
+                  value={accountInfo?.id}
+                  defaultValue={accountInfo?.id}
+                  disabled
+                onChange={formik.handleChange}
+                />
+              </Form.Item>
+            )}
             <Form.Item
               label="UserName"
               name="username"
@@ -203,7 +263,7 @@ const RegistrationForm = () => {
               />
             </Form.Item>
 
-           
+
           </>
         )}
 
@@ -315,7 +375,7 @@ const RegistrationForm = () => {
               />
             </Form.Item>
 
-           
+
             <Form.Item
               label="House Number"
               name="houseNumber"
@@ -337,21 +397,21 @@ const RegistrationForm = () => {
               Previous
             </Button>
           )}
-               <div >
+          <div >
 
-<Button
-  type="primary"
-  className="bg-primary"
-  htmlType="submit"
->
-  {currentStep === steps.length - 1 ? "Save" : "Next"}
-</Button>
-               </div>
-              
+            <Button
+              type="primary"
+              className="bg-primary"
+              htmlType="submit"
+            >
+              {currentStep === steps.length - 1 && updatesate == 0 ? "Save" : updatesate > 0 ? 'Next' : "Next"}
+            </Button>
+          </div>
+
         </div>
       </Form>
- </div>
-     
+    </div>
+
 
   );
 };
