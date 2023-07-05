@@ -7,8 +7,7 @@ import { Typography } from "antd";
 import timeSince from "../../../shared/utilities/time-since";
 import StatusIndicator from "../../../shared/status-indicator";
 import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-
+import {useNavigate} from 'react-router-dom'
 export function BackOfficeApplications() {
   const {
     data: applications,

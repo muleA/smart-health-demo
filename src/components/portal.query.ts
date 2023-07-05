@@ -256,6 +256,14 @@ const portalApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    deleteApplication: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${portalEndPoints.deleteApplication}/${newUser}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["user"],
+    }),
     createUser: builder.mutation<any, any>({
       query: (newUser) => ({
         url: portalEndPoints.createUser,
@@ -304,4 +312,5 @@ export const {
    useGetLicenseByUserIdAndStatusQuery,
    useGetLicenseByUserIdQuery,
    useGetEmployeeByIdQuery,
+   useDeleteApplicationMutation
 } = portalApi;

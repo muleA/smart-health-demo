@@ -2,6 +2,7 @@ import { baseUrl } from "../configs/config";
 export const portalEndPoints = {
   createAccount: `${baseUrl}user/create-account`,
   apply: `${baseUrl}user/add-applicationToUser`,
+  deleteApplication: `${baseUrl}user/delete-application`,
   createUser: `${baseUrl}user/create-user`,
   updateUser: `${baseUrl}user/update-user`,
   getUser: `${baseUrl}user/get-users`,

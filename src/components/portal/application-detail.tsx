@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Card, Table, Button, Tag, Typography, Spin, Modal, message, App } from "antd";
 import { DeleteOutlined, DownloadOutlined, EyeOutlined, ShareAltOutlined } from "@ant-design/icons";
 import Certificate from "./license";
-import { useGetApplicationDetailsQuery, useArchiveApplicationMutation, useGetEducationByIdQuery, useGetLicenseByApplicationIdQuery } from "../portal.query";
+import { useGetApplicationDetailsQuery, useArchiveApplicationMutation, useGetEducationByIdQuery, useGetLicenseByApplicationIdQuery, useDeleteApplicationMutation } from "../portal.query";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   FacebookShareButton,
@@ -24,6 +24,8 @@ const ApplicationDetail = () => {
   const { data: ApplicationDetail, isLoading } = useGetApplicationDetailsQuery(id ?? "");
   const { data: LicenseDetail, isLoading: gettingLicenseisLoading } = useGetLicenseByApplicationIdQuery(id ?? "");
   const [archiveApp, { isLoading: applicationArchiving }] = useArchiveApplicationMutation()
+  const [deleteApplication, { isLoading: applicationDelete }] = useDeleteApplicationMutation()
+
   console.log("LicenseDetail", LicenseDetail);
   const [modalVisible, setModalVisible] = useState(false);
   const handleViewCertificate = () => {
@@ -38,6 +40,16 @@ const ApplicationDetail = () => {
     }
     catch (err) {
       message.error("error happened in archiving")
+    }
+  }
+  const handleDelete = async () => {
+    try {
+      await deleteApplication(id)
+      message.success("application deleted successfully")
+      navigate("/my-applications")
+    }
+    catch (err) {
+      message.error("error happened in deleting")
     }
   }
 
@@ -100,6 +112,11 @@ const ApplicationDetail = () => {
                 <Button loading={applicationArchiving} onClick={handleArchive} className="flex items-center text-white hover:text-white bg-red-400">
                   <DeleteOutlined className="mr-1" />
                   Archive
+                </Button>
+                <Button loading={applicationDelete} onClick={handleDelete}
+                 className="flex items-center text-white hover:text-white bg-red-400">
+                  <DeleteOutlined className="mr-1" />
+                  Delete
                 </Button>
 
               </div>

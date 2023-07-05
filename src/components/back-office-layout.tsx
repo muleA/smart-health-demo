@@ -32,7 +32,6 @@ import { ArchivedApplication } from "./back-office/archives/application/archived
 import ArchivedApplicationDetail from "./back-office/archives/application/archived-application-detail";
 import { BackOfficeApplications } from "./back-office/application/application";
 import { _BackOfficeApplications } from "./back-office/application/_application";
-import SideBarLogo from "../shared/sidebar-logo";
 import * as Icon from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import {
@@ -66,11 +65,11 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
     setCollapsed((prev) => !prev);
   };
   const location = useLocation();
-  const pathSnippets = location.pathname.split("/").filter((i) => i);
+  const pathSnippets = location.pathname.split("/").filter((i: any) => i);
 
   const breadcrumbItems = pathSnippets
-  .filter((_, index) => index < 2) // Limit to the first two paths
-  .map((snippet, index) => {
+  .filter((_: any, index: number) => index < 2) // Limit to the first two paths
+  .map((snippet:any, index:any) => {
     // Skip the breadcrumb item if the snippet is in UUID format
     const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
     if (uuidRegex.test(snippet)) {
