@@ -3,6 +3,6 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery(),
-  tagTypes: ['Education', 'Certificate', 'user','Experience','license','Role','Permission'],
+  tagTypes: ['Education', 'Certificate', 'user','Experience','license','Role','Permission','license_application'],
   endpoints: () => ({}),
 });

@@ -101,7 +101,7 @@ import {
                 {data?.map((application: any) => (
                   <Panel
                     header={
-                      <Text strong>{`Applicationcccc ${application?.status} ${application?.applicationCategory}` }</Text>
+                      <Text strong>{`Application ${application?.status} ${application?.applicationCategory}` }</Text>
                     }
                     key={application.id}
                   >

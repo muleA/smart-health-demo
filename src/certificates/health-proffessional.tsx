@@ -8,7 +8,7 @@ const Certificate1 = ({ licenseInfo, userInfo, ApplicationlicenseInfo }: any) =>
   const { data: issuedByInfo } = useGetEmployeeByIdQuery(ApplicationlicenseInfo?.license.issuedBy ?? "");
   console.log('iiiiiiiiiiiiiiiiisssssssssssssssssuuuuuuuuuuuuuuuueeeeeeeeeeeedddddddddddddddd', ApplicationlicenseInfo)
 
-  console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', issuedByInfo)
+  console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', userInfo)
   // console.log('ApplicationlicenseInfo of certifate 111111111111111111', ApplicationlicenseInfo.license)
   // console.log('Issued By Info of certifate 1', issuedByInfo)
   const ValidFrom = new Date(ApplicationlicenseInfo?.license?.validFrom).toLocaleDateString('en-US', {

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { Button, Divider, Select, Space, Table, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useGetLicensesQuery, useLazyGetLicenseByApplicationIdQuery } from "../home-query";
+import {  useGetLicensesQuery, useLazyGetApplicationWithLicenseQuery, useLazyGetLicenseByApplicationIdQuery } from "../home-query";
 import { useLazyGetUserByIdQuery } from "../../../back-office.query";
 
 function TableCard() {
   const navigate = useNavigate();
   const { data: licenses, isLoading } = useGetLicensesQuery();
-const[trigger,{data:appInfo,isLoading:appInfoLoading}]=useLazyGetLicenseByApplicationIdQuery()
+const[trigger,{data:appInfo,isLoading:appInfoLoading}]=useLazyGetApplicationWithLicenseQuery()
 const[triggerUserInfo,{data:userInfo,isLoading:userInfoLoading}]=useLazyGetUserByIdQuery()
 
 console.log("appInfo",appInfo)

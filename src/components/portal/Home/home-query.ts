@@ -17,11 +17,19 @@ const HomeApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["license"],
     }),
+    getApplicationWithLicense:builder.query<any,any>({
+      query:(id)=>({
+        url:`${HomeEndPoints.getApplicationByUserIdWithLicenseId}/${id}`,
+        method:'GET'
+      }),
+      providesTags: ["license_application"],
+    })
    
   }),
 });
 export const {
 useGetLicensesQuery,
 useGetLicenseByApplicationIdQuery,
-useLazyGetLicenseByApplicationIdQuery
+useLazyGetLicenseByApplicationIdQuery,
+useLazyGetApplicationWithLicenseQuery,
 } = HomeApi;
