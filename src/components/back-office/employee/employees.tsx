@@ -27,6 +27,10 @@ export function Employees() {
         header: 'First Name',
       },
       {
+        accessorKey: 'middleName',
+        header: 'Middle Name',
+      },
+      {
         accessorKey: 'lastName',
         header: 'Last Name',
       },
