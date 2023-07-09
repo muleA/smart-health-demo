@@ -90,9 +90,9 @@ console.log("userInfo",userInfo)
         `${baseUrl}user/change-application-status-By-applicationId/${appId}`,
         {
           ...values,
-          userId: id?.toString(),
           validFrom: new Date(),
           validTo: new Date("6/21/2025"),
+          email:userInfo?.email,
           issuedBy: session?.userInfo?.employeeId,
           status: rejectClicked ? "REJECTED" : "APPROVED",
         }

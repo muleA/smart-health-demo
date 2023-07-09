@@ -6,7 +6,7 @@ export const employeeEndPoints = {
   getArchivedEmployee: `${baseUrl}employees/get-archived-employees`,
   getArchivedEmployeeById: `${baseUrl}employees/get-archived-employeesById`,
   getRoleToEmployee: `${baseUrl}employees/get-role-by-employeeId`,  
-  createEmployee: `${baseUrl}employees/create-employees`,
+  createEmployee: `${baseUrl}employees/create-employee`,
   archiveEmployee: `${baseUrl}employees/archive-employees`,
   restoreEmployee: `${baseUrl}employees/restore-employees`,
   deleteEmployee: `${baseUrl}employees/delete-employees`,
