@@ -41,6 +41,8 @@ console.log("userInfo",userInfo)
   const [isValidateModalVisible, setIsValidateModalVisible] = useState(false);
 
   const [appCat, setAppCat] = useState("");
+  const [type, setType] = useState("exp");
+
   const [modalVisible, setModalVisible] = useState(false);
   const [sendEmailModalVisible, setSendEmailModalVisible] = useState(false);
 
@@ -54,9 +56,10 @@ console.log("userInfo",userInfo)
     setAppId(id);
     setIsModalVisible(true);
   };
-  const handleValidateEducation=(id: string)=>{
+  const handleValidateAttachment=(id: string,type:string)=>{
     setEducationId(id);
     setIsValidateModalVisible(true);
+    setType(type)
   }
   const handleSendEmail = () => {
     setSendEmailModalVisible(true);
@@ -90,9 +93,10 @@ console.log("userInfo",userInfo)
         `${baseUrl}user/change-application-status-By-applicationId/${appId}`,
         {
           ...values,
-          userId: id?.toString(),
           validFrom: new Date(),
           validTo: new Date("6/21/2025"),
+          userId:id?.toString(),
+          email:userInfo?.email,
           issuedBy: session?.userInfo?.employeeId,
           status: rejectClicked ? "REJECTED" : "APPROVED",
         }
@@ -125,7 +129,57 @@ console.log("userInfo",userInfo)
       message.error("error");
     }
   };
+  const handleValidateExperieanceModalOk = async (values: any) => {
+    console.log(
+      "values when the ok modal to approve or reject is clicked ",
+      values
+    );
+    try {
+      // Call API using Axios
+      const response = await axios.get(
+        `${baseUrl}user/get-experience-by-expirianceId/${educationId}`,
+      );
 
+      console.log("response",response);
+
+      setIsModalVisible(false);
+     if(response){
+      setDataFromMinstry(response?.data[0])
+      message.success("The Ministry of Education has verified the authenticity of this attachment");
+      setMessageFromMinistry(true)
+     } 
+    
+    } catch (error) {
+      console.log(error);
+      message.error("The Ministry of Education has not verified the authenticity of this attachment ")
+    }
+  };
+
+  const handleValidateCertificateModalOk = async (values: any) => {
+    console.log(
+      "values when the ok modal to approve or reject is clicked ",
+      values
+    );
+    try {
+      // Call API using Axios
+      const response = await axios.get(
+        `${baseUrl}user/get-certificate-by-certificateId/${educationId}`,
+      );
+
+      console.log("data from minstry",dataFromMinistry);
+
+      setIsModalVisible(false);
+     if(response){
+      setDataFromMinstry(response?.data)
+      message.success("The Ministry of Education has verified the authenticity of this attachment");
+      setMessageFromMinistry(true)
+     } 
+    
+    } catch (error) {
+      console.log(error);
+      message.error("The Ministry of Education has not verified the authenticity of this attachment ")
+    }
+  };
   const handleValidateModalOk = async (values: any) => {
     console.log(
       "values when the ok modal to approve or reject is clicked ",
@@ -215,7 +269,7 @@ console.log("userInfo",userInfo)
       <PreviewFile entityId={item} userId={id} entityType="education" />
       <Button
         className="bg-primary text-white"
-        onClick={() => handleValidateEducation(item)}
+        onClick={() => handleValidateAttachment(item,"edu")}
       >
         Validate
       </Button>
@@ -230,7 +284,7 @@ console.log("userInfo",userInfo)
       <PreviewFile entityId={item} userId={id} entityType="experience" />
       <Button
         className="bg-primary text-white"
-        onClick={() => handleValidateEducation(item)}
+        onClick={() => handleValidateAttachment(item,"exp")}
       >
         Validate
       </Button>
@@ -245,7 +299,7 @@ console.log("userInfo",userInfo)
       <PreviewFile className="text-primary" entityId={item} userId={id} entityType="certificate" />
       <Button
         className="bg-primary text-white"
-        onClick={() => handleValidateEducation(item)}
+        onClick={() => handleValidateAttachment(item,"cert")}
       >
         Validate
       </Button>
@@ -423,7 +477,7 @@ console.log("userInfo",userInfo)
         onCancel={()=>setIsValidateModalVisible(false)}
         footer={null} // Remove the footer
       >
-        <Form onFinish={handleValidateModalOk}>
+        <Form onFinish={type==='edu'?handleValidateModalOk:type==='cert'?handleValidateCertificateModalOk:handleValidateExperieanceModalOk}>
          
 <Typography>
   Are You Sure To Validate Attached Documents with Ministry oF Educations?
@@ -456,9 +510,8 @@ console.log("userInfo",userInfo)
         footer={null} // Remove the footer
       >
         <Card>
-         
-
-         <p>
+         {type==='edu'?(<>
+          <p>
                   <Text strong>Institution:</Text> {dataFromMinistry?.Institution}
                 </p>
                 <p>
@@ -479,6 +532,47 @@ console.log("userInfo",userInfo)
                 </p>
                 
  
+         </>):type==='exp'?(<>
+          <p>
+                  <Text strong>organizationName:</Text> {dataFromMinistry?.organizationName}
+                </p>
+                <p>
+                  <Text strong>SubCity:</Text>{" "}
+                  {dataFromMinistry?.subCity}
+                </p>
+                <p>
+                  <Text strong>Tin:</Text>{" "}
+                  <Text strong>{dataFromMinistry?.tin}</Text>
+                </p>
+                <p>
+                  <Text strong>woreda:</Text>{" "}
+                  <Text strong>{dataFromMinistry?.woreda}</Text>
+                </p>
+                <p>
+                  <Text strong>Kebele:</Text>{" "}
+                  <Text strong>{dataFromMinistry?.kebela}</Text>
+                </p>
+                
+ 
+         </>):<>
+         <p>
+                  <Text strong>Institution:</Text> {dataFromMinistry?.Institution}
+                </p>
+                <p>
+                  <Text strong>CertificateTitle:</Text>{" "}
+                  {dataFromMinistry?.certificateTitle}
+                </p>
+                
+                <p>
+                  <Text strong>Received Date:</Text>{" "}
+                  <Text strong>{dataFromMinistry?.receivedDate}</Text>
+                </p>
+              
+                
+ 
+         </>}
+
+        
           <div>
             <Button
               type="primary"
