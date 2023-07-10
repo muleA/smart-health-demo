@@ -75,7 +75,7 @@ export function BackOfficeApplications() {
     <>
       <DefaultPage title={""} backButtonLink="/license">
        
-        <MaterialReactTable
+         <MaterialReactTable
           columns={columns}
           data={applications ?? []}
           muiTablePaginationProps={{
@@ -98,7 +98,7 @@ export function BackOfficeApplications() {
                 }
               : undefined
           }
-        />
+        /> 
       </DefaultPage>
     </>
   );

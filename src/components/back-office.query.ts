@@ -46,6 +46,13 @@ const backOfficeApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    getTasks: builder.query<any, void>({
+      query: () => ({
+        url: backOfficeEndPoints.getTasks,
+        method: "GET",
+      }),
+      providesTags: ["Task"],
+    }),
     getApplications: builder.query<any, void>({
       query: () => ({
         url: backOfficeEndPoints.getApplications,
@@ -112,6 +119,14 @@ const backOfficeApi = apiSlice.injectEndpoints({
         data: newUser,
       }),
       invalidatesTags: ["user"],
+    }),
+    createTask: builder.mutation<any, any>({
+      query: (newUser) => ({
+        url: `${backOfficeEndPoints.createTask}`,
+        method: "POST",
+        data: newUser,
+      }),
+      invalidatesTags: ["Task"],
     }),
     restoreUser: builder.mutation<any, any>({
       query: (newUser) => ({
@@ -186,5 +201,7 @@ export const {
    useGetArchivedEmployeesByEmployeeIdQuery,
    useGetArchivedUserByUserIdQuery,
    useLazyGetArchivedEmployeesByEmployeeIdQuery,
-   useLazyGetArchivedUserByUserIdQuery
+   useLazyGetArchivedUserByUserIdQuery,
+   useGetTasksQuery,
+   useCreateTaskMutation
 } = backOfficeApi;

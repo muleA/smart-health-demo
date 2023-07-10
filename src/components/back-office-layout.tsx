@@ -50,6 +50,7 @@ import LicenseDetail from "./back-office/license/detail.";
 import { SubmittedApplicationDetail } from "./back-office/application/_application-detail";
 import TimeCounter from "../shared/live-timer";
 import DashboardGreeting from "../shared/dashboard-welcome";
+import WorkFlowPage from "./back-office/work-flow/work-flow-page";
 
 const { Sider, Content, Footer } = Layout;
 
@@ -179,6 +180,26 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
           permissions: ViewArchives,
         },
       ],
+      
+    },
+    {
+      name: "settings",
+      path: "/settings",
+      icon: Icon.SettingOutlined,
+      child:[
+        {
+          name: "design work flow",
+          path: "/design-work-flow",
+          icon: Icon.PlayCircleFilled,
+        },
+        {
+          name: "form Builder",
+          path: "/form-builder",
+          icon: Icon.FormOutlined,
+        },
+      ]
+
+
     },
   ];
 
@@ -404,6 +425,12 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
                   <RoutePermissionGuard requiredPermissions={ViewUser}>
                     <ArchivedUsers />
                   </RoutePermissionGuard>
+                }
+              />
+                <Route
+                path={`/settings/design-work-flow`}
+                element={
+                    <WorkFlowPage />
                 }
               />
               <Route

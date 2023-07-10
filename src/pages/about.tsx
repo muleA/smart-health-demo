@@ -3,6 +3,7 @@ import { AboutSvg } from "./about-svg"
 
 export const AboutUs=()=>{
     return(<>
+ 
     <Card className="w-3/2">
     <div className="flex flex-col md:flex-row items-center justify-center">
   <div className="md:w-1/2">
@@ -33,8 +34,8 @@ export const AboutUs=()=>{
   </div>
 </div>
 
-    </Card>
-  
+    </Card> 
+
 
     
     </>)

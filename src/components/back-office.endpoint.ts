@@ -21,5 +21,7 @@ getArchivedApplication:`${baseUrl}user/get-archived-application`,
 getArchivedEmployees:`${baseUrl}employees/get-archived-employeesById`,
 getArchivedEmployeeById:`${baseUrl}employees/get-archived-employeesById`,
 ChangeLicenseStatus: `${baseUrl}user/change-application-status-By-applicationId`,
+getTasks:`${baseUrl}task/get-tasks`,
+createTask:`${baseUrl}/task/create-task`
 
 };
