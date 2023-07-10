@@ -92,7 +92,7 @@ export function ArchivedEmployees() {
 
  */}      
  
- <DefaultPage title={"Archived Employees"} backButtonLink="/Employees" 
+ <DefaultPage title={""} backButtonLink="/Employees" 
  primaryButtonProps={{
       children: "New",
       onClick: () => {

@@ -46,7 +46,7 @@ export function Roles() {
 
   return (
     <>
- <DefaultPage title={"roles"} backButtonLink="/roles"   primaryButtonProps={{
+ <DefaultPage   primaryButtonProps={{
       children: "New",
       onClick: () => {
         navigate(`/roles/new`)

@@ -5,7 +5,6 @@ import { MRT_ColumnDef } from 'material-react-table';
 import { DefaultPage } from "../../../shared/default-page";
 import { useGetPermissionsQuery } from "./permission.query";
 import { Permission } from "../../../models/permission";
-import { routingBaseUrl } from "../../../configs/config";
 
 export default function PermissionsList() {
   const navigate = useNavigate();
@@ -44,7 +43,7 @@ export default function PermissionsList() {
 
   return (
     <>
- <DefaultPage title={"permissions"} backButtonLink="/permissions"   primaryButtonProps={{
+ <DefaultPage title={""} backButtonLink="/permissions"   primaryButtonProps={{
       children: "New",
       onClick: () => {
         navigate(`/permissions/new`)

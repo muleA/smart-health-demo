@@ -64,7 +64,7 @@ export function Employees() {
 
   return (
     <>
- <DefaultPage title={"Employees"} backButtonLink="/Employees" 
+ <DefaultPage title={""} backButtonLink="/Employees" 
  primaryButtonProps={{
       children: "New",
       onClick: () => {

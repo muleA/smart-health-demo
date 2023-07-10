@@ -13,7 +13,7 @@ import IsPermitted from "./auth/is-permitted";
 import NumberWithCommas from "./utilities/number-commas";
 
 export type DefaultPageHeaderProps = {
-  title: string;
+  title?: string;
   subTitle?: React.ReactNode | string;
   primaryButtonProps?: DefaultPageHeaderButtonProps;
   outlinedButtonProps?: DefaultPageHeaderButtonProps;
@@ -40,6 +40,7 @@ export const DefaultPageHeader = (
         <Button
           startIcon={<ArrowBack />}
           color="inherit"
+          size="small"
           onClick={() => {
             navigate(props.backButtonLink as any);
           }}

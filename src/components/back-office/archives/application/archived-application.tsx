@@ -49,7 +49,7 @@ export function ArchivedApplication() {
 
   return (
     <>
- <DefaultPage title={"Applications"} backButtonLink="/license"   >
+ <DefaultPage title={""} backButtonLink="/license"   >
   <div>
   <MaterialReactTable
         columns={columns}

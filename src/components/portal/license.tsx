@@ -10,12 +10,10 @@ import Certificate1 from "../../certificates/health-proffessional";
 
 const CertificateLicense = (props: { licenseInfo: any, ApplicationlicenseInfo: any, handleModalClose: ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined, modalVisible: boolean | undefined }) => {
   //  console.log("license info test",props?.licenseInfo)
-  console.log("ApplicationlicenseInfo info testwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", props?.ApplicationlicenseInfo)
 
   const { data: userInfo, isLoading } = useGetUserByIdQuery(props?.licenseInfo?.userId)
   
 
-   console.log("userInfoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",userInfo)
   const certificateWrapper = useRef(null);
   const handleDownload = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -75,7 +73,8 @@ const CertificateLicense = (props: { licenseInfo: any, ApplicationlicenseInfo: a
           {
             // eslint-disable-next-line no-mixed-operators
             props?.licenseInfo?.applicationCategory === 'HealthProfessional'
-            && <Certificate1 licenseInfo={props?.licenseInfo} userInfo={userInfo} ApplicationlicenseInfo={props?.ApplicationlicenseInfo}/>
+            && <Certificate1 licenseInfo={props?.licenseInfo} userInfo={userInfo} 
+            ApplicationlicenseInfo={props?.ApplicationlicenseInfo}/>
 
           }
 

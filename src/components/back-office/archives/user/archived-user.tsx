@@ -58,7 +58,7 @@ export function ArchivedUsers() {
     <>
 
  
- <DefaultPage title={"Archived Users"} backButtonLink="/archives/archived-users" >
+ <DefaultPage title={""} backButtonLink="/archives/archived-users" >
   <div >
   <MaterialReactTable
         columns={columns}

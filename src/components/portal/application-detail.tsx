@@ -248,7 +248,8 @@ const ApplicationDetail = () => {
             </Card>
  */}
           </div>
-          <Certificate licenseInfo={ApplicationDetail} ApplicationlicenseInfo={LicenseDetail} handleModalClose={handleModalClose} modalVisible={modalVisible} />
+          <Certificate licenseInfo={ApplicationDetail} ApplicationlicenseInfo={LicenseDetail}
+           handleModalClose={handleModalClose} modalVisible={modalVisible} />
           <Modal
             title="Share on Social Media"
             visible={shareVisible}

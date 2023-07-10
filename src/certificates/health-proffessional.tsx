@@ -1,5 +1,3 @@
-import { useGetUserByIdQuery } from '../components/back-office.query';
-import { useGetEmployeeByEmployeeIdQuery } from '../components/back-office/employee/employee.query';
 import { useGetEmployeeByIdQuery } from '../components/portal.query';
 import './certficate.css';
 

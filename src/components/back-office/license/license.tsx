@@ -87,7 +87,7 @@ export function License() {
 
   return (
     <>
- <DefaultPage title={"license"} backButtonLink="/license"   >
+ <DefaultPage title={""} backButtonLink="/license"   >
   <div>
   <MaterialReactTable
         columns={columns}

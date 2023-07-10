@@ -62,7 +62,7 @@ export function Users() {
     <>
 
  
- <DefaultPage title={"Users"} backButtonLink="/users" >
+ <DefaultPage title={""} backButtonLink="/users" >
   <div >
   <MaterialReactTable
         columns={columns}

@@ -25,13 +25,15 @@ import IsPermitted from "../../../shared/auth/is-permitted";
 import { ApproveApplication } from "../../../shared/shell/permissions-list";
 import { useAuth } from "../../../shared/auth/use-auth";
 import PreviewFile from "../../portal/preview-file";
-import { useGetUserByIdQuery } from "../../portal.query";
+import { useGetEmployeeByIdQuery, useGetUserByIdQuery } from "../../portal.query";
 
 export const UserApplicationsDetail = ({ id }: any) => {
   // console.log('the Id sent as props is ',Session)
 
   const [trigger, { data, isLoading }] =
     useLazyGetApplicationDetailByUserIdQuery();
+
+    console.log("data license data",data)
 const{data:userInfo}=useGetUserByIdQuery(id)
 console.log("userInfo",userInfo)
   const { Panel } = Collapse;
@@ -589,6 +591,7 @@ console.log("userInfo",userInfo)
       </Modal>
       <Certificate
         licenseInfo={data}
+        userInfo={userInfo}
         appCat={appCat ?? "HealthProfessional"}
         handleModalClose={() => setModalVisible(false)}
         modalVisible={modalVisible}
