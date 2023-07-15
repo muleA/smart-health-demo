@@ -440,7 +440,7 @@ const EmployeeForm = (props: { mode: "new" | "update"; id?: string }) => {
 
                   {props?.id  ? (
                     <>
-                    <div className="flex space-x-2">
+                    <div className="mx-8 md:flex space-x-2">
                     <Button
                         onClick={handleDeleteEmployee}
                         className="bg-primary bg-red-500 items-center justify-center"

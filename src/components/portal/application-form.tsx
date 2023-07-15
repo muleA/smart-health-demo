@@ -127,7 +127,7 @@ const ApplicationForm = () => {
           <div>
             <h1 className="text-sm font-bold mt-8 mb-2">Who Can Apply</h1>
             <p>
-              <ul className="list-disc pl-5 space-y-2">
+              <ul className="list-disc pl-5  ">
                 <li className="">Education: Complete the required education and training from a recognized institution in the specific health profession.</li>
                 <li className="">Registration: Register with the relevant professional regulatory body in Ethiopia.</li>
                 <li className="">Good Standing and Ethics: Maintain a positive professional standing and adhere to ethical standards.</li>
@@ -287,8 +287,8 @@ const ApplicationForm = () => {
                         component="div"
                         className="text-red-500" />
                     </div>
-                    <div className="grid grid-cols-5 gap-1">
-                      <div style={{ gridColumn: "1 / span 2" }}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+                      <div >
                         {values?.applicationType &&
                           values?.applicationCategory && (
                             <>
@@ -463,7 +463,7 @@ const ApplicationForm = () => {
                                   </>
 
                                 )} */}
-                      <div style={{ gridColumn: "3 / span 5" }}>
+                      <div>
                         {values?.applicationType &&
                           values?.applicationCategory &&
                           values?.applicationCategory !== "HealthProfessional" && (

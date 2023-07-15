@@ -1,6 +1,6 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
-
+import { Doughnut, Pie } from 'react-chartjs-2';
+import './chart.css';
 const COLORS = [
   '#0088FE',      // Total Applications
   '#00C49F',      // Approved Applications
@@ -17,27 +17,30 @@ const SimplePieChart = (props: { submitted: any; approved: any; rejected: any; t
     { name: 'rejected', value: rejected },
     { name: 'total ', value: total ??0},
   ];
+  const data2 = {
+    labels: ['Rejected', 'Submitted', 'Approved', 'total'],
+    datasets: [
+      {
+        data: [rejected, submitted,approved, total], // Add corresponding data values for all enum values
+        backgroundColor: [
+          'rgba(255, 99, 132, 1)', // Rejected - Red
+          'rgba(255, 206, 86, 1)', // Submitted - Yellow
+          'rgba(75, 192, 192, 1)', // Approved - Green
+          'rgba(153, 102, 255, 1)', // Suspended - Purple
+        ],
+        borderWidth: 1,
+    
+      },
+      
+    ],
+  };
 
   return (
+    <div className="w-full">
     <div className="bg-white p-5 rounded-2xl shadow-lg mr-4">
     <h2 className="text-xl mb-4">Applications Pie Chart</h2>
-    <PieChart width={400} height={400}>
-      <Pie
-        data={data}
-        cx={200}
-        cy={200}
-        labelLine={true}
-        outerRadius={150}
-        fill="#8884d8"
-        dataKey="value"
-      >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
-      <Tooltip />
-      <Legend />
-    </PieChart>
+         <Pie className='w-1/2' data={data2} />
+    </div>
     </div>
   );
 };

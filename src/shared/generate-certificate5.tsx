@@ -5,12 +5,12 @@ const GenerateCertificate5 = ({licenseInfo,ApplicationlicenseInfo,userInfo}:any)
  
 
   return (
-    <>
-    
-      <Certificate5 licenseInfo={licenseInfo} ApplicationlicenseInfo={ApplicationlicenseInfo} userInfo={userInfo}/>
+ <>
+ 
+<Certificate5 licenseInfo={licenseInfo} ApplicationlicenseInfo={ApplicationlicenseInfo} userInfo={userInfo}/>
 
-          {/*  */}
-    </>
+ {/*  */}
+ </>
   );
 };
 

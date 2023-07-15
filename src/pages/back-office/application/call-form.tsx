@@ -4,9 +4,9 @@ import { FormBuilder } from "./form-builder3"
 import { DndProvider } from "react-dnd"
 
 export const CallFormBuilder=()=>{
-    return(<>
-     <DndProvider backend={HTML5Backend}>
-      <FormBuilder />
-    </DndProvider>
-    </>)
+ return(<>
+  <DndProvider backend={HTML5Backend}>
+<FormBuilder />
+ </DndProvider>
+ </>)
 }

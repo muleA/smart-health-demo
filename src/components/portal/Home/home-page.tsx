@@ -75,11 +75,11 @@ export default function HomePage(){
               ))}
             </div>
             </Card>
-        <div style={{ display: 'flex' }} className="flex gap-4">
-          <div style={{ flex: '8' }}>
+        <div  className="grid grid-cols-1 md:grid-cols-2 gap-1">
+          <div >
             <TableCard />
           </div>
-          <div style={{ flex: '2' }}>
+          <div >
             <ProgressChartCard approvedLicense={approvedLicense} approvedLicenseLoading={approvedLicenseLoading} 
            submittedLicese={totalLicense?.length} 
             submittedLicenseLoading={totalLicenseLoading} REJECTEDLicenseLoading={REJECTEDLicenseLoading}

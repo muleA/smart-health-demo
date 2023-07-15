@@ -39,7 +39,7 @@ const CertificateLicense = (props: { licenseInfo: any, ApplicationlicenseInfo: a
     >
 
       <div className="App">
-        <div className="Meta flex space-x-2">
+        <div className="Meta mx-8 md:flex space-x-2">
           <Button
             onClick={handleDownload}
             className="bg-white text-blue-500 font-semibold   rounded border border-blue-500

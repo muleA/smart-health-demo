@@ -10,7 +10,7 @@ import PreviewFile from "./preview-file";
 
 const { Panel } = Collapse;
 
-interface Experience {
+interface Experience { 
   id: string; // Unique identifier for each experience
   tin: string;
   organizationName: string;
@@ -159,15 +159,15 @@ const [expId,setExpId]=useState("")
     <Card title="" className="w-3/2 mx-auto mt-6">
       <Collapse activeKey={expanded ? "1" : ""}>
         <Panel
-          header={<h3 className="font-bold text-lg">Experience information</h3>}
+          header={<h3 className="font-bold md:text-lg">Experience information</h3>}
           key="1"
           extra={
             <>
-              <div className="flex space-x-2">
+              <div className="mx-8 md:flex space-x-2">
                 {expanded ? (
                   <Button
                     type="primary"
-                    className="flex justify-center items-center bg-primary text-white hover:text-white"
+                    className="flex justify-center items-center bg-primary text-white hover:text-white mb-2"
                     onClick={handleAddExperience}
                   >
                     <PlusOutlined /> Experience
@@ -175,7 +175,7 @@ const [expId,setExpId]=useState("")
                   
                 ) : null}
 
-                <Button className="ml-5" onClick={handleButtonClick}>
+                <Button className="ml-5 mb-2" onClick={handleButtonClick}>
                   {expanded ? "Collapse" : "Expand"}
                 </Button>
               </div>
@@ -199,8 +199,9 @@ const [expId,setExpId]=useState("")
                 header={`Experience ${index + 1}`}
                 key={experience.id}
                 extra={
-                  <div className="flex space-x-2">
-  <Button
+                  <div className="mx-8 md:flex space-x-2">
+                   <Button
+                      className="mb-2"
                       type="primary"
                       danger
                       onClick={() => handleArchiveExperience(experience)}

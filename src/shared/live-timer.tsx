@@ -4,13 +4,13 @@ const TimeCounter: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+ const timer = setInterval(() => {
+setCurrentTime(new Date());
+ }, 1000);
 
-    return () => {
-      clearInterval(timer);
-    };
+ return () => {
+clearInterval(timer);
+ };
   }, []);
 
   const formattedTime = currentTime.toLocaleTimeString();

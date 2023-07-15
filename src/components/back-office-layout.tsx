@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Dropdown, Layout, Menu } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "../shared/auth/use-auth";
 import { User } from "../pages/back-office/user";
@@ -58,12 +58,32 @@ const BackOfficeLayoutWrapper = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
   const { logOut } = useAuth();
   const { t } = useTranslation();
+  
+ useEffect(() => {
+  const handleResize = () => {
+    if (window.window.innerWidth <= 800) {
+      if (collapsed === false) {
+        setCollapsed(true);
+
+      }
+    } else {
+      if (collapsed === true) {
+        setCollapsed(false);
+
+      }
+    }
+  };
+  handleResize();
+  window.addEventListener("resize", handleResize);
+});
+
 
   const handleLogOut = (): void => {
     logOut();
   };
   const toggle = () => {
-    setCollapsed((prev) => !prev);
+    setCollapsed(!collapsed);
+
   };
   const location = useLocation();
   const pathSnippets = location.pathname.split("/").filter((i: any) => i);

@@ -91,10 +91,10 @@ const UserPage = () => {
     <Card className="w-3/2 mx-auto mt-6" loading={isLoading}>
       <Collapse defaultActiveKey={["1"]}>
         <Panel
-          header={<h3 className="font-bold text-lg">Personal Information</h3>}
+          header={<h3 className="font-bold md:text-lg">Personal Information</h3>}
           key="1"
           extra={
-            <Button className="ml-5" onClick={handleButtonClick}>
+            <Button className="ml-5" onClick={handleButtonClick}> 
               {expanded ? "Collapse" : "Expand"}
             </Button>
           }
@@ -103,7 +103,7 @@ const UserPage = () => {
             <Form
               layout="vertical"
               onFinish={formik.handleSubmit}
-              className="grid grid-cols-2 gap-4"
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
               <div>
                 <Form.Item label="First Name" required>

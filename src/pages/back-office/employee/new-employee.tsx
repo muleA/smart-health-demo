@@ -3,6 +3,6 @@ import { NewEmployee } from "../../../components/back-office/employee/new-employ
 
 export const NewEmployeePage=()=>{
 return (<>
-<NewEmployee/>    
+<NewEmployee/> 
 </>)
 }

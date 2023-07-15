@@ -140,7 +140,7 @@ import {
         ))}
                     </p>
   
-                    <div className="flex space-x-2">
+                    <div className="mx-8   md:flex space-x-2">
                     <IsPermitted requiredPermissions={_ViewApplications}>
   
                       {application.status !== "APPROVED" ? (

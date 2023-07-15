@@ -81,7 +81,7 @@ const columns = [
         </div>
 
         <Divider className="m-2" />
-        <Table dataSource={[appInfo]} columns={columns} loading={isLoading||appInfoLoading} />
+        <Table dataSource={[appInfo]} columns={columns} loading={isLoading||appInfoLoading} scroll={{ x: '100vw' }} />
       </div>
     </div>
   );

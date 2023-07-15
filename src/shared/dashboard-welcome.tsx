@@ -5,17 +5,17 @@ const DashboardGreeting = (props:{userFullName:string}) => {
   let greeting;
 
   if (currentHour < 12) {
-    greeting = 'Good Morning';
+ greeting = 'Good Morning';
   } else if (currentHour < 18) {
-    greeting = 'Good Afternoon';
+ greeting = 'Good Afternoon';
   } else {
-    greeting = 'Good Evening';
+ greeting = 'Good Evening';
   }
 
   return (
-    <>
-    <h1>{greeting}<span className='text-primary'> {`${props?.userFullName}`},</span>  Welcome to Smart Health eLicense System</h1>
+ <>
+ <p className='text-sm md:text-lg line-clamp-3 lg:line-clamp-none'>{greeting}<span className='text-primary'> {`${props?.userFullName}`},</span>  Welcome to Smart Health eLicense System</p>
 
-    </>
+ </>
 )}
 export default DashboardGreeting;

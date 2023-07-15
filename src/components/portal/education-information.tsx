@@ -189,15 +189,15 @@ c        education
     <Card title="" className="w-3/2 mx-auto mt-6">
       <Collapse activeKey={expanded ? "1" : ""}>
         <Panel
-          header={<h3 className="font-bold text-lg">Education information</h3>}
+          header={<h3 className="font-bold md:text-lg">Education information</h3>}
           key="1"
           extra={
             <>
-              <div className="flex">
+              <div className="pb-4 md:flex">
                 {expanded ? (
                   <Button
                     type="primary"
-                    className="flex justify-center items-center bg-primary text-white hover:text-white"
+                    className="flex justify-center items-center bg-primary text-white hover:text-white mb-2"
                     onClick={handleAddEducation}
                   >
                     <PlusOutlined /> Education
@@ -221,7 +221,6 @@ c        education
               {educations.map((education: Education, index: number) => (
                 <Collapse
                   key={index}
-                  expandIconPosition="right"
                   defaultActiveKey={0}
                   onChange={() => setOpenedPanelId(education.id)}
                 >
@@ -230,14 +229,15 @@ c        education
                     header={`Education ${index + 1}`}
                     key={education.id}
                     extra={
-                      <div className="flex space-x-2">
-                        <Button
+                      <div className="mx-8 md:flex space-x-2">
+                        <Button 
+                          className="mb-2"
                           type="primary"
                           danger
                           onClick={() => handleArchiveEducation(education)}
                         >
                           Archive
-                        </Button>
+                        </Button> 
                         <Button
                           type="primary"
                           danger

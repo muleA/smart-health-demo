@@ -13,34 +13,34 @@ export const AxiosWrapper = (props: AxiosWrapperProps) => {
   console.log("sess",ses)
   /* useEffect hooks */
   useEffect(() => {
-    if (store) {
-      axiosClient.interceptors.request.use(
-        function (config:any) {
-          const session: any = getCurrentSession() || null;
-          config.params.accessToken = session?.accessToken;
-          return config;
-        },
-        async function (error: any) {
-          return await Promise.reject(error);
-        },
-      );
+ if (store) {
+axiosClient.interceptors.request.use(
+  function (config:any) {
+ const session: any = getCurrentSession() || null;
+ config.params.accessToken = session?.accessToken;
+ return config;
+  },
+  async function (error: any) {
+ return await Promise.reject(error);
+  },
+);
 
-      axios.interceptors.response.use(
-        function (response) {
-          return response;
-        },
-        async function (error) {
-          store.dispatch(
-            setError({
-              message: error.message,
-              code: error.message,
-              response: error.response,
-            }),
-          );
-          return await Promise.reject(error);
-        },
-      );
-    }
+axios.interceptors.response.use(
+  function (response) {
+ return response;
+  },
+  async function (error) {
+ store.dispatch(
+setError({
+  message: error.message,
+  code: error.message,
+  response: error.response,
+}),
+ );
+ return await Promise.reject(error);
+  },
+);
+ }
   }, [{ store }]);
 
   return <>{props?.children}</>;

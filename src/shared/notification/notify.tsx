@@ -8,10 +8,10 @@ export const Notify = (
   notificationContainer.id = 'notification-container';
   document?.body?.appendChild(notificationContainer);
   createRoot(notificationContainer).render(
-    <NotificationComponent
-      type={type}
-      message={message}
-      container={notificationContainer}
-    />
+ <NotificationComponent
+type={type}
+message={message}
+container={notificationContainer}
+ />
   );
 };

@@ -1,39 +1,26 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Bar } from 'react-chartjs-2';
 
-const Chart = ({ data }: any) => {
-  const processDataForBarChart = (inputData: Array<any>) => {
-    let processedData: { [key: string]: number } = {};
-  
-    inputData?.forEach((item: { status: string | number; value: number }) => {
-      if (processedData[item.status]) {
-        processedData[item.status] += item.value;
-      } else {
-        processedData[item.status] = item.value;
-      }
-    });
-  
-    return Object.entries(processedData)?.map(([statusName, count]) => ({
-      name: statusName,
-      value: count,
-    }));
+const Chart = (props: { submitted: any; approved: any; rejected: any; total: any; }) => {
+  const { submitted, approved, rejected, total } = props;  
+  const data2 = {
+    labels: ['Total','Rejected', 'Submitted', 'Approved' ],
+    datasets: [
+      {
+        label:'# of Employee',
+        data: [total,rejected, submitted,approved], // Add corresponding data values for all enum values
+        backgroundColor:'#3B82F6', 
+        
+        borderWidth: 1,
+      },
+    ],
   };
-  
-
-  const chartData = processDataForBarChart(data);
 
   return (
     <div className="w-full">
       <div className="bg-white p-5 rounded-2xl shadow-lg mr-4 mb-2">
         <h2 className="text-xl mb-4"> Bar Chart (Applications, Employees, Users, Licenses) </h2>
-        <BarChart width={550} height={400} data={chartData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip labelStyle={{ color: '#8884d8' }} />
-          <Legend />
-          <Bar dataKey="value" fill="#8884d8" />
-        </BarChart>
+        <Bar data={data2}/>
       </div>
     </div>
   );

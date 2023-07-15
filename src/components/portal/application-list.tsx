@@ -119,6 +119,7 @@ export const ApplicationList = (): JSX.Element => {
       loading={isLoading}
       onRow={rowProps}
       rowKey="id"
+      scroll={{ x: '100vw' }}
     />
   );
 };

@@ -118,13 +118,14 @@ const Archives = () => {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Card title="Archived Applications" className="mt-4">
                 <Table
                   dataSource={applications}
                   onRow={applicationTableRowProps}
                   rowKey="id"
+                  scroll={{x: '100vw' }}
                   columns={[
                     { title: "Application Category", dataIndex: "applicationCategory" },
                     {
@@ -150,6 +151,7 @@ const Archives = () => {
                   dataSource={educations}
                   onRow={educationTableRowProps}
                   rowKey="id"
+                  scroll={{x: '100vw' }}
                   columns={[
                     {
                       title: "Professional Title",
@@ -188,6 +190,7 @@ const Archives = () => {
                   dataSource={experiences}
                   onRow={experianceTableRowProps}
                   rowKey="id"
+                  scroll={{x: '100vw' }}
                   columns={[
                     {
                       title: "Organization Name",
@@ -223,6 +226,7 @@ const Archives = () => {
                   dataSource={certificates}
                   onRow={certificateTableRowProps}
                   rowKey="id"
+                  scroll={{x: '100vw' }}
                   columns={[
                     { title: "Institution", dataIndex: "institution" },
                     {

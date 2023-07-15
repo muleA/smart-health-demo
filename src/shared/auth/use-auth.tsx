@@ -15,13 +15,13 @@ export const useAuth = (): {
   const dispatch = useAppDispatch();
 
   return {
-    session,
-    submitLoginRequest: (request: LoginRequest) => {
-      dispatch(logIn(request));
-    },
-    logOut: () => {
-      dispatch(logOut());
-    },
-    selectIsLoading: isLoading,
+ session,
+ submitLoginRequest: (request: LoginRequest) => {
+dispatch(logIn(request));
+ },
+ logOut: () => {
+dispatch(logOut());
+ },
+ selectIsLoading: isLoading,
   };
 };

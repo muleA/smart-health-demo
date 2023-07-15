@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Dropdown } from 'antd';
 import { UserOutlined, CaretDownOutlined, LogoutOutlined, HomeOutlined, FileAddOutlined, FolderOutlined, UnorderedListOutlined, DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 import { Link, useNavigate, Routes, Route } from 'react-router-dom';
@@ -16,9 +16,30 @@ const {  Content, Sider } = Layout;
 
 const PortalNavigation = () => {
   const [collapsed, setCollapsed] = useState(false);
+
   const toggle = () => {
-    setCollapsed((prev) => !prev);
+    setCollapsed(!collapsed);
+
   };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.window.innerWidth <= 800) {
+        if (collapsed === false) {
+          setCollapsed(true);
+  
+        }
+      } else {
+        if (collapsed === true) {
+          setCollapsed(false);
+  
+        }
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  });
+  
+  
   const { logOut } = useAuth();
   const router = useNavigate();
   const [selectedMenu, setSelectedMenu] = useState("1"); // Track the selected menu item

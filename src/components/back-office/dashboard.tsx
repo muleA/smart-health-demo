@@ -116,9 +116,13 @@ export function Dashboard() {
             </div>
             </div>
 
-            <div className="text-center shadow-lg">
-            <div className=" mt-2 flex mx-auto  p-4">
-              <Chart data={data2} />
+            <div className="text-center ">
+            <div className=" mt-2 grid grid-cols-1 md:grid-cols-2 p-4">
+              <Chart  
+               submitted={submittedApplications?.length}
+                approved={approvedApplications?.length}
+                rejected={rejectedAPplications?.length}
+                total={applications?.length} />
               <SimplePieChart
                 submitted={submittedApplications?.length}
                 approved={approvedApplications?.length}

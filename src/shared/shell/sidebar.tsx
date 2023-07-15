@@ -14,24 +14,24 @@ const Sidebar = (props:{menus:Menu[]}): JSX.Element => {
   const permittedMenu = useMemo(() => {
 
 const userPermissions =
-    session?.userInfo?.EmployeeRoles?.flatMap((role: { role: { rolePermission: any; }; }) => role?.role?.rolePermission ?? []).flat().map(
-        (permission: { permissionName: any; }) => permission.permissionName,
-    ) ?? [];
+ session?.userInfo?.EmployeeRoles?.flatMap((role: { role: { rolePermission: any; }; }) => role?.role?.rolePermission ?? []).flat().map(
+  (permission: { permissionName: any; }) => permission.permissionName,
+ ) ?? [];
 
 console.log(userPermissions);
 
-    return filterMenusByPermissions(props?.menus, userPermissions);
+ return filterMenusByPermissions(props?.menus, userPermissions);
   }, [props?.menus, session]);
 
   useEffect(() => {
-    setVisibleMenu(permittedMenu);
+ setVisibleMenu(permittedMenu);
   }, [permittedMenu]);
 
   return (
-    <List dataSource={visibleMenu}   >
-    {visibleMenu?.map((menuItem, index) => (
-      <SidebarItem key={`${index}-${menuItem.name}`} menu={menuItem} mergedPath={""} />
-    ))}
+ <List dataSource={visibleMenu}>
+ {visibleMenu?.map((menuItem, index) => (
+<SidebarItem key={`${index}-${menuItem.name}`} menu={menuItem} mergedPath={""} />
+ ))}
   </List>
   );
 };

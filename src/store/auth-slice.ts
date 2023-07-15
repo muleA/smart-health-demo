@@ -23,38 +23,38 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setSession: (state, action: PayloadAction<Session>) => {
-      localStorage.setItem("session", JSON.stringify(action.payload));
-      state.session = action.payload;
-    },
-    logOut: (state) => {
-      localStorage.removeItem("session");
-      state.session = null;
-    },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-    },
+ setSession: (state, action: PayloadAction<Session>) => {
+localStorage.setItem("session", JSON.stringify(action.payload));
+state.session = action.payload;
+ },
+ logOut: (state) => {
+localStorage.removeItem("session");
+state.session = null;
+ },
+ setLoading: (state, action: PayloadAction<boolean>) => {
+state.isLoading = action.payload;
+ },
   },
 });
 
 export function logIn(request: LoginRequest) {
   return async function logInThunk(dispatch: any, getState: any) {
-    try {
-      dispatch(setLoading(true)); // Start loading
+ try {
+dispatch(setLoading(true)); // Start loading
 
-      const response = await axios.post(
-        `${baseUrl}auth/login`,
-      request,
-      );
-      console.log("response gtt",response)
-      
-      dispatch(setSession({ accessToken: response.data.access_token, userInfo:jwtDecode(response.data.access_token)}));
-    } catch (error: any) {
-      // Handle error
-      message.error("error incorrect  password or username ")
-    } finally {
-      dispatch(setLoading(false)); // Stop loading
-    }
+const response = await axios.post(
+  `${baseUrl}auth/login`,
+request,
+);
+console.log("response gtt",response)
+
+dispatch(setSession({ accessToken: response.data.access_token, userInfo:jwtDecode(response.data.access_token)}));
+ } catch (error: any) {
+// Handle error
+message.error("error incorrect  password or username ")
+ } finally {
+dispatch(setLoading(false)); // Stop loading
+ }
   };
 }
 

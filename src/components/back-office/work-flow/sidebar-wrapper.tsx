@@ -133,10 +133,10 @@ const DnDFlow = () => {
 
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
 <div className="flex items-center justify-between mt-4 bg-gray-100 p-2">
-        <div className="flex space-x-2">
+        <div className="mx-8 md:flex space-x-2">
         </div>
 
-        <div className="flex space-x-2">
+        <div className="mx-8 md:flex space-x-2">
           {/* Save Button */}
           <Button className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-4 rounded">
             Save

@@ -174,16 +174,16 @@ const CertificateInformation: React.FC = () => {
       <Collapse activeKey={expanded ? "1" : ""}>
         <Panel
           header={
-            <h3 className="font-bold text-lg">Certificate Information</h3>
+            <h3 className="font-bold md:text-lg">Certificate Information</h3>
           }
           key="1"
           extra={
             <>
-              <div className="flex">
+              <div className="pb-4   md:flex">
                 {expanded ? (
                   <Button
                     type="primary"
-                    className="flex justify-center items-center bg-primary text-white hover:text-white"
+                    className="flex justify-center items-center bg-primary text-white hover:text-white mb-2"
                     onClick={handleAddCertificate}
                   >
                     <PlusOutlined /> Certificate
@@ -212,8 +212,9 @@ const CertificateInformation: React.FC = () => {
                 header={`Certificate ${index + 1}`}
                 key={certificate.id}
                 extra={
-                  <div className="flex space-x-2">
+                  <div className="mx-8 md:flex space-x-2">
                     <Button
+                      className="mb-2"
                       type="primary"
                       danger
                       onClick={() => handleArchiveCertificate(certificate)}
@@ -221,7 +222,7 @@ const CertificateInformation: React.FC = () => {
                       Archive
                     </Button>
                     <Button
-                      type="primary"
+                      type="primary" 
                       danger
                       onClick={() => handleDeleteCertificate(certificate)}
                     >

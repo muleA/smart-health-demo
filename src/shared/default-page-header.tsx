@@ -35,72 +35,72 @@ export const DefaultPageHeader = (
   const navigate = useNavigate();
 
   return (
-    <Box mx={1} mb={2}>
-      {props.backButtonLink && props.backButtonTitle && (
-        <Button
-          startIcon={<ArrowBack />}
-          color="inherit"
-          size="small"
-          onClick={() => {
-            navigate(props.backButtonLink as any);
-          }}
-        >
-          {props.backButtonTitle}
-        </Button>
-      )}
+ <Box mx={1} mb={2}>
+{props.backButtonLink && props.backButtonTitle && (
+  <Button
+ startIcon={<ArrowBack />}
+ color="inherit"
+ size="small"
+ onClick={() => {
+navigate(props.backButtonLink as any);
+ }}
+  >
+ {props.backButtonTitle}
+  </Button>
+)}
 
-      <Grid
-        container
-        direction="row"
-        justifyContent={"space-between"}
-        flexDirection="row"
-        alignItems="center"
-        spacing={2}
-        wrap="nowrap"
-      >
-        <Grid item>
-          <Typography variant="h4" sx={{ fontWeight: 500, fontSize: "35px" }}>
-            {props.title}
-          </Typography>
-          {typeof props?.subTitle === "string" ? (
-            <Typography variant="subtitle1">{props?.subTitle}</Typography>
-          ) : (
-            props?.subTitle
-          )}
-        </Grid>
-        <Grid item container direction="row" xs={"auto"} spacing={1}>
-          {props.dropdownSelector && <Grid item>{props.dropdownSelector}</Grid>}
+<Grid
+  container
+  direction="row"
+  justifyContent={"space-between"}
+  flexDirection="row"
+  alignItems="center"
+  spacing={2}
+  wrap="nowrap"
+>
+  <Grid item>
+ <Typography variant="h4" sx={{ fontWeight: 500, fontSize: "35px" }}>
+{props.title}
+ </Typography>
+ {typeof props?.subTitle === "string" ? (
+<Typography variant="subtitle1">{props?.subTitle}</Typography>
+ ) : (
+props?.subTitle
+ )}
+  </Grid>
+  <Grid item container direction="row" xs={"auto"} spacing={1}>
+ {props.dropdownSelector && <Grid item>{props.dropdownSelector}</Grid>}
 
-          {props.primaryButtonProps && (
-            <Grid item>
-              <Button
-                style={{ textTransform: "none" }}
-                size="large"
-                variant="contained"
-                {...props.primaryButtonProps}
-              >
-                {props.primaryButtonProps.children}
-              </Button>
-            </Grid>
-          )}
-          {props.outlinedButtonProps && (
-            <Grid item>
-              <Button
-                style={{ textTransform: "none" }}
-                size="large"
-                variant="outlined"
-                {...props.outlinedButtonProps}
-              >
-                {props.outlinedButtonProps.children}
-              </Button>
-            </Grid>
-          )}
+ {props.primaryButtonProps && (
+<Grid item>
+  <Button
+ style={{ textTransform: "none" }}
+ size="large"
+ variant="contained"
+ {...props.primaryButtonProps}
+  >
+ {props.primaryButtonProps.children}
+  </Button>
+</Grid>
+ )}
+ {props.outlinedButtonProps && (
+<Grid item>
+  <Button
+ style={{ textTransform: "none" }}
+ size="large"
+ variant="outlined"
+ {...props.outlinedButtonProps}
+  >
+ {props.outlinedButtonProps.children}
+  </Button>
+</Grid>
+ )}
 
-          {props.rightSideComponent && (
-            <Grid item>{props.rightSideComponent}</Grid>
-          )}
-        </Grid>
-      </Grid>
-    </Box>
+ {props.rightSideComponent && (
+<Grid item>{props.rightSideComponent}</Grid>
+ )}
+  </Grid>
+</Grid>
+ </Box>
   );
 };

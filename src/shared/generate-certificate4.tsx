@@ -4,10 +4,10 @@ import Certificate4 from "../certificates/specialty-center";
 
 const GenerateCertificate4 = ({ licenseInfo,ApplicationlicenseInfo ,userInfo}: any) => {
   return (
-    <>
+ <>
 
-      <Certificate4 licenseInfo={licenseInfo} ApplicationlicenseInfo={ApplicationlicenseInfo} userInfo={userInfo}/>
-    </>
+<Certificate4 licenseInfo={licenseInfo} ApplicationlicenseInfo={ApplicationlicenseInfo} userInfo={userInfo}/>
+ </>
   );
 };
 

@@ -12,9 +12,9 @@ const GlobalErrorSlice = createSlice({
   name: "globalError",
   initialState,
   reducers: {
-    setError: (state: GlobalError, action: PayloadAction<any>) => {
-      state.error = action.payload;
-    },
+ setError: (state: GlobalError, action: PayloadAction<any>) => {
+state.error = action.payload;
+ },
   },
 });
 export const selectError = (state: RootState) => state.globalError.error;

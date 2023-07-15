@@ -54,7 +54,7 @@ export default function ProgressChartCard({approvedLicense,draftLicese,submitted
   return (
     <div>
  
-     <div className="bg-white p-4  rounded-2xl shadow-lg">
+     <div className="bg-white p-4 rounded-2xl shadow-lg">
         <div>
         <div className=" font-bold gap-2 text-blue-400 text-2xl">Status Progress</div>
         <Divider className='m-2'/>

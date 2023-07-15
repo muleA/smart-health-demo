@@ -311,7 +311,7 @@ console.log("userInfo",userInfo)
 
 
 <Card>
-<div className="flex space-x-2 mt-2 mb-2">
+<div className="mx-8 md:flex space-x-2 mt-2 mb-2">
                   <IsPermitted requiredPermissions={ApproveApplication}>
                
                          <Button

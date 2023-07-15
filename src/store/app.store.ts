@@ -5,18 +5,18 @@ import { GlobalErrorReducer } from '../shared/utilities/error-dialogue/error-sli
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
-    globalError: GlobalErrorReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
+ auth: authReducer,
+ [apiSlice.reducerPath]: apiSlice.reducer,
+ globalError: GlobalErrorReducer,
+ [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: apiSlice,
-      },
-      serializableCheck: false,
-    }).concat(apiSlice.middleware),
+ getDefaultMiddleware({
+thunk: {
+  extraArgument: apiSlice,
+},
+serializableCheck: false,
+ }).concat(apiSlice.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
